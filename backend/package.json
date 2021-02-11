@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": ""
+    "start": "node server",
+    "dev": "nodemon server"
   },
   "author": "Hoang Viet",
   "license": "MIT",
