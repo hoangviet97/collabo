@@ -8,7 +8,7 @@ module.exports = {
     User.create(req.body, (err, result) => {
       if (err) {
         res.status(500).json({
-          message: err.message || "Some error occurred while creating the Customer."
+          message: err.message || "Some error occurred while creating a new user."
         });
       } else res.json(result);
     });
