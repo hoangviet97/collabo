@@ -2,6 +2,7 @@ const { registerValidation } = require("../validation/auth");
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 const bcrypt = require("bcryptjs");
+const moment = require("moment");
 
 module.exports = {
   create: async function (data, result) {
@@ -12,6 +13,8 @@ module.exports = {
       return;
     }
 
+    //const date = new Date();
+
     const newUser = {
       id: uuid4(),
       email: data.email,
@@ -19,7 +22,7 @@ module.exports = {
       firstname: data.firstname,
       lastname: data.lastname,
       type: "public",
-      created_at: "now"
+      created_at: new Date()
     };
 
     const salt = await bcrypt.genSalt(10);
