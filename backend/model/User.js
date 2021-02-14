@@ -1,19 +1,12 @@
-const { registerValidation } = require("../validation/auth");
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 const bcrypt = require("bcryptjs");
+const { object } = require("joi");
 
 require("dotenv").config();
 
 module.exports = {
-  create: async function (data, result) {
-    const { error } = registerValidation(data);
-
-    if (error) {
-      result(error, null);
-      return;
-    }
-
+  createUser: async function (data, result) {
     const newUser = {
       id: uuid4(),
       email: data.email,
@@ -37,6 +30,24 @@ module.exports = {
 
       console.log(res);
       result(null, res);
+    });
+  },
+
+  loginUser: function (data, result) {
+    const sql = `SELECT password FROM users WHERE email = '${data.email}'`;
+    con.query(sql, async (err, res) => {
+      if (Object.keys(res).length === 0) {
+        result("Invalid credentionals", null);
+        return;
+      }
+      const isMatch = await bcrypt.compare(data.password, res[0].password, (err, matched) => {
+        if (err || !matched) {
+          result("Invalid credentionals", null);
+          return;
+        }
+        result(null, "Success");
+        return;
+      });
     });
   }
 };

@@ -1,14 +1,41 @@
 const User = require("../model/User");
-const { registerValidation } = require("../validation/auth");
+const { registerValidation, loginValidation } = require("../validation/auth");
 const con = require("../config/db");
-const uuid4 = require("uuid4");
 
 module.exports = {
-  createUser: function (req, res) {
-    User.create(req.body, (err, result) => {
+  create: function (req, res) {
+    const { error } = registerValidation(req.body);
+
+    if (error) {
+      return res.status(500).json({
+        message: error || "Some error occurred while creating a new user."
+      });
+    }
+
+    User.createUser(req.body, (err, result) => {
       if (err) {
-        res.status(500).json({
-          message: err.message || "Some error occurred while creating a new user."
+        return res.status(500).json({
+          message: err || err.message || "Some error occurred while creating a new user."
+        });
+      } else {
+        return res.json(result);
+      }
+    });
+  },
+
+  login: function (req, res) {
+    const { error } = loginValidation(req.body);
+
+    if (error) {
+      return res.status(500).json({
+        message: error || "Some error occurred while creating a new user."
+      });
+    }
+
+    User.loginUser(req.body, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          message: err || err.message || "Some error occurred while creating a new user."
         });
       } else res.json(result);
     });
