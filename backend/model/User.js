@@ -1,7 +1,7 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 const bcrypt = require("bcryptjs");
-const { object } = require("joi");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   loginUser: function (data, result) {
-    const sql = `SELECT password FROM users WHERE email = '${data.email}'`;
+    const sql = `SELECT id, password FROM users WHERE email = '${data.email}'`;
     con.query(sql, async (err, res) => {
       if (Object.keys(res).length === 0) {
         result("Invalid credentionals", null);
@@ -45,8 +45,18 @@ module.exports = {
           result("Invalid credentionals", null);
           return;
         }
-        result(null, "Success");
-        return;
+
+        const payload = {
+          user: {
+            id: res[0].id
+          }
+        };
+
+        jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "5 days" }, (err, token) => {
+          if (err) throw err;
+          result(null, token);
+          return;
+        });
       });
     });
   }
