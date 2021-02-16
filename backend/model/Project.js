@@ -2,7 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 module.exports = {
-  createProject: function (data, result) {
+  createProject: async function (data, result) {
     const newProject = {
       id: uuid4(),
       name: data.name,
@@ -17,7 +17,7 @@ module.exports = {
         return;
       }
 
-      result(null, res);
+      result(null, newProject.id);
       return;
     });
   }
