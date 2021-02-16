@@ -20,5 +20,18 @@ module.exports = {
       result(null, newProject.id);
       return;
     });
+  },
+
+  getAllProjects: function (userId, result) {
+    const sql = `SELECT projects.name, projects.description FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
+    con.query(sql, [userId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };

@@ -14,9 +14,15 @@ module.exports = {
 
       Member.createMember(req.user.id, result, (err, resu) => {
         if (err) apiResponse.ErrorResponse(res, err.message);
-
         res.json(resu);
       });
+    });
+  },
+
+  getAll: function (req, res) {
+    Project.getAllProjects(req.user.id, (err, result) => {
+      if (err) apiResponse.ErrorResponse(res, err.message);
+      res.json(result);
     });
   }
 };
