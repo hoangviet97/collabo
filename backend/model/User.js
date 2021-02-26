@@ -30,6 +30,7 @@ module.exports = {
 
       console.log(res);
       result(null, res);
+      return;
     });
   },
 
