@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -51,7 +52,7 @@ const Register = () => {
         </Form.Item>
         <div className="form-auth-footer">
           <p>
-            Already have an account? <a> Login</a>
+            Already have an account? <Link to="/"> Login</Link>
           </p>
         </div>
       </Form>

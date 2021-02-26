@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -40,7 +41,7 @@ const Login = () => {
         </Form.Item>
         <div className="form-auth-footer">
           <p>
-            Don't have an account? <a> Register</a>
+            Don't have an account? <Link to="/register"> Register</Link>
           </p>
         </div>
       </Form>
