@@ -4,24 +4,26 @@ const { projectValidation } = require("../validation/project");
 const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
+  // Create new projects
   create: function (req, res) {
     const { error } = projectValidation(req.body);
 
-    if (error) apiResponse.validationErrorWithData(res, error.message, error);
+    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
 
     Project.createProject(req.body, (err, result) => {
-      if (err) apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err.message);
 
       Member.createMember(req.user.id, result, (err, resu) => {
-        if (err) apiResponse.ErrorResponse(res, err.message);
+        if (err) return apiResponse.ErrorResponse(res, err.message);
         res.json(resu);
       });
     });
   },
 
+  // Get all user's projects
   getAll: function (req, res) {
     Project.getAllProjects(req.user.id, (err, result) => {
-      if (err) apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err.message);
       res.json(result);
     });
   }
