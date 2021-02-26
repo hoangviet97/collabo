@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="base-wrapper">
       <div class="auth-header">
@@ -10,7 +10,7 @@ const Login = () => {
       </div>
       <Form className="form-box">
         <div class="form-auth-header">
-          <h2>Sign In</h2>
+          <h2>Sign Up</h2>
         </div>
         <Form.Item
           name="email"
@@ -34,6 +34,17 @@ const Login = () => {
         >
           <Input.Password placeholder="Password" />
         </Form.Item>
+        <Form.Item
+          name="Re-type password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!"
+            }
+          ]}
+        >
+          <Input.Password placeholder="Re-type Password" />
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button">
             Submit
@@ -41,7 +52,7 @@ const Login = () => {
         </Form.Item>
         <div className="form-auth-footer">
           <p>
-            Don't have an account? <Link to="/register"> Register</Link>
+            Already have an account? <Link to="/"> Login</Link>
           </p>
         </div>
       </Form>
@@ -49,4 +60,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
