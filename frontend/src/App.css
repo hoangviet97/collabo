@@ -39,3 +39,8 @@
   text-align: center;
   padding-top: 12px;
 }
+
+.name-box {
+  display: flex;
+  justify-content: space-between;
+}
