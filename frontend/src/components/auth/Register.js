@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import Password from "antd/lib/input/Password";
 
-const Register = () => {
+const Register = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
 
   const { email, password, passwordCheck, firstname, lastname } = formData;
@@ -14,7 +17,13 @@ const Register = () => {
     });
   };
 
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    if (password !== passwordCheck) {
+      props.setAlert("Password do not match", "error", 4000);
+    } else {
+      props.setAlert("match", "error", 4000);
+    }
+  };
 
   return (
     <div className="base-wrapper">
@@ -64,4 +73,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(null, { setAlert })(Register);
