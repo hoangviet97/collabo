@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -14,9 +14,7 @@ const Register = () => {
     });
   };
 
-  const submitHandler = () => {
-    console.log(formData);
-  };
+  const submitHandler = () => {};
 
   return (
     <div className="base-wrapper">
@@ -38,7 +36,7 @@ const Register = () => {
           </Form.Item>
         </div>
 
-        <Form.Item rules={[{ required: true, message: "Please input your e-mail" }]}>
+        <Form.Item rules={[{ required: true, type: "email", message: "Please input your e-mail" }]}>
           <Input name="email" value={email} placeholder="E-mail" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
