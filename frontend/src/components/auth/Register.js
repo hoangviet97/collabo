@@ -5,35 +5,49 @@ import { Link } from "react-router-dom";
 const Register = () => {
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
 
+  const { email, password, passwordCheck, firstname, lastname } = formData;
+
+  const changeHandler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const submitHandler = () => {
+    console.log(formData);
+  };
+
   return (
     <div className="base-wrapper">
       <div className="auth-header">
         <h1 className="auth-logo">collabo</h1>
       </div>
-      <Form className="form-box">
+      <Form onFinish={submitHandler} className="form-box">
         <div className="form-auth-header">
           <h2>Create Your Free Account</h2>
         </div>
 
-        <div class="name-box">
+        <div className="name-box">
           <Form.Item rules={[{ required: true, message: "Firstname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
-            <Input placeholder="Firstname" />
+            <Input name="firstname" value={firstname} placeholder="Firstname" onChange={(e) => changeHandler(e)} />
           </Form.Item>
 
           <Form.Item rules={[{ required: true, message: "Lastname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
-            <Input placeholder="Lastname" />
+            <Input name="lastname" value={lastname} placeholder="Lastname" onChange={(e) => changeHandler(e)} />
           </Form.Item>
         </div>
+
         <Form.Item rules={[{ required: true, message: "Please input your e-mail" }]}>
-          <Input placeholder="E-mail" />
+          <Input name="email" value={email} placeholder="E-mail" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
         <Form.Item rules={[{ required: true, message: "Please input your password!" }]}>
-          <Input.Password placeholder="Password" />
+          <Input.Password name="password" value={password} placeholder="Password" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
         <Form.Item rules={[{ required: true, message: "Please input your password!" }]}>
-          <Input.Password placeholder="Re-type Password" />
+          <Input.Password name="passwordCheck" value={passwordCheck} placeholder="Re-type Password" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
         <Form.Item>
