@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
 
-const Login = () => {
+const Login = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const { email, password } = formData;
 
+  // Controlled input
   const changeHandler = (e) => {
     setFormData({
       ...formData,
@@ -14,8 +17,9 @@ const Login = () => {
     });
   };
 
+  // Send auth data to redux action
   const submitHandler = () => {
-    console.log(formData);
+    props.login({ email, password });
   };
 
   return (
@@ -68,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, { login })(Login);
