@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 
@@ -21,6 +21,10 @@ const Login = (props) => {
   const submitHandler = () => {
     props.login({ email, password });
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="base-wrapper">
@@ -72,4 +76,8 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

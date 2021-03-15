@@ -26,6 +26,10 @@ const Register = (props) => {
     }
   };
 
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <div className="base-wrapper">
       <div className="auth-header">
@@ -74,4 +78,8 @@ const Register = (props) => {
   );
 };
 
-export default connect(null, { register })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(Register);
