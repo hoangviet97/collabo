@@ -28,8 +28,7 @@ module.exports = {
         return;
       }
 
-      console.log(res);
-      result(null, res);
+      result(null, "Success...");
       return;
     });
   },

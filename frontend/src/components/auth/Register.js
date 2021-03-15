@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Input, Button, message } from "antd";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { register } from "../../actions/auth";
 
-const Register = () => {
+const Register = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
 
   const { email, password, passwordCheck, firstname, lastname } = formData;
 
+  // Controlled input
   const changeHandler = (e) => {
     setFormData({
       ...formData,
@@ -14,9 +17,18 @@ const Register = () => {
     });
   };
 
+  // Send auth data to redux action
   const submitHandler = () => {
-    console.log(formData);
+    if (password !== passwordCheck) {
+      message.error("Passwords doesn't match!");
+    } else {
+      props.register({ firstname, lastname, email, password });
+    }
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <div className="base-wrapper">
@@ -29,24 +41,24 @@ const Register = () => {
         </div>
 
         <div className="name-box">
-          <Form.Item rules={[{ required: true, message: "Firstname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
+          <Form.Item name="firstname" rules={[{ required: true, message: "Firstname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
             <Input name="firstname" value={firstname} placeholder="Firstname" onChange={(e) => changeHandler(e)} />
           </Form.Item>
 
-          <Form.Item rules={[{ required: true, message: "Lastname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
+          <Form.Item name="lastname" rules={[{ required: true, message: "Lastname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>
             <Input name="lastname" value={lastname} placeholder="Lastname" onChange={(e) => changeHandler(e)} />
           </Form.Item>
         </div>
 
-        <Form.Item rules={[{ required: true, message: "Please input your e-mail" }]}>
+        <Form.Item name="email" rules={[{ required: true, message: "Please input your e-mail" }]}>
           <Input name="email" value={email} placeholder="E-mail" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
-        <Form.Item rules={[{ required: true, message: "Please input your password!" }]}>
+        <Form.Item name="password" rules={[{ required: true, message: "Please input your password!" }]}>
           <Input.Password name="password" value={password} placeholder="Password" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
-        <Form.Item rules={[{ required: true, message: "Please input your password!" }]}>
+        <Form.Item name="passwordCheck" rules={[{ required: true, message: "Please input your password!" }]}>
           <Input.Password name="passwordCheck" value={passwordCheck} placeholder="Re-type Password" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
@@ -66,4 +78,8 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(Register);
