@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, useRouteMatch } from "react-router-dom";
 
-const Toolbar = () => {
-  return <div className="toolbar"></div>;
+const Projects = () => {
+  return <div>Projects</div>;
 };
 
-export default Toolbar;
+export default Projects;
