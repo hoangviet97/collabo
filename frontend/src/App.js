@@ -21,11 +21,9 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <>
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
+          <Route path="/" component={Dashboard} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
         </>
       </Router>
     </Provider>
