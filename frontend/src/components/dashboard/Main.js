@@ -2,6 +2,7 @@ import React from "react";
 import Topbar from "./Topbar";
 import Toolbar from "./Toolbar";
 import MainContent from "./MainContent";
+import Toolbox from "./../toolbox/Toolbox";
 
 const Main = () => {
   return (
@@ -9,6 +10,7 @@ const Main = () => {
       <Topbar />
       <Toolbar />
       <MainContent />
+      <Toolbox />
     </div>
   );
 };

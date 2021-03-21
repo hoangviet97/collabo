@@ -95,6 +95,8 @@
 
 .main {
   margin-left: 70px;
+  background-color: khaki;
+  min-height: 100vh;
 }
 
 .topbar {
@@ -114,7 +116,7 @@
 }
 
 .main-content {
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(117, 98, 98);
   width: 100%;
   min-height: calc(100vh - 95px);
 }
@@ -124,4 +126,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+.toolbox {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
