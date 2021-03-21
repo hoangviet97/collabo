@@ -20,19 +20,13 @@ const Sidebar = () => {
       </div>
       <nav className="side-nav">
         <Link to="/">
-          <Tooltip placement="right" title="Home">
-            <HomeOutlined style={{ fontSize: "25px", color: "#383e42" }} />
-          </Tooltip>
+          <HomeOutlined style={{ fontSize: "25px", color: "#383e42" }} />
         </Link>
         <Link to="/projects">
-          <Tooltip placement="right" title="Projects">
-            <FolderOutlined style={{ fontSize: "25px", color: "#383e42" }} />
-          </Tooltip>
+          <FolderOutlined style={{ fontSize: "25px", color: "#383e42" }} />
         </Link>
         <Link to="/tasks">
-          <Tooltip placement="right" title="Tasks">
-            <CarryOutOutlined style={{ fontSize: "25px", color: "#383e42" }} />
-          </Tooltip>
+          <CarryOutOutlined style={{ fontSize: "25px", color: "#383e42" }} />
         </Link>
         <Link to="">
           <MessageOutlined style={{ fontSize: "25px", color: "#383e42" }} />

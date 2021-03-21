@@ -4,12 +4,10 @@ import Main from "./Main";
 
 const Dashboard = () => {
   return (
-    <>
-      <div className="dashboard">
-        <Sidebar />
-        <Main />
-      </div>
-    </>
+    <div className="dashboard">
+      <Sidebar />
+      <Main />
+    </div>
   );
 };
 
