@@ -4,6 +4,7 @@ import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const Topbar = (props) => {
+
   return (
     <div className="topbar">
       <div class="topbar-profile">
@@ -19,3 +20,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {})(Topbar);
+
