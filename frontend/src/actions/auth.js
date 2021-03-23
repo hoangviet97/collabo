@@ -7,7 +7,8 @@ export const loadUser = () => async (dispatch) => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
-      dispatch({ type: USER_LOADED });
+      const res = await axios.get("http://localhost:9000/api/profile");
+      dispatch({ type: USER_LOADED, payload: res.data[0] });
     }
   } catch (err) {
     dispatch({ type: AUTH_ERROR });

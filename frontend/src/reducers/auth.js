@@ -17,7 +17,7 @@ function authReducer(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: null
+        user: payload
       };
     case REGISTER_SUCCESS:
       return {

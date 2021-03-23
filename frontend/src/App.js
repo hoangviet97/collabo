@@ -20,11 +20,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <>
-          <Route path="/" component={Dashboard} />
+        <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-        </>
+          <Route path="/" component={Dashboard} />
+        </Switch>
       </Router>
     </Provider>
   );
