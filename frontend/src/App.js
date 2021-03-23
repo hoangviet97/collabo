@@ -11,7 +11,8 @@ import { useEffect } from "react";
 
 const App = () => {
   useEffect(() => {
-    if (localStorage.token) {
+    console.log("rendered!");
+    if (localStorage.getItem("token") !== null) {
       setAuthToken(localStorage.token);
     }
     store.dispatch(loadUser());

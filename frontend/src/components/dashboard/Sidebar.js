@@ -8,14 +8,14 @@ const Sidebar = () => {
   const text = <span>Title</span>;
   const content = (
     <div>
-      <p>Logout</p>
+      <Link to="/settings">My Settings</Link>
       <p>Content</p>
     </div>
   );
 
   return (
     <aside className="sidebar">
-      <div class="logo-box">
+      <div className="logo-box">
         <span className="logo">c.</span>
       </div>
       <nav className="side-nav">

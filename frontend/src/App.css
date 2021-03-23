@@ -107,18 +107,20 @@
   align-items: center;
   justify-content: flex-end;
   padding: 0 20px;
+  border-bottom: 0.5px solid rgb(228, 228, 228);
 }
 
 .toolbar {
-  background-color: rgb(161, 161, 161);
+  background-color: white;
   height: 35px;
   width: 100%;
+  border-bottom: 0.5px solid rgb(228, 228, 228);
 }
 
-.main-content {
-  background-color: rgb(117, 98, 98);
+.mainContent {
+  background-color: rgb(255, 255, 255);
   width: 100%;
-  min-height: calc(100vh - 95px);
+  min-height: calc(100vh - 60px);
 }
 
 .topbar-profile {

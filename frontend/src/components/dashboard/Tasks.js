@@ -1,8 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, useRouteMatch } from "react-router-dom";
+import Toolbar from "./Toolbar";
+import Container from "../utils/Container";
 
 const Tasks = () => {
-  return <div>Tasks</div>;
+  return (
+    <div>
+      <Toolbar />
+      <Container size="30">
+        <h2>Tasks</h2>
+      </Container>
+    </div>
+  );
 };
 
 export default Tasks;

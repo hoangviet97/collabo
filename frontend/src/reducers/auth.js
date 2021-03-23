@@ -32,8 +32,7 @@ function authReducer(state = initialState, action) {
         ...state,
         token: localStorage.getItem("token"),
         isAuthenticated: true,
-        loading: false,
-        user: null
+        loading: false
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:

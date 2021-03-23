@@ -6,7 +6,7 @@ module.exports = {
   create: function (req, res) {
     Member.createMember(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
-      res.json(result);
+      return res.json(result);
     });
   }
 };
