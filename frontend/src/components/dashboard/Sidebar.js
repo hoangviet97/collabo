@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Popover, Badge, Tooltip } from "antd";
+import { Popover, Badge } from "antd";
 
 import { SettingOutlined, BellOutlined, CarryOutOutlined, HomeOutlined, FolderOutlined, MessageOutlined } from "@ant-design/icons";
 
@@ -8,8 +8,14 @@ const Sidebar = () => {
   const text = <span>Title</span>;
   const content = (
     <div>
-      <Link to="/settings">My Settings</Link>
-      <p>Content</p>
+      <nav>
+        <li>
+          <Link to="/settings">My Settings</Link>
+        </li>
+        <li>
+          <Link to="/settings">Logout</Link>
+        </li>
+      </nav>
     </div>
   );
 

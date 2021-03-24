@@ -3,15 +3,22 @@ import { connect } from "react-redux";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const Topbar = ({ user }) => {
+const Topbar = (props) => {
   return (
     <div className="topbar">
-      <div className="topbar-profile">
+      <div class="topbar-profile">
         <Avatar size="large" icon={<UserOutlined />} />
-        <span></span>
+        <span>{!props.loading ? props.user.firstname : null}</span>
       </div>
     </div>
   );
 };
 
-export default Topbar;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    loading: state.auth.loading
+  };
+};
+
+export default connect(mapStateToProps, {})(Topbar);
