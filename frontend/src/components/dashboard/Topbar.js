@@ -6,7 +6,7 @@ import { UserOutlined } from "@ant-design/icons";
 const Topbar = ({ auth, user }) => {
   return (
     <div className="topbar">
-      <div className="topbar-profile">
+      <div class="topbar-profile">
         <Avatar size="large" icon={<UserOutlined />} />
         {auth.isAuthenticated && <span>{user.firstname}</span>}
       </div>

@@ -106,7 +106,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 20px;
+  padding: 0 30px;
   border-bottom: 0.5px solid rgb(228, 228, 228);
 }
 
@@ -133,5 +133,11 @@
 .toolbox {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 30px;
+}
+
+.no-project {
+  background-color: rgb(245, 245, 245);
+  padding: 80px;
+  text-align: center;
 }
