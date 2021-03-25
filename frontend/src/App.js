@@ -8,6 +8,7 @@ import store from "./store";
 import setAuthToken from "./helpers/setAuthToken";
 import { loadUser } from "./actions/auth";
 import { useEffect } from "react";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 const App = () => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const App = () => {
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route path="/" component={Dashboard} />
+          <ProtectedRoute path="/" component={Dashboard} />
         </Switch>
       </Router>
     </Provider>

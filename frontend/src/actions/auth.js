@@ -38,3 +38,7 @@ export const login = ({ email, password }) => async (dispatch) => {
     dispatch({ type: LOGIN_FAIL });
   }
 };
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
+};

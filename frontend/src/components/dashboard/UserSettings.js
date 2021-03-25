@@ -8,7 +8,7 @@ const UserSettings = () => {
     <div className="user-settings">
       <Container size="30">
         <h1>My Settings</h1>
-        <div class="user-settings-content">
+        <div className="user-settings-content">
           <Tabs defaultActiveKey="1">
             <TabPane tab="Appereances" key="1">
               Content of Tab Pane 1

@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import authReducer from "../../reducers/auth";
 
-const Topbar = ({ auth }) => {
+const Topbar = ({ auth, user }) => {
   return (
     <div className="topbar">
       <div className="topbar-profile">
         <Avatar size="large" icon={<UserOutlined />} />
-        {auth.isAuthenticated && <span>{auth.user.email}</span>}
+        {auth.isAuthenticated && <span>{user.firstname}</span>}
       </div>
     </div>
   );
@@ -17,7 +16,8 @@ const Topbar = ({ auth }) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    user: state.auth.user
   };
 };
 
