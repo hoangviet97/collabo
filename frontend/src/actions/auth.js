@@ -5,8 +5,8 @@ import { message } from "antd";
 
 export const loadUser = () => async (dispatch) => {
   try {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
     }
     const res = await axios.get("http://localhost:9000/api/profile");
     dispatch({ type: USER_LOADED, payload: res.data[0] });

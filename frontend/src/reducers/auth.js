@@ -30,13 +30,10 @@ function authReducer(state = initialState, action) {
       localStorage.setItem("token", payload);
       return {
         ...state,
-        token: localStorage.getItem("token"),
-        isAuthenticated: true,
-        loading: false
+        token: localStorage.getItem("token")
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
-    case AUTH_ERROR:
       localStorage.removeItem("token");
       return { ...state, token: null, isAuthenticated: false, loading: false, user: null };
     default:

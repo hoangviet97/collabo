@@ -1,17 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useSelector } from "react-redux";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import authReducer from "../../reducers/auth";
 
-const Topbar = ({ user }) => {
+const Topbar = ({ auth }) => {
   return (
     <div className="topbar">
       <div className="topbar-profile">
         <Avatar size="large" icon={<UserOutlined />} />
-        <span></span>
+        {auth.isAuthenticated && <span>{auth.user.email}</span>}
       </div>
     </div>
   );
 };
 
-export default Topbar;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(mapStateToProps, {})(Topbar);
