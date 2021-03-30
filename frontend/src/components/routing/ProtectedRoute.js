@@ -2,11 +2,12 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const ProtectedRoute = ({ component: Component, isAuthenticated, ...children }) => {
-  if (isAuthenticated === true) {
-    return <Route {...children} render={(props) => <Component {...props} />} />;
+const ProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) => {
+  if (isAuthenticated === false) {
+    return <Redirect to="/login" />;
+  } else {
+    return <Component {...rest} />;
   }
-  return <Redirect to="login" />;
 };
 
 const mapStateToProps = (state) => ({
