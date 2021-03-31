@@ -1,10 +1,20 @@
 import React from "react";
 import Toolbar from "./Toolbar";
 import Container from "../utils/Container";
-import NoContent from "./noContent/NoContent";
+import { Button } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Projects = () => {
-  let content = <NoContent type="project" />;
+  let content = (
+    <div className="no-content">
+      <InboxOutlined style={{ fontSize: "50px", color: "grey" }} />
+      <h2>There're no project for you</h2>
+      <Button type="primary">
+        <Link to="/projects/new">Create your first project</Link>
+      </Button>
+    </div>
+  );
 
   return (
     <div>
