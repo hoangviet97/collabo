@@ -1,7 +1,6 @@
 const User = require("../model/User");
 const { registerValidation, loginValidation } = require("../validation/auth");
 const apiResponse = require("../helpers/apiResponse");
-const con = require("../config/db");
 
 module.exports = {
   // register new user
@@ -12,7 +11,7 @@ module.exports = {
 
     User.createUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
-      res.json(result);
+      return res.json(result);
     });
   },
 
@@ -24,7 +23,7 @@ module.exports = {
 
     User.loginUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
-      res.json(result);
+      return res.json(result);
     });
   }
 };

@@ -5,10 +5,11 @@ import { message } from "antd";
 
 export const loadUser = () => async (dispatch) => {
   try {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-      dispatch({ type: USER_LOADED });
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
     }
+    const res = await axios.get("http://localhost:9000/api/profile");
+    dispatch({ type: USER_LOADED, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: AUTH_ERROR });
   }
@@ -33,6 +34,11 @@ export const login = ({ email, password }) => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
+    message.error("failed");
     dispatch({ type: LOGIN_FAIL });
   }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

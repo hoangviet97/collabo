@@ -70,7 +70,7 @@ const Register = (props) => {
 
         <div className="form-auth-footer">
           <p>
-            Already have an account? <Link to="/"> Login</Link>
+            Already have an account? <Link to="/login"> Login</Link>
           </p>
         </div>
       </Form>
