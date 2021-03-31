@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
 
-const Login = () => {
+const Login = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const { email, password } = formData;
 
+  // Controlled input
   const changeHandler = (e) => {
     setFormData({
       ...formData,
@@ -14,9 +17,14 @@ const Login = () => {
     });
   };
 
+  // Send auth data to redux action
   const submitHandler = () => {
-    console.log(formData);
+    props.login({ email, password });
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="base-wrapper">
@@ -32,6 +40,7 @@ const Login = () => {
           rules={[
             {
               required: true,
+              type: "email",
               message: "Please input your e-mail"
             }
           ]}
@@ -67,4 +76,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

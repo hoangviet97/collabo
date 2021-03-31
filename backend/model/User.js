@@ -28,8 +28,7 @@ module.exports = {
         return;
       }
 
-      console.log(res);
-      result(null, res);
+      result(null, "Success...");
       return;
     });
   },
@@ -59,6 +58,21 @@ module.exports = {
           return;
         });
       });
+    });
+  },
+
+  getUser: function (id, result) {
+    const sql = `SELECT id, email, firstname, lastname, created_at FROM users WHERE id = '${id}'`;
+    con.query(sql, async (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      console.log(id);
+      result(null, res);
+      return;
     });
   }
 };
