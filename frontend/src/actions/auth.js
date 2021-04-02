@@ -2,6 +2,7 @@ import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USE
 import axios from "axios";
 import setAuthToken from "../helpers/setAuthToken";
 import { message } from "antd";
+import history from "../helpers/history";
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -20,6 +21,7 @@ export const register = ({ firstname, lastname, email, password }) => async (dis
     const res = await axios.post("http://localhost:9000/api/register", { firstname, lastname, email, password });
     console.log(res.data);
     dispatch({ type: REGISTER_SUCCESS, payload: res });
+    history.push("/login");
     message.success("Registration Success!");
   } catch (err) {
     //console.log(err.response.data.message);

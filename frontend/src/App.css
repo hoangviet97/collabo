@@ -153,14 +153,29 @@
 .new-project {
   width: 100%;
   height: 100vh;
-  background-color: lightcoral;
   position: absolute;
   z-index: 9999;
   top: 0;
+  display: flex;
 }
 
 .new-project__close {
   position: absolute;
   top: 20px;
   right: 30px;
+  color: white;
+}
+
+.new-project__content {
+  width: 70%;
+  height: 100vh;
+  background-color: white;
+  position: relative;
+}
+
+.new-project__bg {
+  background-image: linear-gradient(rgba(255, 127, 80, 0.788), rgba(255, 127, 80, 0.712)), url("./img/new_project.jpg");
+  background-size: cover;
+  width: 30%;
+  height: 100vh;
 }
