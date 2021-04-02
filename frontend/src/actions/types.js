@@ -5,5 +5,5 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGOUT = "LOGOUT";
-export const SHOW_PROJECT_FORM = "SHOW_PROJECT_FORM";
-export const CLOSE_PROJECT_FORM = "CLOSE_PROJECT_FORM";
+export const CREATE_PROJECT = "CREATE_PROJECT";
+export const CREATE_PROJECT_FAIL = "CREATE_PROJECT_FAIL";
