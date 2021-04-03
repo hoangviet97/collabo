@@ -7,3 +7,5 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGOUT = "LOGOUT";
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const CREATE_PROJECT_FAIL = "CREATE_PROJECT_FAIL";
+export const GET_PROJECTS = "GET_PROJECTS";
+export const LOAD_PROJECTS_FAIL = "LOAD_PROJECTS_FAIL";

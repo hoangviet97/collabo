@@ -26,7 +26,7 @@ module.exports = {
   },
 
   getAllProjects: function (userId, result) {
-    const sql = `SELECT projects.name, projects.description FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
+    const sql = `SELECT projects.id, projects.name, projects.description FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
     con.query(sql, [userId], (err, res) => {
       if (err) {
         result(err, null);
