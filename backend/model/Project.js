@@ -1,10 +1,13 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const randomInt = require("random-int");
 
 module.exports = {
   createProject: async function (data, result) {
+    let randId = randomInt(10000000, 99999999);
+
     const newProject = {
-      id: uuid4(),
+      id: randId,
       name: data.name,
       description: data.description,
       created_at: new Date()

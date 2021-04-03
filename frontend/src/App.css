@@ -105,7 +105,6 @@
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   padding: 0 30px;
   border-bottom: 0.5px solid rgb(228, 228, 228);
 }
@@ -128,6 +127,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  justify-self: end;
 }
 
 .toolbox {
@@ -181,4 +181,21 @@
   background-size: cover;
   width: 30%;
   height: 100vh;
+}
+
+.project-navigation {
+  display: flex;
+}
+
+.project-nav {
+  list-style-type: none;
+  display: flex;
+}
+
+.project-nav-link {
+  padding: 0 10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
