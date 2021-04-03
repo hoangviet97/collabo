@@ -13,6 +13,10 @@ const MainContent = () => {
         <Route path="/tasks" component={Tasks} />
         <Route path="/settings" component={UserSettings} />
         <Route exact path="/:id/tasks" component={ProjectTasks} />
+        <Route exact path="/:id/chat" component={ProjectTasks} />
+        <Route exact path="/:id/overview" component={ProjectTasks} />
+        <Route exact path="/:id/calendar" component={ProjectTasks} />
+        <Route exact path="/:id/board" component={ProjectTasks} />
         <Route path="/:id" component={ProjectTasks} />
       </Switch>
     </div>

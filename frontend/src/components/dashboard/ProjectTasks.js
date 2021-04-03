@@ -1,11 +1,12 @@
-import React, { useParams } from "react";
+import React from "react";
 import Toolbar from "./Toolbar";
+import Container from "../utils/Container";
 
 const ProjectTasks = (props) => {
   return (
     <div className="project-tasks">
       <Toolbar />
-      <h2>Tasks {props.match.params.id}</h2>
+      <Container size="30">My tasks</Container>
     </div>
   );
 };
