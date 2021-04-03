@@ -1,44 +1,51 @@
 import React from "react";
 import { Avatar } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined } from "@ant-design/icons";
+import { ThunderboltOutlined, CalendarOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const ProjectNavigation = () => {
   return (
     <div className="project-navigation">
-      <Avatar shape="square" size={45} icon={<ThunderboltOutlined />} />
-      <ul className="project-nav">
+      <div className="project-nav-icon">
+        <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
+      </div>
+      <nav className="project-nav">
         <li className="project-nav-item">
           <Link className="project-nav-link" to="">
-            <LayoutOutlined />
+            <LayoutOutlined style={{ color: "grey" }} />
             <span>Overview</span>
           </Link>
         </li>
         <li className="project-nav-item">
           <Link className="project-nav-link" to="">
-            <BarsOutlined />
+            <BarsOutlined style={{ color: "grey" }} />
             <span>Tasks</span>
           </Link>
         </li>
         <li className="project-nav-item">
           <Link className="project-nav-link" to="">
-            <ProjectOutlined />
+            <ProjectOutlined style={{ color: "grey" }} />
             <span>Board</span>
           </Link>
         </li>
         <li className="project-nav-item">
           <Link className="project-nav-link" to="">
-            <CalendarOutlined />
+            <CalendarOutlined style={{ color: "grey" }} />
             <span>Calendar</span>
           </Link>
         </li>
         <li className="project-nav-item">
           <Link className="project-nav-link" to="">
-            <NumberOutlined />
+            <NumberOutlined style={{ color: "grey" }} />
             <span>Chat</span>
           </Link>
         </li>
-      </ul>
+        <li className="project-nav-item">
+          <Link className="project-nav-link" to="">
+            <EllipsisOutlined style={{ color: "black", fontSize: "25px" }} />
+          </Link>
+        </li>
+      </nav>
     </div>
   );
 };
