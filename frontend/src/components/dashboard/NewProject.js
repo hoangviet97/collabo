@@ -19,8 +19,8 @@ const NewProject = (props) => {
 
   return (
     <div className="new-project">
-      <div class="new-project__content">
-        <div class="new-project__form">
+      <div className="new-project__content">
+        <div className="new-project__form">
           <Form layout="vertical">
             <Form.Item label="Choose your project name">
               <Input value={name} onChange={(e) => changeHandler(e)} placeholder="input placeholder" />
@@ -32,11 +32,11 @@ const NewProject = (props) => {
             </Form.Item>
           </Form>
         </div>
-        <div class="new-project__close">
+        <div className="new-project__close">
           <Link to="/projects">Cancel</Link>
         </div>
       </div>
-      <div class="new-project__bg"></div>
+      <div className="new-project__bg"></div>
     </div>
   );
 };

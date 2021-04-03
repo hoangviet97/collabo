@@ -3,7 +3,7 @@ import Toolbar from "./Toolbar";
 import Container from "../utils/Container";
 import { Button, Card } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../actions/project";
 
@@ -56,4 +56,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProjects })(Projects);
+export default connect(mapStateToProps, { getProjects })(withRouter(Projects));

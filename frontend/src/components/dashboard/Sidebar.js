@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Popover, Badge } from "antd";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -48,4 +48,4 @@ const Sidebar = (props) => {
   );
 };
 
-export default connect(null, { logout })(Sidebar);
+export default connect(null, { logout })(withRouter(Sidebar));
