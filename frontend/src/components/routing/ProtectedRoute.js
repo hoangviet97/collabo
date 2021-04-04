@@ -1,6 +1,7 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import history from "../../helpers/history";
 
 const ProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) => {
   if (isAuthenticated === false) {
@@ -14,4 +15,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {})(ProtectedRoute);
+export default connect(mapStateToProps, {})(withRouter(ProtectedRoute));

@@ -36,5 +36,17 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  getProject: function (projectId, result) {
+    const sql = `SELECT * FROM projects WHERE id = ?`;
+    con.query(sql, [projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
   }
 };

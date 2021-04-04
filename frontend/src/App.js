@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <Router>
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />

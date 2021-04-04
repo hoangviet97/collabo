@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import Projects from "./Projects";
 import Tasks from "./Tasks";
@@ -9,7 +9,7 @@ import Overview from "./Overview";
 import Board from "./Board";
 import Calendar from "./Calendar";
 
-const MainContent = () => {
+const MainContent = (props) => {
   return (
     <div className="mainContent">
       <Switch>

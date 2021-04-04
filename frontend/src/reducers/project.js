@@ -1,8 +1,9 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL } from "../actions/types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT } from "../actions/types";
 
 const initialState = {
   inProject: false,
-  projects: null
+  projects: null,
+  project: null
 };
 
 function projectReducer(state = initialState, action) {
@@ -29,6 +30,16 @@ function projectReducer(state = initialState, action) {
       return {
         ...state,
         projects: null
+      };
+    case GET_SINGLE_PROJECT:
+      return {
+        ...state,
+        project: payload
+      };
+    case ERROR_SINGLE_PROJECT:
+      return {
+        ...state,
+        project: null
       };
     default:
       return state;

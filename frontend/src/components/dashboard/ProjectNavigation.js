@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Popover } from "antd";
 import { ThunderboltOutlined, CalendarOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const ProjectNavigation = () => {
   let path = window.location.pathname;
@@ -18,7 +19,7 @@ const ProjectNavigation = () => {
       <div className="project-nav-icon">
         <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
       </div>
-      <div>name fefoee</div>
+      <div></div>
       <nav className="project-nav">
         <li className="project-nav-item">
           <Link className="project-nav-link" to={`/${path.split("/")[1]}/overview`}>

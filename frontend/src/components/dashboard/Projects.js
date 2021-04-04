@@ -20,11 +20,10 @@ const Projects = (props) => {
     history.push(path);
   };
 
-  let noContent;
-  let projectList;
+  let content;
 
   if (props.projects > 0 || props.projects !== null) {
-    projectList = props.projects.map((project) => {
+    content = props.projects.map((project) => {
       return (
         <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
           {project.name}
@@ -32,7 +31,7 @@ const Projects = (props) => {
       );
     });
   } else {
-    noContent = (
+    content = (
       <div className="no-content">
         <InboxOutlined style={{ fontSize: "50px", color: "grey" }} />
         <h2>There're no project for you</h2>
@@ -46,7 +45,7 @@ const Projects = (props) => {
   return (
     <div>
       <Toolbar />
-      <Container size="30">{props.projects > 0 || props.projects !== null ? <div className="project-list">{projectList}</div> : <div>{noContent}</div>}</Container>
+      <Container size="30">{props.projects > 0 || props.projects !== null ? <div className="project-list">{content}</div> : <div>{content}</div>}</Container>
     </div>
   );
 };
