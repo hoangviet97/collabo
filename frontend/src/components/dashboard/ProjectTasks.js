@@ -3,6 +3,7 @@ import Toolbar from "./Toolbar";
 import Container from "../utils/Container";
 import { connect } from "react-redux";
 import { getProject } from "../../actions/project";
+import { withRouter } from "react-router-dom";
 
 const ProjectTasks = (props) => {
   let path = window.location.pathname;
@@ -20,4 +21,4 @@ const ProjectTasks = (props) => {
   );
 };
 
-export default connect(null, { getProject })(ProjectTasks);
+export default withRouter(connect(null, { getProject })(ProjectTasks));

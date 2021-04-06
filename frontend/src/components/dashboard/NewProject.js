@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/project";
@@ -14,7 +14,8 @@ const NewProject = (props) => {
   };
 
   const submitHandler = (e) => {
-    props.createProject({ name });
+    const { push } = props.history;
+    props.createProject({ name, push });
   };
 
   return (
@@ -41,4 +42,4 @@ const NewProject = (props) => {
   );
 };
 
-export default connect(null, { createProject })(NewProject);
+export default withRouter(connect(null, { createProject })(NewProject));

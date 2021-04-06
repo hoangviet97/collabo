@@ -223,3 +223,7 @@
 .project-card:hover {
   transform: translate(0, -5px);
 }
+
+.spinner-container {
+  background-color: white;
+}

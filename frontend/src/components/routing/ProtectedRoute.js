@@ -1,18 +1,20 @@
 import React from "react";
-import { Route, Redirect, withRouter } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import history from "../../helpers/history";
+import Spinner from "../utils/Spinner";
 
-const ProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) => {
-  if (isAuthenticated === false) {
+const ProtectedRoute = ({ component: Component, isAuthenticated, loading, ...rest }) => {
+  console.log(isAuthenticated);
+  if (!localStorage.token || localStorage.token === null) {
     return <Redirect to="/login" />;
   } else {
-    return <Component {...rest} />;
+    return <Route {...rest} render={(props) => (isAuthenticated === false ? <Spinner /> : <Component {...props} />)} />;
   }
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading
 });
 
-export default connect(mapStateToProps, {})(withRouter(ProtectedRoute));
+export default connect(mapStateToProps, {})(ProtectedRoute);

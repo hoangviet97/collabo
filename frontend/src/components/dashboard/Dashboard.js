@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import NewProject from "./NewProject";
+import { connect } from "react-redux";
 
 const Dashboard = () => {
   return (
@@ -10,12 +11,14 @@ const Dashboard = () => {
       <div className="dashboard">
         <Sidebar />
         <Main />
-        <Switch>
-          <Route path="/projects/new" component={NewProject} />
-        </Switch>
+        <Route path="/projects/new" component={NewProject} />
       </div>
     </>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {})(Dashboard);

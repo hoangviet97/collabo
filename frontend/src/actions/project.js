@@ -1,14 +1,13 @@
 import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT } from "./types";
 import axios from "axios";
 import { message } from "antd";
-import history from "../helpers/history";
 import setAuthToken from "../helpers/setAuthToken";
 
-export const createProject = ({ name }) => async (dispatch) => {
+export const createProject = ({ name, push }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/projects/add", { name });
     dispatch({ type: CREATE_PROJECT });
-    history.push(`/${res.data}/tasks`);
+    push(`/${res.data}/tasks`);
     message.success("Project " + name + " was successfully created");
   } catch (err) {
     dispatch({ type: CREATE_PROJECT_FAIL });
