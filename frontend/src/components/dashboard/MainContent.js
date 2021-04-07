@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Projects from "./Projects";
 import Tasks from "./Tasks";
 import UserSettings from "./UserSettings";

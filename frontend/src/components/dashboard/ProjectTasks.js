@@ -1,24 +1,26 @@
 import React, { useEffect } from "react";
 import Toolbar from "./Toolbar";
 import Container from "../utils/Container";
-import { connect } from "react-redux";
 import { getProject } from "../../actions/project";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { Skeleton } from "antd";
 
 const ProjectTasks = (props) => {
-  let path = window.location.pathname;
-  let val = path.split("/")[1];
-
   useEffect(() => {
-    props.getProject(val);
+    props.getProject(props.match.params.id);
   }, []);
 
   return (
     <div className="project-tasks">
       <Toolbar />
-      <Container size="30"></Container>
+      <Container size="30">Tasks</Container>
     </div>
   );
 };
 
-export default withRouter(connect(null, { getProject })(ProjectTasks));
+const mapStateToProps = (state) => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps, { getProject })(withRouter(ProjectTasks));

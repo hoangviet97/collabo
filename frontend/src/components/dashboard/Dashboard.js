@@ -3,9 +3,8 @@ import Sidebar from "./Sidebar";
 import Main from "./Main";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NewProject from "./NewProject";
-import { connect } from "react-redux";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   return (
     <>
       <div className="dashboard">
@@ -17,8 +16,4 @@ const Dashboard = () => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, {})(Dashboard);
+export default Dashboard;

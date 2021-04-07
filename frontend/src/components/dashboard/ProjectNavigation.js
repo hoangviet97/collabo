@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Popover } from "antd";
 import { ThunderboltOutlined, CalendarOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const ProjectNavigation = () => {
-  let path = window.location.pathname;
-
+const ProjectNavigation = (props) => {
   const moreContent = (
     <div>
       <p>Content</p>
@@ -14,12 +12,14 @@ const ProjectNavigation = () => {
     </div>
   );
 
+  let path = window.location.pathname;
+
   return (
     <div className="project-navigation">
       <div className="project-nav-icon">
         <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
       </div>
-      <div></div>
+      <div>{props.project.currentProject.name}</div>
       <nav className="project-nav">
         <li className="project-nav-item">
           <Link className="project-nav-link" to={`/${path.split("/")[1]}/overview`}>
@@ -63,4 +63,8 @@ const ProjectNavigation = () => {
   );
 };
 
-export default ProjectNavigation;
+const mapStateToProps = (state) => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps)(ProjectNavigation);

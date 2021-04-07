@@ -2,7 +2,6 @@ import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USE
 import axios from "axios";
 import setAuthToken from "../helpers/setAuthToken";
 import { message } from "antd";
-import history from "../helpers/history";
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -13,6 +12,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: USER_LOADED, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: AUTH_ERROR });
+    console.log(err);
   }
 };
 

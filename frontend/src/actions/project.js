@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT } from "./types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING } from "./types";
 import axios from "axios";
 import { message } from "antd";
 import setAuthToken from "../helpers/setAuthToken";
@@ -31,10 +31,16 @@ export const getProject = (id) => async (dispatch) => {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
+    dispatch(setProjectLoading());
     const res = await axios.post("http://localhost:9000/api/projects/single", { id: id });
-    console.log(res);
+    dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: ERROR_SINGLE_PROJECT });
-    console.log(err);
   }
+};
+
+export const setProjectLoading = () => {
+  return {
+    type: PROJECT_LOADING
+  };
 };

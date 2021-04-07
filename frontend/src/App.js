@@ -16,9 +16,6 @@ const App = () => {
       setAuthToken(localStorage.token);
     }
     store.dispatch(loadUser());
-    window.addEventListener("storage", () => {
-      if (!localStorage.token) store.dispatch(logout());
-    });
   }, []);
 
   return (

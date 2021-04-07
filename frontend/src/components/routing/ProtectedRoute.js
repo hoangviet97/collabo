@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Spinner from "../utils/Spinner";
 
 const ProtectedRoute = ({ component: Component, isAuthenticated, loading, ...rest }) => {
-  console.log(isAuthenticated);
   if (!localStorage.token || localStorage.token === null) {
     return <Redirect to="/login" />;
   } else {

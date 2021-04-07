@@ -45,7 +45,18 @@ const Projects = (props) => {
   return (
     <div>
       <Toolbar />
-      <Container size="30">{props.projects > 0 || props.projects !== null ? <div className="project-list">{content}</div> : <div>{content}</div>}</Container>
+      <Container size="30">
+        {props.projects > 0 || props.projects !== null ? (
+          <div className="project-list">
+            {content}
+            <Link to="/projects/new">
+              <Button>Create new project</Button>
+            </Link>
+          </div>
+        ) : (
+          <div>{content}</div>
+        )}
+      </Container>
     </div>
   );
 };

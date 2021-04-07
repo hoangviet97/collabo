@@ -1,9 +1,9 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT } from "../actions/types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING } from "../actions/types";
 
 const initialState = {
-  inProject: false,
+  loading: false,
   projects: null,
-  project: null
+  currentProject: []
 };
 
 function projectReducer(state = initialState, action) {
@@ -13,8 +13,7 @@ function projectReducer(state = initialState, action) {
     // runs everytime when main component re-render
     case CREATE_PROJECT:
       return {
-        ...state,
-        inProject: true
+        ...state
       };
     case CREATE_PROJECT_FAIL:
       return {
@@ -34,12 +33,18 @@ function projectReducer(state = initialState, action) {
     case GET_SINGLE_PROJECT:
       return {
         ...state,
-        project: payload
+        currentProject: payload,
+        loading: false
       };
     case ERROR_SINGLE_PROJECT:
       return {
         ...state,
-        project: null
+        currentProject: null
+      };
+    case PROJECT_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;
