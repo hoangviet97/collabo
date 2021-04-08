@@ -1,25 +1,58 @@
 import React, { useEffect } from "react";
 import { Avatar, Popover } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { ThunderboltOutlined, CalendarOutlined, InfoCircleOutlined, TagOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const ProjectNavigation = (props) => {
+  let path = window.location.pathname;
+
   const moreContent = (
     <div>
-      <p>Content</p>
-      <p>Content</p>
+      <p>
+        <Link to={`/${path.split("/")[1]}/members`}>
+          <TeamOutlined style={{ color: "grey" }} />
+          <span>Project Members</span>
+        </Link>
+      </p>
+      <p>
+        <Link to={`/${path.split("/")[1]}/tags`}>
+          <TagOutlined style={{ color: "grey" }} />
+          <span>Tags</span>
+        </Link>
+      </p>
+      <p>
+        <Link to={`/${path.split("/")[1]}/documents`}>
+          <FileTextOutlined style={{ color: "grey" }} />
+          <span>Docs</span>
+        </Link>
+      </p>
+      <p>
+        <Link to={`/${path.split("/")[1]}/documents`}>
+          <FileTextOutlined style={{ color: "grey" }} />
+          <span>Project Management</span>
+        </Link>
+      </p>
+      <p>
+        <Link to={`/${path.split("/")[1]}/documents`}>
+          <FileTextOutlined style={{ color: "grey" }} />
+          <span>Report</span>
+        </Link>
+      </p>
     </div>
   );
 
-  let path = window.location.pathname;
-
   return (
     <div className="project-navigation">
-      <div className="project-nav-icon">
-        <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
+      <div class="project-nav-identity">
+        <div className="project-nav-icon">
+          <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
+        </div>
+        <div className="project-nav-title">
+          <span>{props.project.currentProject.name}</span>
+          <a className="project-nav-title__detail">Details</a>
+        </div>
       </div>
-      <div>{props.project.currentProject.name}</div>
       <nav className="project-nav">
         <li className="project-nav-item">
           <Link className="project-nav-link" to={`/${path.split("/")[1]}/overview`}>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { connect } from "react-redux";
-import { createProject } from "../../actions/project";
+import { createProject } from "../../../actions/project";
 
 const NewProject = (props) => {
   const [projectName, setProjectName] = useState({ name: "" });

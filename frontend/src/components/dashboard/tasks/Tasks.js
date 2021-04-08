@@ -1,6 +1,6 @@
 import React from "react";
-import Toolbar from "./Toolbar";
-import Container from "../utils/Container";
+import Toolbar from "../Toolbar";
+import Container from "../../utils/Container";
 import { Button } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 

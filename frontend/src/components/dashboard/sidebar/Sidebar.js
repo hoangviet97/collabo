@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Popover, Badge } from "antd";
 import { connect } from "react-redux";
-import { logout } from "../../actions/auth";
+import { logout } from "../../../actions/auth";
 
 import { SettingOutlined, BellOutlined, CarryOutOutlined, HomeOutlined, FolderOutlined, MessageOutlined } from "@ant-design/icons";
 
@@ -34,9 +34,7 @@ const Sidebar = (props) => {
           <MessageOutlined style={{ fontSize: "25px", color: "#383e42" }} />
         </Link>
         <Link to="">
-          <Badge count={899}>
-            <BellOutlined style={{ fontSize: "25px", color: "#383e42" }} />
-          </Badge>
+          <BellOutlined style={{ fontSize: "25px", color: "#383e42" }} />
         </Link>
       </nav>
       <div className="side-profile">
@@ -48,4 +46,4 @@ const Sidebar = (props) => {
   );
 };
 
-export default connect(null, { logout })(withRouter(Sidebar));
+export default connect(null, { logout })(Sidebar);

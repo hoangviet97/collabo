@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Toolbar from "./Toolbar";
-import Container from "../utils/Container";
+import Toolbar from "../Toolbar";
+import Container from "../../utils/Container";
 import { Button, Card } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProjects } from "../../actions/project";
+import { getProjects } from "../../../actions/project";
 
 const Projects = (props) => {
   useEffect(() => {

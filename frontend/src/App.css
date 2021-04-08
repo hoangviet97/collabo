@@ -227,3 +227,28 @@
 .spinner-container {
   background-color: white;
 }
+
+.new-section {
+  position: relative;
+  width: 50%;
+}
+
+.project-nav-title {
+  height: 40px;
+  padding-left: 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-nav-icon {
+  display: flex;
+  align-items: center;
+}
+
+.project-nav-identity {
+  display: flex;
+}
+
+.project-nav-title__detail {
+  font-size: 12px;
+}

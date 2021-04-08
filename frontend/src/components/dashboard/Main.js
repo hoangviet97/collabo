@@ -1,5 +1,5 @@
 import React from "react";
-import Topbar from "./Topbar";
+import Topbar from "./topbar/Topbar";
 import MainContent from "./MainContent";
 import Toolbox from "./../toolbox/Toolbox";
 
