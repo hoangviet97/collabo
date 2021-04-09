@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
-import { getProject } from "../../../actions/project";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { Button, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import TaskModal from "../../modal/TaskModal";
 
 const ProjectTasks = () => {
   return (

@@ -19,6 +19,7 @@ export const getProjects = () => async (dispatch) => {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
+    dispatch(setProjectLoading());
     const res = await axios.get("http://localhost:9000/api/projects");
     dispatch({ type: GET_PROJECTS, payload: res.data });
   } catch (err) {
