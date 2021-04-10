@@ -252,3 +252,8 @@
 .project-nav-title__detail {
   font-size: 12px;
 }
+
+.task-modal-hord {
+  display: flex;
+  gap: 20px;
+}

@@ -21,5 +21,18 @@ module.exports = {
       result(null, projectId);
       return;
     });
+  },
+
+  getAllMembers: async function (projectId, result) {
+    const sql = `SELECT users.firstname, users.lastname, members.roles_id FROM members INNER JOIN users ON members.users_id = users.id WHERE projects_id = ?`;
+    con.query(sql, [projectId.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };
