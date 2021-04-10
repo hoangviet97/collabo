@@ -2,7 +2,7 @@ import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, 
 
 const initialState = {
   loading: false,
-  projects: null,
+  projects: [],
   currentProject: []
 };
 
