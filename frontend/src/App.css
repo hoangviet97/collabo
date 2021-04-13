@@ -6,6 +6,15 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+span {
+  padding: 0;
+  margin: 0;
+}
+
 .auth-header {
   text-align: center;
   padding-top: 30px;
@@ -256,4 +265,27 @@
 .task-modal-hord {
   display: flex;
   gap: 20px;
+}
+
+.chat-header {
+  background-color: white;
+  border-bottom: 0.5px solid rgb(228, 228, 228);
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+}
+
+.member-list {
+  width: 100%;
+}
+
+.member-list-item {
+  background-color: white;
+  padding: 8px 20px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.member-item-name {
+  margin-left: 15px;
+  font-size: 15px;
 }

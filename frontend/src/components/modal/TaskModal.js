@@ -48,9 +48,12 @@ const TaskModal = (props) => {
 
             <Form.Item name="select" hasFeedback rules={[{ required: true, message: "Please select your country!" }]}>
               <Select placeholder="Select a project">
-                {props.projects && props.projects.map((project) => <Option value={project.id}>{project.name}</Option>)}
-                <Option value="china">China</Option>
-                <Option value="usa">U.S.A</Option>
+                {props.projects &&
+                  props.projects.map((project) => (
+                    <Option value={project.id} key={project.id}>
+                      {project.name}
+                    </Option>
+                  ))}
               </Select>
             </Form.Item>
 
@@ -58,7 +61,7 @@ const TaskModal = (props) => {
               <RangePicker format="YYYY-MM-DD HH:mm" style={{ width: "100%" }} />
             </Form.Item>
 
-            <Form.Item name="password">
+            <Form.Item>
               <TextArea rows={3} placeholder="Description" />
             </Form.Item>
           </Form>
