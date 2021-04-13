@@ -18,7 +18,7 @@ module.exports = {
         return;
       }
 
-      result(null, "Member created");
+      result(null, projectId);
       return;
     });
   }

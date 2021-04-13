@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
-import Container from "../utils/Container";
+import Container from "../../utils/Container";
 
 const UserSettings = () => {
   const { TabPane } = Tabs;
