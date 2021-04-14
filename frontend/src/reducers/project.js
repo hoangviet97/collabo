@@ -23,7 +23,8 @@ function projectReducer(state = initialState, action) {
     case GET_PROJECTS:
       return {
         ...state,
-        projects: payload
+        projects: payload,
+        loading: false
       };
     case LOAD_PROJECTS_FAIL:
       return {
