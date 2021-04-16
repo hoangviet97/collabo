@@ -24,5 +24,5 @@ app.use("/api", authRoutes);
 app.use("/api/projects", projectRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}...`);
+  console.log(`Server is running on port ${PORT}...${process.env.DB_NAME}`);
 });

@@ -6,7 +6,6 @@ import { InboxOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
-import Spinner from "../../utils/Spinner";
 
 const Projects = (props) => {
   useEffect(() => {
@@ -23,44 +22,39 @@ const Projects = (props) => {
 
   let content;
 
-  if (props.loading === true) {
-    content = <Spinner />;
-  } else {
-    if (props.projects > 0 || props.projects !== null) {
-      content = props.projects.map((project) => {
-        return (
+  if (props.projects.length > 0) {
+    content = props.projects.map((project) => {
+      return (
+        <div className="project-list">
           <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
             {project.name}
           </Card>
-        );
-      });
-    } else {
-      content = (
-        <div className="no-content">
-          <InboxOutlined style={{ fontSize: "50px", color: "grey" }} />
-          <h2>There're no project for you</h2>
-          <Button type="primary">
-            <Link to="/projects/new">Create your first project</Link>
-          </Button>
         </div>
       );
-    }
+    });
+  } else {
+    content = (
+      <div className="no-content">
+        <InboxOutlined style={{ fontSize: "50px", color: "grey" }} />
+        <h2>There're no project for you</h2>
+        <Button type="primary">
+          <Link to="/projects/new">Create your first project</Link>
+        </Button>
+      </div>
+    );
   }
 
   return (
     <div>
       <Toolbar />
-      <Container size="30">
-        <div class="project-list">{content}</div>
-      </Container>
+      <Container size="30">{content}</Container>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   projects: state.project.projects,
-  auth: state.auth,
-  loading: state.project.loading
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getProjects })(withRouter(Projects));

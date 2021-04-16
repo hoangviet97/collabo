@@ -23,6 +23,7 @@ module.exports = {
 
     User.loginUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
+      console.log(req.body);
       return res.json(result);
     });
   }

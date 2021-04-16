@@ -14,7 +14,7 @@ const TaskModal = (props) => {
 
   return (
     <div className="modal">
-      <Modal title="Basic Modal" visible={props.isVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal width={550} title="Basic Modal" bodyStyle={{ overflowY: "scroll", height: "300px" }} visible={props.isVisible} onOk={handleOk} onCancel={handleCancel}>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
