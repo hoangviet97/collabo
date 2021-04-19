@@ -52,7 +52,7 @@ const TaskModal = (props) => {
             </Row>
           </Form.Item>
           <Form.Item name="project">
-            <Select style={{ width: "100%" }}>
+            <Select placeholder="Select project" style={{ width: "100%" }}>
               {props.projects.map((project, index) => (
                 <Option key={index} value={project.id}>
                   {project.name}
@@ -61,7 +61,7 @@ const TaskModal = (props) => {
             </Select>
           </Form.Item>
           <Form.Item name="section">
-            <Select style={{ width: "100%" }}>
+            <Select placeholder="Select section" style={{ width: "100%" }}>
               <Option value="jack">Jack</Option>
               <Option value="lucy">Lucy</Option>
               <Option value="Yiminghe">yiminghe</Option>

@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/api/auth");
 const projectRoutes = require("./routes/api/projects");
 const memberRoutes = require("./routes/api/members");
+const sectionRoutes = require("./routes/api/sections");
 
 require("dotenv").config();
 
@@ -24,6 +25,7 @@ connection.connect(function (err) {
 app.use("/api", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/members", memberRoutes);
+app.use("/api/sections", sectionRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}...${process.env.DB_NAME}`);
