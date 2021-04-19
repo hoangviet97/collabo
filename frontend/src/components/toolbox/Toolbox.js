@@ -2,10 +2,12 @@ import React from "react";
 import { Button } from "antd";
 import { connect } from "react-redux";
 import { showTaskModal } from "../../actions/modal";
+import { getProjects } from "../../actions/project";
 
 const Toolbox = (props) => {
   const taskModalHandler = () => {
     props.showTaskModal();
+    props.getProjects();
   };
 
   return (
@@ -17,4 +19,4 @@ const Toolbox = (props) => {
   );
 };
 
-export default connect(null, { showTaskModal })(Toolbox);
+export default connect(null, { showTaskModal, getProjects })(Toolbox);

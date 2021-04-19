@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { connect } from "react-redux";
 import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar, Tooltip } from "antd";
 import { showTaskModal, closeTaskModal } from "../../actions/modal";
+import { getMembers } from "../../actions/member";
+import { getProjects } from "../../actions/project";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
 
@@ -37,7 +39,7 @@ const TaskModal = (props) => {
     <div className="modal">
       <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "500px" }} visible={props.isVisible} closable={false} footer={null}>
         <Form name="basic" initialValues={{ remember: true }}>
-          <Form.Item name="remember" valuePropName="checked">
+          <Form.Item name="name">
             <Row>
               <Col span={22}>
                 <Input className="task-name-input" placeholder="Enter task name" />
@@ -48,6 +50,22 @@ const TaskModal = (props) => {
                 </Button>
               </Col>
             </Row>
+          </Form.Item>
+          <Form.Item name="project">
+            <Select style={{ width: "100%" }}>
+              {props.projects.map((project, index) => (
+                <Option key={index} value={project.id}>
+                  {project.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="section">
+            <Select style={{ width: "100%" }}>
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="Yiminghe">yiminghe</Option>
+            </Select>
           </Form.Item>
           <Form.Item name="remember">
             <Row>
@@ -65,7 +83,7 @@ const TaskModal = (props) => {
                   <Avatar style={{ marginLeft: "-8px", marginTop: "-15px" }} size={20} icon={<PlusOutlined />}></Avatar>
                 </a>
                 {/* Conditional Assignee modal */}
-                {assigneeModal && <AssigneeModal close={closeAsigneeModal} />}
+                {assigneeModal && <AssigneeModal close={closeAsigneeModal} projects={props.projects} />}
               </Col>
             </Row>
           </Form.Item>
@@ -128,7 +146,8 @@ const TaskModal = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  isVisible: state.modal.taskModal
+  isVisible: state.modal.taskModal,
+  projects: state.project.projects
 });
 
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal })(TaskModal);
+export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects })(TaskModal);
