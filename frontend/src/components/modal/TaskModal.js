@@ -69,7 +69,7 @@ const TaskModal = (props) => {
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item name="remember" valuePropName="checked">
+          <Form.Item name="description" valuePropName="checked">
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
           <Form.Item name="select">
