@@ -22,14 +22,12 @@ const Projects = (props) => {
 
   let content;
 
-  if (props.projects.length > 0) {
+  if (props.projects) {
     content = props.projects.map((project) => {
       return (
-        <div className="project-list">
-          <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
-            {project.name}
-          </Card>
-        </div>
+        <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
+          {project.name}
+        </Card>
       );
     });
   } else {

@@ -6,6 +6,23 @@
   box-sizing: border-box;
 }
 
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
 .auth-header {
   text-align: center;
   padding-top: 30px;
@@ -253,5 +270,35 @@
   font-size: 12px;
 }
 
-.modal {
+.task-name-input {
+  border: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.select-dot {
+  width: 20px;
+  height: 20px;
+  background-color: aqua;
+}
+
+.assigneeModal {
+  overflow-y: scroll;
+  background-color: rgb(252, 252, 252);
+  width: 170px;
+  height: 190px;
+  z-index: 9999;
+  position: absolute;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
