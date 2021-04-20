@@ -7,6 +7,7 @@ const authRoutes = require("./routes/api/auth");
 const projectRoutes = require("./routes/api/projects");
 const memberRoutes = require("./routes/api/members");
 const sectionRoutes = require("./routes/api/sections");
+const taskRoutes = require("./routes/api/tasks");
 
 require("dotenv").config();
 
@@ -26,6 +27,7 @@ app.use("/api", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/sections", sectionRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}...${process.env.DB_NAME}`);
