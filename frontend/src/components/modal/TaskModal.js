@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { connect } from "react-redux";
-import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar, Tooltip } from "antd";
+import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar } from "antd";
 import { showTaskModal, closeTaskModal } from "../../actions/modal";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
+import { getSections } from "../../actions/section";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
 
@@ -16,6 +17,10 @@ const TaskModal = (props) => {
 
   const [checklist, setChecklist] = useState();
   const [assigneeModal, setAssigneeModal] = useState(false);
+
+  const [name, setName] = useState("");
+  const [projectId, setProjectId] = useState(0);
+  const [section, setSection] = useState(0);
 
   const onChange = (date, dateString) => {
     console.log(dateString);
@@ -33,6 +38,19 @@ const TaskModal = (props) => {
     setAssigneeModal(false);
   };
 
+  const populateSection = (value) => {
+    props.getSections({ id: value });
+    setProjectId(value);
+  };
+
+  const nameHandler = (e) => {
+    setName(e.target.value);
+  };
+
+  const submitForm = () => {
+    console.log(name + " " + projectId);
+  };
+
   const addChecklist = () => {};
 
   return (
@@ -42,7 +60,7 @@ const TaskModal = (props) => {
           <Form.Item name="name">
             <Row>
               <Col span={22}>
-                <Input className="task-name-input" placeholder="Enter task name" />
+                <Input onChange={(e) => nameHandler(e)} value={name} className="task-name-input" placeholder="Enter task name" />
               </Col>
               <Col span={2} style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
                 <Button style={{ border: "none", padding: 0 }} onClick={closeModal}>
@@ -52,7 +70,7 @@ const TaskModal = (props) => {
             </Row>
           </Form.Item>
           <Form.Item name="project">
-            <Select placeholder="Select project" style={{ width: "100%" }}>
+            <Select onSelect={(value) => populateSection(value)} placeholder="Select project" style={{ width: "100%" }}>
               {props.projects.map((project, index) => (
                 <Option key={index} value={project.id}>
                   {project.name}
@@ -61,10 +79,12 @@ const TaskModal = (props) => {
             </Select>
           </Form.Item>
           <Form.Item name="section">
-            <Select placeholder="Select section" style={{ width: "100%" }}>
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="Yiminghe">yiminghe</Option>
+            <Select onSelect placeholder="Select section" style={{ width: "100%" }}>
+              {props.sections.map((section, index) => (
+                <Option key={index} value={section.id}>
+                  {section.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item name="remember">
@@ -90,7 +110,7 @@ const TaskModal = (props) => {
           <Form.Item name="description" valuePropName="checked">
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
-          <Form.Item name="select">
+          <Form.Item name="status">
             <div className="box">
               <Select placeholder="Select a status" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 <Option value="0">
@@ -134,11 +154,18 @@ const TaskModal = (props) => {
             </div>
           </Form.Item>
           <Form.Item name="addChecklist">
-            <Button onClick={addChecklist} style={{ border: "none", padding: 0 }}>
+            <Button name="add-checklist" onClick={addChecklist} style={{ border: "none", padding: 0 }}>
               <PlusOutlined />
               Add checklist
             </Button>
           </Form.Item>
+
+          <div className="bottom" style={{ backgroundColor: "red", position: "absolute", bottom: 0, left: 0, width: "100%", display: "flex", justifyContent: "flex-end" }}>
+            <Button type="primary" name="submit" onClick={submitForm}>
+              <PlusOutlined />
+              Create
+            </Button>
+          </div>
         </Form>
       </Modal>
     </div>
@@ -147,7 +174,8 @@ const TaskModal = (props) => {
 
 const mapStateToProps = (state) => ({
   isVisible: state.modal.taskModal,
-  projects: state.project.projects
+  projects: state.project.projects,
+  sections: state.section.sections
 });
 
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects })(TaskModal);
+export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getSections })(TaskModal);

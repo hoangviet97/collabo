@@ -38,7 +38,7 @@ const ProjectNavigation = (props) => {
 
   return (
     <div className="project-navigation">
-      <div class="project-nav-identity">
+      <div className="project-nav-identity">
         <div className="project-nav-icon">
           <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
         </div>
