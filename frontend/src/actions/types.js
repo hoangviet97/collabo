@@ -18,3 +18,5 @@ export const GET_MEMBERS = "GET_MEMBERS";
 export const GET_MEMBERS_FAIL = "GET_MEMBERS_FAIL";
 export const GET_SECTIONS = "GET_SECTIONS";
 export const GET_SECTIONS_FAIL = "GET_SECTIONS_FAIL";
+export const CREATE_TASK = "CREATE_TASK";
+export const CREATE_TASK_FAIL = "CREATE_TASK_FAIL";

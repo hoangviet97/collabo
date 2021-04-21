@@ -14,7 +14,7 @@ module.exports = {
       start_date: body.start_date,
       due_date: body.due_date,
       created_at: new Date(),
-      assignees: body.assignees
+      assigneesArray: body.assigneesArray
     };
 
     const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, name, description, start_date, due_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -24,8 +24,8 @@ module.exports = {
         return;
       }
 
-      if (newTask.assignees) {
-        result(null, { assignees: newTask.assignees, task: newTask.id });
+      if (newTask.assigneesArray.length > 0) {
+        result(null, { assignees: newTask.assigneesArray, task: newTask.id });
         return;
       } else {
         result(null, null);

@@ -6,6 +6,7 @@ import { showTaskModal, closeTaskModal } from "../../actions/modal";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
 import { getSections } from "../../actions/section";
+import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
 
@@ -16,7 +17,7 @@ const TaskModal = (props) => {
   const { Text } = Typography;
 
   const [assigneeModal, setAssigneeModal] = useState(false);
-  const [assingeesArray, setAssigneesArray] = useState([]);
+  const [assigneesArray, setAssigneesArray] = useState([]);
 
   const closeModal = () => {
     props.closeTaskModal();
@@ -36,7 +37,7 @@ const TaskModal = (props) => {
   };
 
   const assigneeSelected = (id) => {
-    setAssigneesArray((assingeesArray) => [...assingeesArray, id]);
+    setAssigneesArray((assigneesArray) => [...assigneesArray, id]);
   };
 
   const onFinish = (fieldsValue) => {
@@ -46,26 +47,29 @@ const TaskModal = (props) => {
     if (rangeValue === undefined || rangeValue === null) {
       values = {
         ...fieldsValue,
-        "range-picker": [null, null]
+        start_date: null,
+        due_date: null,
+        assigneesArray
       };
     } else {
       values = {
         ...fieldsValue,
-        "range-picker": [rangeValue[0].format("YYYY-MM-DD"), rangeValue[1].format("YYYY-MM-DD")]
+        start_date: rangeValue[0].format("YYYY-MM-DD"),
+        due_date: rangeValue[1].format("YYYY-MM-DD"),
+        assigneesArray
       };
     }
 
-    values = {
-      ...fieldsValue,
-      assingeesArray
-    };
+    props.createTask({ task: values });
 
     console.log("Received values of form: ", values);
+
+    setAssigneesArray([]);
   };
 
   return (
     <div className="modal">
-      <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "500px" }} visible={props.isVisible} closable={false} footer={null}>
+      <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={props.isVisible} closable={false} footer={null}>
         <Form style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
           <Form.Item name="name">
             <Row>
@@ -88,7 +92,7 @@ const TaskModal = (props) => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="section">
+          <Form.Item name="sectionId">
             <Select placeholder="Select section" style={{ width: "100%" }}>
               {props.sections.map((section, index) => (
                 <Option key={index} value={section.id}>
@@ -106,15 +110,15 @@ const TaskModal = (props) => {
             </Col>
             <Col span={11} style={{ display: "flex", justifyContent: "center" }}>
               {/* Avatar icons for adding assignees */}
-              <Form.Item name="assignees">
+              <Form.Item>
                 <Avatar.Group maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-                  {assingeesArray.map((assignee) => (
+                  {assigneesArray.map((assignee) => (
                     <Avatar key={assignee.id} />
                   ))}
                 </Avatar.Group>
               </Form.Item>
               {/* Button for adding new assignee */}
-              {assingeesArray.length > 0 ? (
+              {assigneesArray.length > 0 ? (
                 <a onClick={openAssigneeModal}>
                   <Avatar style={{ marginLeft: "-8px", marginTop: "-15px" }} size={20} icon={<PlusOutlined />}></Avatar>
                 </a>
@@ -132,7 +136,7 @@ const TaskModal = (props) => {
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
           <div className="box">
-            <Form.Item name="status">
+            <Form.Item name="statusId">
               <Select placeholder="Select a status" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 <Option value="0">
                   <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#ecf0f1" }} />
@@ -156,7 +160,7 @@ const TaskModal = (props) => {
                 </Option>
               </Select>
             </Form.Item>
-            <Form.Item name="priority">
+            <Form.Item name="priorityId">
               <Select placeholder="Select a priority" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 <Option value="0">
                   <Text strong style={{ color: "#f1c40f" }}>
@@ -196,4 +200,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getSections })(TaskModal);
+export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getSections, createTask })(TaskModal);
