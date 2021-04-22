@@ -4,5 +4,6 @@ const auth = require("../../middleware/auth");
 const router = express.Router();
 
 router.post("/add", auth, taskController.create);
+router.post("/all", auth, taskController.getAll);
 
 module.exports = router;

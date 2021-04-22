@@ -49,5 +49,20 @@ module.exports = {
       result(null, "success");
       return;
     });
+  },
+
+  // get all tasks
+  getAllTasks: async function (id, result) {
+    const sql = `SELECT tasks.sections_id, tasks.priorities_id, tasks.task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at FROM sections INNER JOIN tasks ON sections.id = tasks.sections_id WHERE sections.projects_id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };

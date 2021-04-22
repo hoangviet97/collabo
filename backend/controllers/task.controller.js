@@ -16,5 +16,12 @@ module.exports = {
         return res.json(result);
       }
     });
+  },
+
+  getAll: function (req, res) {
+    Task.getAllTasks(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

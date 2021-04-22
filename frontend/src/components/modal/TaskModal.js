@@ -5,7 +5,7 @@ import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar }
 import { showTaskModal, closeTaskModal } from "../../actions/modal";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
-import { getSections } from "../../actions/section";
+import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
@@ -32,7 +32,7 @@ const TaskModal = (props) => {
   };
 
   const projectSelected = (value) => {
-    props.getSections({ id: value });
+    props.getModalSections({ id: value });
     props.getMembers({ id: value });
   };
 
@@ -196,8 +196,8 @@ const TaskModal = (props) => {
 const mapStateToProps = (state) => ({
   isVisible: state.modal.taskModal,
   projects: state.project.projects,
-  sections: state.section.sections,
+  sections: state.section.modalSections,
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getSections, createTask })(TaskModal);
+export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getModalSections, createTask })(TaskModal);

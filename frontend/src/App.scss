@@ -302,3 +302,12 @@ button:focus {
   position: absolute;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
+.add-section-inputField {
+  display: flex;
+  gap: 5px;
+}
+
+.add-section-container {
+  width: 30%;
+}
