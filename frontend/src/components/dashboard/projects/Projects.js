@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import { Button, Card } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
@@ -23,13 +23,17 @@ const Projects = (props) => {
   let content;
 
   if (props.projects) {
-    content = props.projects.map((project) => {
-      return (
-        <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
-          {project.name}
-        </Card>
-      );
-    });
+    content = (
+      <div className="project-flex">
+        {props.projects.map((project) => {
+          return (
+            <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
+              {project.name}
+            </Card>
+          );
+        })}
+      </div>
+    );
   } else {
     content = (
       <div className="no-content">
@@ -44,8 +48,19 @@ const Projects = (props) => {
 
   return (
     <div>
-      <Toolbar />
-      <Container size="30">{content}</Container>
+      <Container size="30">
+        <Toolbar>
+          <div className="projects-dimension">
+            <div className="projects-dimension__cards">
+              <AppstoreOutlined />
+            </div>
+            <div className="projects-dimension__list">
+              <MenuOutlined />
+            </div>
+          </div>
+        </Toolbar>
+        <div>{content}</div>
+      </Container>
     </div>
   );
 };

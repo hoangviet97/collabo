@@ -33,6 +33,7 @@ module.exports = {
     });
   },
 
+  // login existing user
   loginUser: function (data, result) {
     const sql = `SELECT id, password FROM users WHERE email = '${data.email}'`;
     con.query(sql, async (err, res) => {
@@ -42,6 +43,7 @@ module.exports = {
       }
       const isMatch = await bcrypt.compare(data.password, res[0].password, (err, matched) => {
         if (err || !matched) {
+          console.log("invald");
           result("Invalid credentionals", null);
           return;
         }
@@ -61,6 +63,7 @@ module.exports = {
     });
   },
 
+  // get current logged in user --> client loaduser()
   getUser: function (id, result) {
     const sql = `SELECT id, email, firstname, lastname, created_at FROM users WHERE id = '${id}'`;
     con.query(sql, async (err, res) => {

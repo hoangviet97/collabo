@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/add", auth, taskController.create);
 router.post("/all", auth, taskController.getAll);
+router.post("/delete", auth, taskController.delete);
 
 module.exports = router;

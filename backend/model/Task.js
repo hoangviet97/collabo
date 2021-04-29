@@ -53,7 +53,12 @@ module.exports = {
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.sections_id, tasks.priorities_id, tasks.task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at FROM sections INNER JOIN tasks ON sections.id = tasks.sections_id WHERE sections.projects_id = ?`;
+    const sql = `SELECT tasks.sections_id, priorities.name AS priority, task_status.name AS status, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+                    FROM sections 
+                    INNER JOIN tasks ON sections.id = tasks.sections_id 
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    WHERE sections.projects_id = ?`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {
@@ -62,6 +67,19 @@ module.exports = {
       }
 
       result(null, res);
+      return;
+    });
+  },
+
+  deleteTask: async function (id, result) {
+    const sql = `DELETE FROM tasks WHERE id = ?`;
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
       return;
     });
   }
