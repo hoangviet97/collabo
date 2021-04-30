@@ -9,12 +9,16 @@ import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
+import { withRouter } from "react-router-dom";
 
 const TaskModal = (props) => {
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;
   const { Text } = Typography;
+
+  let path = window.location.pathname;
+  let pathValue = path.split("/")[1];
 
   const [assigneeModal, setAssigneeModal] = useState(false);
   const [assigneesArray, setAssigneesArray] = useState([]);
@@ -60,7 +64,7 @@ const TaskModal = (props) => {
       };
     }
 
-    props.createTask({ task: values });
+    props.createTask({ task: values, projectId: pathValue });
 
     console.log("Received values of form: ", values);
 
@@ -200,4 +204,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getModalSections, createTask })(TaskModal);
+export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getModalSections, createTask })(withRouter(TaskModal));

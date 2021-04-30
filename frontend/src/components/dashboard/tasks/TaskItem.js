@@ -4,8 +4,12 @@ import { Avatar, Button } from "antd";
 import Moment from "react-moment";
 
 const TaskItem = (props) => {
-  const doneStyle = props.status === "Open" ? { color: "green" } : { color: "#ededed" };
+  const doneStyle = props.status === "Completed" ? { color: "green" } : { color: "#ededed" };
   const due_date = props.due_date === null ? <CalendarOutlined className="task-calendar__icon" /> : props.due_date;
+
+  const deleteTaskHandler = () => {
+    window.alert("ok");
+  };
 
   return (
     <div className="task-column">
@@ -26,7 +30,7 @@ const TaskItem = (props) => {
         <Moment format="D MMM YYYY">{due_date}</Moment>
       </div>
       <div className="task-column__item task-column__more">
-        <MoreOutlined style={{ fontSize: "22px", position: "relative", left: "35px" }} />
+        <MoreOutlined onClick={deleteTaskHandler} style={{ fontSize: "22px", position: "relative", left: "35px" }} />
       </div>
     </div>
   );

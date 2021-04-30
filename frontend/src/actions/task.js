@@ -2,11 +2,15 @@ import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAI
 import axios from "axios";
 import { message } from "antd";
 
-export const createTask = ({ task }) => async (dispatch) => {
+export const createTask = ({ task, projectId }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/tasks/add", task);
     message.success("New task");
     dispatch({ type: CREATE_TASK });
+
+    if (projectId.length === 8 && isNaN(projectId) === false) {
+      dispatch(getProjectTasks({ id: projectId }));
+    }
   } catch (err) {
     dispatch({ type: CREATE_TASK_FAIL });
   }

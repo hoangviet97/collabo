@@ -151,6 +151,8 @@ label:focus,
   position: fixed;
   bottom: 20px;
   right: 30px;
+  display: flex;
+  gap: 3px;
 }
 
 .no-content {
@@ -222,7 +224,14 @@ label:focus,
   gap: 8px;
 }
 
-.project-flex {
+.projects-dimension-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+}
+
+.projects-dimension-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import { Button, Card } from "antd";
@@ -14,17 +14,27 @@ const Projects = (props) => {
 
   const history = useHistory();
 
+  const [projectsDimension, setProjectsDimension] = useState("cards");
+
   const projectCardHandler = (e, index) => {
     e.preventDefault();
     const path = "/" + index + "/tasks";
     history.push(path);
   };
 
+  const setList = () => {
+    setProjectsDimension("list");
+  };
+
+  const setCards = () => {
+    setProjectsDimension("cards");
+  };
+
   let content;
 
   if (props.projects) {
     content = (
-      <div className="project-flex">
+      <div className={`projects-dimension-${projectsDimension}`}>
         {props.projects.map((project) => {
           return (
             <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
@@ -51,10 +61,10 @@ const Projects = (props) => {
       <Container size="30">
         <Toolbar>
           <div className="projects-dimension">
-            <div className="projects-dimension__cards">
+            <div className="projects-dimension__cards" onClick={setCards}>
               <AppstoreOutlined />
             </div>
-            <div className="projects-dimension__list">
+            <div className="projects-dimension__list" onClick={setList}>
               <MenuOutlined />
             </div>
           </div>
