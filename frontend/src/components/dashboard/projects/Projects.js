@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import { Button, Card } from "antd";
-import { InboxOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
@@ -15,6 +15,8 @@ const Projects = (props) => {
   const history = useHistory();
 
   const [projectsDimension, setProjectsDimension] = useState("cards");
+  const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
+  const [activeList, setActiveList] = useState("");
 
   const projectCardHandler = (e, index) => {
     e.preventDefault();
@@ -24,10 +26,14 @@ const Projects = (props) => {
 
   const setList = () => {
     setProjectsDimension("list");
+    setActiveList("projects-dimension__list--active");
+    setActiveCards("");
   };
 
   const setCards = () => {
     setProjectsDimension("cards");
+    setActiveCards("projects-dimension__cards--active");
+    setActiveList("");
   };
 
   let content;
@@ -60,11 +66,19 @@ const Projects = (props) => {
     <div>
       <Container size="30">
         <Toolbar>
+          <div class="new-project-container">
+            <Link to="/projects/new">
+              <Button type="primary">
+                <PlusOutlined />
+                New Project
+              </Button>
+            </Link>
+          </div>
           <div className="projects-dimension">
-            <div className="projects-dimension__cards" onClick={setCards}>
+            <div className={`projects-dimension__cards ${activeCards}`} onClick={setCards}>
               <AppstoreOutlined />
             </div>
-            <div className="projects-dimension__list" onClick={setList}>
+            <div className={`projects-dimension__list ${activeList}`} onClick={setList}>
               <MenuOutlined />
             </div>
           </div>

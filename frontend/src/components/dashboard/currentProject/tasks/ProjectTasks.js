@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
-import { getSections } from "../../../../actions/section";
+import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks } from "../../../../actions/task";
 import { connect } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
+import Spinner from "../../../utils/Spinner";
 
 const ProjectTasks = (props) => {
   useEffect(() => {
@@ -68,7 +69,7 @@ const ProjectTasks = (props) => {
         <Text
           type="danger"
           onClick={(event) => {
-            deleteSection();
+            props.deleteSection({ id: selectedSection });
             event.stopPropagation();
           }}
         >
@@ -90,7 +91,7 @@ const ProjectTasks = (props) => {
             <Panel key={section.id} header={panelHeader(section.name, section.id)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem key={index} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;
+                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;
                 }
               })}
             </Panel>
@@ -111,7 +112,8 @@ const ProjectTasks = (props) => {
 
 const mapStateToProps = (state) => ({
   sections: state.section.sections,
-  tasks: state.task.tasks
+  tasks: state.task.tasks,
+  loading: state.section.loading
 });
 
-export default connect(mapStateToProps, { getSections, getProjectTasks, createSection })(ProjectTasks);
+export default connect(mapStateToProps, { getSections, getProjectTasks, createSection, deleteSection })(ProjectTasks);

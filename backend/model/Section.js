@@ -23,6 +23,19 @@ module.exports = {
     });
   },
 
+  deleteSection: async function (id, result) {
+    const sql = `DELETE FROM sections WHERE id = ?`;
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
   getAllSections: async function (projectId, result) {
     const sql = `SELECT id, name FROM sections WHERE projects_id = ?`;
 

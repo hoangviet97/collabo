@@ -1,4 +1,4 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL } from "./types";
+import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -22,5 +22,15 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
+export const deleteTask = ({ id }) => async (dispatch) => {
+  try {
+    const res = await axios.delete("http://localhost:9000/api/tasks/delete", { id });
+    dispatch({ type: DELETE_TASK });
+    message.success("Task deleted!");
+  } catch (err) {
+    dispatch({ type: DELETE_TASK_FAIL });
   }
 };

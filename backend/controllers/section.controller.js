@@ -10,6 +10,13 @@ module.exports = {
     });
   },
 
+  delete: function (req, res) {
+    Section.deleteSection(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getAll: function (req, res) {
     Section.getAllSections(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
