@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Avatar, Popover } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, InfoCircleOutlined, TagOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { ThunderboltOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -13,12 +13,6 @@ const ProjectNavigation = (props) => {
         <Link to={`/${path.split("/")[1]}/members`}>
           <TeamOutlined style={{ color: "grey" }} />
           <span>Project Members</span>
-        </Link>
-      </p>
-      <p>
-        <Link to={`/${path.split("/")[1]}/tags`}>
-          <TagOutlined style={{ color: "grey" }} />
-          <span>Tags</span>
         </Link>
       </p>
       <p>
@@ -44,7 +38,7 @@ const ProjectNavigation = (props) => {
 
   return (
     <div className="project-navigation">
-      <div class="project-nav-identity">
+      <div className="project-nav-identity">
         <div className="project-nav-icon">
           <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
         </div>

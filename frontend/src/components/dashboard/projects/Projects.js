@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
-import { Button, Card } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+import { Button, Card, Skeleton } from "antd";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
@@ -14,22 +14,42 @@ const Projects = (props) => {
 
   const history = useHistory();
 
+  const [projectsDimension, setProjectsDimension] = useState("cards");
+  const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
+  const [activeList, setActiveList] = useState("");
+
   const projectCardHandler = (e, index) => {
     e.preventDefault();
     const path = "/" + index + "/tasks";
     history.push(path);
   };
 
+  const setList = () => {
+    setProjectsDimension("list");
+    setActiveList("projects-dimension__list--active");
+    setActiveCards("");
+  };
+
+  const setCards = () => {
+    setProjectsDimension("cards");
+    setActiveCards("projects-dimension__cards--active");
+    setActiveList("");
+  };
+
   let content;
 
-  if (props.projects > 0 || props.projects !== null) {
-    content = props.projects.map((project) => {
-      return (
-        <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
-          {project.name}
-        </Card>
-      );
-    });
+  if (props.projects) {
+    content = (
+      <div className={`projects-dimension-${projectsDimension}`}>
+        {props.projects.map((project) => {
+          return (
+            <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
+              {project.name}
+            </Card>
+          );
+        })}
+      </div>
+    );
   } else {
     content = (
       <div className="no-content">
@@ -44,18 +64,26 @@ const Projects = (props) => {
 
   return (
     <div>
-      <Toolbar />
       <Container size="30">
-        {props.projects > 0 || props.projects !== null ? (
-          <div className="project-list">
-            {content}
+        <Toolbar>
+          <div class="new-project-container">
             <Link to="/projects/new">
-              <Button>Create new project</Button>
+              <Button type="primary">
+                <PlusOutlined />
+                New Project
+              </Button>
             </Link>
           </div>
-        ) : (
-          <div>{content}</div>
-        )}
+          <div className="projects-dimension">
+            <div className={`projects-dimension__cards ${activeCards}`} onClick={setCards}>
+              <AppstoreOutlined />
+            </div>
+            <div className={`projects-dimension__list ${activeList}`} onClick={setList}>
+              <MenuOutlined />
+            </div>
+          </div>
+        </Toolbar>
+        <div>{content}</div>
       </Container>
     </div>
   );

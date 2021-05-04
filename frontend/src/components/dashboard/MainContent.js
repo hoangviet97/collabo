@@ -3,14 +3,13 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Projects from "./projects/Projects";
 import Tasks from "./tasks/Tasks";
 import UserSettings from "./globalSettings/UserSettings";
-import ProjectTasks from "./currentProject/ProjectTasks";
-import Chat from "./currentProject/Chat";
-import Overview from "./currentProject/Overview";
-import Board from "./currentProject/Board";
-import Calendar from "./currentProject/Calendar";
-import Tags from "./currentProject/Tags";
-import Documents from "./currentProject/Documents";
-import ProjectMembers from "./currentProject/ProjectMembers";
+import ProjectTasks from "./currentProject/tasks/ProjectTasks";
+import Chat from "./currentProject/chat/Chat";
+import Overview from "./currentProject/overview/Overview";
+import Board from "./currentProject/board/Board";
+import Calendar from "./currentProject/calendar/Calendar";
+import Documents from "./currentProject/documents/Documents";
+import ProjectMembers from "./currentProject/members/ProjectMembers";
 import { getProject } from "../../actions/project";
 import { connect } from "react-redux";
 
@@ -35,7 +34,6 @@ const MainContent = (props) => {
         <Route exact path="/:id/overview" component={Overview} />
         <Route exact path="/:id/calendar" component={Calendar} />
         <Route exact path="/:id/board" component={Board} />
-        <Route exact path="/:id/tags" component={Tags} />
         <Route exact path="/:id/documents" component={Documents} />
         <Route exact path="/:id/members" component={ProjectMembers} />
         <Route exact path="/:id" component={ProjectTasks} />

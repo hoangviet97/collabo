@@ -2,6 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 module.exports = {
+  // create new member by user or by admin
   createMember: async function (userId, projectId, result) {
     const newMember = {
       id: uuid4(),
@@ -19,6 +20,20 @@ module.exports = {
       }
 
       result(null, projectId);
+      return;
+    });
+  },
+
+  getAllMembers: async function (projectId, result) {
+    const sql = `SELECT members.id, users.email, users.firstname, users.lastname FROM members INNER JOIN users ON members.users_id = users.id WHERE projects_id = ?`;
+
+    con.query(sql, [projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
       return;
     });
   }

@@ -3,6 +3,7 @@ exports.ErrorResponse = function (res, msg) {
     status: 0,
     message: msg
   };
+  console.log(data.message);
   return res.status(500).json(data);
 };
 

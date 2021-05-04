@@ -35,16 +35,7 @@ const Login = (props) => {
         <div className="form-auth-header">
           <h2>Sign In</h2>
         </div>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              type: "email",
-              message: "Please input your e-mail"
-            }
-          ]}
-        >
+        <Form.Item name="email">
           <Input value={email} name="email" placeholder="E-mail" onChange={(e) => changeHandler(e)} />
         </Form.Item>
 
