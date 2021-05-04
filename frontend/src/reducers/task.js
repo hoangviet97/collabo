@@ -29,12 +29,11 @@ function taskReducer(state = initialState, action) {
     case DELETE_TASK:
       return {
         ...state,
-        tasks: []
+        tasks: state.tasks.filter((item) => item.id !== payload)
       };
     case DELETE_TASK_FAIL:
       return {
-        ...state,
-        tasks: []
+        ...state
       };
     default:
       return state;

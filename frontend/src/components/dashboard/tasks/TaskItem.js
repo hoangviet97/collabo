@@ -47,9 +47,7 @@ const TaskItem = (props) => {
           <Avatar style={{ backgroundColor: "#1890ff" }} />
         </Avatar.Group>
       </div>
-      <div className="task-column__item task-column__status" contentEditable>
-        {props.status}
-      </div>
+      <div className="task-column__item task-column__status">{props.status}</div>
       <div className="task-column__item task-column__priority">{props.priority}</div>
       <div className="task-column__item task-column__due-date">{due_date}</div>
       <div className="task-column__item task-column__more">

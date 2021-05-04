@@ -27,8 +27,8 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
 
 export const deleteTask = ({ id }) => async (dispatch) => {
   try {
-    const res = await axios.delete("http://localhost:9000/api/tasks/delete", { id });
-    dispatch({ type: DELETE_TASK });
+    const res = await axios.post("http://localhost:9000/api/tasks/delete", { id });
+    dispatch({ type: DELETE_TASK, payload: id });
     message.success("Task deleted!");
   } catch (err) {
     dispatch({ type: DELETE_TASK_FAIL });
