@@ -20,6 +20,7 @@ const ProjectTasks = (props) => {
   const { Panel } = Collapse;
   const { Text } = Typography;
 
+  const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
 
@@ -27,11 +28,13 @@ const ProjectTasks = (props) => {
     setNewSection(e.target.value);
   };
 
-  const deleteSection = () => {
-    console.log(selectedSection);
+  const sectionVisibilityHandler = () => {
+    setNewSectionVisibility(true);
   };
 
-  const addSectionHandler = () => {
+  const onBlurSectionHandler = () => {
+    setNewSectionVisibility(false);
+
     if (newSection.length === 0) {
       console.log("empty");
     } else {
@@ -98,12 +101,17 @@ const ProjectTasks = (props) => {
           ))}
         </Collapse>
         <Container size="15">
-          <div className="add-section-container">
-            <div className="add-section-inputField">
-              <Input value={newSection} onChange={(e) => sectionHandler(e)} />
-              <Button onClick={addSectionHandler}>Add Section</Button>
+          {newSectionVisibility === false ? (
+            <Button onClick={sectionVisibilityHandler}>Add new section</Button>
+          ) : (
+            <div className="add-section-container">
+              <div className="add-section-inputField">
+                <form onSubmit={onBlurSectionHandler}>
+                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
+                </form>
+              </div>
             </div>
-          </div>
+          )}
         </Container>
       </Container>
     </div>
