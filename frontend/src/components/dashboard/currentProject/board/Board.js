@@ -1,4 +1,5 @@
 import React from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Container from "../../../utils/Container";
 
 const Board = () => {

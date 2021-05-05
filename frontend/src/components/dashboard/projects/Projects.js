@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
+import Project from "./Project";
 import { Button, Card, Skeleton } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
@@ -18,8 +19,8 @@ const Projects = (props) => {
   const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState("");
 
-  const projectCardHandler = (e, index) => {
-    e.preventDefault();
+  const projectCardHandler = (index) => {
+    console.log("test");
     const path = "/" + index + "/tasks";
     history.push(path);
   };
@@ -42,11 +43,7 @@ const Projects = (props) => {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
         {props.projects.map((project) => {
-          return (
-            <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
-              {project.name}
-            </Card>
-          );
+          return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} />;
         })}
       </div>
     );
@@ -66,7 +63,7 @@ const Projects = (props) => {
     <div>
       <Container size="30">
         <Toolbar>
-          <div class="new-project-container">
+          <div className="new-project-container">
             <Link to="/projects/new">
               <Button type="primary">
                 <PlusOutlined />

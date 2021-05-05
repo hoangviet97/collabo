@@ -5,9 +5,9 @@ import { message } from "antd";
 export const createSection = ({ id, name }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/sections/add", { id, name });
+    message.success("New section created!");
     dispatch({ type: CREATE_SECTION });
     dispatch(getSections({ id }));
-    message.success("New section created!");
   } catch (err) {
     dispatch({ type: CREATE_SECTION_FAIL });
   }

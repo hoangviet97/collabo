@@ -240,11 +240,17 @@ label:focus,
 }
 
 .project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: all 0.3s ease;
-  height: 150px;
+  min-height: 220px;
   cursor: pointer;
   border: transparent;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+  &__body {
+  }
 }
 
 .project-card:hover {
