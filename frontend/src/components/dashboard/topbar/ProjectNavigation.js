@@ -43,7 +43,7 @@ const ProjectNavigation = (props) => {
           <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
         </div>
         <div className="project-nav-title">
-          <span>{props.project.currentProject.name}</span>
+          <span>{props.project ? props.project.currentProject.name : ""}</span>
           <a className="project-nav-title__detail">Details</a>
         </div>
       </div>

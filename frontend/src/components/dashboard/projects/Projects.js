@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import Project from "./Project";
-import { Button, Card, Skeleton } from "antd";
+import { Button } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
+import {} from "../../../actions/";
 
 const Projects = (props) => {
   useEffect(() => {
@@ -14,7 +15,6 @@ const Projects = (props) => {
   }, []);
 
   const history = useHistory();
-
   const [projectsDimension, setProjectsDimension] = useState("cards");
   const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState("");
