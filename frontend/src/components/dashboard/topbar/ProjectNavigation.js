@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Avatar, Popover } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { ThunderboltOutlined, CalendarOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -10,21 +10,15 @@ const ProjectNavigation = (props) => {
   const moreContent = (
     <div>
       <p>
-        <Link to={`/${path.split("/")[1]}/members`}>
+        <Link to={`/${path.split("/")[1]}/team`}>
           <TeamOutlined style={{ color: "grey" }} />
-          <span>Project Members</span>
+          <span>Team</span>
         </Link>
       </p>
       <p>
         <Link to={`/${path.split("/")[1]}/documents`}>
           <FileTextOutlined style={{ color: "grey" }} />
           <span>Docs</span>
-        </Link>
-      </p>
-      <p>
-        <Link to={`/${path.split("/")[1]}/documents`}>
-          <FileTextOutlined style={{ color: "grey" }} />
-          <span>Project Management</span>
         </Link>
       </p>
       <p>

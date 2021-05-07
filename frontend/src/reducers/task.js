@@ -1,7 +1,8 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL } from "../actions/types";
+import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING } from "../actions/types";
 
 const initialState = {
-  tasks: []
+  tasks: [],
+  loading: false
 };
 
 function taskReducer(state = initialState, action) {
@@ -19,7 +20,8 @@ function taskReducer(state = initialState, action) {
     case GET_PROJECT_TASKS:
       return {
         ...state,
-        tasks: payload
+        tasks: payload,
+        loading: false
       };
     case GET_PROJECT_TASKS_FAIL:
       return {
@@ -34,6 +36,11 @@ function taskReducer(state = initialState, action) {
     case DELETE_TASK_FAIL:
       return {
         ...state
+      };
+    case TASKS_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

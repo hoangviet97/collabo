@@ -1,4 +1,4 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL } from "./types";
+import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -18,6 +18,7 @@ export const createTask = ({ task, projectId }) => async (dispatch) => {
 
 export const getProjectTasks = ({ id }) => async (dispatch) => {
   try {
+    dispatch(setTasksLoading());
     const res = await axios.post("http://localhost:9000/api/tasks/all", { id });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
@@ -33,4 +34,10 @@ export const deleteTask = ({ id }) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: DELETE_TASK_FAIL });
   }
+};
+
+export const setTasksLoading = () => {
+  return {
+    type: TASKS_LOADING
+  };
 };

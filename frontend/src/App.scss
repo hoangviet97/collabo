@@ -453,3 +453,62 @@ button:focus {
     }
   }
 }
+
+.board-item {
+  padding: 16px;
+  border-radius: 7px;
+  margin: 0 0 8px 0;
+  min-height: 50px;
+  user-select: none;
+
+  &__title {
+    color: white;
+  }
+}
+
+.board-column {
+  padding: 10px;
+  border-radius: 12px;
+  width: 300px;
+  min-height: 500px;
+}
+
+.members-header {
+  display: flex;
+  background-color: white;
+  padding: 10px;
+}
+
+.groups-header {
+  display: flex;
+  background-color: white;
+  padding: 10px;
+}
+
+.members-column {
+  &__name {
+    width: 40%;
+    background-color: cyan;
+  }
+
+  &__role {
+    width: 20%;
+    background-color: rgb(113, 185, 119);
+  }
+
+  &__tasks {
+    width: 20%;
+    background-color: rgb(116, 91, 148);
+  }
+
+  &__status {
+    width: 10%;
+    background-color: rgb(214, 184, 101);
+  }
+
+  &__more {
+    width: 10%;
+    background-color: rgb(62, 81, 105);
+    text-align: center;
+  }
+}
