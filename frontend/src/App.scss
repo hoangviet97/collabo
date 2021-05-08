@@ -392,7 +392,9 @@ button:focus {
 .task-header {
   background-color: rgb(255, 255, 255);
   display: flex;
-  padding: 0px 5px;
+  padding: 0px 7px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .task-header * {
@@ -475,40 +477,76 @@ button:focus {
 
 .members-header {
   display: flex;
-  background-color: white;
   padding: 10px;
 }
 
 .groups-header {
   display: flex;
-  background-color: white;
   padding: 10px;
 }
 
 .members-column {
   &__name {
     width: 40%;
-    background-color: cyan;
   }
 
   &__role {
     width: 20%;
-    background-color: rgb(113, 185, 119);
   }
 
   &__tasks {
     width: 20%;
-    background-color: rgb(116, 91, 148);
   }
 
   &__status {
     width: 10%;
-    background-color: rgb(214, 184, 101);
   }
 
   &__more {
     width: 10%;
-    background-color: rgb(62, 81, 105);
     text-align: center;
   }
+}
+
+.members-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-radius: 7px;
+  margin-bottom: 3px;
+
+  &__name {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__identity {
+    width: 40%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__role {
+    width: 20%;
+  }
+
+  &__tasks {
+    width: 20%;
+  }
+
+  &__status {
+    width: 10%;
+  }
+
+  &__more {
+    width: 10%;
+    text-align: center;
+  }
+}
+
+.invite-modal {
+  margin-bottom: 60px;
 }

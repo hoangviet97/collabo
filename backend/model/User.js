@@ -65,7 +65,7 @@ module.exports = {
 
   // get current logged in user --> client loaduser()
   getUser: function (id, result) {
-    const sql = `SELECT id, email, firstname, lastname, created_at FROM users WHERE id = '${id}'`;
+    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at, members.roles_id AS role FROM users INNER JOIN members ON users.id = members.users_id WHERE users.id = '${id}' ORDER BY CAST(members.roles_id AS UNSIGNED) ASC`;
     con.query(sql, async (err, res) => {
       if (err) {
         console.log("error: ", err);
