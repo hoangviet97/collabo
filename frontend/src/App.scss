@@ -1,9 +1,15 @@
 @import "~antd/dist/antd.css";
 
+$primary-color: #4e4e4e;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  color: $primary-color;
 }
 
 textarea:hover,
@@ -21,6 +27,13 @@ label:focus,
   outline: 0px !important;
   -webkit-appearance: none;
   box-shadow: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
 }
 
 .auth-header {
@@ -102,12 +115,17 @@ label:focus,
   position: relative;
   top: -80px;
   gap: 50px;
-}
 
-.side-profile {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  &__icon {
+    font-size: 25px;
+    color: #383e42;
+  }
+
+  &__profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 }
 
 .main {
@@ -222,7 +240,11 @@ label:focus,
   color: black;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+
+  &__icon {
+    color: grey;
+  }
 }
 
 .projects-dimension-list {
@@ -245,17 +267,29 @@ label:focus,
   justify-content: space-between;
   transition: all 0.3s ease;
   min-height: 220px;
-  cursor: pointer;
   border: transparent;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
+  &__right-header {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
   &__body {
+    cursor: pointer;
   }
 
   &__footer {
     border-top: 0.5px solid rgba(92, 92, 92, 0.233);
     padding-top: 18px;
     margin-bottom: -10px;
+
+    &-row {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+    }
   }
 }
 
@@ -296,13 +330,6 @@ label:focus,
   border: none;
 }
 
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
-}
-
 .box {
   display: flex;
   justify-content: space-between;
@@ -341,23 +368,27 @@ button:focus {
   width: 100%;
   height: 50px;
   cursor: pointer;
+  text-align: center;
 
   &__name {
-    width: 40%;
+    width: 35%;
   }
 
   &__assignees {
-    width: 15%;
+    width: 13%;
     display: flex;
     align-self: center;
+    justify-content: center;
   }
 
   &__status {
-    width: 15%;
+    width: 13%;
+    justify-content: center;
   }
 
   &__priority {
-    width: 15%;
+    width: 13%;
+    justify-content: center;
   }
 
   &__done {
@@ -367,17 +398,20 @@ button:focus {
 
   &__more {
     cursor: pointer;
-    width: 3%;
-    display: flex;
-    align-self: center;
+    width: 13%;
+    justify-content: center;
   }
 
   &__due-date {
-    width: 12%;
+    width: 13%;
+    justify-content: center;
   }
 
   &__item {
-    padding: 5px 8px;
+    padding: 0px 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   &__item:last-child {
@@ -392,6 +426,7 @@ button:focus {
 .task-header {
   background-color: rgb(255, 255, 255);
   display: flex;
+  text-align: center;
   padding: 0px 7px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -478,28 +513,36 @@ button:focus {
 .members-header {
   display: flex;
   padding: 10px;
+  text-align: center;
+  color: $primary-color;
+  font-weight: 600;
 }
 
 .groups-header {
   display: flex;
   padding: 10px;
+  text-align: center;
 }
 
 .members-column {
-  &__name {
-    width: 40%;
+  &__identity {
+    width: 29%;
+  }
+
+  &__email {
+    width: 22%;
   }
 
   &__role {
-    width: 20%;
+    width: 13%;
   }
 
   &__tasks {
-    width: 20%;
+    width: 13%;
   }
 
   &__status {
-    width: 10%;
+    width: 13%;
   }
 
   &__more {
@@ -515,6 +558,7 @@ button:focus {
   background-color: white;
   border-radius: 7px;
   margin-bottom: 3px;
+  text-align: center;
 
   &__name {
     margin-left: 10px;
@@ -524,21 +568,25 @@ button:focus {
   }
 
   &__identity {
-    width: 40%;
+    width: 29%;
     display: flex;
     align-items: center;
   }
 
+  &__email {
+    width: 22%;
+  }
+
   &__role {
-    width: 20%;
+    width: 13%;
   }
 
   &__tasks {
-    width: 20%;
+    width: 13%;
   }
 
   &__status {
-    width: 10%;
+    width: 13%;
   }
 
   &__more {
@@ -549,4 +597,8 @@ button:focus {
 
 .invite-modal {
   margin-bottom: 60px;
+}
+
+*:focus {
+  outline: none;
 }

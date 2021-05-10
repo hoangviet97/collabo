@@ -86,17 +86,16 @@ const ProjectTasks = (props) => {
     <div className="project-tasks">
       <Toolbar />
       <Container size="30">
-        <Collapse style={{ padding: 0, margin: 0, width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-          <Container size="15">
-            <TaskHeader />
-          </Container>
+        <TaskHeader />
+        <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]}>
           {props.sections.map((section) => (
-            <Panel key={section.id} header={panelHeader(section.name, section.id)}>
+            <Panel className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
                   return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;
                 }
               })}
+              <Input />
             </Panel>
           ))}
         </Collapse>

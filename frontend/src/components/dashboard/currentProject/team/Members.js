@@ -21,7 +21,7 @@ const Members = (props) => {
       <Input onChange={searchHandler} style={{ width: "30%" }} placeholder="Search member name" />
       <MembersHeader />
       {props.members
-        .filter((item) => item.firstname.toLowerCase().includes(searchValue))
+        .filter((item) => item.firstname.toLowerCase().includes(searchValue) || item.email.toLowerCase().includes(searchValue))
         .map((member, index) => (
           <MemberItem member={member} key={index} />
         ))}

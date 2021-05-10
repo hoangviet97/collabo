@@ -8,6 +8,7 @@ const TaskHeader = () => {
       <div className="task-header-item task-column__status">Status</div>
       <div className="task-header-item task-column__priority">Priority</div>
       <div className="task-header-item task-column__due-date">Due Date</div>
+      <div className="task-header-item task-column__more">More</div>
     </div>
   );
 };

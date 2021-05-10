@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { CalendarOutlined, CheckCircleOutlined, MoreOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Menu, Typography } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteTask } from "../../../actions/task";
+import { Select } from "antd";
 
 const TaskItem = (props) => {
   const doneStyle = props.status === "Completed" ? { color: "green" } : { color: "#ededed" };
+  const statusStyle = props.status === "Completed" ? { color: "white", backgroundColor: "#badc58" } : { color: "black", backgroundColor: "#dcdde1" };
   const due_date = props.due_date === null ? <CalendarOutlined className="task-calendar__icon" /> : <Moment format="D MMM YYYY">{props.due_date}</Moment>;
   const { Text } = Typography;
+  const { Option } = Select;
 
   const sectionMenu = () => (
     <Menu>
@@ -47,12 +50,18 @@ const TaskItem = (props) => {
           <Avatar style={{ backgroundColor: "#1890ff" }} />
         </Avatar.Group>
       </div>
-      <div className="task-column__item task-column__status">{props.status}</div>
+      <div className="task-column__item task-column__status task-column__status--active" style={statusStyle}>
+        <Select className="status-select" defaultValue="lucy" showArrow={false} style={{ width: "100%" }}>
+          <Option value="jack">Jack</Option>
+          <Option value="lucy">Lucy</Option>
+          <Option value="Yiminghe">yiminghe</Option>
+        </Select>
+      </div>
       <div className="task-column__item task-column__priority">{props.priority}</div>
       <div className="task-column__item task-column__due-date">{due_date}</div>
       <div className="task-column__item task-column__more">
         <Dropdown onClick={() => console.log(props.id)} trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
-          <MoreOutlined style={{ fontSize: "22px", position: "relative", left: "35px" }} />
+          <EllipsisOutlined style={{ fontSize: "22px" }} />
         </Dropdown>
       </div>
     </div>

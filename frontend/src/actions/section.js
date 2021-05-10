@@ -35,6 +35,7 @@ export const getModalSections = ({ id }) => async (dispatch) => {
 export const deleteSection = ({ id }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/sections/delete", { id });
+    message.success("Section deleted!");
     dispatch({ type: DELETE_SECTION, payload: id });
   } catch (err) {
     dispatch({ type: DELETE_SECTION_FAIL });

@@ -4,7 +4,7 @@ import Container from "../../utils/Container";
 import Project from "./Project";
 import { Button, Skeleton } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
-import { Link, useHistory, withRouter, Redirect } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
 import Spinner from "../../utils/Spinner";
