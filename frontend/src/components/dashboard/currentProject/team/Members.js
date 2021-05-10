@@ -5,9 +5,9 @@ import MemberItem from "./items/MemberItem";
 import { connect } from "react-redux";
 import { Input } from "antd";
 
-const Members = (props) => {
+const Members = ({ members, getMembers }) => {
   useEffect(() => {
-    props.getMembers({ id: 47823657 });
+    getMembers({ id: 47823657 });
   }, []);
 
   const [searchValue, setSearchValue] = useState("");
@@ -20,7 +20,7 @@ const Members = (props) => {
     <div className="members" style={{ marginTop: "20px" }}>
       <Input onChange={searchHandler} style={{ width: "30%" }} placeholder="Search member name" />
       <MembersHeader />
-      {props.members
+      {members
         .filter((item) => item.firstname.toLowerCase().includes(searchValue) || item.email.toLowerCase().includes(searchValue))
         .map((member, index) => (
           <MemberItem member={member} key={index} />
