@@ -15,18 +15,18 @@ body {
 }
 
 textarea:hover,
-input:hover,
+Input:hover,
 textarea:active,
-input:active,
+Input:active,
 textarea:focus,
-input:focus,
+Input:focus,
 button:focus,
 button:active,
 button:hover,
 label:focus,
 .btn:active,
 .btn.active {
-  outline: 0px !important;
+  outline: none !important;
   -webkit-appearance: none;
   box-shadow: none !important;
 }
@@ -659,8 +659,11 @@ button:focus {
 
   &__control-arrows {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
@@ -673,4 +676,10 @@ button:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.status-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }

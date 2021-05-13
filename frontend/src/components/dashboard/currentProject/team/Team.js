@@ -5,7 +5,7 @@ import Members from "./Members";
 import Groups from "./Groups";
 import InvitePanel from "./invitePanel/InvitePanel";
 
-const Team = () => {
+const Team = (props) => {
   const { TabPane } = Tabs;
 
   function callback(key) {
@@ -20,7 +20,7 @@ const Team = () => {
         </div>
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Active Members" key="1">
-            <Members />
+            <Members projectId={props.match.params.id} />
           </TabPane>
           <TabPane tab="Groups" key="2">
             <Input style={{ width: "30%" }} placeholder="Search group name" />

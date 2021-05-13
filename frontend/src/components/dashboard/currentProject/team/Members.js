@@ -5,9 +5,9 @@ import MemberItem from "./items/MemberItem";
 import { connect } from "react-redux";
 import { Input } from "antd";
 
-const Members = ({ members, getMembers }) => {
+const Members = ({ members, getMembers, projectId }) => {
   useEffect(() => {
-    getMembers({ id: 47823657 });
+    getMembers({ id: projectId });
   }, []);
 
   const [searchValue, setSearchValue] = useState("");
