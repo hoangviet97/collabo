@@ -1,10 +1,9 @@
 import React from "react";
 import Container from "../../../utils/Container";
-import Toolbar from "../../Toolbar";
-import { Tabs, Button, Input } from "antd";
+import { Tabs, Input } from "antd";
 import Members from "./Members";
 import Groups from "./Groups";
-import InviteModal from "../../../modal/InviteModal";
+import InvitePanel from "./invitePanel/InvitePanel";
 
 const Team = () => {
   const { TabPane } = Tabs;
@@ -16,7 +15,9 @@ const Team = () => {
   return (
     <Container size="30">
       <div className="project-team">
-        <InviteModal />
+        <div className="project-team_restricted-panel">
+          <InvitePanel />
+        </div>
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Active Members" key="1">
             <Members />

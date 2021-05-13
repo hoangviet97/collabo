@@ -28,7 +28,7 @@ const AssingeeModal = ({ members, assigneeSelected, close }) => {
               <div class="assignee-modal__identity">
                 <Avatar /> <span>{member.firstname}</span>
               </div>
-              <a onClick={(() => assigneeSelected(member.id), (e) => toogleHandler(index))}>
+              <a onClick={() => assigneeSelected(member.id)}>
                 {toggled[index] && <PlusOutlined style={{ fontSize: "18px" }} />}
                 {!toggled[index] && <CheckCircleOutlined style={{ fontSize: "18px", color: "green" }} />}
               </a>
