@@ -4,7 +4,7 @@ exports.ErrorResponse = function (res, msg) {
     message: msg
   };
   console.log(data);
-  return res.status(500).send(msg);
+  return res.status(500).json(data);
 };
 
 exports.notFoundResponse = function (res, msg) {
