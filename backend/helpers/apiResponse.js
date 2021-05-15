@@ -3,8 +3,8 @@ exports.ErrorResponse = function (res, msg) {
     status: 0,
     message: msg
   };
-  console.log(data.message);
-  return res.status(500).json(data);
+  console.log(data);
+  return res.status(500).send(msg);
 };
 
 exports.notFoundResponse = function (res, msg) {

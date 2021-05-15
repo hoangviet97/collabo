@@ -24,7 +24,7 @@ export const register = ({ firstname, lastname, email, password, push }) => asyn
     push("/login");
     message.success("Registration Success!");
   } catch (err) {
-    //console.log(err.response.data.message);
+    //console.log(err.response.data);
     dispatch({ type: REGISTER_FAIL });
   }
 };
