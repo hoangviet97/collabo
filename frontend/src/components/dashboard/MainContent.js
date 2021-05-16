@@ -7,7 +7,7 @@ import ProjectTasks from "./currentProject/tasks/ProjectTasks";
 import Chat from "./currentProject/chat/Chat";
 import Overview from "./currentProject/overview/Overview";
 import Board from "./currentProject/board/Board";
-import Calendar from "./currentProject/calendar/Calendar";
+import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
 import { getProject } from "../../actions/project";
@@ -32,7 +32,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/tasks" component={ProjectTasks} />
         <Route exact path="/:id/chat" component={Chat} />
         <Route exact path="/:id/overview" component={Overview} />
-        <Route exact path="/:id/calendar" component={Calendar} />
+        <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={Board} />
         <Route exact path="/:id/documents" component={Documents} />
         <Route exact path="/:id/team" component={Team} />

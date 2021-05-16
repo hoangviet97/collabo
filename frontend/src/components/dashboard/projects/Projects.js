@@ -11,7 +11,7 @@ import Spinner from "../../utils/Spinner";
 
 const Projects = (props) => {
   useEffect(() => {
-    props.getProjects();
+    props.projects.length < 1 && props.getProjects();
   }, []);
 
   const history = useHistory();
@@ -36,6 +36,8 @@ const Projects = (props) => {
     setActiveCards("projects-dimension__cards--active");
     setActiveList("");
   };
+
+  //kotva
 
   let content;
 

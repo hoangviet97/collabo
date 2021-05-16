@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Popover, Badge } from "antd";
+import { Popover, Menu } from "antd";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/auth";
 
@@ -8,11 +8,16 @@ import { SettingOutlined, BellOutlined, CarryOutOutlined, HomeOutlined, FolderOu
 
 const Sidebar = (props) => {
   const text = <span>Title</span>;
-  const content = (
-    <div>
-      <Link to="/settings">My Settings</Link>
-      <a onClick={props.logout}>Logout</a>
-    </div>
+
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/settings">Settings</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={props.logout}>Logout</a>
+      </Menu.Item>
+    </Menu>
   );
 
   return (
@@ -38,7 +43,7 @@ const Sidebar = (props) => {
         </Link>
       </nav>
       <div className="side-nav__profile">
-        <Popover placement="rightBottom" title={text} content={content} trigger="click">
+        <Popover placement="rightBottom" content={menu} trigger="click">
           <SettingOutlined style={{ fontSize: "25px", margin: "20px 0", color: "#383e42" }} />
         </Popover>
       </div>

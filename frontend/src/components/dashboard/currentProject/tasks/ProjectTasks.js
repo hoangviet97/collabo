@@ -23,6 +23,7 @@ const ProjectTasks = (props) => {
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
+  const [toggled, setToggle] = useState({});
 
   const sectionHandler = (e) => {
     setNewSection(e.target.value);
@@ -43,11 +44,11 @@ const ProjectTasks = (props) => {
     }
   };
 
-  const panelHeader = (name, id) => (
+  const panelHeader = (name, id, index) => (
     <React.Fragment>
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <span>{name}</span>
-        <Dropdown overlay={sectionMenu} trigger={["click"]}>
+      <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <span style={{ fontWeight: 600, fontSize: "16px" }}>{name}</span>
+        <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["click"]}>
           <a
             style={{ padding: "0px" }}
             type="link"
@@ -88,8 +89,8 @@ const ProjectTasks = (props) => {
       <Container size="30">
         <TaskHeader />
         <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-          {props.sections.map((section) => (
-            <Panel className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
+          {props.sections.map((section, index) => (
+            <Panel className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
                   return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;

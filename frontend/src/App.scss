@@ -683,3 +683,11 @@ button:focus {
   height: 10px;
   border-radius: 50%;
 }
+
+.panel-dropdown {
+  display: none;
+}
+
+.panel-header:hover .panel-dropdown {
+  display: inline-block;
+}

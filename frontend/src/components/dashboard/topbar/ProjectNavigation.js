@@ -73,7 +73,7 @@ const ProjectNavigation = (props) => {
           </Link>
         </li>
         <li className="project-nav-item">
-          <Popover placement="bottom" content={moreContent} trigger="click">
+          <Popover className="popover" placement="bottom" content={moreContent} trigger="click">
             <Link className="project-nav-link" to="">
               <EllipsisOutlined className="project-nav-link__icon" style={{ fontSize: "25px" }} />
             </Link>
