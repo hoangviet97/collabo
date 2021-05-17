@@ -50,11 +50,11 @@ const TaskItem = (props) => {
           <Avatar style={{ backgroundColor: "#1890ff" }} />
         </Avatar.Group>
       </div>
-      <div className="task-column__item task-column__status task-column__status--active" style={statusStyle}>
+      <div className="task-column__item task-column__status task-column__status--active">
         <Select className="status-select" defaultValue="lucy" showArrow={false} style={{ width: "100%" }}>
-          <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="Yiminghe">yiminghe</Option>
+          <Option value="jack">Pending</Option>
+          <Option value="lucy">Canceled</Option>
+          <Option value="Yiminghe">Completed</Option>
         </Select>
       </div>
       <div className="task-column__item task-column__priority">{props.priority}</div>

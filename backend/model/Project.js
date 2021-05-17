@@ -3,6 +3,7 @@ const uuid4 = require("uuid4");
 const randomInt = require("random-int");
 
 module.exports = {
+  // create new user
   createProject: async function (data, result) {
     let randId = randomInt(10000000, 99999999);
 
@@ -10,11 +11,12 @@ module.exports = {
       id: randId,
       name: data.name,
       description: data.description,
-      created_at: new Date()
+      created_at: new Date(),
+      status: 0
     };
 
-    const sql = `INSERT INTO projects (id, name, description, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at], (err, res) => {
+    const sql = `INSERT INTO projects (id, name, description, created_at, project_status_id) VALUES (?, ?, ?, ?, ?)`;
+    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.status], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -25,6 +27,7 @@ module.exports = {
     });
   },
 
+  // get all project from user x
   getAllProjects: function (userId, result) {
     const sql = `SELECT projects.id, projects.name, projects.description FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
     con.query(sql, [userId], (err, res) => {
@@ -38,6 +41,7 @@ module.exports = {
     });
   },
 
+  // get current project
   getProject: function (projectId, result) {
     const sql = `SELECT * FROM projects WHERE id = ?`;
     con.query(sql, [projectId], (err, res) => {

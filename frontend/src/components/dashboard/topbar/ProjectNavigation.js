@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Popover } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, FileTextOutlined, TeamOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { ThunderboltOutlined, CalendarOutlined, FileTextOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -13,6 +13,12 @@ const ProjectNavigation = (props) => {
         <Link className="project-nav-link" to={`/${path.split("/")[1]}/team`}>
           <TeamOutlined className="project-nav-link__icon" />
           <span>Team</span>
+        </Link>
+      </p>
+      <p>
+        <Link className="project-nav-link" to={`/${path.split("/")[1]}/meeting`}>
+          <FundProjectionScreenOutlined className="project-nav-link__icon" />
+          <span>Meeting</span>
         </Link>
       </p>
       <p>
