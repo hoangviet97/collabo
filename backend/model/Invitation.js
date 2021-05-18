@@ -12,14 +12,14 @@ module.exports = {
       created_at: new Date()
     };
 
-    const sql = `INSERT INTO invitations (id, sender, receiver, project, created_at) VALUES (?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO invitations (id, sender, receiver, project_id, created_at) VALUES (?, ?, ?, ?, ?)`;
     con.query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.project, invitation.created_at], (err, res) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      result(null, null);
+      result(null, "success");
       return;
     });
   }

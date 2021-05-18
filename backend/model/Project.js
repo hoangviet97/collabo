@@ -52,5 +52,18 @@ module.exports = {
 
       result(null, res);
     });
+  },
+
+  // get current project
+  setFavoriteProject: function (body, result) {
+    const sql = `UPDATE projects SET favorite = ? WHERE id = ?`;
+    con.query(sql, [body.status, body.projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
   }
 };
