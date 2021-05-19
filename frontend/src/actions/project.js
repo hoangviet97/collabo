@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING } from "./types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 import setAuthToken from "../helpers/setAuthToken";
@@ -6,7 +6,7 @@ import setAuthToken from "../helpers/setAuthToken";
 export const createProject = ({ name, push }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/projects/add", { name });
-    dispatch({ type: CREATE_PROJECT });
+    dispatch({ type: CREATE_PROJECT, payload: res.data });
     push(`/${res.data}/tasks`);
     message.success("Project " + name + " was successfully created");
   } catch (err) {
@@ -37,6 +37,15 @@ export const getProject = (id) => async (dispatch) => {
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: ERROR_SINGLE_PROJECT });
+  }
+};
+
+export const setFavorite = ({ id, status }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/projects/favorite", { status: status, projectId: id });
+    dispatch({ type: SET_FAVORITE_PROJECT, payload: { id: id, status: status } });
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }
 };
 

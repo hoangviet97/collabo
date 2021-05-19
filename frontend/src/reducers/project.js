@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING } from "../actions/types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "../actions/types";
 
 const initialState = {
   loading: false,
@@ -46,6 +46,15 @@ function projectReducer(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case SET_FAVORITE_PROJECT:
+      return {
+        ...state,
+        projects: state.projects.map((item) => (item.id === payload.id ? { ...item, favorite: payload.status } : item))
+      };
+    case SET_FAVORITE_PROJECT_FAIL:
+      return {
+        ...state
       };
     default:
       return state;

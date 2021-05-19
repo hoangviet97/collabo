@@ -12,11 +12,12 @@ module.exports = {
       name: data.name,
       description: data.description,
       created_at: new Date(),
-      status: 0
+      status: 0,
+      favorite: false
     };
 
-    const sql = `INSERT INTO projects (id, name, description, created_at, project_status_id) VALUES (?, ?, ?, ?, ?)`;
-    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.status], (err, res) => {
+    const sql = `INSERT INTO projects (id, name, description, created_at, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.status, newProject.favorite], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -29,7 +30,7 @@ module.exports = {
 
   // get all project from user x
   getAllProjects: function (userId, result) {
-    const sql = `SELECT projects.id, projects.name, projects.description FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
+    const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
     con.query(sql, [userId], (err, res) => {
       if (err) {
         result(err, null);

@@ -1,8 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setFavorite } from "../../../actions/project";
 import { Row, Col, Progress, Avatar } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 
-const Project = ({ project, projectCardHandler }) => {
+const Project = ({ project, projectCardHandler, setFavorite }) => {
+  // need to fix - boolean or num
+  const starStyle = project.favorite === 1 && "#FFD700";
+
+  const favoriteToggle = () => {
+    setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
+    console.log(!!project.favorite);
+  };
+
   return (
     <div className="project-card" style={{ margin: "0px", padding: "25px", borderRadius: "10px", backgroundColor: "white" }}>
       <div className="project-card__header">
@@ -12,7 +22,7 @@ const Project = ({ project, projectCardHandler }) => {
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
-              <StarFilled className="project-card__favorite" style={{ color: "#FFD700" }} />
+              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: starStyle }} />
               <EllipsisOutlined />
             </div>
           </Col>
@@ -24,7 +34,7 @@ const Project = ({ project, projectCardHandler }) => {
       <div className="project-card__footer">
         <Row className="project-card__footer-row">
           <Col span={12}>
-            <h4>Completed</h4>
+            <h4>Completed {project.favorite === true ? "ITS TRUE" : "ITS FALSE"}</h4>
           </Col>
           <Col span={12} style={{ textAlign: "end" }}>
             <Avatar.Group size={30} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
@@ -39,4 +49,4 @@ const Project = ({ project, projectCardHandler }) => {
   );
 };
 
-export default Project;
+export default connect(null, { setFavorite })(Project);
