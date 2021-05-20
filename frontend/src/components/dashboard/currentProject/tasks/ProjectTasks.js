@@ -5,7 +5,7 @@ import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks } from "../../../../actions/task";
 import { connect } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Form } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
@@ -23,7 +23,7 @@ const ProjectTasks = (props) => {
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
-  const [toggled, setToggle] = useState({});
+  const [panelName, setPanelName] = useState(true);
 
   const sectionHandler = (e) => {
     setNewSection(e.target.value);
@@ -44,11 +44,11 @@ const ProjectTasks = (props) => {
     }
   };
 
-  const panelHeader = (name, id, index) => (
+  const panelHeader = (name, id) => (
     <React.Fragment>
       <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <span style={{ fontWeight: 600, fontSize: "16px" }}>{name}</span>
-        <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["click"]}>
+        {panelName ? <input className="panel-input" value={name} autoFocus /> : <span>{name}</span>}
+        <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["hover"]}>
           <a
             style={{ padding: "0px" }}
             type="link"
@@ -67,7 +67,7 @@ const ProjectTasks = (props) => {
   const sectionMenu = () => (
     <Menu>
       <Menu.Item key="0">
-        <span>Rename</span>
+        <Text>Rename</Text>
       </Menu.Item>
       <Menu.Item key="1">
         <Text

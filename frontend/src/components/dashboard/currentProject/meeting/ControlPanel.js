@@ -1,6 +1,7 @@
 import React from "react";
 import { PlusOutlined, MoreOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import MeetingPanelList from "./MeetingPanelList";
 
 const ControlPanel = (props) => {
   return (
@@ -15,6 +16,9 @@ const ControlPanel = (props) => {
             <MoreOutlined />
           </Button>
         </div>
+      </div>
+      <div class="meeting__control-content">
+        <MeetingPanelList />
       </div>
     </div>
   );

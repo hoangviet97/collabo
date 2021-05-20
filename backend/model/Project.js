@@ -23,7 +23,7 @@ module.exports = {
         return;
       }
 
-      result(null, newProject.id);
+      result(null, { projectData: newProject, projectId: newProject.id });
       return;
     });
   },

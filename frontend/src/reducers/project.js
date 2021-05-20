@@ -13,7 +13,8 @@ function projectReducer(state = initialState, action) {
     // runs everytime when main component re-render
     case CREATE_PROJECT:
       return {
-        ...state
+        ...state,
+        projects: [...state.projects, payload]
       };
     case CREATE_PROJECT_FAIL:
       return {

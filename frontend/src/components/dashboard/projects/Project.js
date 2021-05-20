@@ -1,12 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../../actions/project";
-import { Row, Col, Progress, Avatar } from "antd";
-import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
+import { Row, Col, Progress, Avatar, Dropdown, Menu, Typography } from "antd";
+import { EllipsisOutlined, StarFilled, DeleteOutlined, LeftSquareOutlined } from "@ant-design/icons";
+import DeleteModal from "../../modal/DeleteModal";
 
 const Project = ({ project, projectCardHandler, setFavorite }) => {
-  // need to fix - boolean or num
+  const { Text } = Typography;
+
   const starStyle = project.favorite === 1 && "#FFD700";
+
+  const sectionMenu = () => (
+    <Menu>
+      <Menu.Item key="0">
+        <LeftSquareOutlined />
+        <span>Leave</span>
+      </Menu.Item>
+      <Menu.Item key="3" onClick={DeleteModal}>
+        <DeleteOutlined />
+        <Text type="danger">Delete</Text>
+      </Menu.Item>
+    </Menu>
+  );
 
   const favoriteToggle = () => {
     setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
@@ -23,7 +38,9 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
               <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: starStyle }} />
-              <EllipsisOutlined />
+              <Dropdown trigger={["hover"]} overlay={sectionMenu} placement="bottomRight">
+                <EllipsisOutlined className="more-icon" />
+              </Dropdown>
             </div>
           </Col>
         </Row>
@@ -34,7 +51,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
       <div className="project-card__footer">
         <Row className="project-card__footer-row">
           <Col span={12}>
-            <h4>Completed {project.favorite === true ? "ITS TRUE" : "ITS FALSE"}</h4>
+            <h4>Completed</h4>
           </Col>
           <Col span={12} style={{ textAlign: "end" }}>
             <Avatar.Group size={30} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
