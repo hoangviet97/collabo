@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../../../utils/Container";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
+import { connect } from "react-redux";
 
 const localizer = momentLocalizer(moment);
 
 const ProjectCalendar = () => {
+  const header = <h1>all day long</h1>;
+
   const myEventsList = [
     {
       id: 0,
-      title: "All Day Event very long title",
+      title: header,
       allDay: true,
       start: new Date(2021, 2, 1),
       end: new Date(2021, 2, 6)
@@ -38,4 +41,4 @@ const ProjectCalendar = () => {
   );
 };
 
-export default ProjectCalendar;
+export default connect()(ProjectCalendar);

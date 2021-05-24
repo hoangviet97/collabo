@@ -4,7 +4,7 @@ import ControlPanel from "./ControlPanel";
 import MeetingContent from "./MeetingContent";
 import MeetingModal from "../../../modal/MeetingModal";
 
-const Meeting = () => {
+const Meeting = (props) => {
   const data = [
     { id: 1, name: "Meeting 1" },
     { id: 1, name: "Meeting 2" },
@@ -31,7 +31,7 @@ const Meeting = () => {
       <div style={{ height: "calc(100vh-60px)", display: "flex", gap: "15px" }}>
         <ControlPanel addNewMeeting={addNewMeeting} />
         <MeetingContent />
-        <MeetingModal visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
+        <MeetingModal id={props.match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
       </div>
     </Container>
   );

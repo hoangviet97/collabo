@@ -706,3 +706,28 @@ button:focus {
   min-width: 60px;
   border: 0.5px solid grey;
 }
+
+.ant-modal-content {
+  overflow: auto;
+  border-radius: 12px;
+}
+
+.tasks-select-group {
+  display: flex;
+  gap: 5px;
+}
+
+/////// ant
+
+.ant-picker-calendar-mode-switch {
+  display: none;
+}
+
+.ant-picker-calendar-header {
+  display: flex;
+  justify-content: center;
+}
+
+div:last-of-type .task-column {
+  border-bottom: 0.5px solid #dfe4ea;
+}

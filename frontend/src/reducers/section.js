@@ -12,7 +12,8 @@ function sectionReducer(state = initialState, action) {
   switch (type) {
     case CREATE_SECTION:
       return {
-        ...state
+        ...state,
+        sections: [...state.sections, { id: payload.id, name: payload.name }]
       };
     case CREATE_SECTION_FAIL:
       return {

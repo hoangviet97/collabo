@@ -43,9 +43,13 @@ module.exports = {
   },
 
   // get current project
-  getProject: function (projectId, result) {
-    const sql = `SELECT * FROM projects WHERE id = ?`;
-    con.query(sql, [projectId], (err, res) => {
+  getProject: function (projectId, memberId, result) {
+    const sql = `SELECT projects.*, roles.name AS role
+                  FROM members 
+                  INNER JOIN projects ON members.projects_id = projects.id 
+                  INNER JOIN roles ON members.roles_id = roles.id 
+                  WHERE members.projects_id = ? AND members.users_id = ?`;
+    con.query(sql, [projectId, memberId], (err, res) => {
       if (err) {
         result(err, null);
         return;

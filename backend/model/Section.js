@@ -18,7 +18,7 @@ module.exports = {
         return;
       }
 
-      result(null, "success");
+      result(null, newSection);
       return;
     });
   },

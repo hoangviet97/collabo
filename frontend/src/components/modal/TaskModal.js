@@ -140,49 +140,55 @@ const TaskModal = (props) => {
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
           <div className="box">
-            <Form.Item name="statusId">
-              <Select placeholder="Select a status" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                <Option value="0">
-                  <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#ecf0f1" }} />
-                  &nbsp;&nbsp;Open
-                </Option>
-                <Option value="1">
-                  <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#3498db" }} />
-                  &nbsp;&nbsp;In Progress
-                </Option>
-                <Option value="2">
-                  <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#f1c40f" }} />
-                  &nbsp;&nbsp;On Hold
-                </Option>
-                <Option value="3">
-                  <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#27ae60" }} />
-                  &nbsp;&nbsp;Completed
-                </Option>
-                <Option value="4">
-                  <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#e74c3c" }} />
-                  &nbsp;&nbsp;Canceled
-                </Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="priorityId">
-              <Select placeholder="Select a priority" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                <Option value="0">
-                  <Text strong style={{ color: "#f1c40f" }}>
-                    Low
-                  </Text>
-                </Option>
-                <Option value="1">
-                  <Text strong style={{ color: "#27ae60" }}>
-                    Medium
-                  </Text>
-                </Option>
-                <Option value="2">
-                  <Text strong style={{ color: "#e74c3c" }}>
-                    High
-                  </Text>
-                </Option>
-              </Select>
-            </Form.Item>
+            <Row>
+              <Col span={12}>
+                <Form.Item name="statusId">
+                  <Select placeholder="Select a status" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                    <Option value="0">
+                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#ecf0f1" }} />
+                      &nbsp;&nbsp;Open
+                    </Option>
+                    <Option value="1">
+                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#3498db" }} />
+                      &nbsp;&nbsp;In Progress
+                    </Option>
+                    <Option value="2">
+                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#f1c40f" }} />
+                      &nbsp;&nbsp;On Hold
+                    </Option>
+                    <Option value="3">
+                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#27ae60" }} />
+                      &nbsp;&nbsp;Completed
+                    </Option>
+                    <Option value="4">
+                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#e74c3c" }} />
+                      &nbsp;&nbsp;Canceled
+                    </Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item name="priorityId">
+                  <Select placeholder="Select a priority" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                    <Option value="0">
+                      <Text strong style={{ color: "#f1c40f" }}>
+                        Low
+                      </Text>
+                    </Option>
+                    <Option value="1">
+                      <Text strong style={{ color: "#27ae60" }}>
+                        Medium
+                      </Text>
+                    </Option>
+                    <Option value="2">
+                      <Text strong style={{ color: "#e74c3c" }}>
+                        High
+                      </Text>
+                    </Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
           </div>
           <Form.Item>
             <Button style={{ border: "none", padding: 0 }}>

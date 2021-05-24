@@ -1,4 +1,4 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING } from "../actions/types";
+import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK, UPDATE_TASK_FAIL } from "../actions/types";
 
 const initialState = {
   tasks: [],
@@ -27,6 +27,15 @@ function taskReducer(state = initialState, action) {
       return {
         ...state,
         tasks: []
+      };
+    case UPDATE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((item) => (item.id === payload.id ? { ...item, task_status_id: payload.statusId } : item))
+      };
+    case UPDATE_TASK_FAIL:
+      return {
+        ...state
       };
     case DELETE_TASK:
       return {

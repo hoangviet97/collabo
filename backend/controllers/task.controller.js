@@ -25,6 +25,20 @@ module.exports = {
     });
   },
 
+  getPersonal: function (req, res) {
+    Task.getPersonalTasks(req.body.id, req.user.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  update: function (req, res) {
+    Task.updateTask(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

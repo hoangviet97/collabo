@@ -53,7 +53,7 @@ module.exports = {
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.name AS priority, task_status.name AS status, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.name AS priority, task_status.name AS status, task_status.id AS task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM sections 
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -67,6 +67,40 @@ module.exports = {
       }
 
       result(null, res);
+      return;
+    });
+  },
+
+  // get all tasks
+  getPersonalTasks: async function (id, userId, result) {
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.name AS priority, task_status.name AS status, task_status.id AS task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+                    FROM members_tasks 
+                    INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    INNER JOIN sections ON tasks.sections_id = sections.id
+                    WHERE sections.projects_id = ? AND members_tasks.members_id = (SELECT id FROM members WHERE users_id = ? AND projects_id = ?)`;
+
+    con.query(sql, [id, userId, id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  updateTask: async function (task, result) {
+    const sql = `UPDATE tasks SET task_status_id = ? WHERE id = ?`;
+    con.query(sql, [task.statusId, task.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
       return;
     });
   },

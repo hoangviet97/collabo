@@ -21,16 +21,30 @@ const ProjectTasks = (props) => {
   const { Text } = Typography;
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
+  const [newTaskVisibility, setNewTaskVisibility] = useState(false);
+  const [newTask, setNewTask] = useState("");
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [panelName, setPanelName] = useState(true);
+
+  const taskHandler = (e) => {
+    setNewTask(e.target.value);
+  };
 
   const sectionHandler = (e) => {
     setNewSection(e.target.value);
   };
 
+  const taskVisibilityHandler = () => {
+    setNewTaskVisibility(true);
+  };
+
   const sectionVisibilityHandler = () => {
     setNewSectionVisibility(true);
+  };
+
+  const onBlurTaskHandler = () => {
+    setNewTaskVisibility(false);
   };
 
   const onBlurSectionHandler = () => {
@@ -47,7 +61,9 @@ const ProjectTasks = (props) => {
   const panelHeader = (name, id) => (
     <React.Fragment>
       <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        {panelName ? <input className="panel-input" value={name} autoFocus /> : <span>{name}</span>}
+        <span className="panel-header__title" style={{ fontSize: "20px" }}>
+          {name}
+        </span>
         <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["hover"]}>
           <a
             style={{ padding: "0px" }}
@@ -85,34 +101,36 @@ const ProjectTasks = (props) => {
 
   return (
     <div className="project-tasks">
-      <Toolbar />
       <Container size="30">
-        <TaskHeader />
         <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
           {props.sections.map((section, index) => (
-            <Panel className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
+            <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;
+                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.task_status_id} priority={task.priority} due_date={task.due_date} />;
                 }
               })}
-              <Button type="link">Add new task</Button>
+              {newTaskVisibility ? (
+                <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={onBlurTaskHandler} autoFocus />
+              ) : (
+                <Button type="link" onClick={taskVisibilityHandler}>
+                  Add new task
+                </Button>
+              )}
             </Panel>
           ))}
         </Collapse>
-        <Container size="15">
-          {newSectionVisibility === false ? (
-            <Button onClick={sectionVisibilityHandler}>Add new section</Button>
-          ) : (
-            <div className="add-section-container">
-              <div className="add-section-inputField">
-                <form onSubmit={onBlurSectionHandler}>
-                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
-                </form>
-              </div>
+        {newSectionVisibility === false ? (
+          <Button onClick={sectionVisibilityHandler}>Add new section</Button>
+        ) : (
+          <div className="add-section-container">
+            <div className="add-section-inputField">
+              <form onSubmit={onBlurSectionHandler}>
+                <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
+              </form>
             </div>
-          )}
-        </Container>
+          </div>
+        )}
       </Container>
     </div>
   );

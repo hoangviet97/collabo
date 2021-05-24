@@ -38,7 +38,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
               <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: starStyle }} />
-              <Dropdown trigger={["hover"]} overlay={sectionMenu} placement="bottomRight">
+              <Dropdown style={{ borderRadius: "50px" }} trigger={["hover"]} overlay={sectionMenu} placement="bottomRight">
                 <EllipsisOutlined className="more-icon" />
               </Dropdown>
             </div>

@@ -1,4 +1,4 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING } from "./types";
+import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK, UPDATE_TASK_FAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -23,6 +23,16 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
+export const updateTask = ({ id, statusId }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/tasks/update", { id, statusId });
+    dispatch({ type: UPDATE_TASK, payload: { id, statusId } });
+    message.success("Task updated!");
+  } catch (err) {
+    dispatch({ type: UPDATE_TASK_FAIL });
   }
 };
 

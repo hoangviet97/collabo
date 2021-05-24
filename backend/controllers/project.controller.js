@@ -29,7 +29,7 @@ module.exports = {
   },
 
   getOne: function (req, res) {
-    Project.getProject(req.body.id, (err, result) => {
+    Project.getProject(req.body.id, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

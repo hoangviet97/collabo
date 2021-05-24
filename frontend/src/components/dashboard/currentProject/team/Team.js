@@ -18,6 +18,7 @@ const Team = (props) => {
         <div className="project-team_restricted-panel">
           <InvitePanel />
         </div>
+
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Active Members" key="1">
             <Members projectId={props.match.params.id} />
