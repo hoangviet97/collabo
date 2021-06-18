@@ -33,10 +33,18 @@ module.exports = {
   },
 
   update: function (req, res) {
-    Task.updateTask(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+    switch (req.body.type) {
+      case "status":
+        Task.updateStatus(req.body, (err, result) => {
+          if (err) return apiResponse.ErrorResponse(res, err.message);
+          return res.json(result);
+        });
+      case "priority":
+        Task.updatePriority(req.body, (err, result) => {
+          if (err) return apiResponse.ErrorResponse(res, err.message);
+          return res.json(result);
+        });
+    }
   },
 
   delete: function (req, res) {

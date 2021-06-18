@@ -382,6 +382,10 @@ button:focus {
   width: 30%;
 }
 
+.task-column:first-of-type {
+  border-top: 0.5px solid #dfe4ea;
+}
+
 .task-column {
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -390,6 +394,7 @@ button:focus {
   height: 50px;
   cursor: pointer;
   text-align: center;
+  border-bottom: 0.5px solid #dfe4ea;
 
   &__name {
     width: 35%;
@@ -728,6 +733,6 @@ button:focus {
   justify-content: center;
 }
 
-div:last-of-type .task-column {
-  border-bottom: 0.5px solid #dfe4ea;
+.task-select {
+  transition: color 0.2s;
 }

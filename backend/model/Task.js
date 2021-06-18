@@ -53,7 +53,7 @@ module.exports = {
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.name AS priority, task_status.name AS status, task_status.id AS task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.name AS priority, priorities.id AS priorityId, task_status.name AS status, task_status.id AS task_status_id, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM sections 
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -92,9 +92,22 @@ module.exports = {
     });
   },
 
-  updateTask: async function (task, result) {
+  updateStatus: async function (task, result) {
     const sql = `UPDATE tasks SET task_status_id = ? WHERE id = ?`;
-    con.query(sql, [task.statusId, task.id], (err, res) => {
+    con.query(sql, [task.typeId, task.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
+  updatePriority: async function (task, result) {
+    const sql = `UPDATE tasks SET priorities_id = ? WHERE id = ?`;
+    con.query(sql, [task.typeId, task.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

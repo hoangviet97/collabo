@@ -8,7 +8,7 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 const Toolbox = (props) => {
   const taskModalHandler = () => {
     props.showTaskModal();
-    props.getProjects();
+    //upravit na localni modal
   };
 
   return (

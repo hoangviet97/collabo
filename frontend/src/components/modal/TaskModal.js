@@ -12,6 +12,10 @@ import AssigneeModal from "./AssingeeModal";
 import { withRouter } from "react-router-dom";
 
 const TaskModal = (props) => {
+  useEffect(() => {
+    props.projects.length === 0 && props.getProjects();
+  }, []);
+
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;

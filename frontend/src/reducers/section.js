@@ -1,4 +1,4 @@
-import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL } from "../actions/types";
+import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL, RESET_SECTIONS } from "../actions/types";
 
 const initialState = {
   sections: [],
@@ -48,6 +48,11 @@ function sectionReducer(state = initialState, action) {
       return {
         ...state,
         modalSections: []
+      };
+    case RESET_SECTIONS:
+      return {
+        ...state,
+        sections: []
       };
     case SECTIONS_LOADING:
       return {

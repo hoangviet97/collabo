@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, InfoCircleFilled, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Menu, Typography, DatePicker } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -39,16 +39,26 @@ const TaskItem = (props) => {
   const sectionMenu = () => (
     <Menu>
       <Menu.Item key="0">
-        <span>Rename</span>
+        <span>
+          <FormOutlined />
+          Rename
+        </span>
       </Menu.Item>
-      <Menu.Item key="1">
-        <span>Duplicate</span>
+      <Menu.Item key="1" onClick={() => console.log(props.id + " " + props.name)}>
+        <span>
+          <CopyOutlined />
+          Duplicate
+        </span>
       </Menu.Item>
       <Menu.Item key="2">
-        <span>Add to favorite</span>
+        <span>
+          <StarOutlined />
+          Add to favorite
+        </span>
       </Menu.Item>
       <Menu.Item key="3">
         <Text type="danger" onClick={deleteTaskHandler}>
+          <DeleteOutlined />
           Delete
         </Text>
       </Menu.Item>
@@ -61,7 +71,6 @@ const TaskItem = (props) => {
     var scrollTop = document.documentElement.scrollTop;
     const absoluteY = scrollTop + rect.top;
     setDatePosition({ x: e.pageX, y: absoluteY });
-    console.log(e.pageX);
   };
 
   const deleteTaskHandler = (event) => {
@@ -80,13 +89,17 @@ const TaskItem = (props) => {
   const switchTaskStatusHandler = (value) => {
     console.log(value);
     setDone(value);
-    props.updateTask({ id: props.id, statusId: value });
+    props.updateTask({ id: props.id, typeId: value, type: "status" });
+  };
+
+  const switchPriorityHandler = (value) => {
+    props.updateTask({ id: props.id, typeId: value, type: "priority" });
   };
 
   return (
-    <div className="task-column" style={{ borderTop: "0.5px solid #dfe4ea" }}>
+    <div className="task-column">
       <div className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "green" : "#ededed" }} />
+        <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
         <span>{props.name}</span>
       </div>
       <div className="task-column__item task-column__assignees">
@@ -97,7 +110,7 @@ const TaskItem = (props) => {
         </Avatar.Group>
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
-        <Select className="status-select" defaultValue={props.status} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={props.status} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">Open</Option>
           <Option value="1">In Progress</Option>
           <Option value="2">On Hold</Option>
@@ -105,10 +118,22 @@ const TaskItem = (props) => {
           <Option value="4">Canceled</Option>
         </Select>
       </div>
-      <div className="task-column__item task-column__priority">{props.priority}</div>
+      <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Select className="task-select" defaultValue={props.priority} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+          <Option value="0">
+            <InfoCircleFilled style={{ color: "green", fontSize: "25px" }} />
+          </Option>
+          <Option value="1">
+            <InfoCircleFilled style={{ color: "orange", fontSize: "25px" }} />
+          </Option>
+          <Option value="2">
+            <InfoCircleFilled style={{ color: "crimson", fontSize: "25px" }} />
+          </Option>
+        </Select>
+      </div>
       <div className="task-column__item task-column__due-date">
         {due_date}
-        <TaskDateModal show={datePicker} close={closeDateHandler} pos={datePosition} />
+        <TaskDateModal start_date={props.start_date} due_date={props.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__more">
         <Dropdown onClick={() => console.log(props.id)} trigger={["click"]} overlay={sectionMenu} placement="bottomRight">

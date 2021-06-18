@@ -4,8 +4,8 @@ import Container from "../../utils/Container";
 import { Button, Select, Collapse, Dropdown, Menu, Typography } from "antd";
 import { InboxOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
-import { getSections, deleteSection } from "../../../actions/section";
-import { getProjectTasks } from "../../../actions/task";
+import { getSections, deleteSection, resetSections } from "../../../actions/section";
+import { getPersonalTasks } from "../../../actions/task";
 import { getProjects } from "../../../actions/project";
 import TaskItem from "./TaskItem";
 
@@ -16,6 +16,7 @@ const Tasks = (props) => {
   const { Text } = Typography;
 
   useEffect(() => {
+    props.resetSections();
     props.getProjects();
   }, []);
 
@@ -73,7 +74,7 @@ const Tasks = (props) => {
 
   const onProjectSelect = (value) => {
     props.getSections({ id: value });
-    props.getProjectTasks({ id: value });
+    props.getPersonalTasks({ id: value });
   };
 
   return (
@@ -116,4 +117,4 @@ const mapStateToProps = (state) => ({
   tasks: state.task.tasks
 });
 
-export default connect(mapStateToProps, { getSections, deleteSection, getProjects, getProjectTasks })(Tasks);
+export default connect(mapStateToProps, { getSections, deleteSection, getProjects, getPersonalTasks, resetSections })(Tasks);

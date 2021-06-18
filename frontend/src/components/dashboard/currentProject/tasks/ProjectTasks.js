@@ -26,6 +26,7 @@ const ProjectTasks = (props) => {
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [panelName, setPanelName] = useState(true);
+  const [taskDetail, setTaskDetail] = useState(null);
 
   const taskHandler = (e) => {
     setNewTask(e.target.value);
@@ -113,7 +114,7 @@ const ProjectTasks = (props) => {
               {newTaskVisibility ? (
                 <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={onBlurTaskHandler} autoFocus />
               ) : (
-                <Button type="link" onClick={taskVisibilityHandler}>
+                <Button style={{ paddingLeft: "0" }} type="link" onClick={taskVisibilityHandler}>
                   Add new task
                 </Button>
               )}
@@ -132,6 +133,7 @@ const ProjectTasks = (props) => {
           </div>
         )}
       </Container>
+      {taskDetail && <div className="m" style={{ backgroundColor: "grey", position: "absolute", top: "50%", left: "50%", right: 0, bottom: 0, transform: "translate(-50%, -50%)", zIndex: 999999, width: "95%", height: "95vh", borderRadius: "12px" }}></div>}
     </div>
   );
 };

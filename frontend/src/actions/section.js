@@ -1,4 +1,4 @@
-import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL } from "./types";
+import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL, RESET_SECTIONS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -39,6 +39,10 @@ export const deleteSection = ({ id }) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: DELETE_SECTION_FAIL });
   }
+};
+
+export const resetSections = () => {
+  return { type: RESET_SECTIONS };
 };
 
 export const setSectionLoading = () => {

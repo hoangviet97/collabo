@@ -1,6 +1,7 @@
 import React from "react";
 import { Checkbox, Avatar, Select } from "antd";
 import { connect } from "react-redux";
+import StatusMark from "../../../../utils/StatusMark";
 
 const MemberItem = (props) => {
   const { Option } = Select;
@@ -28,7 +29,9 @@ const MemberItem = (props) => {
         </Select>
       </div>
       <div className="members-item__tasks">12</div>
-      <div className="members-item__status">online</div>
+      <div className="members-item__status" style={{ display: "flex", justifyContent: "center" }}>
+        <StatusMark color="#6ab04c" />
+      </div>
       <div className="members-item__more">...</div>
     </div>
   );

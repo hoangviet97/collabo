@@ -8,7 +8,7 @@ export const createProject = ({ name, push }) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/projects/add", { name });
     console.log(res.data);
     dispatch({ type: CREATE_PROJECT, payload: res.data });
-    push(`/${res.data}/tasks`);
+    push(`/${res.data.id}/tasks`);
     message.success("Project " + name + " was successfully created");
   } catch (err) {
     dispatch({ type: CREATE_PROJECT_FAIL });
