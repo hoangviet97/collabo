@@ -32,19 +32,19 @@ module.exports = {
     });
   },
 
-  update: function (req, res) {
-    switch (req.body.type) {
-      case "status":
-        Task.updateStatus(req.body, (err, result) => {
-          if (err) return apiResponse.ErrorResponse(res, err.message);
-          return res.json(result);
-        });
-      case "priority":
-        Task.updatePriority(req.body, (err, result) => {
-          if (err) return apiResponse.ErrorResponse(res, err.message);
-          return res.json(result);
-        });
-    }
+  updatePriority: function (req, res) {
+    console.log(req.body);
+    Task.updatePriority(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateStatus: function (req, res) {
+    Task.updateStatus(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   },
 
   delete: function (req, res) {

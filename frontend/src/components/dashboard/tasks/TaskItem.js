@@ -3,9 +3,10 @@ import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, InfoCircleFilled, 
 import { Avatar, Button, Dropdown, Menu, Typography, DatePicker } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
-import { deleteTask, updateTask } from "../../../actions/task";
+import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actions/task";
 import { Select } from "antd";
 import TaskDateModal from "../../modal/TaskDateModdal";
+import StatusIcon from "../../utils/StatusIcon";
 
 const TaskItem = (props) => {
   const [datePicker, setDatePicker] = useState(null);
@@ -87,13 +88,12 @@ const TaskItem = (props) => {
   };
 
   const switchTaskStatusHandler = (value) => {
-    console.log(value);
     setDone(value);
-    props.updateTask({ id: props.id, typeId: value, type: "status" });
+    props.updateTaskStatus({ id: props.id, statusId: value, project: props.projectId });
   };
 
   const switchPriorityHandler = (value) => {
-    props.updateTask({ id: props.id, typeId: value, type: "priority" });
+    props.updateTaskPriority({ id: props.id, priorityId: value, project: props.projectId });
   };
 
   return (
@@ -111,7 +111,7 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={props.status} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
-          <Option value="0">Open</Option>
+          <Option value="0">Open {props.projectId}</Option>
           <Option value="1">In Progress</Option>
           <Option value="2">On Hold</Option>
           <Option value="3">Completed</Option>
@@ -144,4 +144,4 @@ const TaskItem = (props) => {
   );
 };
 
-export default connect(null, { deleteTask, updateTask })(TaskItem);
+export default connect(null, { deleteTask, updateTaskStatus, updateTaskPriority })(TaskItem);

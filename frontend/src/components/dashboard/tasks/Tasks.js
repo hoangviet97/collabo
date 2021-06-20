@@ -88,11 +88,6 @@ const Tasks = (props) => {
                 <Option value={project.id}>{project.name}</Option>
               ))}
             </Select>
-            <Select placeholder="Select section" style={{ width: 200 }} allowClear>
-              {props.sections.map((section) => (
-                <Option value={section.id}>{section.name}</Option>
-              ))}
-            </Select>
           </div>
         </Toolbar>
         <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
@@ -100,7 +95,7 @@ const Tasks = (props) => {
             <Panel key={index} style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.task_status_id} priority={task.priority} due_date={task.due_date} />;
+                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
                 }
               })}
             </Panel>

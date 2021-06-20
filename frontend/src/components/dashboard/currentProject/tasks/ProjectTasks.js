@@ -108,7 +108,7 @@ const ProjectTasks = (props) => {
             <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.task_status_id} priority={task.priority} due_date={task.due_date} />;
+                  return <TaskItem projectId={props.match.params.id} key={index} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
                 }
               })}
               {newTaskVisibility ? (
