@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, InfoCircleFilled, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Menu, Typography, DatePicker } from "antd";
+import { Avatar, Button, Dropdown, Menu, Typography, DatePicker, Tag } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actions/task";
@@ -111,7 +111,7 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={props.status} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
-          <Option value="0">Open {props.projectId}</Option>
+          <Option value="0">Open</Option>
           <Option value="1">In Progress</Option>
           <Option value="2">On Hold</Option>
           <Option value="3">Completed</Option>
@@ -121,13 +121,13 @@ const TaskItem = (props) => {
       <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Select className="task-select" defaultValue={props.priority} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
-            <InfoCircleFilled style={{ color: "green", fontSize: "25px" }} />
+            <Tag color="gold">Low</Tag>
           </Option>
           <Option value="1">
-            <InfoCircleFilled style={{ color: "orange", fontSize: "25px" }} />
+            <Tag color="orange">Medium</Tag>
           </Option>
           <Option value="2">
-            <InfoCircleFilled style={{ color: "crimson", fontSize: "25px" }} />
+            <Tag color="red">High</Tag>
           </Option>
         </Select>
       </div>

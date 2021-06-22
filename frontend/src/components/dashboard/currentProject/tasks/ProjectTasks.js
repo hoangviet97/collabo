@@ -3,7 +3,7 @@ import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
-import { getProjectTasks } from "../../../../actions/task";
+import { getProjectTasks, createTask } from "../../../../actions/task";
 import { connect } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Form } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
@@ -36,7 +36,7 @@ const ProjectTasks = (props) => {
     setNewSection(e.target.value);
   };
 
-  const taskVisibilityHandler = () => {
+  const newTaskVisibilityHandler = () => {
     setNewTaskVisibility(true);
   };
 
@@ -44,8 +44,26 @@ const ProjectTasks = (props) => {
     setNewSectionVisibility(true);
   };
 
-  const onBlurTaskHandler = () => {
+  const onBlurTaskHandler = (sectionId) => {
     setNewTaskVisibility(false);
+
+    const values = {
+      sectionId: sectionId,
+      priorityId: "0",
+      statusId: "0",
+      name: newTask,
+      description: null,
+      start_date: null,
+      due_date: null,
+      assigneesArray: []
+    };
+
+    if (newTask.length > 0) {
+      props.createTask({ task: values, projectId: props.match.params.id });
+      setNewTask("");
+    } else {
+      console.log("empty name");
+    }
   };
 
   const onBlurSectionHandler = () => {
@@ -112,10 +130,12 @@ const ProjectTasks = (props) => {
                 }
               })}
               {newTaskVisibility ? (
-                <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={onBlurTaskHandler} autoFocus />
+                <form onSubmit={() => onBlurTaskHandler(section.id)}>
+                  <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
+                </form>
               ) : (
-                <Button style={{ paddingLeft: "0" }} type="link" onClick={taskVisibilityHandler}>
-                  Add new task
+                <Button style={{ paddingLeft: "0" }} type="link" onClick={newTaskVisibilityHandler}>
+                  Add task
                 </Button>
               )}
             </Panel>
@@ -144,4 +164,4 @@ const mapStateToProps = (state) => ({
   loading: state.section.loading
 });
 
-export default connect(mapStateToProps, { getSections, getProjectTasks, createSection, deleteSection })(ProjectTasks);
+export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection })(ProjectTasks);

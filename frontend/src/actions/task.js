@@ -61,7 +61,7 @@ export const updateTaskPriority = ({ id, priorityId, project }) => async (dispat
 
 export const deleteTask = ({ id }) => async (dispatch) => {
   try {
-    const res = await axios.delete("http://localhost:9000/api/tasks/delete", { id });
+    const res = await axios.post("http://localhost:9000/api/tasks/delete", { id });
     dispatch({ type: DELETE_TASK, payload: id });
     message.success("Task deleted!");
   } catch (err) {

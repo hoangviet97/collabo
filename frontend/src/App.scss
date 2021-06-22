@@ -736,3 +736,10 @@ button:focus {
 .task-select {
   transition: color 0.2s;
 }
+
+.priority-bullet {
+  background-color: #4e4e4e;
+  padding: 8px 5px;
+  text-align: center;
+  border-radius: 12px;
+}

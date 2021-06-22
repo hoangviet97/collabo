@@ -9,6 +9,6 @@ router.post("/all", auth, taskController.getAll);
 router.post("/personal", auth, taskController.getPersonal);
 router.patch("/update-status", [auth, isAdmin], taskController.updateStatus);
 router.patch("/update-priority", [auth, isAdmin], taskController.updatePriority);
-router.delete("/delete", auth, taskController.delete);
+router.post("/delete", auth, taskController.delete);
 
 module.exports = router;
