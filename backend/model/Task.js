@@ -7,8 +7,8 @@ module.exports = {
     const newTask = {
       id: uuid4(),
       sectionId: body.sectionId,
-      priorityId: body.priorityId,
-      statusId: body.statusId,
+      priorityId: body.priorityId == null || body.priorityId == undefined ? 0 : body.priorityId,
+      statusId: body.statusId == null || body.priorityId == undefined ? 0 : body.statusId,
       name: body.name,
       description: body.description,
       start_date: body.start_date,

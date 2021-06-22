@@ -48,6 +48,11 @@ const TaskModal = (props) => {
     setAssigneesArray((assigneesArray) => [...assigneesArray, id]);
   };
 
+  const assigneeDelete = (id) => {
+    const newAssigneeArray = assigneesArray.filter((assignee) => assignee !== id);
+    setAssigneesArray(newAssigneeArray);
+  };
+
   const onFinish = (fieldsValue) => {
     const rangeValue = fieldsValue["range-picker"];
     let values;
@@ -137,7 +142,7 @@ const TaskModal = (props) => {
                 </Button>
               )}
               {/* Conditional Assignee modal */}
-              {assigneeModal && <AssigneeModal close={closeAsigneeModal} assigneeSelected={assigneeSelected} members={props.members} />}
+              {assigneeModal && <AssigneeModal close={closeAsigneeModal} assigneeSelected={assigneeSelected} assigneeDelete={assigneeDelete} members={props.members} />}
             </Col>
           </Row>
           <Form.Item name="description">
