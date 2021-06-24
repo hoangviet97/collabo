@@ -13,9 +13,9 @@ module.exports = {
     Project.createProject(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      Member.createMember(req.user.id, result, (err, resu) => {
+      Member.createMember(req.user.id, result.projectId, (err, resu) => {
         if (err) return apiResponse.ErrorResponse(res, err.message);
-        return res.json(resu);
+        return res.json(result.projectData);
       });
     });
   },
@@ -29,7 +29,14 @@ module.exports = {
   },
 
   getOne: function (req, res) {
-    Project.getProject(req.body.id, (err, result) => {
+    Project.getProject(req.body.id, req.user.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setFavorite: function (req, res) {
+    Project.setFavoriteProject(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

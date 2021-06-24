@@ -3,9 +3,9 @@ import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
-import { getProjectTasks } from "../../../../actions/task";
+import { getProjectTasks, createTask } from "../../../../actions/task";
 import { connect } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Form } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
@@ -21,15 +21,49 @@ const ProjectTasks = (props) => {
   const { Text } = Typography;
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
+  const [newTaskVisibility, setNewTaskVisibility] = useState(false);
+  const [newTask, setNewTask] = useState("");
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
+  const [panelName, setPanelName] = useState(true);
+  const [taskDetail, setTaskDetail] = useState(null);
+
+  const taskHandler = (e) => {
+    setNewTask(e.target.value);
+  };
 
   const sectionHandler = (e) => {
     setNewSection(e.target.value);
   };
 
+  const newTaskVisibilityHandler = () => {
+    setNewTaskVisibility(true);
+  };
+
   const sectionVisibilityHandler = () => {
     setNewSectionVisibility(true);
+  };
+
+  const onBlurTaskHandler = (sectionId) => {
+    setNewTaskVisibility(false);
+
+    const values = {
+      sectionId: sectionId,
+      priorityId: "0",
+      statusId: "0",
+      name: newTask,
+      description: null,
+      start_date: null,
+      due_date: null,
+      assigneesArray: []
+    };
+
+    if (newTask.length > 0) {
+      props.createTask({ task: values, projectId: props.match.params.id });
+      setNewTask("");
+    } else {
+      console.log("empty name");
+    }
   };
 
   const onBlurSectionHandler = () => {
@@ -45,9 +79,11 @@ const ProjectTasks = (props) => {
 
   const panelHeader = (name, id) => (
     <React.Fragment>
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <span>{name}</span>
-        <Dropdown overlay={sectionMenu} trigger={["click"]}>
+      <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <span className="panel-header__title" style={{ fontSize: "20px" }}>
+          {name}
+        </span>
+        <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["hover"]}>
           <a
             style={{ padding: "0px" }}
             type="link"
@@ -66,7 +102,7 @@ const ProjectTasks = (props) => {
   const sectionMenu = () => (
     <Menu>
       <Menu.Item key="0">
-        <span>Rename</span>
+        <Text>Rename</Text>
       </Menu.Item>
       <Menu.Item key="1">
         <Text
@@ -84,36 +120,40 @@ const ProjectTasks = (props) => {
 
   return (
     <div className="project-tasks">
-      <Toolbar />
       <Container size="30">
-        <Collapse style={{ padding: 0, margin: 0, width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-          <Container size="15">
-            <TaskHeader />
-          </Container>
-          {props.sections.map((section) => (
-            <Panel key={section.id} header={panelHeader(section.name, section.id)}>
+        <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
+          {props.sections.map((section, index) => (
+            <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem key={index} tasks={task} id={task.id} name={task.name} status={task.status} priority={task.priority} due_date={task.due_date} />;
+                  return <TaskItem projectId={props.match.params.id} key={index} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
                 }
               })}
+              {newTaskVisibility ? (
+                <form onSubmit={() => onBlurTaskHandler(section.id)}>
+                  <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
+                </form>
+              ) : (
+                <Button style={{ paddingLeft: "0" }} type="link" onClick={newTaskVisibilityHandler}>
+                  Add task
+                </Button>
+              )}
             </Panel>
           ))}
         </Collapse>
-        <Container size="15">
-          {newSectionVisibility === false ? (
-            <Button onClick={sectionVisibilityHandler}>Add new section</Button>
-          ) : (
-            <div className="add-section-container">
-              <div className="add-section-inputField">
-                <form onSubmit={onBlurSectionHandler}>
-                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
-                </form>
-              </div>
+        {newSectionVisibility === false ? (
+          <Button onClick={sectionVisibilityHandler}>Add new section</Button>
+        ) : (
+          <div className="add-section-container">
+            <div className="add-section-inputField">
+              <form onSubmit={onBlurSectionHandler}>
+                <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
+              </form>
             </div>
-          )}
-        </Container>
+          </div>
+        )}
       </Container>
+      {taskDetail && <div className="m" style={{ backgroundColor: "grey", position: "absolute", top: "50%", left: "50%", right: 0, bottom: 0, transform: "translate(-50%, -50%)", zIndex: 999999, width: "95%", height: "95vh", borderRadius: "12px" }}></div>}
     </div>
   );
 };
@@ -124,4 +164,4 @@ const mapStateToProps = (state) => ({
   loading: state.section.loading
 });
 
-export default connect(mapStateToProps, { getSections, getProjectTasks, createSection, deleteSection })(ProjectTasks);
+export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection })(ProjectTasks);

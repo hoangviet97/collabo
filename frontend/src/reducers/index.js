@@ -5,5 +5,6 @@ import modal from "./modal";
 import member from "./member";
 import section from "./section";
 import task from "./task";
+import invitation from "./invitation";
 
-export default combineReducers({ auth, project, modal, member, section, task });
+export default combineReducers({ auth, project, modal, member, section, task, invitation });

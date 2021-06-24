@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
-import { Button, Card, Skeleton } from "antd";
+import Project from "./Project";
+import { Button, Skeleton } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
+import Spinner from "../../utils/Spinner";
 
 const Projects = (props) => {
   useEffect(() => {
-    props.getProjects();
+    props.projects.length < 1 && props.getProjects();
   }, []);
 
   const history = useHistory();
-
   const [projectsDimension, setProjectsDimension] = useState("cards");
   const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState("");
 
-  const projectCardHandler = (e, index) => {
-    e.preventDefault();
+  const projectCardHandler = (index) => {
+    console.log("test");
     const path = "/" + index + "/tasks";
     history.push(path);
   };
@@ -36,17 +37,17 @@ const Projects = (props) => {
     setActiveList("");
   };
 
+  //kotva
+
   let content;
 
-  if (props.projects) {
+  if (props.loading) {
+    content = <Skeleton />;
+  } else if (props.projects) {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
         {props.projects.map((project) => {
-          return (
-            <Card onClick={(e) => projectCardHandler(e, project.id)} key={project.id} className="project-card">
-              {project.name}
-            </Card>
-          );
+          return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} />;
         })}
       </div>
     );
@@ -66,7 +67,7 @@ const Projects = (props) => {
     <div>
       <Container size="30">
         <Toolbar>
-          <div class="new-project-container">
+          <div className="new-project-container">
             <Link to="/projects/new">
               <Button type="primary">
                 <PlusOutlined />
@@ -91,7 +92,8 @@ const Projects = (props) => {
 
 const mapStateToProps = (state) => ({
   projects: state.project.projects,
-  auth: state.auth
+  auth: state.auth,
+  loading: state.project.loading
 });
 
 export default connect(mapStateToProps, { getProjects })(withRouter(Projects));

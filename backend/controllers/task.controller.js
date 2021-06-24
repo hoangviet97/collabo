@@ -25,6 +25,42 @@ module.exports = {
     });
   },
 
+  getPersonal: function (req, res) {
+    Task.getPersonalTasks(req.body.id, req.user.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updatePriority: function (req, res) {
+    console.log(req.body);
+    Task.updatePriority(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateStatus: function (req, res) {
+    Task.updateStatus(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateStartDate: function (req, res) {
+    Task.updateStartDate(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateEndDate: function (req, res) {
+    Task.updateEndDate(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
