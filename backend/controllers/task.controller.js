@@ -47,6 +47,20 @@ module.exports = {
     });
   },
 
+  updateStartDate: function (req, res) {
+    Task.updateStartDate(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateEndDate: function (req, res) {
+    Task.updateEndDate(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

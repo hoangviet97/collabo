@@ -58,7 +58,7 @@ module.exports = {
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
                     INNER JOIN priorities ON tasks.priorities_id = priorities.id
-                    WHERE sections.projects_id = ?`;
+                    WHERE sections.projects_id = ? ORDER BY tasks.created_at`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {
@@ -108,6 +108,32 @@ module.exports = {
   updatePriority: async function (task, result) {
     const sql = `UPDATE tasks SET priorities_id = ? WHERE id = ?`;
     con.query(sql, [task.priorityId, task.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
+  updateStartDate: async function (body, result) {
+    const sql = `UPDATE tasks SET start_date = ? WHERE id = ?`;
+    con.query(sql, [body.date, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
+  updateEndDate: async function (body, result) {
+    const sql = `UPDATE tasks SET due_date = ? WHERE id = ?`;
+    con.query(sql, [body.date, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

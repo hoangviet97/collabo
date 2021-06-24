@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CalendarOutlined, CheckCircleOutlined, MoreOutlined, InfoCircleFilled, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Menu, Typography, DatePicker, Tag } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -133,10 +133,10 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__due-date">
         {due_date}
-        <TaskDateModal start_date={props.start_date} due_date={props.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
+        <TaskDateModal taskId={props.id} start_date={props.start_date} due_date={props.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__more">
-        <Dropdown onClick={() => console.log(props.id)} trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
+        <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
           <EllipsisOutlined style={{ fontSize: "22px" }} />
         </Dropdown>
       </div>

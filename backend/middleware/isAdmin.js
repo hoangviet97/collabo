@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
     con.query(sql, [req.user.id, req.body.project], (err, dbResponse) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      if (dbResponse[0].roles_id === "0") {
+      if (dbResponse[0].roles_id === "0" && dbResponse[0].roles_id !== undefined) {
         next();
       } else {
         return apiResponse.unauthorizedResponse(res, "Access denied");

@@ -10,6 +10,7 @@ import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import AssigneeModal from "./AssingeeModal";
 import { withRouter } from "react-router-dom";
+import TaskStatusModal from "./TaskStatusModal";
 
 const TaskModal = (props) => {
   useEffect(() => {
