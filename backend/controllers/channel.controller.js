@@ -20,7 +20,7 @@ module.exports = {
 
   // register new user
   getAll: function (req, res) {
-    Channel.getAllChannels(req.body.projectId, (err, result) => {
+    Channel.getAllChannels(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

@@ -4,7 +4,7 @@ import ControlPanel from "./ControlPanel";
 import ChatContent from "./ChatContent";
 import NewChannelModal from "../../../modal/NewChannelModal";
 
-const Chat = () => {
+const Chat = (props) => {
   const [isModal, setModal] = useState(false);
 
   const addNewChannel = () => {
@@ -22,9 +22,9 @@ const Chat = () => {
   return (
     <Container size="30">
       <div style={{ height: "calc(100vh-60px)", display: "flex", gap: "15px" }}>
-        <ControlPanel addNewChannel={addNewChannel} />
+        <ControlPanel projectId={props.match.params.id} addNewChannel={addNewChannel} />
         <ChatContent />
-        <NewChannelModal visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
+        <NewChannelModal projectId={props.match.params.id} visible={isModal} handleCancel={handleCancel} />
       </div>
     </Container>
   );

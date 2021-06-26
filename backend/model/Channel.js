@@ -6,9 +6,9 @@ module.exports = {
   createChannel: async function (body, result) {
     const newChannel = {
       id: uuid4(),
-      projectId: body.id,
+      projectId: body.projectId,
       name: body.name,
-      private: body.private,
+      private: body.isPrivate,
       created_at: new Date()
     };
 
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   getAllChannels: async function (projectId, result) {
-    const sql = `SELECT * FROM channels WHERE id = ?`;
+    const sql = `SELECT * FROM channels WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {
       if (err) {

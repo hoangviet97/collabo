@@ -1,25 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button, Input, Form, Switch } from "antd";
+import { createChannel } from "../../actions/channel";
+import { connect } from "react-redux";
 
 const NewChannelModal = (props) => {
+  const [isPrivate, setPrivate] = useState(false);
+  const [name, setName] = useState("");
+
+  const onFinish = () => {
+    props.createChannel({ projectId: props.projectId, name: name, isPrivate: isPrivate });
+  };
+
   return (
-    <Modal visible={props.visible} onOk={props.handleOk} onCancel={props.handleCancel} width="450px">
+    <Modal visible={props.visible} onCancel={props.handleCancel} footer={null} width="450px">
       <div style={{ padding: "15px 0", textAlign: "center" }}>
         <h2>Create new channel</h2>
       </div>
-      <Form>
-        <Form.Item>
-          <Input />
+      <Form onFinish={onFinish} onSubmit={onFinish}>
+        <Form.Item name="name">
+          <Input addonBefore="#" value={name} onChange={(e) => setName(e.target.value)} />
+        </Form.Item>
+        <Form.Item name="switcher">
+          <Switch onChange={(e) => setPrivate(e)} />
         </Form.Item>
         <Form.Item>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <strong>Private channel</strong>
-            <Switch />
-          </div>
+          <Button onClick={onFinish}>Create</Button>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default NewChannelModal;
+export default connect(null, { createChannel })(NewChannelModal);
