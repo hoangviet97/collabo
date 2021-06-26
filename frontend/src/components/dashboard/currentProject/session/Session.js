@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Container from "../../../utils/Container";
 import ControlPanel from "./ControlPanel";
-import MeetingContent from "./MeetingContent";
-import MeetingModal from "../../../modal/MeetingModal";
+import SessionContent from "./SessionContent";
+import SessionModal from "../../../modal/SessionModal";
 
-const Meeting = (props) => {
+const Session = (props) => {
   const data = [
     { id: 1, name: "Meeting 1" },
     { id: 1, name: "Meeting 2" },
@@ -14,7 +14,7 @@ const Meeting = (props) => {
 
   const [isModal, setModal] = useState(false);
 
-  const addNewMeeting = () => {
+  const addNewSession = () => {
     setModal(true);
   };
 
@@ -29,12 +29,12 @@ const Meeting = (props) => {
   return (
     <Container size="30">
       <div style={{ height: "calc(100vh-60px)", display: "flex", gap: "15px" }}>
-        <ControlPanel addNewMeeting={addNewMeeting} />
-        <MeetingContent />
-        <MeetingModal id={props.match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
+        <ControlPanel addNewSession={addNewSession} />
+        <SessionContent />
+        <SessionModal id={props.match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
       </div>
     </Container>
   );
 };
 
-export default Meeting;
+export default Session;

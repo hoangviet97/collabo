@@ -16,9 +16,9 @@ const ProjectNavigation = (props) => {
         </Link>
       </p>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/meeting`}>
+        <Link className="project-nav-link" to={`/${path.split("/")[1]}/sessions`}>
           <FundProjectionScreenOutlined className="project-nav-link__icon" />
-          <span>Meeting</span>
+          <span>Sessions</span>
         </Link>
       </p>
       <p>

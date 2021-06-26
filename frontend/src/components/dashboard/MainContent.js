@@ -10,7 +10,7 @@ import Board from "./currentProject/board/Board";
 import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
-import Meeting from "./currentProject/meeting/Meeting";
+import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
 import { connect } from "react-redux";
 
@@ -37,7 +37,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/board" component={Board} />
         <Route exact path="/:id/documents" component={Documents} />
         <Route exact path="/:id/team" component={Team} />
-        <Route exact path="/:id/meeting" component={Meeting} />
+        <Route exact path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
       </Switch>
     </div>

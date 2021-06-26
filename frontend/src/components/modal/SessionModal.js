@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getMembers } from "../../actions/member";
 import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col } from "antd";
 
-const MeetingModal = (props) => {
+const SessionModal = (props) => {
   const { Option } = Select;
 
   useEffect(() => {
@@ -24,15 +24,6 @@ const MeetingModal = (props) => {
                 {item.firstname} {item.lastname}
               </Option>
             ))}
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Place" name="place">
-          <Select style={{ width: "100%" }} placeholder="Please select">
-            <Option value="Skype">Skype</Option>
-            <Option value="Teams">Teams</Option>
-            <Option value="Google">Google Meets</Option>
-            <Option value="School">School</Option>
           </Select>
         </Form.Item>
 
@@ -59,4 +50,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { getMembers })(MeetingModal);
+export default connect(mapStateToProps, { getMembers })(SessionModal);

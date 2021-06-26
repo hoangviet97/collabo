@@ -1,6 +1,6 @@
 import React from "react";
 
-const MeetingPanelItem = () => {
+const SessionPanelItem = () => {
   return (
     <div className="meeting-panel__item">
       <span className="meeting-panel__title"></span>
@@ -9,4 +9,4 @@ const MeetingPanelItem = () => {
   );
 };
 
-export default MeetingPanelItem;
+export default SessionPanelItem;
