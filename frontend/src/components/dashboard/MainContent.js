@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
+import TimeTracker from "./currentProject/timeTracker/TimeTracker";
 import Projects from "./projects/Projects";
 import Tasks from "./tasks/Tasks";
 import UserSettings from "./globalSettings/UserSettings";
@@ -36,6 +37,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={Board} />
         <Route exact path="/:id/documents" component={Documents} />
+        <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />
         <Route exact path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
