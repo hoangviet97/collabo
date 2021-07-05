@@ -27,7 +27,7 @@ const MainContent = (props) => {
   return (
     <div className="mainContent">
       <Switch>
-        <Route exact path="/projects" component={Projects} />
+        <Route exact path="/" component={Projects} />
         <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/settings" component={UserSettings} />
         <Route exact path="/:id/tasks" component={ProjectTasks} />

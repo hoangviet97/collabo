@@ -29,9 +29,6 @@ const Sidebar = (props) => {
         <Link className="side-nav__link" to="/">
           <HomeOutlined className="side-nav__icon" />
         </Link>
-        <Link className="side-nav__link" to="/projects">
-          <FolderOutlined className="side-nav__icon" />
-        </Link>
         <Link className="side-nav__link" to="/tasks">
           <CarryOutOutlined className="side-nav__icon" />
         </Link>
