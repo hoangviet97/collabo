@@ -170,7 +170,7 @@ button:focus {
 
 .toolbox {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 30px;
   display: flex;
   gap: 3px;
@@ -742,4 +742,12 @@ button:focus {
   padding: 8px 5px;
   text-align: center;
   border-radius: 12px;
+}
+
+.channel__options {
+  visibility: hidden;
+}
+
+.channel__item:hover > .channel__options {
+  visibility: visible;
 }

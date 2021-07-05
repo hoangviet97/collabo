@@ -7,6 +7,9 @@ import NewChannelModal from "../../../modal/NewChannelModal";
 const Chat = (props) => {
   const [isModal, setModal] = useState(false);
 
+  let path = window.location.pathname;
+  let pathValue = path.split("/")[1];
+
   const addNewChannel = () => {
     setModal(true);
   };
@@ -15,16 +18,12 @@ const Chat = (props) => {
     setModal(false);
   };
 
-  const handleOk = () => {
-    setModal(false);
-  };
-
   return (
     <Container size="30">
       <div style={{ height: "calc(100vh-60px)", display: "flex", gap: "15px" }}>
-        <ControlPanel projectId={props.match.params.id} addNewChannel={addNewChannel} />
+        <ControlPanel projectId={pathValue} addNewChannel={addNewChannel} />
         <ChatContent />
-        <NewChannelModal projectId={props.match.params.id} visible={isModal} handleCancel={handleCancel} />
+        <NewChannelModal projectId={pathValue} visible={isModal} handleCancel={handleCancel} />
       </div>
     </Container>
   );

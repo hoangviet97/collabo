@@ -31,7 +31,7 @@ const MainContent = (props) => {
         <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/settings" component={UserSettings} />
         <Route exact path="/:id/tasks" component={ProjectTasks} />
-        <Route exact path="/:id/chat" component={Chat} />
+        <Route path="/:id/chat" component={Chat} />
         <Route exact path="/:id/overview" component={Overview} />
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={Board} />

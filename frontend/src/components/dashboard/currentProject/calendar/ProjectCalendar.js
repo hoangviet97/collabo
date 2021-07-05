@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../../utils/Container";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -8,26 +8,26 @@ import { connect } from "react-redux";
 const localizer = momentLocalizer(moment);
 
 const ProjectCalendar = () => {
-  const header = <h1>all day long</h1>;
+  const header = <h1 onClick={() => console.log("hello")}>Setup project management</h1>;
 
   const myEventsList = [
     {
       id: 0,
       title: header,
-      allDay: true,
+      allDay: false,
       start: new Date(2021, 2, 1),
       end: new Date(2021, 2, 6)
     },
     {
       id: 1,
-      title: "Long Event",
+      title: "Undefined distance",
       start: new Date(2021, 1, 1),
       end: new Date(2021, 1, 6)
     },
 
     {
       id: 2,
-      title: "DTS STARTS",
+      title: "Taken rootform xpec",
       start: new Date(2021, 1, 1),
       end: new Date(2021, 1, 6)
     }

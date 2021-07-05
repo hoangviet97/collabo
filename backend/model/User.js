@@ -83,7 +83,6 @@ module.exports = {
         return;
       }
 
-      console.log(id);
       result(null, res);
       return;
     });

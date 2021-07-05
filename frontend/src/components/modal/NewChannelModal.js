@@ -14,7 +14,7 @@ const NewChannelModal = (props) => {
   return (
     <Modal visible={props.visible} onCancel={props.handleCancel} footer={null} width="450px">
       <div style={{ padding: "15px 0", textAlign: "center" }}>
-        <h2>Create new channel</h2>
+        <h2>Create new {isPrivate && "private"} channel</h2>
       </div>
       <Form onFinish={onFinish} onSubmit={onFinish}>
         <Form.Item name="name">

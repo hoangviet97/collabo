@@ -1,4 +1,6 @@
 const express = require("express");
+const socketio = require("socket.io");
+const http = require("http");
 const bodyParser = require("body-parser");
 const connection = require("./config/db");
 const cors = require("cors");
@@ -14,6 +16,13 @@ const invitationRoutes = require("./routes/api/invitation");
 require("dotenv").config();
 
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server, {
+  cors: {
+    origin: "*"
+  }
+});
+
 const PORT = process.env.PORT | 9000;
 
 app.use(express.json());
@@ -33,6 +42,18 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/channels", channelRoutes);
 app.use("/api/invitation", invitationRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}...${process.env.DB_NAME}`);
+io.on("connection", (socket) => {
+  console.log("connection made successfully");
+  socket.on("message", (payload) => {
+    console.log("Message received on server: ", payload);
+    io.emit("message", payload);
+  });
+
+  socket.on("say", (payload) => {
+    console.log("hi: ", payload);
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}...`);
 });

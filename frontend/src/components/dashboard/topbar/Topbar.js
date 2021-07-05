@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import ProjectNavigation from "./ProjectNavigation";
+import AvatarIcon from "../../utils/AvatarIcon";
 
 const Topbar = (props) => {
   let path = window.location.pathname;
@@ -12,7 +13,9 @@ const Topbar = (props) => {
     <div className="topbar">
       {isNaN(path.split("/")[1]) === false && path.split("/")[1].length === 8 ? <ProjectNavigation /> : null}
       <div className="topbar-profile">
-        <Avatar size="large" icon={<UserOutlined />} />
+        <Avatar size="large">
+          <AvatarIcon name={props.user.firstname} />
+        </Avatar>
         {props.auth.isAuthenticated && <span>{props.user.firstname}</span>}
       </div>
     </div>

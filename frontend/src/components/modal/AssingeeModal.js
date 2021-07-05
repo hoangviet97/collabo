@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Input, Avatar, Button, Divider } from "antd";
+import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
 const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => {
@@ -26,7 +27,10 @@ const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => 
           {members.map((member, index) => (
             <div className="assignee-modal__item" key={index}>
               <div class="assignee-modal__identity">
-                <Avatar /> <span>{member.firstname}</span>
+                <Avatar>
+                  <AvatarIcon name={member.firstname} />
+                </Avatar>{" "}
+                <span>{member.firstname}</span>
               </div>
               <a
                 onClick={() => {

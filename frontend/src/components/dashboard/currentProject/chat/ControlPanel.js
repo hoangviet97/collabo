@@ -7,8 +7,8 @@ const ControlPanel = (props) => {
   const [channelsVisibility, setChannelsVisibility] = useState(true);
 
   return (
-    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", flex: "0 0 250px", borderRadius: "12px" }}>
-      <div className="meeting__control-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}>
+    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", flex: "0 0 250px", borderRadius: "12px", overflowY: "scroll" }}>
+      <div className="meeting__control-header" style={{ display: "flex", backgroundColor: "white", alignItems: "center", justifyContent: "space-between", cursor: "pointer", position: "fixed" }}>
         <div className="channel__dropdown-header" onClick={() => setChannelsVisibility((prev) => !prev)} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <RightOutlined style={{ fontSize: "10px" }} />
           <span>Channels</span>

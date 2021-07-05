@@ -11,7 +11,7 @@
     "axios": "^0.21.1",
     "history": "^5.0.0",
     "moment": "^2.29.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.1.0",
     "react-big-calendar": "^0.33.2",
@@ -26,6 +26,7 @@
     "redux-devtools": "^3.7.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^4.1.2",
     "uuid": "^8.3.2",
     "uuid4": "^2.0.2"
   },
