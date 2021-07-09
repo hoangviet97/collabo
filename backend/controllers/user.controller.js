@@ -1,4 +1,5 @@
 const User = require("../model/User");
+const multer = require("multer");
 const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {

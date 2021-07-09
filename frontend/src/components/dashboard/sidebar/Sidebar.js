@@ -33,9 +33,6 @@ const Sidebar = (props) => {
           <CarryOutOutlined className="side-nav__icon" />
         </Link>
         <Link className="side-nav__link" to="">
-          <MessageOutlined className="side-nav__icon" />
-        </Link>
-        <Link className="side-nav__link" to="">
           <BellOutlined className="side-nav__icon" />
         </Link>
       </nav>

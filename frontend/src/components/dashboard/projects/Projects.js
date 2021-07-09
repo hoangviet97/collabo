@@ -11,7 +11,9 @@ import Spinner from "../../utils/Spinner";
 
 const Projects = (props) => {
   useEffect(() => {
-    props.projects.length < 1 && props.getProjects();
+    if (props.projects.length < 1) {
+      props.getProjects();
+    }
   }, []);
 
   const history = useHistory();

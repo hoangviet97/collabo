@@ -1,11 +1,44 @@
-import React from "react";
-import { Avatar, Popover } from "antd";
-import { ThunderboltOutlined, CalendarOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu } from "antd";
+import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const iconSet = [<ThunderboltOutlined />, <TrophyOutlined />, <ShareAltOutlined />, <FireOutlined />, <DingtalkOutlined />, <CrownOutlined />];
+
+  useEffect(() => {
+    setProjectName(props.project.currentProject.name);
+    setProjectDescription(props.project.currentProject.description);
+  }, [props]);
+
+  const iconMenu = (
+    <Menu>
+      <Menu.Item>
+        <ThunderboltOutlined />
+      </Menu.Item>
+      <Menu.Item>
+        <TrophyOutlined />
+      </Menu.Item>
+      <Menu.Item>
+        <ShareAltOutlined />
+      </Menu.Item>
+      <Menu.Item>
+        <FireOutlined />
+      </Menu.Item>
+      <Menu.Item>
+        <DingtalkOutlined />
+      </Menu.Item>
+      <Menu.Item>
+        <CrownOutlined />
+      </Menu.Item>
+    </Menu>
+  );
 
   const moreContent = (
     <div>
@@ -42,6 +75,18 @@ const ProjectNavigation = (props) => {
     </div>
   );
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="project-navigation">
       <div className="project-nav-identity">
@@ -50,7 +95,9 @@ const ProjectNavigation = (props) => {
         </div>
         <div className="project-nav-title">
           <span>{props.project ? props.project.currentProject.name : ""}</span>
-          <a className="project-nav-title__detail">Details</a>
+          <a className="project-nav-title__detail" onClick={showModal}>
+            Details
+          </a>
         </div>
       </div>
       <nav className="project-nav">
@@ -92,6 +139,31 @@ const ProjectNavigation = (props) => {
           </Popover>
         </li>
       </nav>
+      <Modal title="Project Details" width="90%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <div class="project-detail__icon-box" style={{ display: "flex" }}>
+          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: "grey", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}>
+            <ThunderboltOutlined />
+          </div>
+          <div className="icon-box__select">
+            <Dropdown overlay={iconMenu} trigger={["click"]}>
+              <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+                Change Icon <DownOutlined />
+              </a>
+            </Dropdown>
+            <a>Change Color</a>
+          </div>
+        </div>
+        <Form>
+          <Form.Item>
+            <label>Project name</label>
+            <Input value={projectName} />
+          </Form.Item>
+          <Form.Item>
+            <label>Project description</label>
+            <Input value={projectDescription} />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

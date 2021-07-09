@@ -2,6 +2,7 @@ import "./App.scss";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import NotFount from "./components/layout/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -22,9 +23,10 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
+          <ProtectedRoute path="/" component={Dashboard} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <ProtectedRoute path="/" component={Dashboard} />
+          <Route component={NotFount} />
         </Switch>
       </Router>
     </Provider>

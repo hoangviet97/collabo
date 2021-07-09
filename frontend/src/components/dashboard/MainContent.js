@@ -11,6 +11,7 @@ import Board from "./currentProject/board/Board";
 import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
+import NotFound from "../layout/NotFound";
 import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
 import { connect } from "react-redux";
@@ -41,6 +42,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/team" component={Team} />
         <Route exact path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );

@@ -43,15 +43,7 @@ app.use("/api/channels", channelRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 io.on("connection", (socket) => {
-  console.log("connection made successfully");
-  socket.on("message", (payload) => {
-    console.log("Message received on server: ", payload);
-    io.emit("message", payload);
-  });
-
-  socket.on("say", (payload) => {
-    console.log("hi: ", payload);
-  });
+  console.log("connection made successfully...");
 });
 
 server.listen(PORT, () => {
