@@ -43,7 +43,15 @@ app.use("/api/channels", channelRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 io.on("connection", (socket) => {
-  console.log("connection made successfully...");
+  console.log("connection made successfullyw...");
+});
+
+io.of("/tasks").on("connection", (socket) => {
+  console.log("projects...");
+  socket.on("close", () => {
+    console.log("disconnected...");
+    socket.disconnect();
+  });
 });
 
 server.listen(PORT, () => {

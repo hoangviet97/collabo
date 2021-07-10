@@ -12,12 +12,13 @@ module.exports = {
       name: data.name,
       description: data.description,
       created_at: new Date(),
+      color: "#535c68",
       status: 0,
       favorite: false
     };
 
-    const sql = `INSERT INTO projects (id, name, description, created_at, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.status, newProject.favorite], (err, res) => {
+    const sql = `INSERT INTO projects (id, name, description, created_at, color, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.color, newProject.status, newProject.favorite], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -63,6 +64,19 @@ module.exports = {
   setFavoriteProject: function (body, result) {
     const sql = `UPDATE projects SET favorite = ? WHERE id = ?`;
     con.query(sql, [body.status, body.projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
+  updateColor: function (body, result) {
+    const sql = `UPDATE projects SET color = ? WHERE id = ?`;
+    con.query(sql, [body.color, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

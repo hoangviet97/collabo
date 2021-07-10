@@ -8,5 +8,6 @@ router.post("/add", auth, projectController.create);
 router.get("/", auth, projectController.getAll);
 router.post("/single", auth, projectController.getOne);
 router.patch("/favorite", auth, projectController.setFavorite);
+router.patch("/color", auth, projectController.updateColor);
 
 module.exports = router;

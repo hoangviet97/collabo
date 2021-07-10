@@ -40,5 +40,12 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  updateColor: function (req, res) {
+    Project.updateColor(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

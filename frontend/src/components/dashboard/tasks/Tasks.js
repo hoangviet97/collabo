@@ -8,12 +8,15 @@ import { getSections, deleteSection, resetSections } from "../../../actions/sect
 import { getPersonalTasks } from "../../../actions/task";
 import { getProjects } from "../../../actions/project";
 import TaskItem from "./TaskItem";
+import io from "socket.io-client";
 
 const Tasks = (props) => {
   const [selectedProject, setSelectedProject] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const { Panel } = Collapse;
   const { Text } = Typography;
+
+  let socket = io("http://localhost:9000/tasks");
 
   useEffect(() => {
     props.resetSections();
@@ -101,6 +104,7 @@ const Tasks = (props) => {
             </Panel>
           ))}
         </Collapse>
+        <button onClick={() => socket.emit("close")}>Click</button>
       </Container>
     </div>
   );

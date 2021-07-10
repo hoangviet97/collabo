@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { useRouteMatch, useParams } from "react-router-dom";
 import Channel from "./Channel";
 import Chat from "./Chat";
-import { socket } from "../../../../service/socket";
 
 const ChatContent = () => {
   const [message, setMessage] = useState("");

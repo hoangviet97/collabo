@@ -1,9 +1,9 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "../actions/types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "../actions/types";
 
 const initialState = {
   loading: false,
   projects: [],
-  currentProject: []
+  currentProject: {}
 };
 
 function projectReducer(state = initialState, action) {
@@ -26,6 +26,11 @@ function projectReducer(state = initialState, action) {
         ...state,
         projects: payload,
         loading: false
+      };
+    case UPDATE_PROJECT_COLOR:
+      return {
+        ...state,
+        currentProject: { ...state.currentProject, color: payload.color }
       };
     case LOAD_PROJECTS_FAIL:
       return {

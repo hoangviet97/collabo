@@ -1,44 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu } from "antd";
+import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu, Button } from "antd";
 import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { updateColor } from "../../../actions/project";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  let ic;
   const [projectName, setProjectName] = useState("");
+  const [ProjectIcon, setProjectIcon] = useState("");
+  const [showIconTab, setIconTab] = useState(false);
   const [projectDescription, setProjectDescription] = useState("");
-  const iconSet = [<ThunderboltOutlined />, <TrophyOutlined />, <ShareAltOutlined />, <FireOutlined />, <DingtalkOutlined />, <CrownOutlined />];
+  const iconSet = [
+    { name: "ThunderboltOutlined", icon: <ThunderboltOutlined /> },
+    { name: "TrophyOutlined", icon: <TrophyOutlined /> },
+    { name: "ShareAltOutlined", icon: <ShareAltOutlined /> },
+    { name: "FireOutlined", icon: <FireOutlined /> },
+    { name: "DingtalkOutlined", icon: <DingtalkOutlined /> },
+    { name: "CrownOutlined", icon: <CrownOutlined /> }
+  ];
+  const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
+  const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
 
   useEffect(() => {
     setProjectName(props.project.currentProject.name);
     setProjectDescription(props.project.currentProject.description);
   }, [props]);
-
-  const iconMenu = (
-    <Menu>
-      <Menu.Item>
-        <ThunderboltOutlined />
-      </Menu.Item>
-      <Menu.Item>
-        <TrophyOutlined />
-      </Menu.Item>
-      <Menu.Item>
-        <ShareAltOutlined />
-      </Menu.Item>
-      <Menu.Item>
-        <FireOutlined />
-      </Menu.Item>
-      <Menu.Item>
-        <DingtalkOutlined />
-      </Menu.Item>
-      <Menu.Item>
-        <CrownOutlined />
-      </Menu.Item>
-    </Menu>
-  );
 
   const moreContent = (
     <div>
@@ -87,11 +77,16 @@ const ProjectNavigation = (props) => {
     setIsModalVisible(false);
   };
 
+  const handleIconColor = (color) => {
+    setIconColorSelection(color);
+    props.updateColor({ id: props.currentProject.id, color: color });
+  };
+
   return (
     <div className="project-navigation">
       <div className="project-nav-identity">
         <div className="project-nav-icon">
-          <Avatar shape="square" size={40} icon={<ThunderboltOutlined />} />
+          <div style={{ width: "40px", height: "40px", borderRadius: "8px", backgroundColor: props.project.currentProject.color !== null ? props.project.currentProject.color : "grey" }}></div>
         </div>
         <div className="project-nav-title">
           <span>{props.project ? props.project.currentProject.name : ""}</span>
@@ -140,17 +135,28 @@ const ProjectNavigation = (props) => {
         </li>
       </nav>
       <Modal title="Project Details" width="90%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <div class="project-detail__icon-box" style={{ display: "flex" }}>
-          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: "grey", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}>
+        <div class="project-detail__icon-box" style={{ display: "flex", gap: "10px" }}>
+          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}>
             <ThunderboltOutlined />
           </div>
           <div className="icon-box__select">
-            <Dropdown overlay={iconMenu} trigger={["click"]}>
-              <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-                Change Icon <DownOutlined />
-              </a>
-            </Dropdown>
-            <a>Change Color</a>
+            <Button onClick={() => setIconTab(true)}>Change Icon</Button>
+            {showIconTab && (
+              <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
+                <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+                  {iconSet.map((icon) => (
+                    <div className="icon-custombox-item" style={{ fontSize: "30px" }}>
+                      {icon.icon}
+                    </div>
+                  ))}
+                </div>
+                <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  {colorSet.map((item, index) => (
+                    <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <Form>
@@ -169,7 +175,8 @@ const ProjectNavigation = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  project: state.project
+  project: state.project,
+  currentProject: state.project.currentProject
 });
 
-export default connect(mapStateToProps)(ProjectNavigation);
+export default connect(mapStateToProps, { updateColor })(ProjectNavigation);

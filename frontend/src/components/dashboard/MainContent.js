@@ -42,7 +42,6 @@ const MainContent = (props) => {
         <Route exact path="/:id/team" component={Team} />
         <Route exact path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
-        <Route component={NotFound} />
       </Switch>
     </div>
   );

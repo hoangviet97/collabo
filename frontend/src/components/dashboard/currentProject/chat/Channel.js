@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { socket } from "../../../../service/socket";
 
 const Channel = (props) => {
   let path = window.location.pathname;
