@@ -170,7 +170,7 @@ button:focus {
 
 .toolbox {
   position: fixed;
-  bottom: 30px;
+  bottom: 10px;
   right: 30px;
   display: flex;
   gap: 3px;
@@ -397,24 +397,24 @@ button:focus {
   border-bottom: 0.5px solid #dfe4ea;
 
   &__name {
-    width: 35%;
+    width: 34%;
   }
 
   &__assignees {
-    width: 13%;
+    width: 11%;
     display: flex;
     align-self: center;
-    justify-content: center;
+
+    justify-content: "center";
+    align-self: center;
   }
 
   &__status {
-    width: 13%;
-    justify-content: center;
+    width: 11%;
   }
 
   &__priority {
-    width: 13%;
-    justify-content: center;
+    width: 11%;
   }
 
   &__done {
@@ -424,12 +424,17 @@ button:focus {
 
   &__more {
     cursor: pointer;
-    width: 13%;
+    width: 11%;
     justify-content: center;
   }
 
   &__due-date {
-    width: 13%;
+    width: 11%;
+    justify-content: center;
+  }
+
+  &__timer {
+    width: 11%;
     justify-content: center;
   }
 

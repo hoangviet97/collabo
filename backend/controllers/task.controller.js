@@ -61,6 +61,13 @@ module.exports = {
     });
   },
 
+  getAllAssignees: function (req, res) {
+    Task.getAllAssingees(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

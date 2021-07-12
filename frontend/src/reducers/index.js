@@ -6,6 +6,6 @@ import member from "./member";
 import section from "./section";
 import task from "./task";
 import invitation from "./invitation";
-import channel from "./channel";
+import post from "./post";
 
-export default combineReducers({ auth, project, modal, member, section, task, invitation, channel });
+export default combineReducers({ auth, project, modal, member, section, task, invitation, post });

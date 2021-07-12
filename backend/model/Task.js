@@ -144,6 +144,24 @@ module.exports = {
     });
   },
 
+  getAllAssingees: async function (body, result) {
+    const sql = `SELECT tasks_id, users.id, users.firstname, users.lastname, users.email 
+                  FROM members_tasks 
+                  INNER JOIN members ON members_tasks.members_id = members.id 
+                  INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON members.users_id = users.id
+                  WHERE members.projects_id = ?`;
+    con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   deleteTask: async function (id, result) {
     const sql = `DELETE FROM tasks WHERE id = ?`;
     con.query(sql, [id], (err, res) => {

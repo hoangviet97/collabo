@@ -10,7 +10,7 @@ const projectRoutes = require("./routes/api/projects");
 const memberRoutes = require("./routes/api/members");
 const sectionRoutes = require("./routes/api/sections");
 const taskRoutes = require("./routes/api/tasks");
-const channelRoutes = require("./routes/api/channel");
+const postRoutes = require("./routes/api/posts");
 const invitationRoutes = require("./routes/api/invitation");
 
 require("dotenv").config();
@@ -39,14 +39,14 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/sections", sectionRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use("/api/channels", channelRoutes);
+app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 io.on("connection", (socket) => {
   console.log("connection made successfullyw...");
 });
 
-io.of("/tasks").on("connection", (socket) => {
+io.of("/chat").on("connection", (socket) => {
   console.log("projects...");
   socket.on("close", () => {
     console.log("disconnected...");
