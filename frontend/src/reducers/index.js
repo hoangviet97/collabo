@@ -8,4 +8,23 @@ import task from "./task";
 import invitation from "./invitation";
 import post from "./post";
 
-export default combineReducers({ auth, project, modal, member, section, task, invitation, post });
+const appReducer = combineReducers({
+  auth,
+  project,
+  modal,
+  member,
+  section,
+  task,
+  invitation,
+  post
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === "LOGOUT") {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
+
+export default rootReducer;
