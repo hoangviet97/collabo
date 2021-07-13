@@ -11,6 +11,7 @@ import Board from "./currentProject/board/Board";
 import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
+import Notifications from "./notifications/Notifications";
 import NotFound from "../layout/NotFound";
 import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
@@ -30,6 +31,7 @@ const MainContent = (props) => {
     <div className="mainContent">
       <Switch>
         <Route exact path="/" component={Projects} />
+        <Route exact path="/notifications" component={Notifications} />
         <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/settings" component={UserSettings} />
         <Route exact path="/:id/tasks" component={ProjectTasks} />

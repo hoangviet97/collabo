@@ -83,6 +83,7 @@ const Tasks = (props) => {
   return (
     <div>
       <Container size="30">
+        <h2>Manage Your Assigneed Tasks</h2>
         <Toolbar>
           <div class="tasks-select-group">
             <Select placeholder="Select project" onSelect={onProjectSelect} style={{ width: 250 }} allowClear>

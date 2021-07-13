@@ -1,18 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Container from "../../../utils/Container";
-import { Input } from "antd";
+import MyPost from "./posts/MyPost";
+import Post from "./posts/Post";
+import { Input, Button } from "antd";
 import io from "socket.io-client";
 
+const socket = io("http://localhost:9000");
+
 const Chat = (props) => {
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [myId, setMyId] = useState("");
+
   useEffect(() => {
-    const socket = io("http://localhost:9000/chat");
+    socket.on("your id", (id) => {
+      setMyId(id);
+    });
+
+    socket.on("msg", (body) => {
+      console.log(body);
+      receivedMsg(body);
+    });
   }, []);
+
+  const receivedMsg = (data) => {
+    setMessages((prev) => [...prev, data]);
+  };
+
+  const sendMsg = (e) => {
+    e.preventDefault();
+    const msg = {
+      id: myId,
+      body: message
+    };
+
+    if (message.length > 0) {
+      socket.emit("send message", msg);
+      setMessage("");
+    } else {
+      setMessage("");
+    }
+  };
 
   return (
     <Container size="30">
-      <div className="chat-window"></div>
+      <div className="chat-window">
+        {messages.map((item, index) => {
+          if (item.id === myId) {
+            return <MyPost key={index}>{item.body}</MyPost>;
+          } else {
+            return <Post key={index}>{item.body}</Post>;
+          }
+        })}
+      </div>
       <div className="chat-input-container">
-        <Input width="30" />
+        <Input width="30" value={message} onChange={(e) => setMessage(e.target.value)} />
+        <Button onClick={(e) => sendMsg(e)}>Send</Button>
       </div>
     </Container>
   );

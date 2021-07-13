@@ -32,7 +32,7 @@ const Sidebar = (props) => {
         <Link className="side-nav__link" to="/tasks">
           <CarryOutOutlined className="side-nav__icon" />
         </Link>
-        <Link className="side-nav__link" to="">
+        <Link className="side-nav__link" to="/notifications">
           <BellOutlined className="side-nav__icon" />
         </Link>
       </nav>

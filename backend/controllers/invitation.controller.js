@@ -8,5 +8,12 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  getAll: function (req, res) {
+    Invitation.getAllInvitations(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

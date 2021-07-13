@@ -1,7 +1,8 @@
-import { CREATE_INVITATION, CREATE_INVITATION_FAIL } from "../actions/types";
+import { CREATE_INVITATION, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../actions/types";
 
 const initialState = {
-  sended_invitations: []
+  sended_invitations: [],
+  invitations: []
 };
 
 function invitationReducer(state = initialState, action) {
@@ -17,6 +18,15 @@ function invitationReducer(state = initialState, action) {
       return {
         ...state,
         sended_invitations: []
+      };
+    case GET_INVITATIONS:
+      return {
+        ...state,
+        invitations: payload
+      };
+    case GET_INVITATIONS_FAIL:
+      return {
+        ...state
       };
     default:
       return state;

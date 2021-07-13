@@ -3,7 +3,7 @@ const uuid4 = require("uuid4");
 
 module.exports = {
   // create new member by user or by admin
-  createInvitation: async function (body) {
+  createInvitation: async function (body, result) {
     const invitation = {
       id: uuid4(),
       sender: body.senderId,
@@ -20,6 +20,19 @@ module.exports = {
       }
 
       result(null, "success");
+      return;
+    });
+  },
+
+  getAllInvitations: async function (body, result) {
+    const sql = `SELECT * FROM invitations WHERE receiver = ?`;
+    con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res.data);
       return;
     });
   }

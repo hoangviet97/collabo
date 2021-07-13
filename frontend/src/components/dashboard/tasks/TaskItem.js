@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CalendarOutlined, CaretRightOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Menu, Typography, DatePicker, Tag } from "antd";
+import { Avatar, Button, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actions/task";
@@ -107,9 +107,11 @@ const TaskItem = (props) => {
           {props.assignees.map((assignee) => {
             if (assignee.tasks_id === props.id) {
               return (
-                <Avatar style={{ backgroundColor: "#1890ff" }}>
-                  <AvatarIcon name={assignee.firstname} />
-                </Avatar>
+                <Popover content={assignee.firstname}>
+                  <Avatar style={{ backgroundColor: "#1890ff" }}>
+                    <AvatarIcon name={assignee.firstname} />
+                  </Avatar>
+                </Popover>
               );
             }
           })}

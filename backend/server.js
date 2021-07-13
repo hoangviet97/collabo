@@ -43,14 +43,10 @@ app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 io.on("connection", (socket) => {
-  console.log("connection made successfullyw...");
-});
-
-io.of("/chat").on("connection", (socket) => {
   console.log("projects...");
-  socket.on("close", () => {
-    console.log("disconnected...");
-    socket.disconnect();
+  socket.emit("your id", socket.id);
+  socket.on("send message", (body) => {
+    io.emit("msg", body);
   });
 });
 
