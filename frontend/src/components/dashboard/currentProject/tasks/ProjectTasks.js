@@ -3,7 +3,7 @@ import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
-import { getProjectTasks, createTask } from "../../../../actions/task";
+import { getProjectTasks, createTask, getAllAssignees } from "../../../../actions/task";
 import { connect } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Form } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
@@ -14,6 +14,7 @@ import Spinner from "../../../utils/Spinner";
 const ProjectTasks = (props) => {
   useEffect(() => {
     props.getSections({ id: props.match.params.id });
+    props.getAllAssignees({ id: props.match.params.id });
     props.getProjectTasks({ id: props.match.params.id });
   }, []);
 
@@ -126,7 +127,7 @@ const ProjectTasks = (props) => {
             <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem projectId={props.match.params.id} key={index} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
+                  return <TaskItem projectId={props.match.params.id} key={index} assignees={props.assignees} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
                 }
               })}
               {newTaskVisibility ? (
@@ -161,7 +162,8 @@ const ProjectTasks = (props) => {
 const mapStateToProps = (state) => ({
   sections: state.section.sections,
   tasks: state.task.tasks,
+  assignees: state.task.assignees,
   loading: state.section.loading
 });
 
-export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection })(ProjectTasks);
+export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection, getAllAssignees })(ProjectTasks);

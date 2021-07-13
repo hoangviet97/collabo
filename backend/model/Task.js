@@ -145,7 +145,7 @@ module.exports = {
   },
 
   getAllAssingees: async function (body, result) {
-    const sql = `SELECT tasks_id, users.id, users.firstname, users.lastname, users.email 
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
                   FROM members_tasks 
                   INNER JOIN members ON members_tasks.members_id = members.id 
                   INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 

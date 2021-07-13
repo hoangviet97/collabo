@@ -7,6 +7,7 @@ import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actio
 import { Select } from "antd";
 import TaskDateModal from "../../modal/TaskDateModdal";
 import StatusIcon from "../../utils/StatusIcon";
+import AvatarIcon from "../../utils/AvatarIcon";
 
 const TaskItem = (props) => {
   const [datePicker, setDatePicker] = useState(null);
@@ -103,9 +104,15 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-          <Avatar style={{ backgroundColor: "#1890ff" }} />
+          {props.assignees.map((assignee) => {
+            if (assignee.tasks_id === props.id) {
+              return (
+                <Avatar style={{ backgroundColor: "#1890ff" }}>
+                  <AvatarIcon name={assignee.firstname} />
+                </Avatar>
+              );
+            }
+          })}
         </Avatar.Group>
       </div>
       <div className="task-column__item task-column__status task-column__status--active">

@@ -1,7 +1,8 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL } from "../actions/types";
+import { CREATE_TASK, CREATE_TASK_FAIL, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL } from "../actions/types";
 
 const initialState = {
   tasks: [],
+  assignees: [],
   loading: false
 };
 
@@ -14,6 +15,15 @@ function taskReducer(state = initialState, action) {
         ...state
       };
     case CREATE_TASK_FAIL:
+      return {
+        ...state
+      };
+    case GET_ASSIGNEES:
+      return {
+        ...state,
+        assignees: payload
+      };
+    case GET_ASSIGNEES_FAIL:
       return {
         ...state
       };
