@@ -748,3 +748,17 @@ button:focus {
 .channel__item:hover > .channel__options {
   visibility: visible;
 }
+
+.task-detail-window {
+  background-color: "grey";
+  position: "absolute";
+  top: "50%";
+  left: "50%";
+  right: 0;
+  bottom: 0;
+  transform: "translate(-50%, -50%)";
+  z-index: 999999;
+  width: "95%";
+  height: "95vh";
+  border-radius: "12px";
+}

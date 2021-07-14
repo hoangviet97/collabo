@@ -21,6 +21,8 @@ const Chat = (props) => {
       console.log(body);
       receivedMsg(body);
     });
+
+    socket.emit("hi", "hi...");
   }, []);
 
   const receivedMsg = (data) => {
@@ -53,9 +55,14 @@ const Chat = (props) => {
           }
         })}
       </div>
-      <div className="chat-input-container">
-        <Input width="30" value={message} onChange={(e) => setMessage(e.target.value)} />
-        <Button onClick={(e) => sendMsg(e)}>Send</Button>
+      <div className="chat-footer">
+        <div className="chat-footer-input">
+          <Input width="30" value={message} onChange={(e) => setMessage(e.target.value)} />
+        </div>
+        <div className="chat-footer-bar">
+          <div className="chat-bar-list"></div>
+          <Button onClick={(e) => sendMsg(e)}>Send</Button>
+        </div>
       </div>
     </Container>
   );

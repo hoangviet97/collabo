@@ -44,6 +44,9 @@ app.use("/api/invitation", invitationRoutes);
 
 io.on("connection", (socket) => {
   console.log("projects...");
+  socket.on("hi", (data) => {
+    console.log(data);
+  });
   socket.emit("your id", socket.id);
   socket.on("send message", (body) => {
     io.emit("msg", body);

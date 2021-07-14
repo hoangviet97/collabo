@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actions/task";
 import { Select } from "antd";
 import TaskDateModal from "../../modal/TaskDateModdal";
+import TaskDetailModal from "../../modal/TaskDetailModal";
 import StatusIcon from "../../utils/StatusIcon";
 import AvatarIcon from "../../utils/AvatarIcon";
 
@@ -14,6 +15,7 @@ const TaskItem = (props) => {
   const [done, setDone] = useState(props.status);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [startTime, setStartTime] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const due_date =
     props.due_date === null ? (
@@ -96,19 +98,27 @@ const TaskItem = (props) => {
     props.updateTaskPriority({ id: props.id, priorityId: value, project: props.projectId });
   };
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="task-column">
-      <div className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div onClick={showModal} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
         <span>{props.name}</span>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-          {props.assignees.map((assignee) => {
+          {props.assignees.map((assignee, index) => {
             if (assignee.tasks_id === props.id) {
               return (
                 <Popover content={assignee.firstname}>
-                  <Avatar style={{ backgroundColor: "#1890ff" }}>
+                  <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                     <AvatarIcon name={assignee.firstname} />
                   </Avatar>
                 </Popover>
@@ -154,6 +164,7 @@ const TaskItem = (props) => {
           <EllipsisOutlined style={{ fontSize: "22px" }} />
         </Dropdown>
       </div>
+      {isModalVisible && <TaskDetailModal projectName={props.projectName} taskName={props.name} closeModal={closeModal} />}
     </div>
   );
 };

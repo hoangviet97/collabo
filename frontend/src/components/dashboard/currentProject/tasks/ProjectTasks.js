@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
+import TaskDetail from "../../../modal/TaskDetailModal";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../../../actions/task";
 import { connect } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Form } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Modal } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
@@ -27,6 +28,7 @@ const ProjectTasks = (props) => {
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [panelName, setPanelName] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [taskDetail, setTaskDetail] = useState(null);
 
   const taskHandler = (e) => {
@@ -119,6 +121,14 @@ const ProjectTasks = (props) => {
     </Menu>
   );
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="project-tasks">
       <Container size="30">
@@ -127,7 +137,7 @@ const ProjectTasks = (props) => {
             <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
               {props.tasks.map((task, index) => {
                 if (section.id === task.sections_id) {
-                  return <TaskItem projectId={props.match.params.id} key={index} assignees={props.assignees} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
+                  return <TaskItem showModal={showModal} projectId={props.match.params.id} projectName={props.project.name} key={index} assignees={props.assignees} tasks={task} id={task.id} name={task.name} status={task.statusId} priority={task.priorityId} due_date={task.due_date} />;
                 }
               })}
               {newTaskVisibility ? (
@@ -154,7 +164,6 @@ const ProjectTasks = (props) => {
           </div>
         )}
       </Container>
-      {taskDetail && <div className="m" style={{ backgroundColor: "grey", position: "absolute", top: "50%", left: "50%", right: 0, bottom: 0, transform: "translate(-50%, -50%)", zIndex: 999999, width: "95%", height: "95vh", borderRadius: "12px" }}></div>}
     </div>
   );
 };
@@ -163,7 +172,8 @@ const mapStateToProps = (state) => ({
   sections: state.section.sections,
   tasks: state.task.tasks,
   assignees: state.task.assignees,
-  loading: state.section.loading
+  loading: state.section.loading,
+  project: state.project.currentProject
 });
 
 export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection, getAllAssignees })(ProjectTasks);
