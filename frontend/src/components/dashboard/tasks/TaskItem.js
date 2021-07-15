@@ -15,13 +15,12 @@ const TaskItem = (props) => {
   const [done, setDone] = useState(props.status);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [startTime, setStartTime] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const due_date =
-    props.due_date === null ? (
+    props.task.due_date === null ? (
       <CalendarOutlined
         onClick={(e) => {
-          openDateHandler(props.id);
+          openDateHandler(props.task.id);
           getE(e);
         }}
         className="task-calendar__icon"
@@ -29,11 +28,11 @@ const TaskItem = (props) => {
     ) : (
       <span
         onClick={(e) => {
-          openDateHandler(props.id);
+          openDateHandler(props.task.id);
           getE(e);
         }}
       >
-        <Moment format="D MMM YYYY">{props.due_date}</Moment>
+        <Moment format="D MMM YYYY">{props.task.due_date}</Moment>
       </span>
     );
   const { Text } = Typography;
@@ -47,7 +46,7 @@ const TaskItem = (props) => {
           Rename
         </span>
       </Menu.Item>
-      <Menu.Item key="1" onClick={() => console.log(props.id + " " + props.name)}>
+      <Menu.Item key="1" onClick={() => console.log(props.task.id + " " + props.task.name)}>
         <span>
           <CopyOutlined />
           Duplicate
@@ -78,7 +77,7 @@ const TaskItem = (props) => {
 
   const deleteTaskHandler = (event) => {
     event.stopPropagation();
-    props.deleteTask({ id: props.id });
+    props.deleteTask({ id: props.task.id });
   };
 
   const openDateHandler = (id) => {
@@ -91,31 +90,23 @@ const TaskItem = (props) => {
 
   const switchTaskStatusHandler = (value) => {
     setDone(value);
-    props.updateTaskStatus({ id: props.id, statusId: value, project: props.projectId });
+    props.updateTaskStatus({ id: props.task.id, statusId: value, project: props.projectId });
   };
 
   const switchPriorityHandler = (value) => {
-    props.updateTaskPriority({ id: props.id, priorityId: value, project: props.projectId });
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setIsModalVisible(false);
+    props.updateTaskPriority({ id: props.task.id, priorityId: value, project: props.projectId });
   };
 
   return (
     <div className="task-column">
-      <div onClick={showModal} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div onClick={() => props.showModal(props.task.id, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
-        <span>{props.name}</span>
+        <span>{props.task.name}</span>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
           {props.assignees.map((assignee, index) => {
-            if (assignee.tasks_id === props.id) {
+            if (assignee.tasks_id === props.task.id) {
               return (
                 <Popover content={assignee.firstname}>
                   <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
@@ -128,7 +119,7 @@ const TaskItem = (props) => {
         </Avatar.Group>
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
-        <Select className="task-select" defaultValue={props.status} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={props.task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">Open</Option>
           <Option value="1">In Progress</Option>
           <Option value="2">On Hold</Option>
@@ -137,7 +128,7 @@ const TaskItem = (props) => {
         </Select>
       </div>
       <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Select className="task-select" defaultValue={props.priority} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={props.task.priorityId} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
             <Tag color="gold">Low</Tag>
           </Option>
@@ -151,7 +142,7 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__due-date">
         {due_date}
-        <TaskDateModal taskId={props.id} start_date={props.start_date} due_date={props.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
+        <TaskDateModal taskId={props.task.id} start_date={props.task.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
         <Button>
@@ -164,7 +155,6 @@ const TaskItem = (props) => {
           <EllipsisOutlined style={{ fontSize: "22px" }} />
         </Dropdown>
       </div>
-      {isModalVisible && <TaskDetailModal projectName={props.projectName} taskName={props.name} closeModal={closeModal} />}
     </div>
   );
 };

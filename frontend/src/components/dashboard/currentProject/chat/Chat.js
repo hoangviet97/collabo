@@ -5,7 +5,7 @@ import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:9000");
+const socket = io("http://localhost:9000/chat");
 
 const Chat = (props) => {
   const [messages, setMessages] = useState([]);
@@ -23,6 +23,14 @@ const Chat = (props) => {
     });
 
     socket.emit("hi", "hi...");
+
+    socket.on("connect", () => {
+      socket.emit("join", "fffff");
+    });
+
+    socket.on("get join", (data) => {
+      console.log(data);
+    });
   }, []);
 
   const receivedMsg = (data) => {
@@ -46,7 +54,7 @@ const Chat = (props) => {
 
   return (
     <Container size="30">
-      <div className="chat-window">
+      <div className="chat-window" style={{ width: "100%" }}>
         {messages.map((item, index) => {
           if (item.id === myId) {
             return <MyPost key={index}>{item.body}</MyPost>;

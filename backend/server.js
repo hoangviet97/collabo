@@ -42,14 +42,20 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
 
-io.on("connection", (socket) => {
+const chat = io.of("/chat");
+
+chat.on("connection", (socket) => {
   console.log("projects...");
   socket.on("hi", (data) => {
     console.log(data);
   });
   socket.emit("your id", socket.id);
   socket.on("send message", (body) => {
-    io.emit("msg", body);
+    chat.emit("msg", body);
+  });
+  socket.on("join", (data) => {
+    console.log(data);
+    socket.emit("get join", "ffff gain");
   });
 });
 

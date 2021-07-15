@@ -750,15 +750,28 @@ button:focus {
 }
 
 .task-detail-window {
-  background-color: "grey";
-  position: "absolute";
-  top: "50%";
-  left: "50%";
-  right: 0;
-  bottom: 0;
-  transform: "translate(-50%, -50%)";
-  z-index: 999999;
-  width: "95%";
-  height: "95vh";
-  border-radius: "12px";
+}
+
+.mod {
+  height: 600px;
+}
+
+.project-status {
+  font-size: 12px;
+  color: white;
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 12px;
+
+  &__0 {
+    background-color: #bdc3c7;
+  }
+
+  &__1 {
+    background-color: #2ecc71;
+  }
+
+  &__2 {
+    background-color: #e74c3c;
+  }
 }
