@@ -20,6 +20,7 @@ const ProjectTasks = (props) => {
 
   const { Panel } = Collapse;
   const { Text } = Typography;
+  const { TextArea } = Input;
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTaskVisibility, setNewTaskVisibility] = useState(false);
@@ -28,7 +29,8 @@ const ProjectTasks = (props) => {
   const [selectedSection, setSelectedSection] = useState("");
   const [panelName, setPanelName] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [taskDetail, setTaskDetail] = useState(null);
+  const [taskDetail, setTaskDetail] = useState({});
+  const [taskName, setTaskName] = useState("");
   const [sectionName, setSectionName] = useState(null);
 
   const taskHandler = (e) => {
@@ -124,6 +126,7 @@ const ProjectTasks = (props) => {
   const showModal = (id, sectionName) => {
     let task = props.tasks.filter((item) => item.id === id);
     setTaskDetail(task[0]);
+    setTaskName(taskDetail.name);
     setSectionName(sectionName);
     setIsModalVisible(true);
   };
@@ -169,9 +172,9 @@ const ProjectTasks = (props) => {
       </Container>
 
       <Modal visible={isModalVisible} width="90%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
-        <div className="task-detail-window">
-          <header className="task-detail-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#f5f6fa", padding: "8px 12px" }}>
-            <div class="task-detail-bread" style={{ backgroundColor: "white", padding: "5px 12px", border: "0.5px solid grey", borderRadius: "10px" }}>
+        <div className="task-detail">
+          <header className="task-detail__header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#f5f6fa", padding: "8px 12px" }}>
+            <div className="task-detail-bread" style={{ backgroundColor: "white", padding: "5px 12px", border: "0.5px solid grey", borderRadius: "10px" }}>
               <Breadcrumb>
                 <Breadcrumb.Item>{sectionName}</Breadcrumb.Item>
                 <Breadcrumb.Item>{taskDetail && taskDetail.name}</Breadcrumb.Item>
@@ -181,11 +184,14 @@ const ProjectTasks = (props) => {
               X
             </Button>
           </header>
-          <div class="task-detail-body" style={{ width: "100%", height: "100%" }}>
-            <div class="task-detail-data" style={{ backgroundColor: "blue", width: "55%", height: "100%" }}>
-              dwd
+          <div className="task-detail-body" style={{ width: "100%", height: "100%", display: "flex" }}>
+            <div className="task-detail-data" style={{ width: "55%", height: "100%", padding: "20px" }}>
+              <Input size="large" value={taskName} />
+              <TextArea rows={4} />
             </div>
-            <div class="task-detail-comments" style={{ backgroundColor: "red", width: "45%", height: "100%" }}></div>
+            <div className="task-detail-comments" style={{ backgroundColor: "red", width: "45%", height: "100%" }}>
+              fe
+            </div>
           </div>
         </div>
       </Modal>

@@ -1,16 +1,21 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 
+class Member {
+  constructor(id, userId, roleId, projectId) {
+    this.id = id;
+    this.userId = userId;
+    this.roleId = roleId;
+    this.projectId = projectId;
+    this.created_at = new Date();
+  }
+}
+
 module.exports = {
+  Member,
   // create new member by user or by admin
   createMember: async function (userId, projectId, result) {
-    const newMember = {
-      id: uuid4(),
-      userId: userId,
-      roleId: 0,
-      projectId: projectId,
-      created_at: new Date()
-    };
+    const newMember = new Member(uuid4(), userId, 0, projectId);
 
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
     con.query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at], (err, res) => {

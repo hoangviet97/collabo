@@ -1,21 +1,24 @@
 const con = require("../config/db");
-const uuid4 = require("uuid4");
 const randomInt = require("random-int");
 
+class Project {
+  constructor(id, name, description) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.created_at = new Date();
+    this.color = "#535c68";
+    this.status = 0;
+    this.favorite = false;
+  }
+}
+
 module.exports = {
+  Project,
   // create new user
   createProject: async function (data, result) {
     let randId = randomInt(10000000, 99999999);
-
-    const newProject = {
-      id: randId,
-      name: data.name,
-      description: data.description,
-      created_at: new Date(),
-      color: "#535c68",
-      status: 0,
-      favorite: false
-    };
+    const newProject = new Project(randId, data.name, data.description);
 
     const sql = `INSERT INTO projects (id, name, description, created_at, color, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.color, newProject.status, newProject.favorite], (err, res) => {

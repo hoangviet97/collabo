@@ -5,6 +5,7 @@ import { Row, Col, Progress, Avatar, Dropdown, Menu, Typography, Modal } from "a
 import { EllipsisOutlined, StarFilled, DeleteOutlined, LeftSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import DeleteModal from "../../modal/DeleteModal";
 import ProjectStatus from "../../utils/ProjectStatus";
+import "./Project.scss";
 
 const Project = ({ project, projectCardHandler, setFavorite }) => {
   const { Text } = Typography;
@@ -67,7 +68,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
           <Col span={12}>
             <div className={`project-status project-status__${project.status_id}`}>{project.status}</div>
           </Col>
-          <Col span={12} style={{ textAlign: "end" }}>
+          <Col className="project-card__members" span={12}>
             <Avatar.Group size={30} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
               <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
@@ -76,7 +77,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
           </Col>
         </Row>
       </div>
-      <Modal visible={isModalVisible} width="90%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}></Modal>
+      <Modal visible={isModalVisible} width="60%" centered closable={false} footer={false} bodyStyle={{ height: "60vh", padding: "0" }}></Modal>
     </div>
   );
 };

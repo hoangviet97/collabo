@@ -6,7 +6,20 @@ const { object } = require("joi");
 
 require("dotenv").config();
 
+class User {
+  constructor(id, email, password, firstname, lastname) {
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.created_at = new Date();
+  }
+}
+
 module.exports = {
+  User,
+
   createUser: async function (data, result) {
     const email_check_sql = `SELECT * FROM users WHERE email = ?`;
 
@@ -15,14 +28,7 @@ module.exports = {
         result("Email already exist", null);
         return;
       } else {
-        const newUser = {
-          id: uuid4(),
-          email: data.email,
-          password: data.password,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          created_at: new Date()
-        };
+        const newUser = new User(uuid4(), data.email, data.password, data.firstname, data.lastname);
 
         // encrypt password
         const salt = await bcrypt.genSalt(10);

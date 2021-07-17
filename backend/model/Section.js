@@ -1,15 +1,20 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 
+class Section {
+  constructor(id, projectId, name) {
+    this.id = id;
+    this.projectId = projectId;
+    this.name = name;
+    this.created_at = new Date();
+  }
+}
+
 module.exports = {
+  Section,
   // create new member by user or by admin
   createSection: async function (body, result) {
-    const newSection = {
-      id: uuid4(),
-      projectId: body.id,
-      name: body.name,
-      created_at: new Date()
-    };
+    const newSection = new Section(uuid4(), body.id, body.name);
 
     const sql = `INSERT INTO sections (id, projects_id, name, created_at) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newSection.id, newSection.projectId, newSection.name, newSection.created_at], (err, res) => {

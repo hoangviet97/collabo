@@ -2,6 +2,7 @@ const Project = require("../model/Project");
 const Member = require("../model/Member");
 const { projectValidation } = require("../validation/project");
 const apiResponse = require("../helpers/apiResponse");
+const socket = require("../server");
 
 module.exports = {
   // Create new projects

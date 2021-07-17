@@ -4,6 +4,7 @@ import MyPost from "./posts/MyPost";
 import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import io from "socket.io-client";
+import "./Chat.scss";
 
 const socket = io("http://localhost:9000/chat");
 
@@ -20,16 +21,6 @@ const Chat = (props) => {
     socket.on("msg", (body) => {
       console.log(body);
       receivedMsg(body);
-    });
-
-    socket.emit("hi", "hi...");
-
-    socket.on("connect", () => {
-      socket.emit("join", "fffff");
-    });
-
-    socket.on("get join", (data) => {
-      console.log(data);
     });
   }, []);
 

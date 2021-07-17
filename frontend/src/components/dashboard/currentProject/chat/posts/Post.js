@@ -1,7 +1,7 @@
 import React from "react";
 
 const Post = (props) => {
-  return <div style={{ backgroundColor: "#ced6e0", padding: "10px 20px", borderRadius: "10px", margin: "5px 0", maxWidth: "400px" }}>{props.children}</div>;
+  return <div style={{ clear: "both", float: "right", backgroundColor: "grey", padding: "10px 20px", borderRadius: "10px", color: "white", margin: "5px 0" }}>{props.children}</div>;
 };
 
 export default Post;

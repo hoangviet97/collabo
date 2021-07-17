@@ -5,14 +5,6 @@ const bodyParser = require("body-parser");
 const connection = require("./config/db");
 const cors = require("cors");
 
-const authRoutes = require("./routes/api/auth");
-const projectRoutes = require("./routes/api/projects");
-const memberRoutes = require("./routes/api/members");
-const sectionRoutes = require("./routes/api/sections");
-const taskRoutes = require("./routes/api/tasks");
-const postRoutes = require("./routes/api/posts");
-const invitationRoutes = require("./routes/api/invitation");
-
 require("dotenv").config();
 
 const app = express();
@@ -34,6 +26,16 @@ connection.connect(function (err) {
   console.log("DB connected!");
 });
 
+const chat = io.of("/chat");
+
+const authRoutes = require("./routes/api/auth");
+const projectRoutes = require("./routes/api/projects");
+const memberRoutes = require("./routes/api/members");
+const sectionRoutes = require("./routes/api/sections");
+const taskRoutes = require("./routes/api/tasks");
+const postRoutes = require("./routes/api/posts");
+const invitationRoutes = require("./routes/api/invitation");
+
 app.use("/api", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/members", memberRoutes);
@@ -41,8 +43,6 @@ app.use("/api/sections", sectionRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
-
-const chat = io.of("/chat");
 
 chat.on("connection", (socket) => {
   console.log("projects...");
@@ -52,10 +52,6 @@ chat.on("connection", (socket) => {
   socket.emit("your id", socket.id);
   socket.on("send message", (body) => {
     chat.emit("msg", body);
-  });
-  socket.on("join", (data) => {
-    console.log(data);
-    socket.emit("get join", "ffff gain");
   });
 });
 
