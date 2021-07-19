@@ -19,7 +19,7 @@ class Task {
 module.exports = {
   Task,
   // create new member by user or by admin
-  createTask: async function (body, result) {
+  create: async function (body, result) {
     const priorityCheck = body.priorityId == null || body.priorityId == undefined ? 0 : body.priorityId;
     const statusCheck = body.statusId == null || body.priorityId == undefined ? 0 : body.statusId;
     const newTask = new Task(uuid4(), body.sectionId, priorityCheck, statusCheck, body.name, body.description, body.start_date, body.due_date, body.assigneesArray);

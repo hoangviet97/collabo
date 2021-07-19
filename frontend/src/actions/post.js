@@ -2,13 +2,9 @@ import { CREATE_POST, CREATE_POST_FAIL, GET_POSTS, GET_POSTS_FAIL } from "./type
 import axios from "axios";
 import { message } from "antd";
 
-export const createPost = ({ projectId, name, isPrivate }) => async (dispatch) => {
-  try {
-    const res = await axios.post("http://localhost:9000/api/posts/new", { projectId, name, isPrivate });
-    dispatch({ type: CREATE_POST, payload: res.data });
-  } catch (err) {
-    dispatch({ type: CREATE_POST_FAIL });
-  }
+export const createPost = ({ socket, postBody }) => (dispatch) => {
+  console.log("ok");
+  socket.emit("create post", postBody);
 };
 
 export const getAllPosts = ({ id }) => async (dispatch) => {

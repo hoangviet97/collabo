@@ -4,14 +4,14 @@ const apiResponse = require("../helpers/apiResponse");
 module.exports = {
   // Create new project member
   create: function (req, res) {
-    Member.createMember(req.body, (err, result) => {
+    Member.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   getAll: function (req, res) {
-    Member.getAllMembers(req.body.id, (err, result) => {
+    Member.find(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

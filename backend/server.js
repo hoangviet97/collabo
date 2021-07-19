@@ -9,11 +9,7 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server, {
-  cors: {
-    origin: "*"
-  }
-});
+const io = socketio(server);
 
 const PORT = process.env.PORT | 9000;
 
@@ -36,6 +32,8 @@ const taskRoutes = require("./routes/api/tasks");
 const postRoutes = require("./routes/api/posts");
 const invitationRoutes = require("./routes/api/invitation");
 
+const uuid4 = require("uuid4");
+
 app.use("/api", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/members", memberRoutes);
@@ -45,13 +43,16 @@ app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 chat.on("connection", (socket) => {
-  console.log("projects...");
-  socket.on("hi", (data) => {
-    console.log(data);
-  });
-  socket.emit("your id", socket.id);
-  socket.on("send message", (body) => {
-    chat.emit("msg", body);
+  console.log("Socket connected");
+
+  socket.on("create post", (postBody) => {
+    const newPost = { id: uuid4(), text: postBody.body, created_at: new Date(), projects_id: postBody.project, users_id: postBody.id, name: postBody.name };
+
+    const sql = `INSERT INTO posts (id, text, created_at, projects_id, users_id) VALUES (?, ?, ?, ?, ?)`;
+    connection.query(sql, [newPost.id, newPost.text, newPost.created_at, newPost.projects_id, newPost.users_id], (err, res) => {
+      chat.emit("get post", newPost);
+      return;
+    });
   });
 });
 

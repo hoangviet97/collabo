@@ -13,7 +13,7 @@ class Section {
 module.exports = {
   Section,
   // create new member by user or by admin
-  createSection: async function (body, result) {
+  create: async function (body, result) {
     const newSection = new Section(uuid4(), body.id, body.name);
 
     const sql = `INSERT INTO sections (id, projects_id, name, created_at) VALUES (?, ?, ?, ?)`;
@@ -28,7 +28,7 @@ module.exports = {
     });
   },
 
-  deleteSection: async function (id, result) {
+  delete: async function (id, result) {
     const sql = `DELETE FROM sections WHERE id = ?`;
     con.query(sql, [id], (err, res) => {
       if (err) {
@@ -41,7 +41,7 @@ module.exports = {
     });
   },
 
-  getAllSections: async function (projectId, result) {
+  find: async function (projectId, result) {
     const sql = `SELECT id, name FROM sections WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {

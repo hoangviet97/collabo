@@ -16,7 +16,7 @@ class Project {
 module.exports = {
   Project,
   // create new user
-  createProject: async function (data, result) {
+  create: async function (data, result) {
     let randId = randomInt(10000000, 99999999);
     const newProject = new Project(randId, data.name, data.description);
 
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   // get all project from user x
-  getAllProjects: function (userId, result) {
+  find: function (userId, result) {
     const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite, projects.project_status_id AS status_id ,project_status.name AS status
                   FROM members 
                   RIGHT JOIN projects ON members.projects_id = projects.id 
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   // get current project
-  getProject: function (projectId, memberId, result) {
+  findOne: function (projectId, memberId, result) {
     const sql = `SELECT projects.*, roles.name AS role
                   FROM members 
                   INNER JOIN projects ON members.projects_id = projects.id 

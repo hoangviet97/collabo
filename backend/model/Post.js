@@ -14,7 +14,7 @@ class Post {
 module.exports = {
   Post,
   // create new member by user or by admin
-  createPost: async function (body, user, result) {
+  create: async function (body, user, result) {
     const newPost = new Post(uuid4(), body.text, body.projectId, user);
 
     const sql = `INSERT INTO posts (id, text, created_at, projects_id, users_id) VALUES (?, ?, ?, ?, ?)`;
@@ -29,7 +29,7 @@ module.exports = {
     });
   },
 
-  deletePost: async function (id, result) {
+  delete: async function (id, result) {
     const sql = `DELETE FROM posts WHERE id = ?`;
     con.query(sql, [id], (err, res) => {
       if (err) {
@@ -42,7 +42,7 @@ module.exports = {
     });
   },
 
-  getAllPosts: async function (projectId, result) {
+  find: async function (projectId, result) {
     const sql = `SELECT * FROM posts WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {

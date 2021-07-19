@@ -16,7 +16,7 @@ module.exports = {
   Invitation,
 
   // Create new member by user or by admin
-  createInvitation: async function (body, result) {
+  create: async function (body, result) {
     const invitation = new Invitation(uuid4(), body.senderId, body.receiverId, body.projectId);
     const sql = `INSERT INTO invitations (id, sender, receiver, project_id, created_at) VALUES (?, ?, ?, ?, ?)`;
 
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   // Get all invitations
-  getAllInvitations: async function (body, result) {
+  find: async function (body, result) {
     const sql = `SELECT * FROM invitations WHERE receiver = ?`;
 
     con.query(sql, [body.id], (err, res) => {

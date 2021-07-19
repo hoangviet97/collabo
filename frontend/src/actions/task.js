@@ -9,6 +9,7 @@ export const createTask = ({ task, projectId }) => async (dispatch) => {
     dispatch({ type: CREATE_TASK });
 
     if (projectId.length === 8 && isNaN(projectId) === false) {
+      dispatch(getAllAssignees({ id: projectId }));
       dispatch(getProjectTasks({ id: projectId }));
     }
   } catch (err) {
