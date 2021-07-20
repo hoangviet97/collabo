@@ -23,6 +23,7 @@ connection.connect(function (err) {
 });
 
 const chat = io.of("/chat");
+const global = io.of("/");
 
 const authRoutes = require("./routes/api/auth");
 const projectRoutes = require("./routes/api/projects");
@@ -53,6 +54,12 @@ chat.on("connection", (socket) => {
       chat.emit("get post", newPost);
       return;
     });
+  });
+
+  socket.on("disconnect", function () {
+    socket.removeAllListeners("get post");
+    socket.removeAllListeners("disconnect");
+    io.removeAllListeners("connection");
   });
 });
 

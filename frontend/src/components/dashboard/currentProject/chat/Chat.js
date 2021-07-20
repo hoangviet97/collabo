@@ -6,6 +6,7 @@ import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import { createPost } from "../../../../actions/post";
 import io from "socket.io-client";
+import { PaperClipOutlined, GifOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
 import "./Chat.scss";
 
 const Chat = (props) => {
@@ -43,7 +44,7 @@ const Chat = (props) => {
 
   return (
     <Container size="30">
-      <div className="chat-window" style={{ width: "100%" }}>
+      <div className="chat-window" style={{ width: "100%", height: "67vh", overflowY: "scroll" }}>
         {messages.map((item, index) => {
           if (item.users_id === props.user.id) {
             return <MyPost key={index} post={item} />;
@@ -54,11 +55,18 @@ const Chat = (props) => {
       </div>
       <div className="chat-footer">
         <div className="chat-footer-input">
-          <Input width="30" value={message} onChange={(e) => setMessage(e.target.value)} />
+          <Input className="input" size="large" value={message} allowClear onChange={(e) => setMessage(e.target.value)} />
         </div>
-        <div className="chat-footer-bar">
-          <div className="chat-bar-list"></div>
-          <Button onClick={(e) => sendMsg(e)}>Send</Button>
+        <div className="chat-footer-bar" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px", backgroundColor: "white", border: "0.5px solid #dfe6e9" }}>
+          <div className="chat-bar-list" style={{ display: "flex", gap: "18px" }}>
+            <PaperClipOutlined style={{ fontSize: "19px" }} />
+            <GifOutlined style={{ fontSize: "19px" }} />
+            <PictureOutlined style={{ fontSize: "19px" }} />
+            <SmileOutlined style={{ fontSize: "19px" }} />
+          </div>
+          <Button type="primary" onClick={(e) => sendMsg(e)}>
+            <SendOutlined />
+          </Button>
         </div>
       </div>
     </Container>
