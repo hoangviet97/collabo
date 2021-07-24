@@ -33,7 +33,25 @@ module.exports = {
   },
 
   // get all project from user x
-  find: function (userId, result) {
+  find: async function (userId, result) {
+    const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite, projects.project_status_id AS status_id ,project_status.name AS status
+                  FROM members 
+                  RIGHT JOIN projects ON members.projects_id = projects.id 
+                  INNER JOIN project_status ON projects.project_status_id = project_status.id 
+                  WHERE members.users_id = ?`;
+    con.query(sql, [userId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  // get all project from user x
+  find2: async function (userId) {
     const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite, projects.project_status_id AS status_id ,project_status.name AS status
                   FROM members 
                   RIGHT JOIN projects ON members.projects_id = projects.id 
@@ -63,7 +81,13 @@ module.exports = {
         return;
       }
 
-      result(null, res);
+      if (res.length > 0) {
+        result(null, res);
+        return;
+      } else {
+        result("not found", null);
+        return;
+      }
     });
   },
 

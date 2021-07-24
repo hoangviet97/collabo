@@ -24,13 +24,16 @@ module.exports = {
   getAll: function (req, res) {
     Project.find(req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
+
+      //req.app.get("io").emit("test2", req.user.id);
+
       return res.json(result);
     });
   },
 
   getOne: function (req, res) {
     Project.findOne(req.body.id, req.user.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
   },

@@ -22,9 +22,6 @@ connection.connect(function (err) {
   console.log("DB connected!");
 });
 
-const chat = io.of("/chat");
-const global = io.of("/");
-
 const authRoutes = require("./routes/api/auth");
 const projectRoutes = require("./routes/api/projects");
 const memberRoutes = require("./routes/api/members");
@@ -43,8 +40,18 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/invitation", invitationRoutes);
 
-chat.on("connection", (socket) => {
-  console.log("Socket connected");
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("Connection privded");
+
+  socket.on("greet", (data) => {
+    socket.emit("notify", data);
+  });
+
+  socket.on("meet", (data) => {
+    console.log(data);
+  });
 
   socket.on("create post", (postBody) => {
     const newPost = { id: uuid4(), text: postBody.body, created_at: new Date(), projects_id: postBody.project, users_id: postBody.id, name: postBody.name };
@@ -56,10 +63,8 @@ chat.on("connection", (socket) => {
     });
   });
 
-  socket.on("disconnect", function () {
-    socket.removeAllListeners("get post");
-    socket.removeAllListeners("disconnect");
-    io.removeAllListeners("connection");
+  socket.on("disconnect", () => {
+    console.log("bye");
   });
 });
 

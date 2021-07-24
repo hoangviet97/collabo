@@ -16,6 +16,9 @@ import NotFound from "../layout/NotFound";
 import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
 import { connect } from "react-redux";
+//import io from "socket.io-client";
+import socket from "../../service/socket";
+import { message } from "antd";
 
 const MainContent = (props) => {
   let path = window.location.pathname;
@@ -27,6 +30,12 @@ const MainContent = (props) => {
     }
   }, [props.match]);
 
+  useEffect(() => {
+    socket.on("notify", (data) => {
+      message.success(data);
+    });
+  }, []);
+
   return (
     <div className="mainContent">
       <Switch>
@@ -35,7 +44,7 @@ const MainContent = (props) => {
         <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/settings" component={UserSettings} />
         <Route exact path="/:id/tasks" component={ProjectTasks} />
-        <Route path="/:id/chat" component={Chat} />
+        <Route exact path="/:id/chat" component={Chat} />
         <Route exact path="/:id/overview" component={Overview} />
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={Board} />

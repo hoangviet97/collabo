@@ -1,65 +1,93 @@
 import React, { useState } from "react";
 import InviteItem from "./InviteItem";
-import { Input, Button } from "antd";
+import { Input, Button, Table, Tag, Space } from "antd";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 const InvitePanel = (props) => {
-  const [invitation, setInvitation] = useState("");
-
-  const data = [
-    { id: 1, name: "John Doe", status: "Pending" },
-    { id: 2, name: "Lara Cores", status: "Pending" },
-    { id: 3, name: "Jim Torress", status: "Pending" },
-    { id: 4, name: "Carl Arsen", status: "Pending" }
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text) => <a>{text}</a>
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age"
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address"
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags",
+      render: (tags) => (
+        <>
+          {tags.map((tag) => {
+            let color = tag.length > 5 ? "geekblue" : "green";
+            if (tag === "loser") {
+              color = "volcano";
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      )
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <a>Invite {record.name}</a>
+          <a>Delete</a>
+        </Space>
+      )
+    }
   ];
 
-  const [datas, setDatas] = useState(data);
-
-  const createInvitationHandler = (e) => {
-    const genId = Math.floor(Math.random() * 600) + 1;
-    setDatas([{ id: genId, name: invitation, status: "pending" }, ...datas]);
-    console.log(data);
-  };
-
-  const [translate, setTranslate] = useState(0);
-
-  const upHandler = () => {
-    if (translate !== 0) {
-      setTranslate((prev) => prev + 68);
+  const data = [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"]
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+      tags: ["loser"]
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"]
     }
-  };
-
-  const downHandler = () => {
-    setTranslate((prev) => prev - 68);
-  };
-
-  const invitationHandler = (e) => {
-    setInvitation(e.target.value);
-  };
+  ];
 
   return (
     <div className="invite-panel">
       <div class="invite-panel__form-box">
         <form class="invite-panel__form">
-          <h2 style={{ color: "white", fontSize: "30px" }}>Invite new member</h2>
-          <Input value={invitation} onChange={(e) => invitationHandler(e)} placeholder="Enter e-mail address" />
-          <Button onClick={createInvitationHandler}>Invite</Button>
+          <h2 style={{ fontSize: "30px" }}>Invite new member</h2>
+          <Input placeholder="Enter e-mail address" />
+          <Button>Invite</Button>
         </form>
       </div>
       <div class="invite-panel__list-box">
-        <div className="invite-panel__list">
-          {datas.map((item) => (
-            <InviteItem key={item.id} position={translate} data={item} />
-          ))}
-        </div>
-        <div class="invite-panel__control-arrows">
-          <Button onClick={upHandler} className="invite-panel__control-arrows--up">
-            <CaretUpOutlined />
-          </Button>
-          <Button onClick={downHandler} className="invite-panel__control-arrows--down">
-            <CaretDownOutlined />
-          </Button>
-        </div>
+        <Table columns={columns} dataSource={data} />
       </div>
     </div>
   );

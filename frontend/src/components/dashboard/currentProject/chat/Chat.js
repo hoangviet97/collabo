@@ -1,25 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Container from "../../../utils/Container";
 import MyPost from "./posts/MyPost";
 import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import { createPost } from "../../../../actions/post";
-import io from "socket.io-client";
 import { PaperClipOutlined, GifOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
 import "./Chat.scss";
+import socket from "../../../../service/socket";
 
 const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  let socket = null;
-  socket = io("http://localhost:9000/chat", { transports: ["websocket", "polling", "flashsocket"] });
-
-  useEffect(() => {
-    socket.on("get post", (data) => {
-      receivedMsg(data);
-    });
-  }, [0]);
 
   const receivedMsg = (data) => {
     setMessages((prev) => [...prev, data]);
@@ -35,11 +27,12 @@ const Chat = (props) => {
     };
 
     if (message.length > 0) {
-      props.createPost({ socket, postBody });
+      //props.createPost({ socket, postBody });
       setMessage("");
     } else {
       setMessage("");
     }
+    socket.emit("greet", message);
   };
 
   return (

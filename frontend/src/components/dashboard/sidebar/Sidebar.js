@@ -21,7 +21,7 @@ const Sidebar = (props) => {
   );
 
   return (
-    <aside className="sidebar">
+    <div className="sidebar">
       <div className="logo-box">
         <span className="logo">c.</span>
       </div>
@@ -41,7 +41,7 @@ const Sidebar = (props) => {
           <SettingOutlined style={{ fontSize: "25px", margin: "20px 0", color: "#383e42" }} />
         </Popover>
       </div>
-    </aside>
+    </div>
   );
 };
 

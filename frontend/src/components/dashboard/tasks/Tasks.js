@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import { Button, Select, Collapse, Dropdown, Menu, Typography } from "antd";
 import { InboxOutlined, EllipsisOutlined } from "@ant-design/icons";
@@ -81,7 +80,7 @@ const Tasks = (props) => {
     <div>
       <Container size="30">
         <h2>Manage Your Assigneed Tasks</h2>
-        <Toolbar>
+        <div>
           <div class="tasks-select-group">
             <Select placeholder="Select project" onSelect={onProjectSelect} style={{ width: 250 }} allowClear>
               <Option value="all">All</Option>
@@ -90,7 +89,7 @@ const Tasks = (props) => {
               ))}
             </Select>
           </div>
-        </Toolbar>
+        </div>
         <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
           {props.sections.map((section, index) => (
             <Panel key={index} style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>

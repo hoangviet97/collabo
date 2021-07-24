@@ -1,5 +1,16 @@
 @import "~antd/dist/antd.css";
 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 $primary-color: #4e4e4e;
 $primary-blue-color: #1f56e7;
 $secondaty-blue-color: #f5f6f9;
@@ -85,6 +96,14 @@ button:focus {
 
 .dashboard {
   position: relative;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar main";
+}
+
+.content-side {
+  grid-area: main;
 }
 
 .logo-box {
@@ -99,9 +118,10 @@ button:focus {
 }
 
 .sidebar {
-  background-color: white;
-  width: 70px;
+  grid-area: sidebar;
+  background-color: #031428;
   height: 100%;
+  width: 70px;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -120,7 +140,7 @@ button:focus {
 
   &__icon {
     font-size: 25px;
-    color: #383e42;
+    color: rgb(190, 190, 190);
   }
 
   &__profile {
@@ -128,12 +148,6 @@ button:focus {
     flex-direction: column;
     justify-content: space-around;
   }
-}
-
-.main {
-  margin-left: 70px;
-  background-color: khaki;
-  min-height: 100vh;
 }
 
 .topbar {
@@ -144,14 +158,6 @@ button:focus {
   position: relative;
   align-items: center;
   border-bottom: 0.5px solid rgb(228, 228, 228);
-}
-
-.toolbar {
-  height: 35px;
-  width: 100%;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .mainContent {
@@ -593,67 +599,6 @@ button:focus {
     width: 10%;
     text-align: center;
   }
-}
-
-.invite-panel {
-  width: 100%;
-  display: flex;
-  height: 320px;
-  border-radius: 7px;
-  margin-bottom: 30px;
-
-  &__form-box {
-    width: 60%;
-    height: 100%;
-    background-color: $primary-blue-color;
-    border-radius: 12px;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-  }
-
-  &__form {
-    width: 60%;
-  }
-
-  &__list-box {
-    width: 40%;
-    height: 100%;
-    position: relative;
-  }
-
-  &__list {
-    width: 100%;
-    height: 210px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: -30%;
-    overflow: hidden;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-
-  &__control-arrows {
-    position: absolute;
-    right: 10%;
-    display: flex;
-    flex-direction: column;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
-.invite-item {
-  height: 60px;
-  border-radius: 7px;
-  transition: transform 0.3s;
-  margin: 8px 0;
-  padding: 5px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .status-mark {

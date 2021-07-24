@@ -34,7 +34,7 @@ const NewProject = (props) => {
           </Form>
         </div>
         <div className="new-project__close">
-          <Link to="/projects">Cancel</Link>
+          <Link to="/">Cancel</Link>
         </div>
       </div>
       <div className="new-project__bg"></div>

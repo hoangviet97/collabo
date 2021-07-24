@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../../../utils/Container";
+import socket from "../../../../service/socket";
 
 const Overview = () => {
+  useEffect(() => {
+    socket.emit("meet", "meeting");
+  }, []);
+
   return (
     <div className="overview">
       <Container size="30">

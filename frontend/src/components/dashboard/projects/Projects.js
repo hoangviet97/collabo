@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Toolbar from "../Toolbar";
 import Container from "../../utils/Container";
 import Project from "./Project";
 import { Button, Skeleton } from "antd";
@@ -7,13 +6,16 @@ import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@an
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
-import Spinner from "../../utils/Spinner";
+import socket from "../../../service/socket";
 
 const Projects = (props) => {
   useEffect(() => {
     if (props.projects.length < 1) {
       props.getProjects();
     }
+    socket.on("test2", (data) => {
+      console.log(data);
+    });
   }, []);
 
   const history = useHistory();
@@ -68,7 +70,7 @@ const Projects = (props) => {
   return (
     <div>
       <Container size="30">
-        <Toolbar>
+        <div className="projects-toolbar" style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
           <div className="new-project-container">
             <Link to="/projects/new">
               <Button type="primary">
@@ -85,7 +87,7 @@ const Projects = (props) => {
               <MenuOutlined />
             </div>
           </div>
-        </Toolbar>
+        </div>
         <div>{content}</div>
       </Container>
     </div>

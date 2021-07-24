@@ -19,6 +19,7 @@ module.exports = {
   },
 
   getAll: function (req, res) {
+    req.app.get("io").emit("test", "test sucess");
     Task.getAllTasks(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Toolbar from "../../Toolbar";
 import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
@@ -10,12 +9,16 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
 import Spinner from "../../../utils/Spinner";
+import socket from "../../../../service/socket";
 
 const ProjectTasks = (props) => {
   useEffect(() => {
     props.getSections({ id: props.match.params.id });
     props.getAllAssignees({ id: props.match.params.id });
     props.getProjectTasks({ id: props.match.params.id });
+    socket.on("test", (data) => {
+      console.log(data);
+    });
   }, []);
 
   const { Panel } = Collapse;
