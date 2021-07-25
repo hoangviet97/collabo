@@ -142,7 +142,7 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__due-date">
         {due_date}
-        <TaskDateModal taskId={props.task.id} start_date={props.task.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
+        <TaskDateModal taskId={props.task.id} start_date={props.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
         <Button>

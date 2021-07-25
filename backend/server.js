@@ -42,8 +42,13 @@ app.use("/api/invitation", invitationRoutes);
 
 app.set("io", io);
 
+let users = {};
+
+app.set("users", users);
+
 io.on("connection", (socket) => {
   console.log("Connection privded");
+  users;
 
   socket.on("greet", (data) => {
     socket.emit("notify", data);
@@ -58,7 +63,8 @@ io.on("connection", (socket) => {
 
     const sql = `INSERT INTO posts (id, text, created_at, projects_id, users_id) VALUES (?, ?, ?, ?, ?)`;
     connection.query(sql, [newPost.id, newPost.text, newPost.created_at, newPost.projects_id, newPost.users_id], (err, res) => {
-      chat.emit("get post", newPost);
+      console.log(newPost);
+      io.emit("get post", newPost);
       return;
     });
   });

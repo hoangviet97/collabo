@@ -1,4 +1,4 @@
-import { CREATE_INVITATION, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../actions/types";
+import { CREATE_INVITATION, CREATE_INVITATION_FAIL, UPDATE_SEEN_INVITATION, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../actions/types";
 
 const initialState = {
   sended_invitations: [],
@@ -27,6 +27,11 @@ function invitationReducer(state = initialState, action) {
     case GET_INVITATIONS_FAIL:
       return {
         ...state
+      };
+    case UPDATE_SEEN_INVITATION:
+      return {
+        ...state,
+        invitations: state.invitations.map((item) => (item.id === payload.id ? { ...item, seen: payload.seenStatus } : item))
       };
     default:
       return state;

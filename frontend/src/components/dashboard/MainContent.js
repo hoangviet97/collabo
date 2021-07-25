@@ -15,6 +15,7 @@ import Notifications from "./notifications/Notifications";
 import NotFound from "../layout/NotFound";
 import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
+import { getAllInvitations } from "../../actions/invitation";
 import { connect } from "react-redux";
 //import io from "socket.io-client";
 import socket from "../../service/socket";
@@ -31,9 +32,7 @@ const MainContent = (props) => {
   }, [props.match]);
 
   useEffect(() => {
-    socket.on("notify", (data) => {
-      message.success(data);
-    });
+    props.getAllInvitations();
   }, []);
 
   return (
@@ -58,4 +57,4 @@ const MainContent = (props) => {
   );
 };
 
-export default connect(null, { getProject })(withRouter(MainContent));
+export default connect(null, { getProject, getAllInvitations })(withRouter(MainContent));

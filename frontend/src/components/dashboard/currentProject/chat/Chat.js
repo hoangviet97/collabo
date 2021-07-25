@@ -13,6 +13,12 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    socket.on("get post", (data) => {
+      receivedMsg(data);
+    });
+  }, []);
+
   const receivedMsg = (data) => {
     setMessages((prev) => [...prev, data]);
   };
@@ -27,12 +33,11 @@ const Chat = (props) => {
     };
 
     if (message.length > 0) {
-      //props.createPost({ socket, postBody });
+      props.createPost({ socket, postBody });
       setMessage("");
     } else {
       setMessage("");
     }
-    socket.emit("greet", message);
   };
 
   return (

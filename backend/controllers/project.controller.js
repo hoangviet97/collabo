@@ -13,7 +13,7 @@ module.exports = {
     Project.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      Member.createMember(req.user.id, result.projectId, (err, resu) => {
+      Member.create(req.user.id, result.projectId, (err, resu) => {
         if (err) return apiResponse.ErrorResponse(res, err.message);
         return res.json(result.projectData);
       });

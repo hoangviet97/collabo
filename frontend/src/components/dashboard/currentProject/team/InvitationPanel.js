@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Input, Button } from "antd";
+import { connect } from "react-redux";
+import { createInvitation } from "../../../../actions/invitation";
 
-const InvitationPanel = () => {
+const InvitationPanel = (props) => {
   const [email, setEmail] = useState("");
 
   const submitHandle = (e) => {
     e.preventDefault();
+    props.createInvitation({ receiver_email: email, project: props.project });
   };
 
   return (
@@ -16,4 +19,4 @@ const InvitationPanel = () => {
   );
 };
 
-export default InvitationPanel;
+export default connect(null, { createInvitation })(InvitationPanel);

@@ -2,6 +2,7 @@ import React from "react";
 import { Checkbox, Avatar, Select } from "antd";
 import { connect } from "react-redux";
 import StatusMark from "../../../../utils/StatusMark";
+import AvatarIcon from "../../../../utils/AvatarIcon";
 
 const MemberItem = (props) => {
   const { Option } = Select;
@@ -14,7 +15,9 @@ const MemberItem = (props) => {
     <div className="members-item">
       <div className="members-item__identity">
         <div class="members-item__name">
-          <Avatar />
+          <Avatar size="large">
+            <AvatarIcon name={props.member.firstname} />
+          </Avatar>
           <span>
             {props.member.firstname} {props.member.lastname}
           </span>

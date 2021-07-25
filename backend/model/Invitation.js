@@ -8,6 +8,7 @@ class Invitation {
     this.receiver = receiver;
     this.created_at = new Date();
     this.project = project;
+    this.seen = false;
   }
 }
 
@@ -20,6 +21,11 @@ module.exports = {
     con.query("SELECT id FROM users WHERE email = ?", [body.receiver_email], (err, receiver_id_result) => {
       if (err) {
         result(err, null);
+        return;
+      }
+
+      if (receiver_id_result === sender) {
+        result("You cannot invite yourself", null);
         return;
       }
 
@@ -36,7 +42,7 @@ module.exports = {
           result(null, invitation);
         });
       } else {
-        result("not found", null);
+        result("E-mail doesn't exist", null);
       }
     });
   },
@@ -52,6 +58,21 @@ module.exports = {
       }
 
       result(null, res);
+      return;
+    });
+  },
+
+  // Get all invitations
+  updateSeenStatus: async function (id, result) {
+    const sql = `UPDATE invitations SET seen = true WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, 1);
       return;
     });
   }

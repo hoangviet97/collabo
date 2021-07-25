@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../../utils/Container";
 import { connect } from "react-redux";
-import { getAllInvitations } from "../../../actions/invitation";
+import { getAllInvitations, updateSeenStatus } from "../../../actions/invitation";
 import { Button } from "antd";
 
 const Notifications = (props) => {
-  useEffect(() => {
-    props.getAllInvitations();
-  }, []);
+  const seenHandle = (id, seen) => {
+    if (seen === 0) {
+      props.updateSeenStatus({ id: id });
+    }
+  };
 
   return (
     <Container size="30">
       <div className="notifications-container">
         <header style={{ width: "100%", height: "60px", backgroundColor: "grey", borderRadius: "10px", marginBottom: "20px" }}>Notifications</header>
         {props.invitations.map((invitation) => (
-          <div className="invitation__item" style={{ display: "flex", gap: "15px", alignItems: "center", backgroundColor: "white", padding: "15px 20px", borderRadius: "10px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
+          <div onClick={() => seenHandle(invitation.id, invitation.seen)} className="invitation__item" style={{ display: "flex", gap: "15px", alignItems: "center", backgroundColor: invitation.seen === 1 ? "white" : "#dff9fb", padding: "15px 20px", borderRadius: "10px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
             <div className="invitation__content">
               <strong>
                 {invitation.firstname} {invitation.lastname}
@@ -38,4 +40,4 @@ const mapStateToProps = (state) => ({
   invitations: state.invitation.invitations
 });
 
-export default connect(mapStateToProps, { getAllInvitations })(Notifications);
+export default connect(mapStateToProps, { getAllInvitations, updateSeenStatus })(Notifications);
