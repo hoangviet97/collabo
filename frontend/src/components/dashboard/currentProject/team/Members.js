@@ -21,7 +21,7 @@ const Members = ({ members, getMembers, projectId }) => {
       <Input onChange={searchHandler} style={{ width: "30%" }} placeholder="Search member name" />
       <MembersHeader />
       {members
-        .filter((item) => item.firstname.toLowerCase().includes(searchValue) || item.email.toLowerCase().includes(searchValue))
+        .filter((item) => item.firstname.toLowerCase().includes(searchValue.toLowerCase()) || item.lastname.toLowerCase().includes(searchValue.toLowerCase()) || item.email.toLowerCase().includes(searchValue.toLowerCase()))
         .map((member, index) => (
           <MemberItem member={member} key={index} />
         ))}

@@ -30,9 +30,23 @@ module.exports = {
   },
 
   find: async function (projectId, result) {
-    const sql = `SELECT members.id, users.email, users.firstname, users.lastname, roles.name FROM members INNER JOIN users ON members.users_id = users.id INNER JOIN roles ON members.roles_id = roles.id WHERE projects_id = ?`;
+    const sql = `SELECT members.id, users.email, users.firstname, users.lastname, roles.id AS role_id, roles.name AS role, members.created_at FROM members INNER JOIN users ON members.users_id = users.id INNER JOIN roles ON members.roles_id = roles.id WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  updateRole: async function (body, result) {
+    const sql = `UPDATE members SET roles_id = ? WHERE users_id = ?`;
+
+    con.query(sql, [body.role, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;
