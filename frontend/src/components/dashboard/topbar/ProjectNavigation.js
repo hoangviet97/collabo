@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu, Button } from "antd";
+import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio } from "antd";
 import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { updateColor } from "../../../actions/project";
+import { updateColor, updateStatus } from "../../../actions/project";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
@@ -82,6 +82,10 @@ const ProjectNavigation = (props) => {
     props.updateColor({ id: props.currentProject.id, color: color });
   };
 
+  const projectStatusHandle = (e) => {
+    props.updateStatus({ id: props.currentProject.id, status: e.target.value });
+  };
+
   return (
     <div className="project-navigation">
       <div className="project-nav-identity">
@@ -134,7 +138,7 @@ const ProjectNavigation = (props) => {
           </Popover>
         </li>
       </nav>
-      <Modal title="Project Details" width="90%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Project Details" width="70%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <div class="project-detail__icon-box" style={{ display: "flex", gap: "10px" }}>
           <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}>
             <ThunderboltOutlined />
@@ -168,6 +172,13 @@ const ProjectNavigation = (props) => {
             <label>Project description</label>
             <Input value={projectDescription} />
           </Form.Item>
+          <Form.Item>
+            <Radio.Group onChange={projectStatusHandle} defaultValue={props.currentProject.project_status_id}>
+              <Radio.Button value="0">On Progress</Radio.Button>
+              <Radio.Button value="1">Completed</Radio.Button>
+              <Radio.Button value="2">Canceled</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
         </Form>
       </Modal>
     </div>
@@ -179,4 +190,4 @@ const mapStateToProps = (state) => ({
   currentProject: state.project.currentProject
 });
 
-export default connect(mapStateToProps, { updateColor })(ProjectNavigation);
+export default connect(mapStateToProps, { updateColor, updateStatus })(ProjectNavigation);

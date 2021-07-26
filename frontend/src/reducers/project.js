@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "../actions/types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "../actions/types";
 
 const initialState = {
   loading: false,
@@ -36,6 +36,15 @@ function projectReducer(state = initialState, action) {
       return {
         ...state,
         projects: null
+      };
+    case UPDATE_PROJECT_STATUS:
+      return {
+        ...state,
+        currentProject: { ...state.currentProject, project_status_id: payload.status }
+      };
+    case UPDATE_PROJECT_STATUS_FAIL:
+      return {
+        ...state
       };
     case GET_SINGLE_PROJECT:
       return {

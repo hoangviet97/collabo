@@ -9,5 +9,6 @@ router.get("/", auth, projectController.getAll);
 router.post("/single", auth, projectController.getOne);
 router.patch("/favorite", auth, projectController.setFavorite);
 router.patch("/color", auth, projectController.updateColor);
+router.patch("/status", auth, projectController.updateStatus);
 
 module.exports = router;

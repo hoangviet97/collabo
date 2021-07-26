@@ -50,24 +50,6 @@ module.exports = {
     });
   },
 
-  // get all project from user x
-  find2: async function (userId) {
-    const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite, projects.project_status_id AS status_id ,project_status.name AS status
-                  FROM members 
-                  RIGHT JOIN projects ON members.projects_id = projects.id 
-                  INNER JOIN project_status ON projects.project_status_id = project_status.id 
-                  WHERE members.users_id = ?`;
-    con.query(sql, [userId], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
   // get current project
   findOne: function (projectId, memberId, result) {
     const sql = `SELECT projects.*, roles.name AS role
@@ -108,6 +90,19 @@ module.exports = {
   updateColor: function (body, result) {
     const sql = `UPDATE projects SET color = ? WHERE id = ?`;
     con.query(sql, [body.color, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
+  updateStatus: function (body, result) {
+    const sql = `UPDATE projects SET project_status_id = ? WHERE id = ?`;
+    con.query(sql, [body.status, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

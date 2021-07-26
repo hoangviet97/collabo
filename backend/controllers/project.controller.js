@@ -50,5 +50,12 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  updateStatus: function (req, res) {
+    Project.updateStatus(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };
