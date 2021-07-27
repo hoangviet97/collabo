@@ -24,7 +24,7 @@ const Team = (props) => {
   return (
     <Container size="30">
       <div className="project-team">
-        <div class="project-team__restricted-area">
+        <div className="project-team__restricted-area">
           <InvitationPanel project={props.match.params.id} />
         </div>
         <Tabs defaultActiveKey="1" onChange={callback}>
