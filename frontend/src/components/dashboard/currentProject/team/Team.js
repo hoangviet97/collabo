@@ -9,9 +9,7 @@ import InvitationPanel from "./InvitationPanel";
 const Team = (props) => {
   const { TabPane } = Tabs;
 
-  useEffect(() => {
-    console.log(props.match.params.id);
-  }, []);
+  useEffect(() => {}, []);
 
   function callback(key) {
     console.log(key);
@@ -38,7 +36,7 @@ const Team = (props) => {
             <Groups />
           </TabPane>
           <TabPane tab={inviteHeader} key="3">
-            <Invitations />
+            <Invitations projectId={props.match.params.id} />
           </TabPane>
         </Tabs>
       </div>

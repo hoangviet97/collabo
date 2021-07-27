@@ -13,6 +13,13 @@ module.exports = {
   },
 
   getAll: function (req, res) {
+    Invitation.findAll(req.body.project, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAllPrivate: function (req, res) {
     Invitation.find(req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);

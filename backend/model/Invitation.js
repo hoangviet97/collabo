@@ -63,6 +63,21 @@ module.exports = {
   },
 
   // Get all invitations
+  findAll: async function (project, result) {
+    const sql = `SELECT invitations.*, users.firstname, users.lastname FROM invitations INNER JOIN users ON invitations.receiver = users.id WHERE projects_id = ?`;
+
+    con.query(sql, [project], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  // Get all invitations
   updateSeenStatus: async function (id, result) {
     const sql = `UPDATE invitations SET seen = true WHERE id = ?`;
 

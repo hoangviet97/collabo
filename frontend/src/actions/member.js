@@ -5,7 +5,6 @@ export const getMembers = ({ id }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/members/all", { id });
     dispatch({ type: GET_MEMBERS, payload: res.data });
-    console.log(res.data);
   } catch (err) {
     dispatch({ type: GET_MEMBERS_FAIL });
   }

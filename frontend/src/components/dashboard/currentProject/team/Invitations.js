@@ -1,19 +1,27 @@
-import React, { useState } from "react";
-import { Input, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import MembersHeader from "./header/MembersHeader";
+import { getAllProjectInvitations } from "../../../../actions/invitation";
+import InvitationItem from "./items/InvitationItem";
+import { connect } from "react-redux";
+import { Input } from "antd";
 
-const Invitation = () => {
-  const [email, setEmail] = useState("");
-
-  const submitHandle = (e) => {
-    e.preventDefault();
-  };
+const Invitations = (props) => {
+  useEffect(() => {
+    props.getAllProjectInvitations({ id: props.projectId });
+  }, []);
 
   return (
-    <div>
-      <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-      <Button onClick={submitHandle}>Invite</Button>
+    <div className="invitations" style={{ marginTop: "20px" }}>
+      <MembersHeader />
+      {props.invitations.map((item, index) => (
+        <InvitationItem invitation={item} key={index} />
+      ))}
     </div>
   );
 };
 
-export default Invitation;
+const mapStateToProps = (state) => ({
+  invitations: state.invitation.sended
+});
+
+export default connect(mapStateToProps, { getAllProjectInvitations })(Invitations);
