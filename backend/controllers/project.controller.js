@@ -10,19 +10,50 @@ module.exports = {
 
     if (error) return apiResponse.validationErrorWithData(res, error.message, error);
 
-    Project.createProject(req.body, (err, result) => {
+    Project.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      Member.createMember(req.user.id, result, (err, resu) => {
+      Member.create(req.user.id, result.projectId, (err, resu) => {
         if (err) return apiResponse.ErrorResponse(res, err.message);
-        return res.json(resu);
+        return res.json(result.projectData);
       });
     });
   },
 
   // Get all user's projects
   getAll: function (req, res) {
-    Project.getAllProjects(req.user.id, (err, result) => {
+    Project.find(req.user.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+
+      //req.app.get("io").emit("test2", req.user.id);
+
+      return res.json(result);
+    });
+  },
+
+  getOne: function (req, res) {
+    Project.findOne(req.body.id, req.user.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err);
+      return res.json(result);
+    });
+  },
+
+  setFavorite: function (req, res) {
+    Project.setFavoriteProject(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateColor: function (req, res) {
+    Project.updateColor(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  updateStatus: function (req, res) {
+    Project.updateStatus(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

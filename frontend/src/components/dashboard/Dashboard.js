@@ -1,20 +1,24 @@
-import React, { useEffect } from "react";
-import Sidebar from "./Sidebar";
-import Main from "./Main";
-import { Route, Switch } from "react-router-dom";
-import NewProject from "./NewProject";
+import React, { useEffect, useState } from "react";
+import Sidebar from "./sidebar/Sidebar";
+import TaskModal from "../modal/TaskModal";
+import MainContent from "./MainContent";
+import Toolbox from "../toolbox/Toolbox";
+import Topbar from "./topbar/Topbar";
+import { Route } from "react-router-dom";
+import NewProject from "./newProjectForm/NewProject";
 
 const Dashboard = () => {
   return (
-    <>
-      <div className="dashboard">
-        <Sidebar />
-        <Main />
-        <Switch>
-          <Route path="/projects/new" component={NewProject} />
-        </Switch>
+    <div className="dashboard">
+      <Sidebar />
+      <div class="content-side">
+        <Topbar />
+        <MainContent />
+        <Toolbox />
+        <TaskModal />
       </div>
-    </>
+      <Route path="/projects/new" component={NewProject} />
+    </div>
   );
 };
 

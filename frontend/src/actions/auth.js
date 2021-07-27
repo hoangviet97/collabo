@@ -12,17 +12,19 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: USER_LOADED, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: AUTH_ERROR });
+    console.log(err);
   }
 };
 
-export const register = ({ firstname, lastname, email, password }) => async (dispatch) => {
+export const register = ({ firstname, lastname, email, password, push }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/register", { firstname, lastname, email, password });
-    console.log(res.data);
     dispatch({ type: REGISTER_SUCCESS, payload: res });
+    push("/login");
     message.success("Registration Success!");
   } catch (err) {
-    //console.log(err.response.data.message);
+    message.error(err.response.data.message);
+    console.log(err.response.data.message);
     dispatch({ type: REGISTER_FAIL });
   }
 };

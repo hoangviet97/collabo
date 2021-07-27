@@ -3,7 +3,8 @@ exports.ErrorResponse = function (res, msg) {
     status: 0,
     message: msg
   };
-  return res.status(500).json(data);
+  console.log(data);
+  return res.status(400).json(data);
 };
 
 exports.notFoundResponse = function (res, msg) {
@@ -25,7 +26,7 @@ exports.validationErrorWithData = function (res, msg, data) {
 
 exports.unauthorizedResponse = function (res, msg) {
   var data = {
-    status: 0,
+    status: 401,
     message: msg
   };
   return res.status(401).json(data);

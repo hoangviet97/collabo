@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
 
@@ -22,12 +22,13 @@ const Register = (props) => {
     if (password !== passwordCheck) {
       message.error("Passwords doesn't match!");
     } else {
-      props.register({ firstname, lastname, email, password });
+      const { push } = props.history;
+      props.register({ firstname, lastname, email, password, push });
     }
   };
 
   if (props.isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/" />;
   }
 
   return (
@@ -82,4 +83,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default withRouter(connect(mapStateToProps, { register })(Register));

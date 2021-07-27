@@ -1,19 +1,19 @@
-import "./App.css";
+import "./App.scss";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import NotFount from "./components/layout/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import setAuthToken from "./helpers/setAuthToken";
-import { loadUser } from "./actions/auth";
+import { loadUser, logout } from "./actions/auth";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 const App = () => {
   useEffect(() => {
-    console.log("rendered!");
-    if (localStorage.getItem("token") !== null) {
+    if (localStorage.getItem("token")) {
       setAuthToken(localStorage.token);
     }
     store.dispatch(loadUser());

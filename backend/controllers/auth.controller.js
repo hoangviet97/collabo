@@ -10,7 +10,7 @@ module.exports = {
     if (error) return apiResponse.validationErrorWithData(res, error.message, error);
 
     User.createUser(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
   },
@@ -23,6 +23,7 @@ module.exports = {
 
     User.loginUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
+      console.log(req.body);
       return res.json(result);
     });
   }
