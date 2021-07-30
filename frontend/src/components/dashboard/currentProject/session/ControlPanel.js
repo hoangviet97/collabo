@@ -5,7 +5,7 @@ import SessionPanelList from "./SessionPanelList";
 
 const ControlPanel = (props) => {
   return (
-    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", flexGrow: 1, borderRadius: "12px" }}>
+    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", flexGrow: 1, borderRadius: "12px", overflowY: "scroll" }}>
       <div class="meeting__control-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span>Sessions</span>
         <div class="meeting-header-btns">
@@ -18,7 +18,7 @@ const ControlPanel = (props) => {
         </div>
       </div>
       <div class="meeting__control-content">
-        <SessionPanelList />
+        <SessionPanelList project_id={props.project_id} />
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const Session = (props) => {
   return (
     <Container size="30">
       <div style={{ height: "calc(100vh-60px)", display: "flex", gap: "15px" }}>
-        <ControlPanel addNewSession={addNewSession} />
+        <ControlPanel project_id={props.match.params.id} addNewSession={addNewSession} />
         <SessionContent />
         <SessionModal project_id={props.match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
       </div>
