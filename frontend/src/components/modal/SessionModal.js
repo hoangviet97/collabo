@@ -1,20 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import moment from "moment";
 import { getMembers } from "../../actions/member";
+import { createSession } from "../../actions/session";
 import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col } from "antd";
 
 const SessionModal = (props) => {
   const { Option } = Select;
+  const { TextArea } = Input;
 
   useEffect(() => {
-    props.getMembers({ id: props.id });
+    props.getMembers({ id: props.project_id });
   }, []);
 
+  const timeHandle = (value) => {
+    console.log(moment(value._d).format("LT"));
+  };
+
+  const onFinish = (fieldsValue) => {
+    const dateVal = fieldsValue.date._d;
+    const startTime = fieldsValue.start._d;
+    const endTime = fieldsValue.end._d;
+
+    const values = {
+      ...fieldsValue,
+      date: moment(dateVal).format("YYYY-MM-DD"),
+      start: moment(startTime).format("YYYY-MM-DD hh:mm:ss"),
+      end: moment(endTime).format("YYYY-MM-DD hh:mm:ss"),
+      project_id: props.project_id
+    };
+
+    props.createSession({ session: values });
+  };
+
   return (
-    <Modal title="Basic Modal" width="600px" visible={props.visible} onOk={props.handleOk} onCancel={props.handleCancel}>
-      <Form layout="vertical">
-        <Form.Item label="Event title" name="title">
+    <Modal title="Basic Modal" width="600px" visible={props.visible} onCancel={props.handleCancel} footer={null}>
+      <Form layout="vertical" onFinish={onFinish}>
+        <Form.Item label="Event title" name="name">
           <Input />
+        </Form.Item>
+
+        <Form.Item label="Description" name="description">
+          <TextArea rows={4} />
         </Form.Item>
 
         <Form.Item label="Add participants" name="participants">
@@ -29,17 +56,20 @@ const SessionModal = (props) => {
 
         <Row>
           <Col span={14}>
-            <Form.Item label="Start time" name="start">
+            <Form.Item label="Start time" name="date">
               <DatePicker />
-              <TimePicker />
+            </Form.Item>
+            <Form.Item label="Start time" name="start">
+              <TimePicker format="HH:mm" />
             </Form.Item>
           </Col>
 
           <Col span={10}>
             <Form.Item label="End time" name="end">
-              <TimePicker />
+              <TimePicker onSelect={timeHandle} format="HH:mm" />
             </Form.Item>
           </Col>
+          <Button htmlType="submit">Create</Button>
         </Row>
       </Form>
     </Modal>
@@ -50,4 +80,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { getMembers })(SessionModal);
+export default connect(mapStateToProps, { getMembers, createSession })(SessionModal);

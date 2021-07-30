@@ -8,11 +8,25 @@ import { getProjectTasks } from "../../../../actions/task";
 
 const localizer = momentLocalizer(moment);
 
+class CalendarTask {
+  constructor(id, title, start, end) {
+    this.id = id;
+    this.title = title;
+    this.start = start;
+    this.end = end;
+  }
+}
+
 const ProjectCalendar = (props) => {
   const header = <h1 onClick={() => console.log("hello")}>Setup project management</h1>;
+  const [events, setEvents] = useState();
 
   useEffect(() => {
-    console.log(props.match.params.id);
+    props.getProjectTasks({ id: props.match.params.id });
+    let arr = props.tasks.map((item) => {
+      return { id: item.id, title: item.name, start: new Date(2021, 1, 1), end: new Date(2021, 1, 1) };
+    });
+    setEvents(arr);
   }, []);
 
   const myEventsList = [
@@ -40,10 +54,14 @@ const ProjectCalendar = (props) => {
   return (
     <div className="calendar">
       <Container size="30">
-        <Calendar localizer={localizer} events={myEventsList} startAccessor="start" endAccessor="end" style={{ height: "calc(100vh - 120px)" }} />
+        <Calendar localizer={localizer} events={events} startAccessor="start" endAccessor="end" style={{ height: "calc(100vh - 120px)" }} />
       </Container>
     </div>
   );
 };
 
-export default connect(null, { getProjectTasks })(ProjectCalendar);
+const mapStateToProps = (state) => ({
+  tasks: state.task.tasks
+});
+
+export default connect(mapStateToProps, { getProjectTasks })(ProjectCalendar);
