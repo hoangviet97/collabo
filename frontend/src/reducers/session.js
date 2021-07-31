@@ -1,7 +1,8 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL } from "../actions/types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING } from "../actions/types";
 
 const initialState = {
   sessions: [],
+  single: {},
   loading: false
 };
 
@@ -29,7 +30,18 @@ function sessionReducer(state = initialState, action) {
         ...state,
         sessions: []
       };
+    case GET_SESSION:
+      return {
+        ...state,
+        single: payload,
+        loading: false
+      };
     case SESSIONS_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    case DATA_LOADING:
       return {
         ...state,
         loading: true

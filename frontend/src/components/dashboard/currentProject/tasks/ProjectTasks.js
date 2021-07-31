@@ -4,7 +4,7 @@ import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../../../actions/task";
 import { connect } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Modal, Breadcrumb } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Modal, Breadcrumb, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
@@ -140,39 +140,43 @@ const ProjectTasks = (props) => {
 
   return (
     <div className="project-tasks">
-      <Container size="30">
-        <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-          {props.sections.map((section, index) => (
-            <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
-              {props.tasks.map((task, index) => {
-                if (section.id === task.sections_id) {
-                  return <TaskItem showModal={showModal} projectId={props.match.params.id} sectionName={section.name} key={index} assignees={props.assignees} task={task} start_date={task.start_date} />;
-                }
-              })}
-              {newTaskVisibility ? (
-                <form onSubmit={() => onBlurTaskHandler(section.id)}>
-                  <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
+      {props.loading ? (
+        <Spin size="large" />
+      ) : (
+        <Container size="30">
+          <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
+            {props.sections.map((section, index) => (
+              <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
+                {props.tasks.map((task, index) => {
+                  if (section.id === task.sections_id) {
+                    return <TaskItem showModal={showModal} projectId={props.match.params.id} sectionName={section.name} key={index} assignees={props.assignees} task={task} start_date={task.start_date} />;
+                  }
+                })}
+                {newTaskVisibility ? (
+                  <form onSubmit={() => onBlurTaskHandler(section.id)}>
+                    <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
+                  </form>
+                ) : (
+                  <Button style={{ paddingLeft: "0" }} type="link" onClick={newTaskVisibilityHandler}>
+                    Add task
+                  </Button>
+                )}
+              </Panel>
+            ))}
+          </Collapse>
+          {newSectionVisibility === false ? (
+            <Button onClick={sectionVisibilityHandler}>Add new section</Button>
+          ) : (
+            <div className="add-section-container">
+              <div className="add-section-inputField">
+                <form onSubmit={onBlurSectionHandler}>
+                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
                 </form>
-              ) : (
-                <Button style={{ paddingLeft: "0" }} type="link" onClick={newTaskVisibilityHandler}>
-                  Add task
-                </Button>
-              )}
-            </Panel>
-          ))}
-        </Collapse>
-        {newSectionVisibility === false ? (
-          <Button onClick={sectionVisibilityHandler}>Add new section</Button>
-        ) : (
-          <div className="add-section-container">
-            <div className="add-section-inputField">
-              <form onSubmit={onBlurSectionHandler}>
-                <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
-              </form>
+              </div>
             </div>
-          </div>
-        )}
-      </Container>
+          )}
+        </Container>
+      )}
 
       <Modal visible={isModalVisible} width="90%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
         <div className="task-detail">
@@ -206,7 +210,7 @@ const mapStateToProps = (state) => ({
   sections: state.section.sections,
   tasks: state.task.tasks,
   assignees: state.task.assignees,
-  loading: state.section.loading,
+  loading: state.task.loading,
   project: state.project.currentProject
 });
 

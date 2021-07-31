@@ -21,14 +21,6 @@ const ProjectCalendar = (props) => {
   const header = <h1 onClick={() => console.log("hello")}>Setup project management</h1>;
   const [events, setEvents] = useState();
 
-  useEffect(() => {
-    props.getProjectTasks({ id: props.match.params.id });
-    let arr = props.tasks.map((item) => {
-      return { id: item.id, title: item.name, start: new Date(2021, 1, 1), end: new Date(2021, 1, 1) };
-    });
-    setEvents(arr);
-  }, []);
-
   const myEventsList = [
     {
       id: 0,
@@ -54,7 +46,7 @@ const ProjectCalendar = (props) => {
   return (
     <div className="calendar">
       <Container size="30">
-        <Calendar localizer={localizer} events={events} startAccessor="start" endAccessor="end" style={{ height: "calc(100vh - 120px)" }} />
+        <Calendar localizer={localizer} events={myEventsList} startAccessor="start" endAccessor="end" style={{ height: "calc(100vh - 120px)" }} />
       </Container>
     </div>
   );

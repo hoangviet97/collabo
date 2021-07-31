@@ -44,5 +44,19 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  findOne: async function (id, result) {
+    const sql = `SELECT * FROM sessions WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };
