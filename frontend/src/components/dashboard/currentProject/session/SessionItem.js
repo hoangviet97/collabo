@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Route, useParams } from "react-router-dom";
 import { getSession } from "../../../../actions/session";
 import { getTalkingPoints, createTalkingPoint } from "../../../../actions/talking_point";
-import { Divider, Spin, Input } from "antd";
+import { Divider, Spin, Input, Button } from "antd";
+import moment from "moment";
 
 const SessionItem = (props) => {
   let { sessionId } = useParams();
@@ -27,6 +28,9 @@ const SessionItem = (props) => {
     <div>
       <header>
         <span style={{ fontSize: "20px" }}>{props.single.name}</span>
+        <div>
+          <span>Created {moment(props.single.created_at).startOf("hour").fromNow()}</span>
+        </div>
       </header>
       <Divider />
       <div class="session__talking-point" style={{ marginBottom: "30px" }}>
@@ -45,6 +49,12 @@ const SessionItem = (props) => {
       <div class="session__note">
         <span style={{ fontSize: "18px" }}>Notepad</span>
         <TextArea style={{ padding: "5px 0" }} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
+      </div>
+      <div class="session__assigned-tasks">
+        <span style={{ fontSize: "18px" }}>Assigned tasks</span>
+        <div>
+          <Button>Add task</Button>
+        </div>
       </div>
     </div>
   );

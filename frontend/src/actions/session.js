@@ -2,9 +2,9 @@ import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_SESSIONS, GET_SESSIONS_FAIL, G
 import axios from "axios";
 import { message } from "antd";
 
-export const createSession = ({ session }) => async (dispatch) => {
+export const createSession = ({ session, project }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/sessions/add", { session });
+    const res = await axios.post("http://localhost:9000/api/sessions/add", { session, project });
     console.log(res.data);
     dispatch({ type: CREATE_SESSION, payload: res.data });
   } catch (err) {

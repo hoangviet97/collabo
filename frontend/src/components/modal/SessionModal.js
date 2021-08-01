@@ -30,7 +30,7 @@ const SessionModal = (props) => {
       project_id: props.project_id
     };
 
-    props.createSession({ session: values });
+    props.createSession({ session: values, project: props.project_id });
   };
 
   return (
@@ -55,8 +55,8 @@ const SessionModal = (props) => {
         </Form.Item>
 
         <Row>
-          <Col span={14}>
-            <Form.Item label="Start time" name="date">
+          <Col span={16} style={{ display: "flex", gap: "10px" }}>
+            <Form.Item label="Date" name="date">
               <DatePicker />
             </Form.Item>
             <Form.Item label="Start time" name="start">
@@ -64,7 +64,7 @@ const SessionModal = (props) => {
             </Form.Item>
           </Col>
 
-          <Col span={10}>
+          <Col span={8}>
             <Form.Item label="End time" name="end">
               <TimePicker onSelect={timeHandle} format="HH:mm" />
             </Form.Item>

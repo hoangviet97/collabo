@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { PlusOutlined, CalendarOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Calendar } from "antd";
 import SessionPanelList from "./SessionPanelList";
 
 const ControlPanel = (props) => {
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
+
+  const dateSelectHandle = () => {
+    setCalendarVisible(false);
+  };
+
   return (
-    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", width: "450px", borderRadius: "12px", overflowY: "scroll" }}>
+    <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", width: "450px", borderRadius: "12px", overflowY: "scroll", overflowX: "hidden" }}>
       <div className="meeting__control-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div class="meeting__control-filter" style={{ display: "flex", gap: "5px" }}>
           <span style={{ fontSize: "20px", marginRight: "10px" }}>Sessions</span>
           <Button>All</Button>
           <Button>Today</Button>
-          <Button type="text">
-            <CalendarOutlined />
-          </Button>
+          <div style={{ position: "relative" }}>
+            <Button type="text" onClick={() => setCalendarVisible((prev) => !prev)}>
+              <CalendarOutlined />
+            </Button>
+            {isCalendarVisible && (
+              <div className="site-calendar-demo-card" style={{ zIndex: 99999, position: "absolute", left: "-150px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
+                <Calendar fullscreen={false} />
+                <Button type="primary" onClick={dateSelectHandle}>
+                  Select date
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
         <div className="meeting-header-btns">
           <Button onClick={props.addNewSession}>
