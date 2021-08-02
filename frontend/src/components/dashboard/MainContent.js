@@ -50,7 +50,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />
-        <Route path="/:id/sessions" component={Session} />
+        <Route exact path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
       </Switch>
     </div>

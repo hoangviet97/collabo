@@ -8,9 +8,5 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
-  },
-
-  upload: function (req, res) {
-    return res.json(req);
   }
 };

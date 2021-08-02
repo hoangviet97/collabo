@@ -8,18 +8,12 @@ import { getProjectTasks } from "../../../../actions/task";
 
 const localizer = momentLocalizer(moment);
 
-class CalendarTask {
-  constructor(id, title, start, end) {
-    this.id = id;
-    this.title = title;
-    this.start = start;
-    this.end = end;
-  }
-}
-
 const ProjectCalendar = (props) => {
   const header = <h1 onClick={() => console.log("hello")}>Setup project management</h1>;
-  const [events, setEvents] = useState();
+
+  useEffect(() => {
+    console.log(props.match.params.id);
+  }, []);
 
   const myEventsList = [
     {
@@ -52,8 +46,4 @@ const ProjectCalendar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  tasks: state.task.tasks
-});
-
-export default connect(mapStateToProps, { getProjectTasks })(ProjectCalendar);
+export default connect(null, { getProjectTasks })(ProjectCalendar);

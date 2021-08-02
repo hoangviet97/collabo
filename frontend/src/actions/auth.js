@@ -32,7 +32,7 @@ export const register = ({ firstname, lastname, email, password, push }) => asyn
 export const login = ({ email, password }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/login", { email, password });
-
+    message.success("Login Success!");
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
