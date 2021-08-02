@@ -7,6 +7,8 @@ import section from "./section";
 import task from "./task";
 import invitation from "./invitation";
 import post from "./post";
+import session from "./session";
+import talking_point from "./talking_point";
 
 const appReducer = combineReducers({
   auth,
@@ -16,7 +18,9 @@ const appReducer = combineReducers({
   section,
   task,
   invitation,
-  post
+  post,
+  session,
+  talking_point
 });
 
 const rootReducer = (state, action) => {

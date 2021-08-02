@@ -28,6 +28,8 @@ const memberRoutes = require("./routes/api/members");
 const sectionRoutes = require("./routes/api/sections");
 const taskRoutes = require("./routes/api/tasks");
 const postRoutes = require("./routes/api/posts");
+const sessionRoutes = require("./routes/api/session");
+const talkingPointRoutes = require("./routes/api/talking_points");
 const invitationRoutes = require("./routes/api/invitation");
 
 const uuid4 = require("uuid4");
@@ -38,6 +40,8 @@ app.use("/api/members", memberRoutes);
 app.use("/api/sections", sectionRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/sessions", sessionRoutes);
+app.use("/api/talking-points", talkingPointRoutes);
 app.use("/api/invitation", invitationRoutes);
 
 app.set("io", io);
