@@ -11,10 +11,13 @@ const ControlPanel = (props) => {
 
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [filteredSessions, setFilteredSessions] = useState([]);
+  const [calendarDay, setCalendarDay] = useState("");
   const today = new Date();
+  const byDateSessions = props.sessions.filter((item) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
   const todaySessions = props.sessions.filter((item) => moment(item.date).format("MMM Do YY") === moment(today).format("MMM Do YY"));
 
   const dateSelectHandle = () => {
+    setFilteredSessions(byDateSessions);
     setCalendarVisible(false);
   };
 
@@ -25,8 +28,6 @@ const ControlPanel = (props) => {
   const showTodaySessions = () => {
     setFilteredSessions(todaySessions);
   };
-
-  const showSessionsByDate = () => {};
 
   return (
     <div className="meeting__control-panel" style={{ backgroundColor: "white", padding: "15px", height: "calc(100vh - 120px)", width: "450px", borderRadius: "12px", overflowY: "scroll", overflowX: "hidden" }}>
@@ -41,7 +42,7 @@ const ControlPanel = (props) => {
             </Button>
             {isCalendarVisible && (
               <div className="site-calendar-demo-card" style={{ zIndex: 99999, position: "absolute", left: "-150px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
-                <Calendar fullscreen={false} />
+                <Calendar fullscreen={false} onSelect={(value) => setCalendarDay(value)} />
                 <Button type="primary" onClick={dateSelectHandle}>
                   Select date
                 </Button>

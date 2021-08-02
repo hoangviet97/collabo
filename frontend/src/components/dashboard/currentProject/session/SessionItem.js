@@ -50,12 +50,6 @@ const SessionItem = (props) => {
         <span style={{ fontSize: "18px" }}>Notepad</span>
         <TextArea style={{ padding: "5px 0" }} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
       </div>
-      <div class="session__assigned-tasks">
-        <span style={{ fontSize: "18px" }}>Assigned tasks</span>
-        <div>
-          <Button>Add task</Button>
-        </div>
-      </div>
     </div>
   );
 };
