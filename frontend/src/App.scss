@@ -667,3 +667,60 @@ button:focus {
 .mod {
   height: 600px;
 }
+
+.overview {
+  &__grid {
+    display: grid;
+    grid-template-columns: 65% 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 15px;
+    grid-auto-flow: row;
+    grid-template-areas: "left right";
+    width: 100%;
+    height: 100%;
+  }
+
+  &__left-side {
+    grid-area: left;
+  }
+
+  &__right-side {
+    grid-area: right;
+  }
+}
+
+.overview__left-side {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 300px 1fr;
+  gap: 15px 0px;
+  grid-template-areas:
+    "cards"
+    "chart";
+  width: 100%;
+  height: 100%;
+}
+.overview__left-cards {
+  grid-area: cards;
+}
+.overview__chart {
+  grid-area: chart;
+}
+
+.overview__right-side {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 250px;
+  gap: 15px 0px;
+  grid-template-areas:
+    "project-card"
+    "card-md";
+  width: 100%;
+  height: 100%;
+}
+.project-card {
+  grid-area: project-card;
+}
+.card-md {
+  grid-area: card-md;
+}

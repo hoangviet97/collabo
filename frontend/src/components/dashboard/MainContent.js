@@ -12,7 +12,7 @@ import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
 import Notifications from "./notifications/Notifications";
-import NotFound from "../layout/NotFound";
+import NotFound from "../../layout/notFound/NotFound";
 import Session from "./currentProject/session/Session";
 import { getProject } from "../../actions/project";
 import { getAllInvitations } from "../../actions/invitation";
@@ -52,6 +52,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/team" component={Team} />
         <Route path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
