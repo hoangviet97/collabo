@@ -687,6 +687,14 @@ button:focus {
   &__right-side {
     grid-area: right;
   }
+
+  &__project-card {
+    grid-area: project-card;
+  }
+
+  &__card-md {
+    grid-area: card-md;
+  }
 }
 
 .overview__left-side {
@@ -717,10 +725,4 @@ button:focus {
     "card-md";
   width: 100%;
   height: 100%;
-}
-.project-card {
-  grid-area: project-card;
-}
-.card-md {
-  grid-area: card-md;
 }

@@ -1,7 +1,6 @@
 import React, { useRouteMatch } from "react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-import "moment/locale/cs";
 import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 const SessionPanelItem = ({ session, match }) => {
