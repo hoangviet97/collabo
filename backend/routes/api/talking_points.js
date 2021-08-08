@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/add", auth, talkingPointController.create);
 router.post("/all", auth, talkingPointController.getAll);
+router.patch("/check", auth, talkingPointController.updateCheck);
 
 module.exports = router;

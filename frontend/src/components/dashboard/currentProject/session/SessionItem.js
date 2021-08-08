@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, useParams } from "react-router-dom";
 import { getSession } from "../../../../actions/session";
-import { getTalkingPoints, createTalkingPoint } from "../../../../actions/talking_point";
-import { Divider, Spin, Input, Button } from "antd";
+import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../../../actions/talking_point";
+import { Divider, Spin, Input, Button, Checkbox } from "antd";
 import moment from "moment";
 
 const SessionItem = (props) => {
@@ -24,6 +24,11 @@ const SessionItem = (props) => {
     }
   };
 
+  const pointCheckHandle = (e, id) => {
+    console.log(e.target.checked);
+    props.updateCheckTalkingPoint({ id: id, val: e.target.checked });
+  };
+
   return (
     <div>
       <header>
@@ -35,9 +40,13 @@ const SessionItem = (props) => {
       <Divider />
       <div class="session__talking-point" style={{ marginBottom: "30px" }}>
         <span style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Talking Points</span>
-        <ul style={{ marginLeft: "20px" }}>
-          {props.talking_points.map((item) => (
-            <li>{item.text}</li>
+        <ul style={{ marginLeft: "20px", listStyleType: "none" }}>
+          {props.talking_points.map((item, index) => (
+            <li key={index}>
+              <Checkbox onChange={(e) => pointCheckHandle(e, item.id)} checked={item.checked}>
+                {item.checked ? <strike>{item.text}</strike> : item.text}
+              </Checkbox>
+            </li>
           ))}
           <li>
             <form onSubmit={talkingPointHandle}>
@@ -60,4 +69,4 @@ const mapStateToProps = (state) => ({
   talking_points: state.talking_point.list
 });
 
-export default connect(mapStateToProps, { getSession, getTalkingPoints, createTalkingPoint })(SessionItem);
+export default connect(mapStateToProps, { getSession, getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint })(SessionItem);

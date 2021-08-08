@@ -1,4 +1,4 @@
-import { CREATE_TALKING_POINT, CREATE_TALKING_POINT_FAIL, GET_TALKING_POINTS, GET_TALKING_POINTS_FAIL } from "../actions/types";
+import { CREATE_TALKING_POINT, CREATE_TALKING_POINT_FAIL, GET_TALKING_POINTS, GET_TALKING_POINTS_FAIL, UPDATE_CHECK_STATUS } from "../actions/types";
 
 const initialState = {
   list: [],
@@ -27,6 +27,11 @@ function talkingPointReducer(state = initialState, action) {
       return {
         ...state,
         list: []
+      };
+    case UPDATE_CHECK_STATUS:
+      return {
+        ...state,
+        list: state.list.map((item) => (item.id === payload.id ? { ...item, checked: payload.val } : item))
       };
     default:
       return state;

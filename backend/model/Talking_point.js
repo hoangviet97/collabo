@@ -7,6 +7,7 @@ class TalkingPoint {
     this.session_id = session_id;
     this.text = text;
     this.created_at = new Date();
+    this.checked = false;
   }
 }
 
@@ -38,6 +39,19 @@ module.exports = {
       }
 
       result(null, res);
+      return;
+    });
+  },
+
+  updateCheck: async function (body, result) {
+    const sql = `UPDATE talking_points SET checked = ? WHERE id = ?`;
+    con.query(sql, [body.val, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
       return;
     });
   }
