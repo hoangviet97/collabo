@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
+    "@asseinfo/react-kanban": "^2.1.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
@@ -13,8 +14,7 @@
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
-    "react-beautiful-dnd": "^13.1.0",
-    "react-big-calendar": "^0.33.2",
+    "react-awesome-calendar": "^1.0.14",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-moment": "^1.1.1",

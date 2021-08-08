@@ -156,19 +156,20 @@ button:focus {
   width: 100%;
   height: 60px;
   display: flex;
-  position: relative;
+  position: fixed;
   align-items: center;
+  padding-right: 100px;
   border-bottom: 0.5px solid rgb(228, 228, 228);
 }
 
 .mainContent {
   background-color: $secondaty-blue-color;
   width: 100%;
-  min-height: calc(100vh - 60px);
+  padding-top: 60px;
+  min-height: 100vh;
 }
 
 .topbar-profile {
-  position: absolute;
   display: flex;
   gap: 12px;
   align-items: center;

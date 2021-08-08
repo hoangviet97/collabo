@@ -86,12 +86,13 @@ const Overview = (props) => {
                   />
                   <h4>Completed</h4>
                 </div>
-                <div>
+                <div style={{ textAlign: "center" }}>
                   <div style={{ width: "80px", height: "80px", borderRadius: "50%", backgroundColor: "white", border: "4px solid #95afc0", display: "flex", justifyContent: "center", alignItems: "center" }}>{ongoingTasks.length}</div>
                   <h3>Ongoing</h3>
                 </div>
-                <div>
-                  <Progress type="circle" percent={openTasks.length} format={(percent) => `${percent}`} />
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ width: "80px", height: "80px", borderRadius: "50%", backgroundColor: "white", border: "4px solid #95afc0", display: "flex", justifyContent: "center", alignItems: "center" }}>{openTasks.length}</div>
+                  <h3>Open</h3>
                 </div>
               </div>
             </div>

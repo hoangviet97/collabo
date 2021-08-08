@@ -7,7 +7,7 @@ import UserSettings from "./globalSettings/UserSettings";
 import ProjectTasks from "./currentProject/tasks/ProjectTasks";
 import Chat from "./currentProject/chat/Chat";
 import Overview from "./currentProject/overview/Overview";
-import Board from "./currentProject/board/Board";
+import KanbanBoard from "./currentProject/board/KanbanBoard";
 import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
@@ -35,6 +35,8 @@ const MainContent = (props) => {
     props.getAllInvitations();
   }, []);
 
+  console.log(props.match);
+
   return (
     <div className="mainContent">
       <Switch>
@@ -46,7 +48,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/chat" component={Chat} />
         <Route exact path="/:id/overview" component={Overview} />
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
-        <Route exact path="/:id/board" component={Board} />
+        <Route exact path="/:id/board" component={KanbanBoard} />
         <Route exact path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />

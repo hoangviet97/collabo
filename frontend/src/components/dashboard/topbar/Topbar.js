@@ -12,7 +12,7 @@ const Topbar = (props) => {
   return (
     <div className="topbar">
       {isNaN(path.split("/")[1]) === false && path.split("/")[1].length === 8 ? <ProjectNavigation /> : null}
-      <div className="topbar-profile">
+      <div className="topbar-profile" style={{ position: "absolute", right: "30px" }}>
         <Avatar size="large">
           <AvatarIcon name={props.user.firstname} />
         </Avatar>

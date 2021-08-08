@@ -101,7 +101,7 @@ const TaskItem = (props) => {
     <div className="task-column">
       <div onClick={() => props.showModal(props.task.id, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
-        <span>{props.task.name}</span>
+        <span>{props.task.title}</span>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
