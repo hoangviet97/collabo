@@ -44,5 +44,19 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  download: async function (id, result) {
+    const sql = `SELECT * FROM files WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res[0]);
+      return;
+    });
   }
 };
