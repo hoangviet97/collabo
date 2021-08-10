@@ -9,6 +9,7 @@ import invitation from "./invitation";
 import post from "./post";
 import session from "./session";
 import talking_point from "./talking_point";
+import file from "./file";
 
 const appReducer = combineReducers({
   auth,
@@ -20,7 +21,8 @@ const appReducer = combineReducers({
   invitation,
   post,
   session,
-  talking_point
+  talking_point,
+  file
 });
 
 const rootReducer = (state, action) => {

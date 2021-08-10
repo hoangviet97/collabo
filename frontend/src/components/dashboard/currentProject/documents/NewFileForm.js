@@ -4,7 +4,7 @@ import { Tabs, Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 
-const NewFileForm = () => {
+const NewFileForm = (props) => {
   const API_URL = "http://localhost:9000/api/files/upload";
   const [file, setFile] = useState(null); // state for storing actual image
   const [previewSrc, setPreviewSrc] = useState(""); // state for storing previewImage
@@ -40,6 +40,7 @@ const NewFileForm = () => {
           const formData = new FormData();
           formData.append("file", file);
           formData.append("title", title);
+          formData.append("project_id", props.project_id);
           formData.append("description", description);
 
           await axios.post(`${API_URL}`, formData, {
@@ -87,32 +88,34 @@ const NewFileForm = () => {
               </Button>
             </Form.Item>
           </Row>
-          <div className="upload-section">
+          <div className="upload-section" style={{ display: "flex", height: "400px" }}>
             <Dropzone onDrop={onDrop} onDragEnter={() => updateBorder("over")} onDragLeave={() => updateBorder("leave")}>
               {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
-                  <input {...getInputProps()} />
-                  <p>Drag and drop a file OR click here to select a file</p>
-                  {file && (
-                    <div>
-                      <strong>Selected file:</strong> {file.name}
-                    </div>
-                  )}
+                <div {...getRootProps({ className: "drop-zone" })} style={{ width: "40%", height: "inherit", border: "0.5px solid black", display: "flex", justifyContent: "center", alignItems: "center" }} ref={dropRef}>
+                  <div class="drop-container">
+                    <input {...getInputProps()} />
+                    <p>Drag and drop a file OR click here to select a file</p>
+                    {file && (
+                      <div>
+                        <strong>Selected file:</strong> {file.name}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </Dropzone>
             {previewSrc ? (
               isPreviewAvailable ? (
-                <div className="image-preview">
+                <div className="image-preview" style={{ width: "60%", height: "inherit" }}>
                   <img className="preview-image" src={previewSrc} alt="Preview" />
                 </div>
               ) : (
-                <div className="preview-message">
+                <div className="preview-message" style={{ width: "60%", display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
                   <p>No preview available for this file</p>
                 </div>
               )
             ) : (
-              <div className="preview-message">
+              <div className="preview-message" style={{ width: "60%", display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
                 <p>Image preview will be shown here after selection</p>
               </div>
             )}

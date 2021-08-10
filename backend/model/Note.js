@@ -14,16 +14,16 @@ module.exports = {
   Note,
   // create new member by user or by admin
   create: async function (body, result) {
-    const newTalkingPoint = new TalkingPoint(uuid4(), body.session_id, body.text);
+    const newNote = new Note(uuid4(), body.session_id, body.text);
 
     const sql = `INSERT INTO talking_points (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newTalkingPoint.id, newTalkingPoint.session_id, newTalkingPoint.text, newTalkingPoint.created_at], (err, res) => {
+    con.query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at], (err, res) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      result(null, newTalkingPoint);
+      result(null, newNote);
       return;
     });
   },
