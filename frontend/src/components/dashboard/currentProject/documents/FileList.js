@@ -3,6 +3,7 @@ import { Table, Space } from "antd";
 import moment from "moment";
 import download from "downloadjs";
 import axios from "axios";
+import { DownloadOutlined } from "@ant-design/icons";
 
 const FileList = (props) => {
   const downloadFile = async (id, path, mimetype) => {
@@ -44,7 +45,9 @@ const FileList = (props) => {
       width: "12%",
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>download</a>
+          <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>
+            <DownloadOutlined style={{ fontSize: "20px" }} />
+          </a>
         </Space>
       )
     }
