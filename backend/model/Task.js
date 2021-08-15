@@ -2,9 +2,9 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 class Task {
-  constructor(id, sectionId, priorityId, statusId, title, description, start_date, due_date, assigneesArray) {
+  constructor(id, sections_id, priorityId, statusId, title, description, start_date, due_date) {
     this.id = id;
-    this.sectionId = sectionId;
+    this.sections_id = sections_id;
     this.priorityId = priorityId;
     this.statusId = statusId;
     this.title = title;
@@ -12,7 +12,6 @@ class Task {
     this.start_date = start_date;
     this.due_date = due_date;
     this.created_at = new Date();
-    this.assigneesArray = assigneesArray;
   }
 }
 
@@ -20,41 +19,18 @@ module.exports = {
   Task,
   // create new member by user or by admin
   create: async function (body, result) {
-    console.log(body);
     const priorityCheck = body.task.priorityId === null || body.task.priorityId === undefined ? "0" : body.task.priorityId;
     const statusCheck = body.task.statusId === null || body.task.statusId === undefined ? "0" : body.task.statusId;
-    const newTask = new Task(uuid4(), body.task.sectionId, priorityCheck, statusCheck, body.task.title, body.task.description, body.task.start_date, body.task.due_date, body.task.assigneesArray);
+    const newTask = new Task(uuid4(), body.task.sectionId, priorityCheck, statusCheck, body.task.title, body.task.description, body.task.start_date, body.task.due_date);
 
     const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, title, description, start_date, due_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newTask.id, newTask.sectionId, newTask.priorityId, newTask.statusId, newTask.title, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at], (err, res) => {
+    con.query(sql, [newTask.id, newTask.sections_id, newTask.priorityId, newTask.statusId, newTask.title, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at], (err, res) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      if (newTask.assigneesArray.length > 0) {
-        result(null, { assignees: newTask.assigneesArray, task: newTask.id });
-        return;
-      } else {
-        result(null, null);
-        return;
-      }
-    });
-  },
-
-  createTaskAssignees: async function (body, result) {
-    const arr = [];
-    const { assignees, task } = body;
-    assignees.map((assignee) => arr.push([assignee, task]));
-
-    const sql = `INSERT INTO members_tasks (members_id, tasks_id) VALUES ?`;
-    con.query(sql, [arr], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, "success");
+      result(null, newTask);
       return;
     });
   },

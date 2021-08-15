@@ -5,13 +5,9 @@ import { message } from "antd";
 export const createTask = ({ task, projectId }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/tasks/add", { task });
+    console.log(res);
     message.success("New task");
     dispatch({ type: CREATE_TASK });
-
-    if (projectId.length === 8 && isNaN(projectId) === false) {
-      dispatch(getAllAssignees({ id: projectId }));
-      dispatch(getProjectTasks({ id: projectId }));
-    }
   } catch (err) {
     dispatch({ type: CREATE_TASK_FAIL });
   }

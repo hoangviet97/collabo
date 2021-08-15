@@ -7,14 +7,7 @@ module.exports = {
     Task.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      if (result !== null) {
-        Task.createTaskAssignees(result, (err, resu) => {
-          if (err) return apiResponse.ErrorResponse(res, err.message);
-          return res.json(resu);
-        });
-      } else {
-        return res.json(result);
-      }
+      return res.json(result);
     });
   },
 
