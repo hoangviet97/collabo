@@ -4,7 +4,7 @@ import { message } from "antd";
 
 export const createTask = ({ task, projectId }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/tasks/add", task);
+    const res = await axios.post("http://localhost:9000/api/tasks/add", { task });
     message.success("New task");
     dispatch({ type: CREATE_TASK });
 

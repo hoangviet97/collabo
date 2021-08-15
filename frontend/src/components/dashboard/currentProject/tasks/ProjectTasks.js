@@ -59,7 +59,7 @@ const ProjectTasks = (props) => {
       sectionId: sectionId,
       priorityId: "0",
       statusId: "0",
-      name: newTask,
+      title: newTask,
       description: null,
       start_date: null,
       due_date: null,
@@ -68,6 +68,7 @@ const ProjectTasks = (props) => {
 
     if (newTask.length > 0) {
       props.createTask({ task: values, projectId: props.match.params.id });
+      console.log(values);
       setNewTask("");
     } else {
       console.log("empty name");

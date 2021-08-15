@@ -21,6 +21,7 @@ const Timer = () => {
     clearInterval(countRef.current);
     setIsActive(false);
     setIsPaused(false);
+    console.log(timer);
     setTimer(0);
   };
 
