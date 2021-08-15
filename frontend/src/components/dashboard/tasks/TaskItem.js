@@ -9,6 +9,7 @@ import TaskDateModal from "../../modal/TaskDateModdal";
 import TaskDetailModal from "../../modal/TaskDetailModal";
 import StatusIcon from "../../utils/StatusIcon";
 import AvatarIcon from "../../utils/AvatarIcon";
+import Timer from "../currentProject/timeTracker/Timer";
 
 const TaskItem = (props) => {
   const [datePicker, setDatePicker] = useState(null);
@@ -145,10 +146,7 @@ const TaskItem = (props) => {
         <TaskDateModal taskId={props.task.id} start_date={props.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
-        <Button>
-          00:00:00
-          <CaretRightOutlined />
-        </Button>
+        <Timer />
       </div>
       <div className="task-column__item task-column__more">
         <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
