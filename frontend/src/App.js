@@ -1,4 +1,4 @@
-import "./App.scss";
+import "./styles/main.scss";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";

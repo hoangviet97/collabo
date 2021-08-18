@@ -1,0 +1,15 @@
+.sidebar {
+  grid-area: sidebar;
+  background-color: #031428;
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    font-size: 40px;
+  }
+}

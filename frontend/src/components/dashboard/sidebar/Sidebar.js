@@ -28,9 +28,7 @@ const Sidebar = (props) => {
 
   return (
     <div className="sidebar">
-      <div className="logo-box">
-        <span className="logo">c.</span>
-      </div>
+      <a className="sidebar__logo">c.</a>
       <nav className="side-nav">
         <Link className="side-nav__link" to="/">
           <HomeOutlined className="side-nav__icon" />

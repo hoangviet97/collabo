@@ -33,32 +33,32 @@ const ProjectNavigation = (props) => {
   const moreContent = (
     <div>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/team`}>
-          <TeamOutlined className="project-nav-link__icon" />
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
+          <TeamOutlined className="single-navigation__link-icon" />
           <span>Team</span>
         </Link>
       </p>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/sessions`}>
-          <FundProjectionScreenOutlined className="project-nav-link__icon" />
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/sessions`}>
+          <FundProjectionScreenOutlined className="single-navigation__link-icon" />
           <span>Sessions</span>
         </Link>
       </p>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/tracker`}>
-          <DashboardOutlined className="project-nav-link__icon" />
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/tracker`}>
+          <DashboardOutlined className="single-navigation__link-icon" />
           <span>Time Tracker</span>
         </Link>
       </p>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/documents`}>
-          <FileTextOutlined className="project-nav-link__icon" />
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
+          <FileTextOutlined className="single-navigation__link-icon" />
           <span>Docs</span>
         </Link>
       </p>
       <p>
-        <Link className="project-nav-link" to={`/${path.split("/")[1]}/documents`}>
-          <FileTextOutlined className="project-nav-link__icon" />
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
+          <FileTextOutlined className="single-navigation__link-icon" />
           <span>Report</span>
         </Link>
       </p>
@@ -86,54 +86,61 @@ const ProjectNavigation = (props) => {
     props.updateStatus({ id: props.currentProject.id, status: e.target.value });
   };
 
+  const projectInfoMenu = (
+    <Menu>
+      <Menu.Item>
+        <a onClick={showModal}>Show details</a>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className="project-navigation">
-      <div className="project-nav-identity">
-        <div className="project-nav-icon">
+    <div className="single-navigation">
+      <div className="single-navigation__identity">
+        <div className="single-navigation__icon">
           <div style={{ width: "40px", height: "40px", borderRadius: "8px", backgroundColor: props.project.currentProject.color !== null ? props.project.currentProject.color : "grey" }}></div>
         </div>
-        <div className="project-nav-title">
-          <span>{props.project ? props.project.currentProject.name : ""}</span>
-          <a className="project-nav-title__detail" onClick={showModal}>
-            Details
-          </a>
+        <div className="single-navigation__title">
+          <Dropdown overlay={projectInfoMenu} placement="bottomCenter">
+            <span>{props.project ? props.project.currentProject.name : ""}</span>
+          </Dropdown>
         </div>
       </div>
-      <nav className="project-nav">
-        <li className="project-nav-item">
-          <Link className="project-nav-link" to={`/${path.split("/")[1]}/overview`}>
-            <LayoutOutlined className="project-nav-link__icon" />
+      <nav className="single-navigation__list">
+        <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/overview`}>
+            <LayoutOutlined className="single-navigation__link-icon" />
             <span>Overview</span>
           </Link>
         </li>
-        <li className="project-nav-item">
-          <Link className="project-nav-link" to={`/${path.split("/")[1]}/tasks`}>
-            <BarsOutlined className="project-nav-link__icon" />
+        <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tasks`}>
+            <BarsOutlined className="single-navigation__link-icon" />
             <span>Tasks</span>
           </Link>
         </li>
-        <li className="project-nav-item">
-          <Link className="project-nav-link" to={`/${path.split("/")[1]}/board`}>
-            <ProjectOutlined className="project-nav-link__icon" />
+        <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/board`}>
+            <ProjectOutlined className="single-navigation__link-icon" />
             <span>Board</span>
           </Link>
         </li>
-        <li className="project-nav-item">
-          <Link className="project-nav-link" to={`/${path.split("/")[1]}/calendar`}>
-            <CalendarOutlined className="project-nav-link__icon" />
+        <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/calendar`}>
+            <CalendarOutlined className="single-navigation__link-icon" />
             <span>Calendar</span>
           </Link>
         </li>
-        <li className="project-nav-item">
-          <Link className="project-nav-link" to={`/${path.split("/")[1]}/chat`}>
-            <NumberOutlined className="project-nav-link__icon" />
+        <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/chat`}>
+            <NumberOutlined className="single-navigation__link-icon" />
             <span>Chat</span>
           </Link>
         </li>
-        <li className="project-nav-item">
+        <li className="single-navigation__item">
           <Popover className="popover" placement="bottom" content={moreContent} trigger="click">
-            <Link className="project-nav-link" to="">
-              <EllipsisOutlined className="project-nav-link__icon" style={{ fontSize: "25px" }} />
+            <Link className="single-navigation__link" to="">
+              <EllipsisOutlined className="single-navigation__link-icon" style={{ fontSize: "25px" }} />
             </Link>
           </Popover>
         </li>

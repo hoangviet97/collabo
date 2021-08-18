@@ -1,0 +1,38 @@
+.single-navigation {
+  display: flex;
+  gap: 30px;
+  position: relative;
+  float: left;
+  line-height: 60px;
+
+  &__list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
+
+  &__link {
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    height: 40px;
+    padding-left: 7px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__identity {
+    display: flex;
+  }
+}

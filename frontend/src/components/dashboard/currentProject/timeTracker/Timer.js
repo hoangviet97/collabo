@@ -3,6 +3,7 @@ import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 
 const Timer = () => {
   const [timer, setTimer] = useState(0);
+  let finalFormat = "";
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const countRef = useRef(null);
@@ -21,7 +22,7 @@ const Timer = () => {
     clearInterval(countRef.current);
     setIsActive(false);
     setIsPaused(false);
-    console.log(timer);
+    console.log(new Date("1970-01-01 " + finalFormat));
     setTimer(0);
   };
 
@@ -30,8 +31,9 @@ const Timer = () => {
     const minutes = `${Math.floor(timer / 60)}`;
     const getMinutes = `0${minutes % 60}`.slice(-2);
     const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+    finalFormat = `${getHours}:${getMinutes}:${getSeconds}`;
 
-    return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    return finalFormat;
   };
 
   return (

@@ -12,7 +12,8 @@ function taskReducer(state = initialState, action) {
   switch (type) {
     case CREATE_TASK:
       return {
-        ...state
+        ...state,
+        tasks: [...state.tasks, payload]
       };
     case CREATE_TASK_FAIL:
       return {

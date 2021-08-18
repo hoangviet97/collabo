@@ -1,0 +1,23 @@
+textarea:hover,
+Input:hover,
+textarea:active,
+Input:active,
+textarea:focus,
+Input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: none !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}

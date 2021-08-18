@@ -7,7 +7,7 @@ export const createTask = ({ task, projectId }) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/tasks/add", { task });
     console.log(res);
     message.success("New task");
-    dispatch({ type: CREATE_TASK });
+    dispatch({ type: CREATE_TASK, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_TASK_FAIL });
   }

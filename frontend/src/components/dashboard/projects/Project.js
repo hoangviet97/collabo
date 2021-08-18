@@ -44,7 +44,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
   };
 
   return (
-    <div className="project-card" style={{ margin: "0px", padding: "25px", borderRadius: "10px", backgroundColor: "white" }}>
+    <div className="project-card">
       <div className="project-card__header">
         <Row>
           <Col span={20}>
