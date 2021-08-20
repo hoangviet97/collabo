@@ -55,7 +55,7 @@ const FileList = (props) => {
 
   return (
     <div className="files-container">
-      <Table columns={columns} dataSource={props.files} />
+      <Table columns={columns} dataSource={props.files} pagination={{ pageSize: 10 }} />
     </div>
   );
 };

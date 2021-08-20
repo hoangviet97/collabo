@@ -523,3 +523,21 @@
   display: block;
   margin-bottom: 10px;
 }
+
+.files {
+  position: relative;
+  min-height: 100vh;
+}
+
+.files__storage-tab {
+  background-color: white;
+  position: fixed;
+  top: 90px;
+  right: 30px;
+  width: 350px;
+  height: calc(100vh - 120px);
+  border-radius: 12px;
+}
+.files__data {
+  width: calc(100% - 370px);
+}

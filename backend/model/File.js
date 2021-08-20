@@ -17,8 +17,9 @@ module.exports = {
   File,
   // create new member by user or by admin
   upload: async function (body, file, result) {
-    console.log(body.project_id);
-    const newFile = new File(uuid4(), body.title, body.description, file.path, file.mimetype, body.project_id);
+    console.log(file.originalname);
+    const fileTitle = body.title === undefined || body.title === null || body.title === "" ? file.originalname : body.title;
+    const newFile = new File(uuid4(), fileTitle, body.description, file.path, file.mimetype, body.project_id);
 
     const sql = `INSERT INTO files (id, title, description, file_path, file_mimetype, created_at, projects_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newFile.id, newFile.title, newFile.description, newFile.file_path, newFile.file_mimetype, newFile.created_at, newFile.project_id], (err, res) => {

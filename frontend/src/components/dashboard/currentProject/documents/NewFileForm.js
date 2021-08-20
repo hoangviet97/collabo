@@ -7,13 +7,12 @@ import axios from "axios";
 const NewFileForm = (props) => {
   const API_URL = "http://localhost:9000/api/files/upload";
   const [file, setFile] = useState(null); // state for storing actual image
-  const [previewSrc, setPreviewSrc] = useState(""); // state for storing previewImage
   const [state, setState] = useState({
     title: "",
     description: ""
   });
-  const [isPreviewAvailable, setIsPreviewAvailable] = useState(false); // state to show preview only for images
   const dropRef = useRef();
+  const { TextArea } = Input;
 
   const handleInputChange = (event) => {
     setState({
@@ -35,7 +34,7 @@ const NewFileForm = (props) => {
 
     try {
       const { title, description } = state;
-      if (title.trim() !== "" && description.trim() !== "") {
+      if (description.trim() !== "") {
         if (file) {
           const formData = new FormData();
           formData.append("file", file);
@@ -62,66 +61,52 @@ const NewFileForm = (props) => {
   const onDrop = (files) => {
     const [uploadedFile] = files;
     setFile(uploadedFile);
-
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      setPreviewSrc(fileReader.result);
-    };
-    fileReader.readAsDataURL(uploadedFile);
-    setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png)$/));
   };
 
   return (
-    <div className="documents">
-      <Container size="30">
-        <Form className="search-form">
-          <Row>
-            <Form.Item label="title">
+    <div className="files__upload" style={{ width: "100%" }}>
+      <Form className="search-form" layout="vertical">
+        <Row>
+          <Col span={24}>
+            <Form.Item label="Title (optional)">
               <Input placeholder="Enter title" name="title" value={state.title || ""} onChange={handleInputChange} />
             </Form.Item>
-            <Form.Item label="description">
-              <Input placeholder="Enter description" name="description" value={state.description || ""} onChange={handleInputChange} />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <Form.Item label="Description (optional)">
+              <TextArea rows={4} placeholder="Enter description" name="description" value={state.description || ""} onChange={handleInputChange} />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button onClick={handleOnSubmit} type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Row>
-          <div className="upload-section" style={{ display: "flex", height: "400px" }}>
-            <Dropzone onDrop={onDrop} onDragEnter={() => updateBorder("over")} onDragLeave={() => updateBorder("leave")}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps({ className: "drop-zone" })} style={{ width: "40%", height: "inherit", border: "0.5px solid black", display: "flex", justifyContent: "center", alignItems: "center" }} ref={dropRef}>
-                  <div class="drop-container">
-                    <input {...getInputProps()} />
-                    <p>Drag and drop a file OR click here to select a file</p>
-                    {file && (
-                      <div>
-                        <strong>Selected file:</strong> {file.name}
-                      </div>
-                    )}
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <div className="upload-section" style={{ display: "flex", width: "100%" }}>
+              <Dropzone onDrop={onDrop} onDragEnter={() => updateBorder("over")} onDragLeave={() => updateBorder("leave")}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps({ className: "drop-zone" })} style={{ width: "100%", padding: "30px 30px", height: "inherit", border: "0.5px solid black", display: "flex", justifyContent: "center", alignItems: "center" }} ref={dropRef}>
+                    <div class="drop-container">
+                      <input {...getInputProps()} />
+                      <p>Drag and drop a file OR click here to select a file</p>
+                      {file && (
+                        <div>
+                          <strong>Selected file:</strong> {file.name}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-            </Dropzone>
-            {previewSrc ? (
-              isPreviewAvailable ? (
-                <div className="image-preview" style={{ width: "60%", height: "inherit" }}>
-                  <img className="preview-image" src={previewSrc} alt="Preview" />
-                </div>
-              ) : (
-                <div className="preview-message" style={{ width: "60%", display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
-                  <p>No preview available for this file</p>
-                </div>
-              )
-            ) : (
-              <div className="preview-message" style={{ width: "60%", display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
-                <p>Image preview will be shown here after selection</p>
-              </div>
-            )}
-          </div>
-        </Form>
-      </Container>
+                )}
+              </Dropzone>
+            </div>
+          </Col>
+        </Row>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button onClick={handleOnSubmit} type="primary" htmlType="submit">
+            Upload
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

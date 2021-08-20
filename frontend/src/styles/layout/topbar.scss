@@ -5,6 +5,7 @@
   position: fixed;
   border-bottom: 0.5px solid rgb(228, 228, 228);
   padding: 0 30px;
+  z-index: 999999;
 
   &__profile {
     float: right;
