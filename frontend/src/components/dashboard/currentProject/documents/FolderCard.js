@@ -1,10 +1,30 @@
 import React from "react";
+import { Button, Menu, Dropdown } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 
-const FolderCard = () => {
+const FolderCard = ({ folder }) => {
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a>Rename</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a>Delete</a>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className="folder-card" style={{ backgroundColor: "#ffff", width: "calc(100% / 4)", height: "120px", borderRadius: "12px", padding: "15px", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }}>
-      <span>Folder Name</span>
-      <h3>12 items</h3>
+    <div className="folder-card">
+      <div className="folder-card__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span>{folder.title}</span>
+        <Dropdown overlay={menu}>
+          <Button type="text" style={{ padding: 0 }}>
+            <EllipsisOutlined style={{ color: "white", fontSize: "20px" }} />
+          </Button>
+        </Dropdown>
+      </div>
+      <span>12 items</span>
     </div>
   );
 };

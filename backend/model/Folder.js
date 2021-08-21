@@ -17,7 +17,7 @@ module.exports = {
     const newFolder = new Folder(uuid4(), body.title, body.project_id);
 
     const sql = `INSERT INTO folders (id, title, created_at, projects_id) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newFolder.id, newFodler.title, newFolder.created_at, newFolder.project_id], (err, res) => {
+    con.query(sql, [newFolder.id, newFolder.title, newFolder.created_at, newFolder.project_id], (err, res) => {
       if (err) {
         result(err, null);
         return;
