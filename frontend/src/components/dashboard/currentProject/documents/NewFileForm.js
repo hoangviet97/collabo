@@ -13,6 +13,7 @@ const NewFileForm = (props) => {
   });
   const dropRef = useRef();
   const { TextArea } = Input;
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleInputChange = (event) => {
     setState({
@@ -34,24 +35,22 @@ const NewFileForm = (props) => {
 
     try {
       const { title, description } = state;
-      if (description.trim() !== "") {
-        if (file) {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("title", title);
-          formData.append("project_id", props.project_id);
-          formData.append("description", description);
 
-          await axios.post(`${API_URL}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          });
-        } else {
-          console.log("Please select a file to add.");
-        }
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("title", title);
+        formData.append("project_id", props.project_id);
+        formData.append("description", description);
+        setErrorMsg("");
+
+        await axios.post(`${API_URL}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
       } else {
-        console.log("Please enter all the field values.");
+        setErrorMsg("Please select a file to add.");
       }
     } catch (error) {
       error.response && console.log(error.response.data);
@@ -101,6 +100,7 @@ const NewFileForm = (props) => {
             </div>
           </Col>
         </Row>
+        {errorMsg}
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button onClick={handleOnSubmit} type="primary" htmlType="submit">
             Upload

@@ -32,6 +32,7 @@ const sessionRoutes = require("./routes/api/session");
 const talkingPointRoutes = require("./routes/api/talking_points");
 const invitationRoutes = require("./routes/api/invitation");
 const fileRoutes = require("./routes/api/files");
+const folderRoutes = require("./routes/api/folders");
 
 const uuid4 = require("uuid4");
 
@@ -45,6 +46,7 @@ app.use("/api/sessions", sessionRoutes);
 app.use("/api/talking-points", talkingPointRoutes);
 app.use("/api/invitation", invitationRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/folders", folderRoutes);
 
 app.set("io", io);
 

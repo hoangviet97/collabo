@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../../utils/Container";
-import { Tabs, Button, Modal } from "antd";
+import { Form, Input, Button, Modal } from "antd";
 import NewFileForm from "./NewFileForm";
 import { connect } from "react-redux";
 import { getAllFiles } from "../../../../actions/file";
@@ -21,12 +21,12 @@ const Documents = (props) => {
     modalType === "upload" ? setIsModalVisible(true) : setIsFolderModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
+  const handleOk = (modalType) => {
+    modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  const handleCancel = (modalType) => {
+    modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
   return (
@@ -62,10 +62,16 @@ const Documents = (props) => {
               </div>
             </div>
           </div>
-          <Modal title="Basic Modal" width="500px" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+          <Modal title="Basic Modal" width="500px" visible={isModalVisible} onOk={() => handleOk("upload")} onCancel={() => handleCancel("upload")} footer={null}>
             <NewFileForm project_id={props.match.params.id} />
           </Modal>
-          <Modal title="files" width="500px" visible={isFolderModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}></Modal>
+          <Modal title="files" width="500px" visible={isFolderModalVisible} onOk={() => handleOk("folder")} onCancel={() => handleCancel("folder")} footer={null}>
+            <Form>
+              <Form.Item>
+                <Input placeholder="Name" />
+              </Form.Item>
+            </Form>
+          </Modal>
           <FileList files={props.files} />
         </div>
         <FileStorage />
