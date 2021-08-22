@@ -34,6 +34,7 @@ const Documents = (props) => {
 
   const createFolderHandler = () => {
     props.createFolder({ title: newFolder, project_id: props.match.params.id });
+    setIsFolderModalVisible(false);
   };
 
   return (
@@ -57,7 +58,7 @@ const Documents = (props) => {
             </div>
             <div class="files__folders-list" style={{ display: "flex", gap: "15px" }}>
               {props.folders.length > 0 ? (
-                props.folders.map((item, index) => <FolderCard key={index} folder={item} />)
+                props.folders.slice(0, 4).map((item, index) => <FolderCard key={index} folder={item} />)
               ) : (
                 <div className="folder-card folder-card--empty" onClick={() => showModal("folder")}>
                   <PlusCircleOutlined style={{ fontSize: "40px", color: "#bdc3c7" }} />

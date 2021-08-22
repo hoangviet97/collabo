@@ -53,7 +53,7 @@ const ProjectNavigation = (props) => {
       <p>
         <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
           <FileTextOutlined className="single-navigation__link-icon" />
-          <span>Docs</span>
+          <span>Files</span>
         </Link>
       </p>
       <p>

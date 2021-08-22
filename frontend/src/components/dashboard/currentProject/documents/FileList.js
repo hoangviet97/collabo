@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Table, Space } from "antd";
+import { Table, Space, Dropdown, Menu, Typography } from "antd";
 import moment from "moment";
 import download from "downloadjs";
 import axios from "axios";
-import { DownloadOutlined } from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 const FileList = (props) => {
+  const { Text, Link } = Typography;
+
   const downloadFile = async (id, path, mimetype) => {
     try {
       const result = await axios.post(`http://localhost:9000/api/files/download/${id}`, {
@@ -45,13 +47,26 @@ const FileList = (props) => {
       width: "12%",
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>
-            <DownloadOutlined style={{ fontSize: "20px" }} />
-          </a>
+          <Dropdown overlay={() => menu(record)} trigger={["click"]}>
+            <a>
+              <EllipsisOutlined style={{ fontSize: "20px" }} />
+            </a>
+          </Dropdown>
         </Space>
       )
     }
   ];
+
+  const menu = (record) => (
+    <Menu>
+      <Menu.Item key="0">
+        <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>Download</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <Text type="danger">Delete</Text>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div className="files-container">
