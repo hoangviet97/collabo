@@ -1,15 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
+import moment from "moment";
 
-const Timer = () => {
+const Timer = (props) => {
   const [timer, setTimer] = useState(0);
   let finalFormat = "";
   const [isActive, setIsActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const countRef = useRef(null);
 
   const handleStart = () => {
-    const now = Date.now();
+    let now = new Date();
+    let val = JSON.parse(localStorage.getItem(`timer${props.localstorage}`));
+
+    if (!val) {
+      localStorage.setItem(`timer${props.localstorage}`, JSON.stringify(now));
+    }
 
     setIsActive(true);
     countRef.current = setInterval(() => {
@@ -22,9 +27,25 @@ const Timer = () => {
     clearInterval(countRef.current);
     setIsActive(false);
     setIsPaused(false);
-    console.log(new Date("1970-01-01 " + finalFormat));
+    const datem = moment(JSON.parse(localStorage.getItem(`timer${props.localstorage}`)));
+    const datem2 = moment(new Date());
+    console.log(datem2.diff(datem, "seconds"));
+    localStorage.removeItem(`timer${props.localstorage}`);
     setTimer(0);
   };
+
+  useEffect(() => {
+    let val = JSON.parse(localStorage.getItem(`timer${props.localstorage}`));
+
+    if (val) {
+      const date1 = moment(JSON.parse(localStorage.getItem(`timer${props.localstorage}`)));
+      const date2 = moment(new Date());
+      setTimer(date2.diff(date1, "seconds"));
+      handleStart();
+    } else {
+      console.log("its not there");
+    }
+  }, []);
 
   const formatTime = () => {
     const getSeconds = `0${timer % 60}`.slice(-2);
@@ -38,7 +59,7 @@ const Timer = () => {
 
   return (
     <div>
-      <div className="stopwatch-card" style={{ border: "0.5px solid black", display: "inline-block", borderRadius: "12px" }}>
+      <div className="stopwatch-card" style={{ border: "0.5px solid #ecf0f1", display: "inline-block", borderRadius: "12px", backgroundColor: isActive ? "#e74c3c" : "white", color: isActive && "white" }}>
         <div class="stopwatch-content" style={{ display: "flex", padding: "5px 8px", gap: "12px" }}>
           <span>{formatTime()}</span>
           <div className="buttons">

@@ -146,7 +146,7 @@ const TaskItem = (props) => {
         <TaskDateModal taskId={props.task.id} start_date={props.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
-        <Timer />
+        <Timer localstorage={props.task.id} />
       </div>
       <div className="task-column__item task-column__more">
         <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">

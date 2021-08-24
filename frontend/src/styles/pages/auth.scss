@@ -1,0 +1,73 @@
+.auth {
+  &__wrapper {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(233, 233, 233);
+    display: flex;
+  }
+
+  &__container {
+    height: inherit;
+    flex: 1;
+  }
+
+  &__form-container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__project-info-container {
+    background-color: #031428;
+  }
+
+  &__external-services {
+    display: flex;
+    justify-content: space-between;
+    gap: 7px;
+  }
+
+  &__services-btn {
+    padding: 12px 45px;
+    border: 1px solid #bdc3c7;
+    display: flex;
+    align-items: center;
+    border-radius: 7px;
+    transition: background-color 0.5s;
+
+    &:hover {
+      background-color: #ecf0f1;
+    }
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 30px 0;
+
+    &::after {
+      content: "";
+      width: 100px;
+      height: 1px;
+      background-color: #bdc3c7;
+    }
+
+    &::before {
+      content: "";
+      width: 100px;
+      height: 1px;
+      background-color: #bdc3c7;
+    }
+  }
+
+  &__form {
+    width: 50%;
+  }
+
+  &__element {
+    text-align: center;
+  }
+}

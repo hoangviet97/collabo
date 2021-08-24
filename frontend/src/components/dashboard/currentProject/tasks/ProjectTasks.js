@@ -70,8 +70,6 @@ const ProjectTasks = (props) => {
       props.createTask({ task: values, projectId: props.match.params.id });
       console.log(values);
       setNewTask("");
-    } else {
-      console.log("empty name");
     }
   };
 
