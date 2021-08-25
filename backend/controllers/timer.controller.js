@@ -18,7 +18,7 @@ module.exports = {
   },
 
   getAllPersonal: function (req, res) {
-    Timer.find(req.body.id, "user", (err, result) => {
+    Timer.find(req.user.id, "user", (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

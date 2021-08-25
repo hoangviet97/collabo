@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { createTimeRecord } from "../../../../actions/time_record";
+import { connect } from "react-redux";
 
 const Timer = (props) => {
   const [timer, setTimer] = useState(0);
@@ -26,10 +28,9 @@ const Timer = (props) => {
     // Reset button logic here
     clearInterval(countRef.current);
     setIsActive(false);
-    setIsPaused(false);
     const datem = moment(JSON.parse(localStorage.getItem(`timer${props.localstorage}`)));
     const datem2 = moment(new Date());
-    console.log(datem2.diff(datem, "seconds"));
+    props.createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: props.localstorage, total: datem2.diff(datem, "seconds") });
     localStorage.removeItem(`timer${props.localstorage}`);
     setTimer(0);
   };
@@ -79,4 +80,4 @@ const Timer = (props) => {
   );
 };
 
-export default Timer;
+export default connect(null, { createTimeRecord })(Timer);
