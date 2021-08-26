@@ -50,18 +50,18 @@ export const setFavorite = ({ id, status }) => async (dispatch) => {
   }
 };
 
-export const updateColor = ({ id, color }) => async (dispatch) => {
+export const updateColor = ({ id, color, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/projects/color", { id: id, color: color });
+    const res = await axios.patch("http://localhost:9000/api/projects/color", { id: id, color: color, project_id: project_id });
     dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color } });
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }
 };
 
-export const updateStatus = ({ id, status }) => async (dispatch) => {
+export const updateStatus = ({ id, status, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/projects/status", { id: id, status: status });
+    const res = await axios.patch("http://localhost:9000/api/projects/status", { id: id, status: status, project_id: project_id });
     dispatch({ type: UPDATE_PROJECT_STATUS, payload: { status: status } });
     message.success("Status updated");
   } catch (err) {

@@ -5,16 +5,19 @@ import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
 
 const ControlPanel = (props) => {
-  useEffect(() => {
-    showAllSessions();
-  }, []);
-
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [calendarDay, setCalendarDay] = useState("");
   const today = new Date();
   const byDateSessions = props.sessions.filter((item) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
-  const todaySessions = props.sessions.filter((item) => moment(item.date).format("MMM Do YY") === moment(today).format("MMM Do YY"));
+
+  useEffect(() => {
+    showAllSessions();
+  }, []);
+
+  useEffect(() => {
+    setFilteredSessions(props.sessions);
+  }, [props.sessions]);
 
   const dateSelectHandle = () => {
     setFilteredSessions(byDateSessions);
@@ -26,6 +29,8 @@ const ControlPanel = (props) => {
   };
 
   const showTodaySessions = () => {
+    const todaySessions = props.sessions.filter((item) => moment(item.date).format("MMM Do YY") === moment(today).format("MMM Do YY"));
+
     setFilteredSessions(todaySessions);
   };
 
@@ -57,7 +62,7 @@ const ControlPanel = (props) => {
         </div>
       </div>
       <div class="meeting__control-content">
-        <SessionPanelList sessions={filteredSessions.length > 0 ? filteredSessions : props.sessions} project_id={props.project_id} match={props.match} />
+        <SessionPanelList sessions={filteredSessions} project_id={props.project_id} match={props.match} />
       </div>
     </div>
   );

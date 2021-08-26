@@ -13,3 +13,14 @@
     font-size: 40px;
   }
 }
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__icon {
+    font-size: 25px;
+    color: #bdc3c7;
+  }
+}

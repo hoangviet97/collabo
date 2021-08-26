@@ -45,7 +45,7 @@ const ProjectTasks = (props) => {
   };
 
   const newTaskVisibilityHandler = () => {
-    setNewTaskVisibility(true);
+    setNewTaskVisibility((prev) => !prev);
   };
 
   const sectionVisibilityHandler = () => {
@@ -53,7 +53,7 @@ const ProjectTasks = (props) => {
   };
 
   const onBlurTaskHandler = (sectionId) => {
-    setNewTaskVisibility(false);
+    setNewTaskVisibility((prev) => !prev);
 
     const values = {
       sectionId: sectionId,
@@ -156,7 +156,7 @@ const ProjectTasks = (props) => {
                     <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
                   </form>
                 ) : (
-                  <Button style={{ paddingLeft: "0" }} type="link" onClick={newTaskVisibilityHandler}>
+                  <Button type="link" onClick={newTaskVisibilityHandler}>
                     Add task
                   </Button>
                 )}

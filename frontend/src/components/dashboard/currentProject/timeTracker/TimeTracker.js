@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import TimerBody from "./TimerBody";
 import TimerHeader from "./TimerHeader";
+import TimerLogger from "./TimerLogger";
 import Container from "../../../utils/Container";
 import { connect } from "react-redux";
 import { getTimeRecords } from "../../../../actions/time_record";
 
 const TimeTracker = (props) => {
-  const [records, setRecords] = useState([]);
   useEffect(() => {
     props.getTimeRecords();
   }, []);
@@ -16,6 +16,7 @@ const TimeTracker = (props) => {
       <Container size="30">
         <TimerHeader />
         <TimerBody />
+        <TimerLogger records={props.records} />
       </Container>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../utils/Container";
 import Project from "./Project";
-import { Button, Skeleton } from "antd";
-import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Select } from "antd";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../../actions/project";
@@ -10,18 +10,23 @@ import socket from "../../../service/socket";
 
 const Projects = (props) => {
   useEffect(() => {
-    if (props.projects.length < 1) {
-      props.getProjects();
-    }
+    props.getProjects();
+
     socket.on("test2", (data) => {
       console.log(data);
     });
   }, []);
 
+  useEffect(() => {
+    setFilteredData(props.projects);
+  }, [props.projects]);
+
   const history = useHistory();
+  const { Option } = Select;
   const [projectsDimension, setProjectsDimension] = useState("cards");
   const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const projectCardHandler = (index) => {
     console.log("test");
@@ -41,6 +46,21 @@ const Projects = (props) => {
     setActiveList("");
   };
 
+  function handleChange(value) {
+    if (value === "newest") {
+      const data = [...props.projects].sort((a, b) => (new Date(a.created_at) < new Date(b.created_at) ? 1 : -1));
+      setFilteredData(data);
+    } else if (value === "oldest") {
+      const data = [...props.projects].sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
+      setFilteredData(data);
+    }
+  }
+
+  const showFavorite = () => {
+    const data = props.projects.filter((item) => item.favorite === 1);
+    setFilteredData(data);
+  };
+
   //kotva
 
   let content;
@@ -50,7 +70,7 @@ const Projects = (props) => {
   } else if (props.projects) {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
-        {props.projects.map((project) => {
+        {filteredData.map((project) => {
           return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} />;
         })}
       </div>
@@ -79,12 +99,25 @@ const Projects = (props) => {
               </Button>
             </Link>
           </div>
-          <div className="projects-dimension">
-            <div className={`projects-dimension__cards ${activeCards}`} onClick={setCards}>
-              <AppstoreOutlined />
+          <div className="projects-toolbar__right-side" style={{ display: "flex", gap: "15px" }}>
+            <div class="projects__favorite-filter">
+              <Button onClick={showFavorite} style={{ borderRadius: "10px" }}>
+                <StarFilled />
+              </Button>
             </div>
-            <div className={`projects-dimension__list ${activeList}`} onClick={setList}>
-              <MenuOutlined />
+            <div className="projects__sort">
+              <Select style={{ width: 150, borderRadius: "10px" }} onChange={handleChange}>
+                <Option value="newest">Newest</Option>
+                <Option value="oldest">Oldest</Option>
+              </Select>
+            </div>
+            <div className="projects-dimension">
+              <div className={`projects-dimension__cards ${activeCards}`} onClick={setCards}>
+                <AppstoreOutlined />
+              </div>
+              <div className={`projects-dimension__list ${activeList}`} onClick={setList}>
+                <MenuOutlined />
+              </div>
             </div>
           </div>
         </div>
