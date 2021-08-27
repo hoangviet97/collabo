@@ -79,11 +79,11 @@ const ProjectNavigation = (props) => {
 
   const handleIconColor = (color) => {
     setIconColorSelection(color);
-    props.updateColor({ id: props.currentProject.id, color: color, projec_id: props.currentProject.id });
+    props.updateColor({ id: props.currentProject.id, color: color, project: props.currentProject.id });
   };
 
   const projectStatusHandle = (e) => {
-    props.updateStatus({ id: props.currentProject.id, status: e.target.value, project_id: props.currentProject.id });
+    props.updateStatus({ id: props.currentProject.id, status: e.target.value, project: props.currentProject.id });
   };
 
   const projectInfoMenu = (

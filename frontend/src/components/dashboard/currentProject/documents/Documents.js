@@ -16,6 +16,12 @@ const Documents = (props) => {
     props.getAllFiles({ project_id: props.match.params.id });
   }, []);
 
+  useEffect(() => {
+    const foldersArr = [];
+    props.folders.map((item) => foldersArr.push({ name: item.title, sum: 0 }));
+    console.log(foldersArr);
+  }, [props.files]);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFolderModalVisible, setIsFolderModalVisible] = useState(false);
   const [newFolder, setNewFolder] = useState("");

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Popover, Menu, Badge } from "antd";
+import { Badge, Button } from "antd";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/auth";
 
-import { SettingOutlined, BellOutlined, CarryOutOutlined, HomeOutlined, FolderOutlined, MessageOutlined } from "@ant-design/icons";
+import { ImportOutlined, BellOutlined, CarryOutOutlined, HomeOutlined } from "@ant-design/icons";
 
 const Sidebar = (props) => {
   const text = <span>Title</span>;
@@ -14,17 +14,6 @@ const Sidebar = (props) => {
   useEffect(() => {
     setInvitationNum(props.invitations.filter((item) => item.seen === 0));
   }, [props.invitations]);
-
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <Link to="/settings">Settings</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <a onClick={props.logout}>Logout</a>
-      </Menu.Item>
-    </Menu>
-  );
 
   return (
     <div className="sidebar">
@@ -43,9 +32,9 @@ const Sidebar = (props) => {
         </Link>
       </nav>
       <div className="side-nav__profile">
-        <Popover placement="rightBottom" content={menu} trigger="click">
-          <SettingOutlined style={{ fontSize: "25px", margin: "20px 0", color: "#383e42" }} />
-        </Popover>
+        <a onClick={props.logout}>
+          <ImportOutlined style={{ fontSize: "30px", color: "white" }} />
+        </a>
       </div>
     </div>
   );

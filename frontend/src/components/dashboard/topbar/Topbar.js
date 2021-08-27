@@ -1,13 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Avatar } from "antd";
+import { Avatar, Menu, Dropdown } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import ProjectNavigation from "./ProjectNavigation";
 import AvatarIcon from "../../utils/AvatarIcon";
+import { Link } from "react-router-dom";
 
 const Topbar = (props) => {
   let path = window.location.pathname;
+
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/settings">Settings</Link>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div className="topbar">
@@ -16,7 +25,11 @@ const Topbar = (props) => {
         <Avatar size="large">
           <AvatarIcon name={props.user.firstname} />
         </Avatar>
-        {props.auth.isAuthenticated && <span>{props.user.firstname}</span>}
+        {props.auth.isAuthenticated && (
+          <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+            <span className="topbar__profile-name">{props.user.firstname}</span>
+          </Dropdown>
+        )}
       </div>
     </div>
   );
