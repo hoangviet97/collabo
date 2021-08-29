@@ -4,6 +4,7 @@ const apiResponse = require("../helpers/apiResponse");
 module.exports = {
   // register new user
   create: function (req, res) {
+    console.log(req.body.receiver_email);
     Invitation.create(req.body, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
 

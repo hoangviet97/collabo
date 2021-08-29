@@ -24,12 +24,12 @@ module.exports = {
         return;
       }
 
-      if (receiver_id_result === sender) {
-        result("You cannot invite yourself", null);
-        return;
-      }
-
       if (receiver_id_result.length > 0) {
+        if (receiver_id_result[0].id === sender) {
+          result("You cannot invite yourself", null);
+          return;
+        }
+
         const invitation = new Invitation(uuid4(), sender, receiver_id_result[0].id, body.project);
         const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id) VALUES (?, ?, ?, ?, ?)`;
 
