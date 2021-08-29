@@ -5,11 +5,15 @@ import Members from "./Members";
 import Groups from "./Groups";
 import Invitations from "./Invitations";
 import InvitationPanel from "./InvitationPanel";
+import { connect } from "react-redux";
+import { getAllProjectInvitations } from "../../../../actions/invitation";
 
 const Team = (props) => {
   const { TabPane } = Tabs;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    props.getAllProjectInvitations({ project: props.match.params.id });
+  }, []);
 
   function callback(key) {
     console.log(key);
@@ -44,4 +48,4 @@ const Team = (props) => {
   );
 };
 
-export default Team;
+export default connect(null, { getAllProjectInvitations })(Team);
