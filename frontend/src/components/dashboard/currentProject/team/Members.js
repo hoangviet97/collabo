@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MembersHeader from "./header/MembersHeader";
-import { getMembers } from "../../../../actions/member";
 import MemberItem from "./items/MemberItem";
 import { connect } from "react-redux";
 import { Input } from "antd";
 
-const Members = ({ members, getMembers, projectId }) => {
-  useEffect(() => {
-    getMembers({ id: projectId });
-  }, []);
-
+const Members = ({ members }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (e) => {
@@ -33,4 +28,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { getMembers })(Members);
+export default connect(mapStateToProps, {})(Members);

@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from "react";
-import MembersHeader from "./header/MembersHeader";
 import { getAllProjectInvitations } from "../../../../actions/invitation";
-import InvitationItem from "./items/InvitationItem";
 import { connect } from "react-redux";
-import { Input } from "antd";
+import { Table } from "antd";
+import moment from "moment";
 
 const Invitations = (props) => {
+  const columns = [
+    {
+      title: "firstname",
+      dataIndex: "firstname",
+      key: "firstname"
+    },
+    {
+      title: "lastname",
+      dataIndex: "lastname",
+      key: "lastname"
+    },
+    {
+      title: "created_at",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (date) => <span>{moment(date).format("LL")}</span>
+    }
+  ];
+
   return (
     <div className="invitations" style={{ marginTop: "20px" }}>
-      {props.sended.map((item, index) => (
-        <div>{item.id}</div>
-      ))}
+      <Table dataSource={props.sended} columns={columns} />;
     </div>
   );
 };
