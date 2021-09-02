@@ -7,6 +7,7 @@ const InvitationPanel = (props) => {
   const [email, setEmail] = useState("");
 
   const submitHandle = (e) => {
+    window.alert("hello");
     e.preventDefault();
     props.createInvitation({ receiver_email: email, project: props.project });
   };
@@ -14,7 +15,7 @@ const InvitationPanel = (props) => {
   return (
     <div>
       <Input style={{ width: "30%" }} value={email} onChange={(e) => setEmail(e.target.value)} />
-      <Button onClick={submitHandle}>Invite</Button>
+      <Button onClick={submitHandle}>Invite now</Button>
     </div>
   );
 };

@@ -14,6 +14,12 @@ const TimerLogger = () => {
       name: "John",
       age: 42,
       address: "10 Downing Street"
+    },
+    {
+      key: "23",
+      name: "Johne",
+      age: 42,
+      address: "10 Downing Street"
     }
   ];
 

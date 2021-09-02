@@ -82,7 +82,7 @@ const InvitePanel = (props) => {
       <div class="invite-panel__form-box">
         <form class="invite-panel__form">
           <h2 style={{ fontSize: "30px" }}>Invite new member</h2>
-          <Input placeholder="Enter e-mail address" />
+          <Input type="email" placeholder="Enter e-mail address" />
           <Button>Invite</Button>
         </form>
       </div>

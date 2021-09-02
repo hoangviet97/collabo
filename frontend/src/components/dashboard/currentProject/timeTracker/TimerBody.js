@@ -11,31 +11,31 @@ const getThisWeekDates = () => {
     weekDates.push(moment().day(i));
   }
 
-  //moment(date._d).format("dddd")
-
   return weekDates;
 };
 
 const TimerBody = (props) => {
   const [data2, setData2] = useState([]);
-  const [newArr2, setNewArr2] = useState([]);
 
   useEffect(() => {
     props.getTimeRecords();
   }, []);
 
   useEffect(() => {
-    const myDates = getThisWeekDates();
-    const newArr = [];
-    const newArr21 = [];
-    myDates.map((date) => newArr.push({ day: moment(date._d).format("MMM Do YY"), degress: 20 }));
-    setData2(newArr);
-    console.log(newArr);
+    const currentWeek = getThisWeekDates();
+    const baseArr = [];
+    const clearedArr = [];
+    currentWeek.map((date) => baseArr.push({ day: moment(date._d).format("MMM Do YY"), sum: 0, dayText: moment(date._d).format("dddd") }));
 
-    props.records.filter((item) => moment(item.start).format("MMM Do YY") === moment(myDates[0]).format("MMM Do YY")).map((item) => newArr21.push(item.start));
-    setNewArr2(newArr21);
+    props.records.filter((item) => moment(item.start).format("MMM Do YY") >= moment(currentWeek[0]).format("MMM Do YY") || moment(item.start).format("MMM Do YY") >= moment(currentWeek[6]).format("MMM Do YY")).map((item) => clearedArr.push({ day: moment(item.start).format("MMM Do YY"), total: item.total }));
 
-    console.log(newArr2);
+    for (let { day, total } of clearedArr) {
+      baseArr.find((x) => x.day === day)["sum"] += total;
+    }
+
+    setData2(baseArr);
+
+    console.log(baseArr);
   }, [props.records]);
 
   return (
@@ -43,8 +43,8 @@ const TimerBody = (props) => {
       <div className="time-body__chart" style={{ padding: "0 20px", backgroundColor: "white", width: "50%", height: "inherit", borderRadius: "12px", display: "flex", alignItems: "center", clear: "both" }}>
         <ResponsiveBar
           data={data2}
-          keys={["degress"]}
-          indexBy="day"
+          keys={["sum"]}
+          indexBy="dayText"
           margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
           padding={0.4}
           valueScale={{ type: "linear" }}
@@ -60,11 +60,7 @@ const TimerBody = (props) => {
           }}
         />
       </div>
-      <div className="time-body__chart" style={{ backgroundColor: "white", width: "50%", height: "inherit", borderRadius: "12px", clear: "both" }}>
-        {newArr2.map((item) => (
-          <div>{moment(item).format("MMM Do YY")}</div>
-        ))}
-      </div>
+      <div className="time-body__chart" style={{ backgroundColor: "white", width: "50%", height: "inherit", borderRadius: "12px", clear: "both" }}></div>
     </div>
   );
 };
