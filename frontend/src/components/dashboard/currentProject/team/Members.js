@@ -4,7 +4,7 @@ import MemberItem from "./items/MemberItem";
 import { connect } from "react-redux";
 import { Input } from "antd";
 
-const Members = ({ members }) => {
+const Members = ({ members, projectId }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (e) => {
@@ -18,7 +18,7 @@ const Members = ({ members }) => {
       {members
         .filter((item) => item.firstname.toLowerCase().includes(searchValue.toLowerCase()) || item.lastname.toLowerCase().includes(searchValue.toLowerCase()) || item.email.toLowerCase().includes(searchValue.toLowerCase()))
         .map((member, index) => (
-          <MemberItem member={member} key={index} />
+          <MemberItem member={member} key={index} projectId={projectId} />
         ))}
     </div>
   );

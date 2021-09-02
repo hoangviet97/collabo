@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "antd";
+import { connect } from "react-redux";
 
 const TimerLogger = () => {
   const dataSource = [
@@ -48,4 +49,8 @@ const TimerLogger = () => {
   );
 };
 
-export default TimerLogger;
+const mapStateToProps = (state) => ({
+  records: state.time_record.records
+});
+
+export default connect(mapStateToProps, {})(TimerLogger);

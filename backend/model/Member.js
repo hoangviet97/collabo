@@ -44,9 +44,9 @@ module.exports = {
   },
 
   updateRole: async function (body, result) {
-    const sql = `UPDATE members SET roles_id = ? WHERE users_id = ?`;
+    const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
 
-    con.query(sql, [body.role, body.id], (err, res) => {
+    con.query(sql, [body.role_id, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

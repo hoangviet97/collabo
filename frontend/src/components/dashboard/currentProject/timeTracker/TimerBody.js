@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
+import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import { connect } from "react-redux";
 import { getTimeRecords } from "../../../../actions/time_record";

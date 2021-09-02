@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import StatusMark from "../../../../utils/StatusMark";
 import AvatarIcon from "../../../../utils/AvatarIcon";
 import Moment from "react-moment";
+import { updateMemberRole } from "../../../../../actions/member";
 
 const MemberItem = (props) => {
   const { Option } = Select;
 
   function roleHandle(value) {
-    console.log(value);
+    props.updateMemberRole({ id: props.member.id, project: props.projectId, role_id: value });
   }
 
   return (
@@ -47,4 +48,4 @@ const mapStateToProps = (state) => ({
   role: state.auth.user.role
 });
 
-export default connect(mapStateToProps, {})(MemberItem);
+export default connect(mapStateToProps, { updateMemberRole })(MemberItem);
