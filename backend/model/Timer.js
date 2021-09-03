@@ -35,13 +35,16 @@ module.exports = {
     let sql = "";
 
     if (column === "project") {
-      sql = `SELECT time_records.* FROM time_records 
+      sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
                 INNER JOIN tasks ON time_records.tasks_id = tasks.id 
                 INNER JOIN sections ON tasks.sections_id = sections.id 
                 INNER JOIN projects ON sections.projects_id = projects.id 
                 WHERE projects.id = ?`;
     } else {
-      sql = `SELECT * FROM time_records WHERE users_id = ?`;
+      sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
+              INNER JOIN tasks ON time_records.tasks_id = tasks.id 
+              INNER JOIN sections ON tasks.sections_id = sections.id  
+              WHERE users_id = ?`;
     }
 
     con.query(sql, [id], (err, res) => {

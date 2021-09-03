@@ -2,49 +2,33 @@ import React from "react";
 import { Table } from "antd";
 import { connect } from "react-redux";
 
-const TimerLogger = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street"
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street"
-    },
-    {
-      key: "23",
-      name: "Johne",
-      age: 42,
-      address: "10 Downing Street"
-    }
-  ];
-
+const TimerLogger = (props) => {
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name"
+      title: "Section",
+      dataIndex: "section_name",
+      key: "section_name"
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age"
+      title: "Task",
+      dataIndex: "task_title",
+      key: "task_title"
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address"
+      title: "Date",
+      dataIndex: "start",
+      key: "start"
+    },
+    {
+      title: "Date",
+      dataIndex: "start",
+      key: "start"
     }
   ];
 
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={props.records} columns={columns} />
     </div>
   );
 };
