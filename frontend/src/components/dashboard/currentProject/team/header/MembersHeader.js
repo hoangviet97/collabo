@@ -8,7 +8,7 @@ const MembersHeader = () => {
       </div>
       <div className="members-header-item members-column__email">email</div>
       <div className="members-header-item members-column__role">Role</div>
-      <div className="members-header-item members-column__tasks">Tasks</div>
+      <div className="members-header-item members-column__tasks">Joined</div>
       <div className="members-header-item members-column__status">Status</div>
       <div className="members-header-item members-column__more">More</div>
     </div>

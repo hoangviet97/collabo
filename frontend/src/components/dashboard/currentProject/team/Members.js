@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MembersHeader from "./header/MembersHeader";
-import { getMembers } from "../../../../actions/member";
 import MemberItem from "./items/MemberItem";
 import { connect } from "react-redux";
 import { Input } from "antd";
 
-const Members = ({ members, getMembers, projectId }) => {
-  useEffect(() => {
-    getMembers({ id: projectId });
-  }, []);
-
+const Members = ({ members, projectId }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (e) => {
@@ -21,9 +16,9 @@ const Members = ({ members, getMembers, projectId }) => {
       <Input onChange={searchHandler} style={{ width: "30%" }} placeholder="Search member name" />
       <MembersHeader />
       {members
-        .filter((item) => item.firstname.toLowerCase().includes(searchValue) || item.email.toLowerCase().includes(searchValue))
+        .filter((item) => item.firstname.toLowerCase().includes(searchValue.toLowerCase()) || item.lastname.toLowerCase().includes(searchValue.toLowerCase()) || item.email.toLowerCase().includes(searchValue.toLowerCase()))
         .map((member, index) => (
-          <MemberItem member={member} key={index} />
+          <MemberItem member={member} key={index} projectId={projectId} />
         ))}
     </div>
   );
@@ -33,4 +28,4 @@ const mapStateToProps = (state) => ({
   members: state.member.members
 });
 
-export default connect(mapStateToProps, { getMembers })(Members);
+export default connect(mapStateToProps, {})(Members);

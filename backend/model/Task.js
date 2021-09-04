@@ -1,59 +1,43 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 
+class Task {
+  constructor(id, sections_id, priorityId, statusId, title, description, start_date, due_date) {
+    this.id = id;
+    this.sections_id = sections_id;
+    this.priorityId = priorityId;
+    this.statusId = statusId;
+    this.title = title;
+    this.description = description;
+    this.start_date = start_date;
+    this.due_date = due_date;
+    this.created_at = new Date();
+  }
+}
+
 module.exports = {
+  Task,
   // create new member by user or by admin
-  createTask: async function (body, result) {
-    const newTask = {
-      id: uuid4(),
-      sectionId: body.sectionId,
-      priorityId: body.priorityId == null || body.priorityId == undefined ? 0 : body.priorityId,
-      statusId: body.statusId == null || body.priorityId == undefined ? 0 : body.statusId,
-      name: body.name,
-      description: body.description,
-      start_date: body.start_date,
-      due_date: body.due_date,
-      created_at: new Date(),
-      assigneesArray: body.assigneesArray
-    };
+  create: async function (body, result) {
+    const priorityCheck = body.task.priorityId === null || body.task.priorityId === undefined ? "0" : body.task.priorityId;
+    const statusCheck = body.task.statusId === null || body.task.statusId === undefined ? "0" : body.task.statusId;
+    const newTask = new Task(uuid4(), body.task.sectionId, priorityCheck, statusCheck, body.task.title, body.task.description, body.task.start_date, body.task.due_date);
 
-    const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, name, description, start_date, due_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newTask.id, newTask.sectionId, newTask.priorityId, newTask.statusId, newTask.name, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at], (err, res) => {
+    const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, title, description, start_date, due_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newTask.id, newTask.sections_id, newTask.priorityId, newTask.statusId, newTask.title, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at], (err, res) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      if (newTask.assigneesArray.length > 0) {
-        result(null, { assignees: newTask.assigneesArray, task: newTask.id });
-        return;
-      } else {
-        result(null, null);
-        return;
-      }
-    });
-  },
-
-  createTaskAssignees: async function (body, result) {
-    const arr = [];
-    const { assignees, task } = body;
-    assignees.map((assignee) => arr.push([assignee, task]));
-
-    const sql = `INSERT INTO members_tasks (members_id, tasks_id) VALUES ?`;
-    con.query(sql, [arr], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, "success");
+      result(null, newTask);
       return;
     });
   },
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM sections 
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -73,7 +57,7 @@ module.exports = {
 
   // get all tasks
   getPersonalTasks: async function (id, userId, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.name, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM members_tasks 
                     INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -140,6 +124,24 @@ module.exports = {
       }
 
       result(null, "success");
+      return;
+    });
+  },
+
+  getAllAssingees: async function (body, result) {
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
+                  FROM members_tasks 
+                  INNER JOIN members ON members_tasks.members_id = members.id 
+                  INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON members.users_id = users.id
+                  WHERE members.projects_id = ?`;
+    con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
       return;
     });
   },

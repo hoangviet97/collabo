@@ -4,21 +4,15 @@ const apiResponse = require("../helpers/apiResponse");
 module.exports = {
   // Create new projects
   create: function (req, res) {
-    Task.createTask(req.body, (err, result) => {
+    Task.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      if (result !== null) {
-        Task.createTaskAssignees(result, (err, resu) => {
-          if (err) return apiResponse.ErrorResponse(res, err.message);
-          return res.json(resu);
-        });
-      } else {
-        return res.json(result);
-      }
+      return res.json(result);
     });
   },
 
   getAll: function (req, res) {
+    req.app.get("io").emit("test", "test sucess");
     Task.getAllTasks(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
@@ -56,6 +50,13 @@ module.exports = {
 
   updateEndDate: function (req, res) {
     Task.updateEndDate(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAllAssignees: function (req, res) {
+    Task.getAllAssingees(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

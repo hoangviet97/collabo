@@ -85,7 +85,7 @@ const TaskModal = (props) => {
     <div className="modal">
       <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={props.isVisible} closable={false} footer={null}>
         <Form style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
-          <Form.Item name="name">
+          <Form.Item name="title">
             <Row>
               <Col span={22}>
                 <Input className="task-name-input" placeholder="Enter task name" />

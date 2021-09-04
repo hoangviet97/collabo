@@ -21,8 +21,8 @@ const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos, update
   };
 
   const startDateChange = (value) => {
-    console.log(taskId);
-    //updateTaskStartDate({ id: taskId, date: moment(value).format("YYYY-MM-DD hh:mm:ss") });
+    const date = moment(value).format("YYYY-MM-DD hh:mm:ss");
+    updateTaskStartDate({ id: taskId, date: date });
   };
 
   const endDateChange = (value) => {
@@ -33,12 +33,12 @@ const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos, update
   return show ? (
     <div className="back-drop" onClick={close} style={{ cursor: "default", position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 111111 }}>
       <div id="date-picker__window" onClick={(e) => e.stopPropagation()} style={{ width: "300px", height: "360px", zIndex: 999999, borderRadius: "12px", backgroundColor: "white", zIndex: "8998", position: "relative", top: y, left: x, boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
-        <Calendar fullscreen={false} value={start_date} onSelect={startDateChange} onCalendarChange={(e) => e.stopPropagation()} style={{ display: startView ? "block" : "none" }} />
+        <Calendar fullscreen={false} onSelect={startDateChange} onCalendarChange={(e) => e.stopPropagation()} style={{ display: startView ? "block" : "none" }} />
         <Calendar fullscreen={false} onSelect={endDateChange} onCalendarChange={(e) => e.stopPropagation()} style={{ display: dueView ? "block" : "none" }} />
-        <Button onClick={switcher} disabled={startView} onClick={switcher}>
+        <Button disabled={startView} onClick={switcher}>
           Start Date
         </Button>
-        <Button onClick={switcher} disabled={dueView} onClick={switcher}>
+        <Button disabled={dueView} onClick={switcher}>
           End Date
         </Button>
       </div>

@@ -1,0 +1,23 @@
+.topbar {
+  background-color: #ffff;
+  width: calc(100% - 70px);
+  height: 60px;
+  position: fixed;
+  border-bottom: 0.5px solid rgb(228, 228, 228);
+  padding: 0 30px;
+  z-index: 999;
+
+  &__profile {
+    float: right;
+    line-height: 60px;
+
+    &-name {
+      margin-left: 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: grey;
+      }
+    }
+  }
+}

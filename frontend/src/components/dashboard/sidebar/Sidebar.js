@@ -1,54 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Popover, Menu } from "antd";
+import { Badge, Button } from "antd";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/auth";
 
-import { SettingOutlined, BellOutlined, CarryOutOutlined, HomeOutlined, FolderOutlined, MessageOutlined } from "@ant-design/icons";
+import { ImportOutlined, BellOutlined, CarryOutOutlined, HomeOutlined } from "@ant-design/icons";
 
 const Sidebar = (props) => {
   const text = <span>Title</span>;
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <Link to="/settings">Settings</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <a onClick={props.logout}>Logout</a>
-      </Menu.Item>
-    </Menu>
-  );
+  const [invitationNum, setInvitationNum] = useState([]);
+
+  useEffect(() => {
+    setInvitationNum(props.invitations.filter((item) => item.seen === 0));
+  }, [props.invitations]);
 
   return (
-    <aside className="sidebar">
-      <div className="logo-box">
-        <span className="logo">c.</span>
-      </div>
+    <div className="sidebar">
+      <a className="sidebar__logo">c.</a>
       <nav className="side-nav">
         <Link className="side-nav__link" to="/">
           <HomeOutlined className="side-nav__icon" />
         </Link>
-        <Link className="side-nav__link" to="/projects">
-          <FolderOutlined className="side-nav__icon" />
-        </Link>
         <Link className="side-nav__link" to="/tasks">
           <CarryOutOutlined className="side-nav__icon" />
         </Link>
-        <Link className="side-nav__link" to="">
-          <MessageOutlined className="side-nav__icon" />
-        </Link>
-        <Link className="side-nav__link" to="">
-          <BellOutlined className="side-nav__icon" />
+        <Link className="side-nav__link" to="/notifications">
+          <Badge count={invitationNum.length}>
+            <BellOutlined className="side-nav__icon" />
+          </Badge>
         </Link>
       </nav>
       <div className="side-nav__profile">
-        <Popover placement="rightBottom" content={menu} trigger="click">
-          <SettingOutlined style={{ fontSize: "25px", margin: "20px 0", color: "#383e42" }} />
-        </Popover>
+        <a onClick={props.logout}>
+          <ImportOutlined style={{ fontSize: "30px", color: "white" }} />
+        </a>
       </div>
-    </aside>
+    </div>
   );
 };
 
-export default connect(null, { logout })(Sidebar);
+const mapStateToProps = (state) => ({
+  invitations: state.invitation.invitations
+});
+
+export default connect(mapStateToProps, { logout })(Sidebar);

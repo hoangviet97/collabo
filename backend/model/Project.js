@@ -1,23 +1,27 @@
 const con = require("../config/db");
-const uuid4 = require("uuid4");
 const randomInt = require("random-int");
 
+class Project {
+  constructor(id, name, description) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.created_at = new Date();
+    this.color = "#535c68";
+    this.status = 0;
+    this.favorite = false;
+  }
+}
+
 module.exports = {
+  Project,
   // create new user
-  createProject: async function (data, result) {
+  create: async function (data, result) {
     let randId = randomInt(10000000, 99999999);
+    const newProject = new Project(randId, data.name, data.description);
 
-    const newProject = {
-      id: randId,
-      name: data.name,
-      description: data.description,
-      created_at: new Date(),
-      status: 0,
-      favorite: false
-    };
-
-    const sql = `INSERT INTO projects (id, name, description, created_at, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.status, newProject.favorite], (err, res) => {
+    const sql = `INSERT INTO projects (id, name, description, created_at, color, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.color, newProject.status, newProject.favorite], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -29,8 +33,12 @@ module.exports = {
   },
 
   // get all project from user x
-  getAllProjects: function (userId, result) {
-    const sql = `SELECT projects.id, projects.name, projects.description, projects.favorite FROM members RIGHT JOIN projects ON members.projects_id = projects.id WHERE users_id = ?`;
+  find: async function (userId, result) {
+    const sql = `SELECT projects.id, projects.name, projects.description, projects.created_at, projects.favorite, projects.project_status_id AS status_id ,project_status.name AS status
+                  FROM members 
+                  RIGHT JOIN projects ON members.projects_id = projects.id 
+                  INNER JOIN project_status ON projects.project_status_id = project_status.id 
+                  WHERE members.users_id = ?`;
     con.query(sql, [userId], (err, res) => {
       if (err) {
         result(err, null);
@@ -43,7 +51,7 @@ module.exports = {
   },
 
   // get current project
-  getProject: function (projectId, memberId, result) {
+  findOne: function (projectId, memberId, result) {
     const sql = `SELECT projects.*, roles.name AS role
                   FROM members 
                   INNER JOIN projects ON members.projects_id = projects.id 
@@ -55,7 +63,13 @@ module.exports = {
         return;
       }
 
-      result(null, res);
+      if (res.length > 0) {
+        result(null, res);
+        return;
+      } else {
+        result("not found", null);
+        return;
+      }
     });
   },
 
@@ -63,6 +77,32 @@ module.exports = {
   setFavoriteProject: function (body, result) {
     const sql = `UPDATE projects SET favorite = ? WHERE id = ?`;
     con.query(sql, [body.status, body.projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
+  updateColor: function (body, result) {
+    const sql = `UPDATE projects SET color = ? WHERE id = ?`;
+    con.query(sql, [body.color, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
+  updateStatus: function (body, result) {
+    const sql = `UPDATE projects SET project_status_id = ? WHERE id = ?`;
+    con.query(sql, [body.status, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

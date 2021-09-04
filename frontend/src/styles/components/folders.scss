@@ -1,0 +1,21 @@
+.folder-card {
+  background-color: "#ffff";
+  width: calc(100% / 4);
+  height: 120px;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all 0.4s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #34495e;
+    color: white;
+  }
+
+  &--empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

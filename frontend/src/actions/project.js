@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL } from "./types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, UPDATE_PROJECT_COLOR, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 import setAuthToken from "../helpers/setAuthToken";
@@ -47,6 +47,25 @@ export const setFavorite = ({ id, status }) => async (dispatch) => {
     dispatch({ type: SET_FAVORITE_PROJECT, payload: { id: id, status: status } });
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
+export const updateColor = ({ id, color, project }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/projects/color", { id: id, color: color, project: project });
+    dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color } });
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
+export const updateStatus = ({ id, status, project }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/projects/status", { id: id, status: status, project: project });
+    dispatch({ type: UPDATE_PROJECT_STATUS, payload: { status: status } });
+    message.success("Status updated");
+  } catch (err) {
+    dispatch({ type: UPDATE_PROJECT_STATUS_FAIL });
   }
 };
 
