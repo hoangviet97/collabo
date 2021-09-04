@@ -2,12 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Avatar, Menu, Dropdown } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import ProjectNavigation from "./ProjectNavigation";
 import AvatarIcon from "../../utils/AvatarIcon";
 import { Link } from "react-router-dom";
 
-const Topbar = (props) => {
+const Topbar = ({ auth, user }) => {
   let path = window.location.pathname;
 
   const menu = (
@@ -23,11 +22,11 @@ const Topbar = (props) => {
       {isNaN(path.split("/")[1]) === false && path.split("/")[1].length === 8 ? <ProjectNavigation /> : null}
       <div className="topbar__profile">
         <Avatar size="large">
-          <AvatarIcon name={props.user.firstname} />
+          <AvatarIcon name={user.firstname} />
         </Avatar>
-        {props.auth.isAuthenticated && (
+        {auth.isAuthenticated && (
           <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-            <span className="topbar__profile-name">{props.user.firstname}</span>
+            <span className="topbar__profile-name">{user.firstname}</span>
           </Dropdown>
         )}
       </div>
@@ -38,8 +37,7 @@ const Topbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    user: state.auth.user,
-    project: state.project
+    user: state.auth.user
   };
 };
 
