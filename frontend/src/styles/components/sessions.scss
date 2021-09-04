@@ -1,0 +1,24 @@
+.session {
+  height: calc(100vh-60px);
+  display: flex;
+  gap: 15px;
+
+  &__content {
+    background-color: white;
+    padding: 15px;
+    position: relative;
+    height: calc(100vh - 120px);
+    flex: 1;
+    border-radius: 12px;
+  }
+
+  &__control-panel {
+    background-color: white;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    width: 450px;
+    border-radius: 12px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}

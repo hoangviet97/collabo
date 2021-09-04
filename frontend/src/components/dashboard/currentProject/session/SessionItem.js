@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSession } from "../../../../actions/session";
 import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../../../actions/talking_point";
-import { Divider, Spin, Input, Button, Checkbox } from "antd";
+import { Divider, Input, Checkbox } from "antd";
 import moment from "moment";
 
 const SessionItem = (props) => {
@@ -38,7 +38,7 @@ const SessionItem = (props) => {
         </div>
       </header>
       <Divider />
-      <div class="session__talking-point" style={{ marginBottom: "30px" }}>
+      <div className="session__talking-point" style={{ marginBottom: "30px" }}>
         <span style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Talking Points</span>
         <ul style={{ marginLeft: "20px", listStyleType: "none" }}>
           {props.talking_points.map((item, index) => (
@@ -55,7 +55,7 @@ const SessionItem = (props) => {
           </li>
         </ul>
       </div>
-      <div class="session__note">
+      <div className="session__note">
         <span style={{ fontSize: "18px" }}>Notepad</span>
         <TextArea style={{ padding: "5px 0" }} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
       </div>
