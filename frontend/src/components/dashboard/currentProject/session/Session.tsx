@@ -3,7 +3,7 @@ import Container from "../../../utils/Container";
 import ControlPanel from "./ControlPanel";
 import SessionContent from "./SessionContent";
 import SessionModal from "../../../modal/SessionModal";
-import { connect } from "react-redux";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { getSessions } from "../../../../actions/session";
 
 interface Session {
@@ -18,16 +18,16 @@ interface Session {
 }
 
 interface Props {
-  sessions: Array<Session>;
   match: any;
-  getSessions: any;
 }
 
-const Session: React.FC<Props> = ({ sessions, match, getSessions }) => {
+const Session: React.FC<Props> = ({ match }) => {
+  const dispatch = useDispatch();
+  const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const [isModal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    getSessions({ project_id: match.params.id });
+    dispatch(getSessions({ project_id: match.params.id }));
   }, []);
 
   const addNewSession = () => {
@@ -53,8 +53,4 @@ const Session: React.FC<Props> = ({ sessions, match, getSessions }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  sessions: state.session.sessions
-});
-
-export default connect(mapStateToProps, { getSessions })(Session);
+export default Session;

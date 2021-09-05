@@ -5,7 +5,6 @@ import { message } from "antd";
 export const createSession = ({ session, project }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/sessions/add", { session, project });
-    console.log(res.data);
     dispatch({ type: CREATE_SESSION, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_SESSION_FAIL });
@@ -26,7 +25,6 @@ export const getSession = ({ id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
     const res = await axios.post("http://localhost:9000/api/sessions/single", { id });
-    console.log(res.data[0]);
     dispatch({ type: GET_SESSION, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
