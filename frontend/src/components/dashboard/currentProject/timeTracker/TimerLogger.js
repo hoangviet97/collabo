@@ -1,8 +1,10 @@
 import React from "react";
 import { Table } from "antd";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const TimerLogger = (props) => {
+const TimerLogger = () => {
+  const records = useSelector((state) => state.time_record.records);
+
   const columns = [
     {
       title: "Section",
@@ -20,21 +22,17 @@ const TimerLogger = (props) => {
       key: "start"
     },
     {
-      title: "Date",
-      dataIndex: "start",
+      title: "Total",
+      dataIndex: "total",
       key: "start"
     }
   ];
 
   return (
     <div>
-      <Table dataSource={props.records} columns={columns} />
+      <Table dataSource={records} columns={columns} />
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  records: state.time_record.records
-});
-
-export default connect(mapStateToProps, {})(TimerLogger);
+export default TimerLogger;

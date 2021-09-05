@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { createTimeRecord } from "../../../../actions/time_record";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const Timer = (props) => {
+const Timer = ({ localstorage }) => {
+  const dispatch = useDispatch();
   const [timer, setTimer] = useState(0);
   let finalFormat = "";
   const [isActive, setIsActive] = useState(false);
@@ -12,10 +13,10 @@ const Timer = (props) => {
 
   const handleStart = () => {
     let now = new Date();
-    let val = JSON.parse(localStorage.getItem(`timer${props.localstorage}`));
+    let val = JSON.parse(localStorage.getItem(`timer${localstorage}`));
 
     if (!val) {
-      localStorage.setItem(`timer${props.localstorage}`, JSON.stringify(now));
+      localStorage.setItem(`timer${localstorage}`, JSON.stringify(now));
     }
 
     setIsActive(true);
@@ -28,18 +29,18 @@ const Timer = (props) => {
     // Reset button logic here
     clearInterval(countRef.current);
     setIsActive(false);
-    const datem = moment(JSON.parse(localStorage.getItem(`timer${props.localstorage}`)));
+    const datem = moment(JSON.parse(localStorage.getItem(`timer${localstorage}`)));
     const datem2 = moment(new Date());
-    props.createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: props.localstorage, total: datem2.diff(datem, "seconds") });
-    localStorage.removeItem(`timer${props.localstorage}`);
+    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds") }));
+    localStorage.removeItem(`timer${localstorage}`);
     setTimer(0);
   };
 
   useEffect(() => {
-    let val = JSON.parse(localStorage.getItem(`timer${props.localstorage}`));
+    let val = JSON.parse(localStorage.getItem(`timer${localstorage}`));
 
     if (val) {
-      const date1 = moment(JSON.parse(localStorage.getItem(`timer${props.localstorage}`)));
+      const date1 = moment(JSON.parse(localStorage.getItem(`timer${localstorage}`)));
       const date2 = moment(new Date());
       setTimer(date2.diff(date1, "seconds"));
       handleStart();
@@ -80,4 +81,4 @@ const Timer = (props) => {
   );
 };
 
-export default connect(null, { createTimeRecord })(Timer);
+export default Timer;

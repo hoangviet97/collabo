@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
-import { getTimeRecords } from "../../../../actions/time_record";
 
-const TimerHeader = (props) => {
+const TimerHeader = () => {
+  const records = useSelector((state) => state.time_record.records);
   const [total, setTotal] = useState(0);
   const [totalToday, setTotalToday] = useState(0);
 
   useEffect(() => {
     const today = new Date();
-    props.data.map((item) => {
+    records.map((item) => {
       setTotal((prev) => prev + item.total);
     });
 
-    props.data.filter((i) => moment(i.created_at).format("YYYY MM DD") === moment(today).format("YYYY MM DD")).map((item) => setTotalToday((prev) => prev + item.total));
+    records.filter((i) => moment(i.created_at).format("YYYY MM DD") === moment(today).format("YYYY MM DD")).map((item) => setTotalToday((prev) => prev + item.total));
 
     return () => {
       setTotal(0);
       setTotalToday(0);
     };
-  }, [props.data]);
+  }, [records]);
 
   return (
     <div className="time-header">
@@ -53,8 +53,4 @@ const TimerHeader = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  data: state.time_record.records
-});
-
-export default connect(mapStateToProps, { getTimeRecords })(TimerHeader);
+export default TimerHeader;
