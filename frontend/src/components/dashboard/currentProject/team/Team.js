@@ -16,10 +16,6 @@ const Team = ({ getMembers, getAllProjectInvitations, match, sended }) => {
     getAllProjectInvitations({ project: match.params.id });
   }, []);
 
-  function callback(key) {
-    console.log(key);
-  }
-
   const inviteHeader = (
     <Badge style={{ position: "relative", left: "5px" }} count={sended.length}>
       Invitations
@@ -32,7 +28,7 @@ const Team = ({ getMembers, getAllProjectInvitations, match, sended }) => {
         <div className="project-team__restricted-area">
           <InvitationPanel project={match.params.id} />
         </div>
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs defaultActiveKey="1">
           <TabPane tab="Active Members" key="1">
             <Members projectId={match.params.id} />
           </TabPane>

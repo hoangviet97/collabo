@@ -25,6 +25,8 @@ const TimerBody = ({ records }) => {
 
     records.filter((item) => moment(item.start).format("MMM Do YY") >= moment(currentWeek[0]).format("MMM Do YY") || moment(item.start).format("MMM Do YY") >= moment(currentWeek[6]).format("MMM Do YY")).map((item) => clearedArr.push({ day: moment(item.start).format("MMM Do YY"), total: viewAsMinutes ? Math.floor(item.total / 60) : Math.floor(item.total / 3600) }));
 
+    console.log(clearedArr);
+
     if (clearedArr > 0) {
       for (let { day, total } of clearedArr) {
         baseArr.find((x) => x.day === day)["sum"] += total;

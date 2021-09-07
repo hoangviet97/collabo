@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Interface } from "readline";
 import SessionItem from "./SessionItem";
 import SessionWelcome from "./SessionWelcome";
 

@@ -1,10 +1,24 @@
 import React from "react";
 import { Table } from "antd";
-import { useSelector } from "react-redux";
 
-const TimerLogger = () => {
-  const records = useSelector((state) => state.time_record.records);
+interface Record {
+  id: string;
+  start: Date;
+  end: Date;
+  created_at: Date;
+  tasks_id: string;
+  users_id: string;
+  total: number;
+  description?: string;
+  task_title: string;
+  section_name: string;
+}
 
+interface Props {
+  records: Array<Record>;
+}
+
+const TimerLogger: React.FC<Props> = ({ records }) => {
   const columns = [
     {
       title: "Section",

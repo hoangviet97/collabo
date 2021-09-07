@@ -62,7 +62,7 @@ const Timer = ({ localstorage }) => {
   return (
     <div>
       <div className="stopwatch-card" style={{ border: "0.5px solid #ecf0f1", display: "inline-block", borderRadius: "12px", backgroundColor: isActive ? "#e74c3c" : "white", color: isActive && "white" }}>
-        <div class="stopwatch-content" style={{ display: "flex", padding: "5px 8px", gap: "12px" }}>
+        <div className="stopwatch-content" style={{ display: "flex", padding: "5px 8px", gap: "12px" }}>
           <span>{formatTime()}</span>
           <div className="buttons">
             {!isActive ? (
