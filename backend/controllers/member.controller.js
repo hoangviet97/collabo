@@ -22,5 +22,12 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  deleteMember: function (req, res) {
+    Member.delete(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

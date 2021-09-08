@@ -55,5 +55,19 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  delete: async function (body, result) {
+    const sql = `DELETE from members WHERE id = ?`;
+
+    con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };

@@ -90,6 +90,66 @@ const KanbanBoard = (props) => {
     ]
   });
 
+  const [controlledBoard2, setBoard2] = useState({
+    columns: [
+      {
+        id: 0,
+        title: "Open",
+        cards: [
+          {
+            id: 1,
+            title: "Add card",
+            description: "Add capability to add a card in a column"
+          }
+        ]
+      },
+      {
+        id: 1,
+        title: "In Progress",
+        cards: [
+          {
+            id: 22,
+            title: "Drag-n-drop support",
+            description: "Move a card between the columns"
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "On Hold",
+        cards: [
+          {
+            id: 1,
+            title: "Add card",
+            description: "Add capability to add a card in a column"
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Completed",
+        cards: [
+          {
+            id: 1,
+            title: "Add card",
+            description: "Add capability to add a card in a column"
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Canceled",
+        cards: [
+          {
+            id: 13,
+            title: "Add card",
+            description: "Add capability to add a card in a column"
+          }
+        ]
+      }
+    ]
+  });
+
   useEffect(() => {
     const arr = props.tasks.filter((item) => item.statusId === "0");
     const arr2 = props.tasks.filter((item) => item.statusId === "1");
