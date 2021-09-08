@@ -21,7 +21,7 @@ const AccountSettings = ({ profile }) => {
 
   return (
     <div>
-      <Form name="basic" ref={formRef}>
+      <Form name="basic" ref={formRef} onFinish={onFinish}>
         <Form.Item label="Firstname" name="firstname" rules={[{ required: true, message: "Please input your username!" }]}>
           <Input />
         </Form.Item>

@@ -10,6 +10,7 @@ import TaskItem from "../../tasks/TaskItem";
 import TaskHeader from "../../tasks/TaskHeader";
 import Spinner from "../../../utils/Spinner";
 import socket from "../../../../service/socket";
+import TaskDetailModal from "../../../modal/TaskDetailModal";
 
 const ProjectTasks = (props) => {
   useEffect(() => {
@@ -33,6 +34,7 @@ const ProjectTasks = (props) => {
   const [panelName, setPanelName] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [taskDetail, setTaskDetail] = useState({});
+
   const [taskName, setTaskName] = useState("");
   const [sectionName, setSectionName] = useState(null);
 
@@ -125,11 +127,10 @@ const ProjectTasks = (props) => {
     </Menu>
   );
 
-  const showModal = (id, sectionName) => {
-    let task = props.tasks.filter((item) => item.id === id);
-    setTaskDetail(task[0]);
-    setTaskName(taskDetail.name);
-    setSectionName(sectionName);
+  const showModal = (task, section) => {
+    Object.assign(task, { section_name: section });
+    setTaskDetail(task);
+    console.log(task);
     setIsModalVisible(true);
   };
 
@@ -148,7 +149,7 @@ const ProjectTasks = (props) => {
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
                 {props.tasks.map((task, index) => {
                   if (section.id === task.sections_id) {
-                    return <TaskItem showModal={showModal} projectId={props.match.params.id} sectionName={section.name} key={index} assignees={props.assignees} task={task} start_date={task.start_date} />;
+                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={props.match.params.id} sectionName={section.name} key={index} assignees={props.assignees} task={task} start_date={task.start_date} />;
                   }
                 })}
                 {newTaskVisibility ? (
@@ -174,33 +175,9 @@ const ProjectTasks = (props) => {
               </div>
             </div>
           )}
+          <TaskDetailModal task={taskDetail} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
-
-      <Modal visible={isModalVisible} width="90%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
-        <div className="task-detail">
-          <header className="task-detail__header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#f5f6fa", padding: "8px 12px" }}>
-            <div className="task-detail-bread" style={{ backgroundColor: "white", padding: "5px 12px", border: "0.5px solid grey", borderRadius: "10px" }}>
-              <Breadcrumb>
-                <Breadcrumb.Item>{sectionName}</Breadcrumb.Item>
-                <Breadcrumb.Item>{taskDetail && taskDetail.name}</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-            <Button style={{ borderRadius: "10px" }} onClick={closeModal}>
-              X
-            </Button>
-          </header>
-          <div className="task-detail-body" style={{ width: "100%", height: "100%", display: "flex" }}>
-            <div className="task-detail-data" style={{ width: "55%", height: "100%", padding: "20px" }}>
-              <Input size="large" value={taskName} />
-              <TextArea rows={4} />
-            </div>
-            <div className="task-detail-comments" style={{ backgroundColor: "red", width: "45%", height: "100%" }}>
-              fe
-            </div>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 };

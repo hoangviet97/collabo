@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../../actions/task";
 import { Select } from "antd";
 import TaskDateModal from "../../modal/TaskDateModdal";
-import TaskDetailModal from "../../modal/TaskDetailModal";
 import StatusIcon from "../../utils/StatusIcon";
 import AvatarIcon from "../../utils/AvatarIcon";
 import Timer from "../currentProject/timeTracker/Timer";
@@ -100,7 +99,7 @@ const TaskItem = (props) => {
 
   return (
     <div className="task-column">
-      <div onClick={() => props.showModal(props.task.id, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div onClick={() => props.showModal(props.task, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
         <span>{props.task.title}</span>
       </div>
