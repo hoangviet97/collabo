@@ -6,12 +6,17 @@ import { EllipsisOutlined, StarFilled, DeleteOutlined, LeftSquareOutlined, InfoC
 import DeleteModal from "../../modal/DeleteModal";
 import ProjectStatus from "../../utils/ProjectStatus";
 import "./Project.scss";
+import { leaveProject } from "../../../actions/member";
 
-const Project = ({ project, projectCardHandler, setFavorite }) => {
+const Project = ({ project, projectCardHandler, setFavorite, leaveProject }) => {
   const { Text } = Typography;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const starStyle = project.favorite === 1 && "#FFD700";
+
+  const leaveHandle = () => {
+    leaveProject({ project_id: project.id });
+  };
 
   const sectionMenu = () => (
     <Menu>
@@ -19,7 +24,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
         <InfoCircleOutlined />
         <span>Details</span>
       </Menu.Item>
-      <Menu.Item key="1">
+      <Menu.Item onClick={leaveHandle} key="1">
         <LeftSquareOutlined />
         <span>Leave</span>
       </Menu.Item>
@@ -82,4 +87,4 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
   );
 };
 
-export default connect(null, { setFavorite })(Project);
+export default connect(null, { setFavorite, leaveProject })(Project);

@@ -69,5 +69,18 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  // get current project
+  leave: function (body, user, result) {
+    const sql = `DELETE FROM members WHERE users_id = ? AND projects_id = ?`;
+    con.query(sql, [user, body.project_id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
   }
 };

@@ -4,6 +4,7 @@ import { Input, Table, Space, Avatar, Select, Menu, Dropdown } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../../../utils/AvatarIcon";
 import { updateMemberRole, deleteMember } from "../../../../actions/member";
+import moment from "moment";
 
 const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
   const { Option } = Select;
@@ -66,7 +67,8 @@ const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
     {
       title: "Joined",
       dataIndex: "created_at",
-      key: "created_at"
+      key: "created_at",
+      render: (text) => <span>{moment(text).format("MMM Do YYYY")}</span>
     },
     {
       title: "More",

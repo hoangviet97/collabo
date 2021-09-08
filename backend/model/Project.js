@@ -110,5 +110,19 @@ module.exports = {
 
       result(null, res);
     });
+  },
+
+  delete: async function (body, result) {
+    const sql = `DELETE from projects WHERE id = ?`;
+
+    con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };
