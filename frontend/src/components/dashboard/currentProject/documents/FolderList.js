@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FolderCard from "./FolderCard";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
-const FolderList = ({ folders, showModal }) => {
+const FolderList = ({ files, folders, showModal, match }) => {
+  const [filteredFiles, setfilteredFiles] = useState([]);
+  useEffect(() => {
+    const newArr = folders.map((item) => Object.assign(item, { sum: 0 }));
+    const newFiles = files.filter((item) => item.folders_id !== null);
+
+    for (let { folders_id } of newFiles) {
+      newArr.find((x) => x.id === folders_id)["sum"] += 1;
+    }
+
+    setfilteredFiles(newArr);
+  }, [files]);
+
   return (
     <div class="files__folders-container">
       <div class="files__folders-header">
@@ -21,8 +33,10 @@ const FolderList = ({ folders, showModal }) => {
         )}
       </div>
       <div class="files__folders-list">
-        {folders.length > 0 ? (
-          folders.slice(0, 4).map((item, index) => <FolderCard key={index} folder={item} />)
+        {filteredFiles.length > 0 ? (
+          filteredFiles.slice(0, 4).map((item, index) => {
+            return <FolderCard key={index} folder={item} match={match} />;
+          })
         ) : (
           <div className="folder-card folder-card--empty" onClick={() => showModal("folder")}>
             <PlusCircleOutlined style={{ fontSize: "40px", color: "#bdc3c7" }} />

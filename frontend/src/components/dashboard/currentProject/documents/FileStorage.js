@@ -36,7 +36,7 @@ const FileStorage = () => {
   ];
 
   return (
-    <div className="files__storage-tab" style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "30px" }}>
+    <div className="files__storage-tab">
       <div style={{ width: "100%", height: "60%" }}>
         <ResponsivePie data={data} innerRadius={0.5} padAngle={0.7} cornerRadius={3} activeOuterRadiusOffset={1} borderWidth={1} borderColor={{ from: "color", modifiers: [["darker", 0.2]] }} arcLinkLabelsSkipAngle={10} arcLinkLabelsTextColor="#333333" arcLinkLabelsThickness={2} arcLinkLabelsColor={{ from: "color" }} arcLabelsSkipAngle={10} arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }} />
       </div>

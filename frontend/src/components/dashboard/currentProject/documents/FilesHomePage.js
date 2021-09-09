@@ -8,7 +8,7 @@ import { Form, Input, Button, Modal } from "antd";
 import { createFolder } from "../../../../actions/folder";
 import { UploadOutlined } from "@ant-design/icons";
 
-const FilesHomePage = ({ files, folders, project_id }) => {
+const FilesHomePage = ({ files, folders, project_id, match }) => {
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFolderModalVisible, setIsFolderModalVisible] = useState(false);
@@ -35,7 +35,7 @@ const FilesHomePage = ({ files, folders, project_id }) => {
     <div>
       <div className="files">
         <div class="files__data">
-          <FolderList folders={folders} showModal={showModal} />
+          <FolderList files={files} folders={folders} showModal={showModal} match={match} />
           <div class="files__recent-files">
             <div class="files__recent-files-header">
               <span style={{ fontSize: "27px", fontWeight: "bold" }}>All files</span>

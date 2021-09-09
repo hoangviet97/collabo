@@ -36,8 +36,8 @@ const TimerBody = ({ records }) => {
   }, [records]);
 
   return (
-    <div className="time-body" style={{ width: "100%", height: "55vh", marginTop: "20px", display: "flex", gap: "20px" }}>
-      <div className="time-body__chart" style={{ padding: "0 00px", backgroundColor: "white", width: "50%", height: "inherit", borderRadius: "12px", display: "flex", flexDirection: "column", position: "relative", justifyContent: "center", alignItems: "center", clear: "both" }}>
+    <div className="time-body">
+      <div className="time-body__chart">
         <ResponsiveBar
           data={finalArr}
           keys={["sum"]}

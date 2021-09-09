@@ -2,6 +2,11 @@
   position: relative;
   min-height: 100vh;
 
+  &__storage-tab {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 30px;
+  }
+
   &__folders-container {
     margin-bottom: 80px;
   }

@@ -49,7 +49,7 @@ const MainContent = (props) => {
         <Route exact path="/:id/overview" component={Overview} />
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={KanbanBoard} />
-        <Route exact path="/:id/documents" component={Documents} />
+        <Route path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />
         <Route path="/:id/sessions" component={Session} />
