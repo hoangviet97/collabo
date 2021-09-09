@@ -9,6 +9,7 @@ import FolderCard from "./FolderCard";
 import FileStorage from "./FileStorage";
 import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import { createFolder, getAllFolders } from "../../../../actions/folder";
+import FolderList from "./FolderList";
 
 const Documents = (props) => {
   useEffect(() => {
@@ -47,31 +48,7 @@ const Documents = (props) => {
     <Container size="30">
       <div className="files">
         <div class="files__data">
-          <div class="files__folders-container" style={{ marginBottom: "80px" }}>
-            <div class="files__folders-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "10px" }}>
-              <span style={{ fontSize: "27px", fontWeight: "bold" }}>Folders</span>
-              {props.folders.length > 0 ? (
-                <div class="files__folders-options" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                  {props.folders.length > 4 ? <a>View all</a> : ""}
-                  <Button type="primary" style={{ borderRadius: "7px" }} onClick={() => showModal("folder")}>
-                    <PlusCircleOutlined />
-                    Add folder
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-            <div class="files__folders-list" style={{ display: "flex", gap: "15px" }}>
-              {props.folders.length > 0 ? (
-                props.folders.slice(0, 4).map((item, index) => <FolderCard key={index} folder={item} />)
-              ) : (
-                <div className="folder-card folder-card--empty" onClick={() => showModal("folder")}>
-                  <PlusCircleOutlined style={{ fontSize: "40px", color: "#bdc3c7" }} />
-                </div>
-              )}
-            </div>
-          </div>
+          <FolderList folders={props.folders} showModal={showModal} />
           <div class="files__recent-files">
             <div class="files__recent-files-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "10px" }}>
               <span style={{ fontSize: "27px", fontWeight: "bold" }}>All files</span>
