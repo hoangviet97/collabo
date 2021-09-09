@@ -23,6 +23,19 @@
     display: flex;
     gap: 15px;
   }
+
+  &__recent-files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 10px;
+  }
+
+  &__recent-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }
 
 .files__storage-tab {
