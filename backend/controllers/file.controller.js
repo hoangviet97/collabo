@@ -28,5 +28,12 @@ module.exports = {
       });
       res.sendFile(path.join(__dirname, "..", result.file_path));
     });
+  },
+
+  moveToFolder: function (req, res) {
+    File.addFolder(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

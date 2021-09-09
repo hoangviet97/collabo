@@ -59,5 +59,19 @@ module.exports = {
       result(null, res[0]);
       return;
     });
+  },
+
+  addFolder: async function (body, result) {
+    const sql = `UPDATE files SET folders_id = ? WHERE id = ?`;
+
+    con.query(sql, [body.folder_id, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
   }
 };

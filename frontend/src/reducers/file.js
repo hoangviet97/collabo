@@ -1,4 +1,4 @@
-import { GET_FILES } from "../actions/types";
+import { GET_FILES, MOVE_TO_FOLDER } from "../actions/types";
 
 const initialState = {
   files: []
@@ -12,6 +12,11 @@ function fileReducer(state = initialState, action) {
       return {
         ...state,
         files: payload
+      };
+    case MOVE_TO_FOLDER:
+      return {
+        ...state,
+        files: state.files.map((item) => (item.id === payload.id ? { ...item, folders_id: payload.folder_id } : item))
       };
     default:
       return state;

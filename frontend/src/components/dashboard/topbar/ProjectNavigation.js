@@ -151,7 +151,7 @@ const ProjectNavigation = (props) => {
             <ThunderboltOutlined />
           </div>
           <div className="icon-box__select">
-            <Button onClick={() => setIconTab(true)}>Change Icon</Button>
+            <Button onClick={() => setIconTab((prev) => !prev)}>Change Icon</Button>
             {showIconTab && (
               <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
                 <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>

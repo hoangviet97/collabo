@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Table, Space, Dropdown, Menu, Typography } from "antd";
+import { useDispatch } from "react-redux";
+import { Table, Space, Dropdown, Menu, Typography, Modal, Button, Select } from "antd";
 import moment from "moment";
 import download from "downloadjs";
 import axios from "axios";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { moveToFolder } from "../../../../actions/file";
 
 const FileList = (props) => {
+  const dispatch = useDispatch();
   const { Text, Link } = Typography;
+  const { Option } = Select;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [fileId, setFileId] = useState("");
+  const [folderId, setFolderId] = useState("");
+  const [clearedFiles, setClearedFiles] = useState([]);
+
+  useEffect(() => {
+    const arr = props.files.filter((item) => item.folders_id === null);
+    setClearedFiles(arr);
+  }, [props.files]);
 
   const downloadFile = async (id, path, mimetype) => {
     try {
@@ -57,21 +70,58 @@ const FileList = (props) => {
     }
   ];
 
+  const handleModalInfo = (id) => {
+    setIsModalVisible(true);
+    setFileId(id);
+  };
+
   const menu = (record) => (
     <Menu>
       <Menu.Item key="0">
         <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>Download</a>
       </Menu.Item>
-      <Menu.Item key="1">
+      <Menu.Item onClick={() => handleModalInfo(record.id)} key="1">
+        <Text>Move to folder</Text>
+      </Menu.Item>
+      <Menu.Item key="2">
         <Text type="danger">Delete</Text>
       </Menu.Item>
     </Menu>
   );
 
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleFolderName = (value) => {
+    setFolderId(value);
+  };
+
+  const submitHandle = () => {
+    dispatch(moveToFolder({ id: fileId, folder_id: folderId }));
+    setFolderId(0);
+    setFileId(0);
+    setIsModalVisible(false);
+  };
+
   return (
-    <div className="files-container">
-      <Table columns={columns} dataSource={props.files} pagination={{ pageSize: 10 }} />
-    </div>
+    <>
+      <div className="files-container">
+        <Table columns={columns} dataSource={clearedFiles} pagination={{ pageSize: 10 }} />
+      </div>
+      <Modal title="Select folder" width="500px" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+        <Select style={{ width: 200 }} onChange={handleFolderName} placeholder="Select a person">
+          {props.folders.map((item) => (
+            <Option value={item.id}>{item.title}</Option>
+          ))}
+        </Select>
+        <Button onClick={submitHandle}>Move</Button>
+      </Modal>
+    </>
   );
 };
 

@@ -96,7 +96,7 @@ const Documents = (props) => {
               </Form.Item>
             </Form>
           </Modal>
-          <FileList files={props.files} />
+          <FileList files={props.files} folders={props.folders} />
         </div>
         <FileStorage />
       </div>
