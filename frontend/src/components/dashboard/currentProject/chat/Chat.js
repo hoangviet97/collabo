@@ -5,13 +5,19 @@ import MyPost from "./posts/MyPost";
 import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import { createPost, getAllPosts } from "../../../../actions/post";
-import { PaperClipOutlined, GifOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
+import { PaperClipOutlined, BarsOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
 import "./Chat.scss";
 import socket from "../../../../service/socket";
+import TaskAttachmentModal from "../../../modal/TaskAttachmentModal";
+
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
 const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [isTaskAttachmentOpen, setisTaskAttachmentOpen] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
 
   useEffect(() => {
     props.getAllPosts({ id: props.match.params.id });
@@ -29,7 +35,7 @@ const Chat = (props) => {
   };
 
   useEffect(() => {
-    document.querySelector(".chat-window").scrollTop = document.querySelector(".chat-window").scrollHeight;
+    document.querySelector(".chat__window").scrollTop = document.querySelector(".chat__window").scrollHeight;
   }, [messages]);
 
   const sendMsg = (e) => {
@@ -49,9 +55,14 @@ const Chat = (props) => {
     }
   };
 
+  const addEmoji = (e) => {
+    console.log(e.native);
+    setMessage((prev) => prev + e.native);
+  };
+
   return (
     <Container size="30">
-      <div className="chat-window" style={{ width: "100%", height: "67vh", overflowY: "scroll" }}>
+      <div className="chat__window">
         {messages.length > 0 &&
           messages.map((item, index) => {
             if (item.users_id === props.user.id) {
@@ -61,16 +72,33 @@ const Chat = (props) => {
             }
           })}
       </div>
-      <div className="chat-footer">
-        <div className="chat-footer-input">
+      <div className="chat__footer">
+        <div className="chat__footer-input">
           <Input className="input" size="large" value={message} allowClear onChange={(e) => setMessage(e.target.value)} />
+          <div class="chat__footer-attachment"></div>
         </div>
-        <div className="chat-footer-bar" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px", backgroundColor: "white", border: "0.5px solid #dfe6e9" }}>
+        <div className="chat__footer-bar">
           <div className="chat-bar-list" style={{ display: "flex", gap: "18px" }}>
-            <PaperClipOutlined style={{ fontSize: "19px" }} />
-            <GifOutlined style={{ fontSize: "19px" }} />
-            <PictureOutlined style={{ fontSize: "19px" }} />
-            <SmileOutlined style={{ fontSize: "19px" }} />
+            <div className="chat__bar-item">
+              <PaperClipOutlined style={{ fontSize: "19px" }} />
+            </div>
+            <div className="chat__bar-item" onClick={() => setisTaskAttachmentOpen(true)}>
+              <BarsOutlined style={{ fontSize: "19px" }} />
+              {isTaskAttachmentOpen && <TaskAttachmentModal />}
+            </div>
+            <div className="chat__bar-item">
+              <PictureOutlined style={{ fontSize: "19px" }} />
+            </div>
+            <div className="chat__bar-item">
+              <SmileOutlined style={{ fontSize: "19px" }} onClick={() => setShowEmoji(true)} />
+              {showEmoji && (
+                <div style={{ position: "absolute", zIndex: 99999, width: "100%", height: "100%", top: 0, left: 0, right: 0, bottom: 0 }} onClick={() => setShowEmoji((prev) => !prev)}>
+                  <div style={{ position: "absolute", top: "50%" }}>
+                    <Picker onSelect={addEmoji} />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <Button type="primary" onClick={(e) => sendMsg(e)}>
             <SendOutlined />

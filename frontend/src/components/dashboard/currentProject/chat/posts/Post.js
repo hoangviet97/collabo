@@ -5,6 +5,7 @@ import moment from "moment";
 
 const Post = (props) => {
   const date = moment(props.post.created_at).format("lll");
+  console.log(props.post);
 
   return (
     <div style={{ display: "flex" }}>
