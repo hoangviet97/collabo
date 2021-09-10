@@ -7,24 +7,24 @@ import FileHomePage from "./FilesHomePage";
 import FolderPage from "./FolderPage";
 import { Switch, Route } from "react-router-dom";
 
-const Documents = (props) => {
+const Documents = ({ match }) => {
   const dispatch = useDispatch();
   const files = useSelector((state) => state.file.files);
   const folders = useSelector((state) => state.folder.folders);
 
   useEffect(() => {
-    dispatch(getAllFolders({ project_id: props.match.params.id }));
-    dispatch(getAllFiles({ project_id: props.match.params.id }));
+    dispatch(getAllFolders({ project_id: match.params.id }));
+    dispatch(getAllFiles({ project_id: match.params.id }));
   }, []);
 
   return (
     <Container size="30">
       <Switch>
-        <Route exact path={`${props.match.path}/`}>
-          <FileHomePage files={files} folders={folders} project_id={props.match.params.id} match={props.match} />
+        <Route exact path={`${match.path}/`}>
+          <FileHomePage files={files} folders={folders} project_id={match.params.id} match={match} />
         </Route>
-        <Route exact path={`${props.match.path}/folders/:folderId`}>
-          <FolderPage match={props.match} />
+        <Route exact path={`${match.path}/folders/:folderId`}>
+          <FolderPage match={match} />
         </Route>
       </Switch>
     </Container>

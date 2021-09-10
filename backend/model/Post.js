@@ -43,7 +43,7 @@ module.exports = {
   },
 
   find: async function (projectId, result) {
-    const sql = `SELECT * FROM posts WHERE projects_id = ?`;
+    const sql = `SELECT * FROM posts WHERE projects_id = ? ORDER BY created_at`;
 
     con.query(sql, [projectId], (err, res) => {
       if (err) {

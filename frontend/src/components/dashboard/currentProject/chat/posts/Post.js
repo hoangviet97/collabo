@@ -11,7 +11,7 @@ const Post = (props) => {
       <Avatar>
         <AvatarIcon name={props.post.name} />
       </Avatar>
-      <div className="post-content" style={{ backgroundColor: "white", padding: "10px 15px", borderRadius: "10px", color: "black", marginLeft: "10px", marginBottom: "10px", flex: "1" }}>
+      <div className="post-content" style={{ backgroundColor: "white", padding: "10px 15px", borderRadius: "10px", color: "black", marginLeft: "10px", marginBottom: "30px", flex: "1" }}>
         <p>
           <span style={{ fontWeight: "400" }}>{props.post.name}</span> &nbsp; <span style={{ fontSize: "12px" }}>{date}</span>
         </p>

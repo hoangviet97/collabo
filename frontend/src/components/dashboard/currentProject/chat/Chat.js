@@ -4,7 +4,7 @@ import Container from "../../../utils/Container";
 import MyPost from "./posts/MyPost";
 import Post from "./posts/Post";
 import { Input, Button } from "antd";
-import { createPost } from "../../../../actions/post";
+import { createPost, getAllPosts } from "../../../../actions/post";
 import { PaperClipOutlined, GifOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
 import "./Chat.scss";
 import socket from "../../../../service/socket";
@@ -14,14 +14,23 @@ const Chat = (props) => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    props.getAllPosts({ id: props.match.params.id });
     socket.on("get post", (data) => {
       receivedMsg(data);
     });
   }, []);
 
+  useEffect(() => {
+    setMessages(props.posts);
+  }, [props.posts]);
+
   const receivedMsg = (data) => {
     setMessages((prev) => [...prev, data]);
   };
+
+  useEffect(() => {
+    document.querySelector(".chat-window").scrollTop = document.querySelector(".chat-window").scrollHeight;
+  }, [messages]);
 
   const sendMsg = (e) => {
     e.preventDefault();
@@ -43,13 +52,14 @@ const Chat = (props) => {
   return (
     <Container size="30">
       <div className="chat-window" style={{ width: "100%", height: "67vh", overflowY: "scroll" }}>
-        {messages.map((item, index) => {
-          if (item.users_id === props.user.id) {
-            return <MyPost key={index} post={item} />;
-          } else {
-            return <Post key={index} post={item} />;
-          }
-        })}
+        {messages.length > 0 &&
+          messages.map((item, index) => {
+            if (item.users_id === props.user.id) {
+              return <MyPost key={index} post={item} />;
+            } else {
+              return <Post key={index} post={item} />;
+            }
+          })}
       </div>
       <div className="chat-footer">
         <div className="chat-footer-input">
@@ -72,7 +82,8 @@ const Chat = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  posts: state.post.posts
 });
 
-export default connect(mapStateToProps, { createPost })(Chat);
+export default connect(mapStateToProps, { createPost, getAllPosts })(Chat);

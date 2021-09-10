@@ -20,7 +20,7 @@ function postReducer(state = initialState, action) {
     case GET_POSTS:
       return {
         ...state,
-        channels: payload
+        posts: payload
       };
     case GET_POSTS_FAIL:
       return {
