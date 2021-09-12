@@ -6,9 +6,10 @@ import Post from "./posts/Post";
 import { Input, Button } from "antd";
 import { createPost, getAllPosts } from "../../../../actions/post";
 import { PaperClipOutlined, BarsOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
-import "./Chat.scss";
 import socket from "../../../../service/socket";
 import TaskAttachmentModal from "../../../modal/TaskAttachmentModal";
+
+import { Mention, MentionsInput } from "react-mentions";
 
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
@@ -18,6 +19,64 @@ const Chat = (props) => {
   const [message, setMessage] = useState("");
   const [isTaskAttachmentOpen, setisTaskAttachmentOpen] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
+
+  const users = [
+    {
+      id: "walter",
+      display: "Walter White"
+    },
+    {
+      id: "jesse",
+      display: "Jesse Pinkman"
+    },
+    {
+      id: "gus",
+      display: 'Gustavo "Gus" Fring'
+    },
+    {
+      id: "saul",
+      display: "Saul Goodman"
+    },
+    {
+      id: "hank",
+      display: "Hank Schrader"
+    },
+    {
+      id: "skyler",
+      display: "Skyler White"
+    },
+    {
+      id: "mike",
+      display: "Mike Ehrmantraut"
+    },
+    {
+      id: "lydia",
+      display: "Lydìã Rôdarté-Qüayle"
+    }
+  ];
+
+  const tasks = [
+    {
+      id: "walter",
+      display: "Take a bath"
+    },
+    {
+      id: "jesse",
+      display: "Use math"
+    },
+    {
+      id: "gus",
+      display: "Do a homework"
+    },
+    {
+      id: "saul",
+      display: "Get saturn"
+    },
+    {
+      id: "hank",
+      display: "Roast beef"
+    }
+  ];
 
   useEffect(() => {
     props.getAllPosts({ id: props.match.params.id });
@@ -60,6 +119,20 @@ const Chat = (props) => {
     setMessage((prev) => prev + e.native);
   };
 
+  const colonsToUnicode = (text) => {
+    const colonsRegex = new RegExp("(^|\\s):([)|D|(|P|O|o])+", "g");
+    let newText = text;
+
+    let match = colonsRegex.exec(text);
+
+    if (match !== null) {
+      let offset = match.index + match[1].length;
+
+      newText = newText.slice(0, offset) + newText.slice(offset + 2);
+    }
+    return newText;
+  };
+
   return (
     <Container size="30">
       <div className="chat__window">
@@ -74,7 +147,10 @@ const Chat = (props) => {
       </div>
       <div className="chat__footer">
         <div className="chat__footer-input">
-          <Input className="input" size="large" value={message} allowClear onChange={(e) => setMessage(e.target.value)} />
+          <MentionsInput value={message} onChange={(e) => setMessage(colonsToUnicode(e.target.value))} className="mentions" placeholder="Leave a comment..." allowSuggestionsAboveCursor={true}>
+            <Mention trigger="@" data={users} />
+            <Mention trigger="#" data={tasks} />
+          </MentionsInput>
           <div class="chat__footer-attachment"></div>
         </div>
         <div className="chat__footer-bar">

@@ -1,22 +1,53 @@
-import { LeftCircleFilled } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AvatarIcon from "../../../../utils/AvatarIcon";
-import { Avatar } from "antd";
+import { Avatar, Popover } from "antd";
 import moment from "moment";
 
-function MyPost(props) {
-  const date = moment(props.post.created_at).format("lll");
+function MyPost({ post }) {
+  const date = moment(post.created_at).format("lll");
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (post.text !== "") {
+      let regex = /@\[.+?\]\(.+?\)/gm;
+      let displayRegex = /@\[.+?\]/g;
+      let idRegex = /\(.+?\)/g;
+      let matches = post.text.match(regex);
+      let arr = [];
+      matches &&
+        matches.forEach((m) => {
+          let id = m.match(idRegex)[0].replace("(", "").replace(")", "");
+          let display = m.match(displayRegex)[0].replace("@[", "").replace("]", "");
+
+          arr.push({ id: id, display: display });
+        });
+      let newComment = post.text.split(regex);
+      let output = "";
+      for (let i = 0; i < newComment.length; i++) {
+        const c = newComment[i];
+        if (i === newComment.length - 1) output += c;
+        else output += c + `<a>${arr[i].display}</a>`;
+      }
+      setText(output);
+    }
+  }, [post]);
 
   return (
     <div style={{ display: "flex" }}>
       <Avatar>
-        <AvatarIcon name={props.post.name} />
+        <AvatarIcon name={post.name} />
       </Avatar>
-      <div className="post-content" style={{ backgroundColor: "white", border: "0.7px solid #7ed6df", padding: "10px 15px", borderRadius: "10px", color: "black", marginLeft: "10px", marginBottom: "30px", flex: "1" }}>
+      <div className="post__content">
         <p>
-          <span style={{ fontWeight: "400" }}>{props.post.name}</span> &nbsp; <span style={{ fontSize: "12px" }}>{date}</span>
+          <span style={{ fontWeight: "400" }}>{post.name}</span> &nbsp; <span style={{ fontSize: "12px" }}>{date}</span>
         </p>
-        {props.post.text}
+
+        <p
+          className="d-inline comment-paragraph-text"
+          dangerouslySetInnerHTML={{
+            __html: text.replace(/\n\r?/g, "<br />")
+          }}
+        />
       </div>
     </div>
   );

@@ -3,20 +3,19 @@ import AvatarIcon from "../../../../utils/AvatarIcon";
 import { Avatar } from "antd";
 import moment from "moment";
 
-const Post = (props) => {
-  const date = moment(props.post.created_at).format("lll");
-  console.log(props.post);
+const Post = ({ post }) => {
+  const date = moment(post.created_at).format("lll");
 
   return (
     <div style={{ display: "flex" }}>
       <Avatar>
-        <AvatarIcon name={props.post.name} />
+        <AvatarIcon name={post.name} />
       </Avatar>
-      <div className="post-content" style={{ backgroundColor: "white", padding: "10px 15px", borderRadius: "10px", color: "black", marginLeft: "10px", marginBottom: "30px", flex: "1" }}>
+      <div className="post__content">
         <p>
-          <span style={{ fontWeight: "400" }}>{props.post.name}</span> &nbsp; <span style={{ fontSize: "12px" }}>{date}</span>
+          <span style={{ fontWeight: "400" }}>{post.name}</span> &nbsp; <span style={{ fontSize: "12px" }}>{date}</span>
         </p>
-        {props.post.text}
+        {post.text}
       </div>
     </div>
   );
