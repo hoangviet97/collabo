@@ -11,6 +11,7 @@ import KanbanBoard from "./currentProject/board/KanbanBoard";
 import ProjectCalendar from "./currentProject/calendar/ProjectCalendar";
 import Documents from "./currentProject/documents/Documents";
 import Team from "./currentProject/team/Team";
+import Report from "../dashboard/currentProject/report/Report";
 import Notifications from "./notifications/Notifications";
 import NotFound from "../../layout/notFound/NotFound";
 import Session from "./currentProject/session/Session";
@@ -52,6 +53,7 @@ const MainContent = (props) => {
         <Route path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />
+        <Route exact path="/:id/report" component={Report} />
         <Route path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
         <Route component={NotFound} />

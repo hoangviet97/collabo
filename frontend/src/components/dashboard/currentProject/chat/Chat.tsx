@@ -1,93 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect, FC } from "react";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import Container from "../../../utils/Container";
 import MyPost from "./posts/MyPost";
 import Post from "./posts/Post";
-import { Input, Button } from "antd";
+import { Button } from "antd";
 import { createPost, getAllPosts } from "../../../../actions/post";
+import { getMembers } from "../../../../actions/member";
 import { PaperClipOutlined, BarsOutlined, PictureOutlined, SmileOutlined, SendOutlined } from "@ant-design/icons";
 import socket from "../../../../service/socket";
 import TaskAttachmentModal from "../../../modal/TaskAttachmentModal";
-
 import { Mention, MentionsInput } from "react-mentions";
-
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 
-const Chat = (props) => {
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
-  const [isTaskAttachmentOpen, setisTaskAttachmentOpen] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(false);
+interface Props {
+  match: any;
+}
 
-  const users = [
-    {
-      id: "walter",
-      display: "Walter White"
-    },
-    {
-      id: "jesse",
-      display: "Jesse Pinkman"
-    },
-    {
-      id: "gus",
-      display: 'Gustavo "Gus" Fring'
-    },
-    {
-      id: "saul",
-      display: "Saul Goodman"
-    },
-    {
-      id: "hank",
-      display: "Hank Schrader"
-    },
-    {
-      id: "skyler",
-      display: "Skyler White"
-    },
-    {
-      id: "mike",
-      display: "Mike Ehrmantraut"
-    },
-    {
-      id: "lydia",
-      display: "Lydìã Rôdarté-Qüayle"
-    }
-  ];
-
-  const tasks = [
-    {
-      id: "walter",
-      display: "Take a bath"
-    },
-    {
-      id: "jesse",
-      display: "Use math"
-    },
-    {
-      id: "gus",
-      display: "Do a homework"
-    },
-    {
-      id: "saul",
-      display: "Get saturn"
-    },
-    {
-      id: "hank",
-      display: "Roast beef"
-    }
-  ];
+const Chat: FC<Props> = ({ match }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootStateOrAny) => state.auth.user);
+  const posts = useSelector((state: RootStateOrAny) => state.post.posts);
+  const members = useSelector((state: RootStateOrAny) => state.member.members);
+  const [messages, setMessages] = useState<Array<any>>([]);
+  const [message, setMessage] = useState<string>("");
+  const [isTaskAttachmentOpen, setisTaskAttachmentOpen] = useState<boolean>(false);
+  const [showEmoji, setShowEmoji] = useState<boolean>(false);
+  const [memberList, setMemberList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    props.getAllPosts({ id: props.match.params.id });
+    dispatch(getAllPosts({ id: match.params.id }));
+    dispatch(getMembers({ id: match.params.id }));
     socket.on("get post", (data) => {
       receivedMsg(data);
     });
   }, []);
 
   useEffect(() => {
-    setMessages(props.posts);
-  }, [props.posts]);
+    setMessages(posts);
+  }, [posts]);
+
+  useEffect(() => {
+    const newList = [];
+    members.map((i) => newList.push({ id: i.id, display: `${i.firstname} ${i.lastname}` }));
+    setMemberList(newList);
+  }, [members]);
 
   const receivedMsg = (data) => {
     setMessages((prev) => [...prev, data]);
@@ -100,26 +57,25 @@ const Chat = (props) => {
   const sendMsg = (e) => {
     e.preventDefault();
     const postBody = {
-      id: props.user.id,
-      name: props.user.firstname,
-      project: props.match.params.id,
+      id: user.id,
+      name: user.firstname,
+      project: match.params.id,
       body: message
     };
 
     if (message.length > 0) {
-      props.createPost({ socket, postBody });
+      dispatch(createPost({ socket, postBody }));
       setMessage("");
     } else {
       setMessage("");
     }
   };
 
-  const addEmoji = (e) => {
-    console.log(e.native);
+  const addEmoji = (e: any) => {
     setMessage((prev) => prev + e.native);
   };
 
-  const colonsToUnicode = (text) => {
+  const colonsToUnicode = (text: any) => {
     const colonsRegex = new RegExp("(^|\\s):([)|D|(|P|O|o])+", "g");
     let newText = text;
 
@@ -138,7 +94,7 @@ const Chat = (props) => {
       <div className="chat__window">
         {messages.length > 0 &&
           messages.map((item, index) => {
-            if (item.users_id === props.user.id) {
+            if (item.users_id === user.id) {
               return <MyPost key={index} post={item} />;
             } else {
               return <Post key={index} post={item} />;
@@ -148,10 +104,9 @@ const Chat = (props) => {
       <div className="chat__footer">
         <div className="chat__footer-input">
           <MentionsInput value={message} onChange={(e) => setMessage(colonsToUnicode(e.target.value))} className="mentions" placeholder="Leave a comment..." allowSuggestionsAboveCursor={true}>
-            <Mention trigger="@" data={users} />
-            <Mention trigger="#" data={tasks} />
+            <Mention trigger="@" data={memberList} />
           </MentionsInput>
-          <div class="chat__footer-attachment"></div>
+          <div className="chat__footer-attachment"></div>
         </div>
         <div className="chat__footer-bar">
           <div className="chat-bar-list" style={{ display: "flex", gap: "18px" }}>
@@ -185,9 +140,4 @@ const Chat = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  posts: state.post.posts
-});
-
-export default connect(mapStateToProps, { createPost, getAllPosts })(Chat);
+export default Chat;

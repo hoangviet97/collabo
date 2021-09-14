@@ -5,6 +5,7 @@ import { Button } from "antd";
 
 const FolderList = ({ files, folders, showModal, match }) => {
   const [filteredFiles, setfilteredFiles] = useState([]);
+  const [maxVisibleFolders, setMaxVisibleFolders] = useState(4);
   useEffect(() => {
     const newArr = folders.map((item) => Object.assign(item, { sum: 0 }));
     const newFiles = files.filter((item) => item.folders_id !== null);
@@ -16,13 +17,17 @@ const FolderList = ({ files, folders, showModal, match }) => {
     setfilteredFiles(newArr);
   }, [files]);
 
+  const viewAllFoldersHandle = () => {
+    setMaxVisibleFolders(folders.length);
+  };
+
   return (
     <div class="files__folders-container">
       <div class="files__folders-header">
         <span style={{ fontSize: "27px", fontWeight: "bold" }}>Folders</span>
         {folders.length > 0 ? (
           <div class="files__folders-options">
-            {folders.length > 4 ? <a>View all</a> : ""}
+            {folders.length > 4 ? <a onClick={viewAllFoldersHandle}>View all</a> : ""}
             <Button type="primary" style={{ borderRadius: "7px" }} onClick={() => showModal("folder")}>
               <PlusCircleOutlined />
               Add folder
@@ -34,7 +39,7 @@ const FolderList = ({ files, folders, showModal, match }) => {
       </div>
       <div class="files__folders-list">
         {filteredFiles.length > 0 ? (
-          filteredFiles.slice(0, 4).map((item, index) => {
+          filteredFiles.slice(0, maxVisibleFolders).map((item, index) => {
             return <FolderCard key={index} folder={item} match={match} />;
           })
         ) : (

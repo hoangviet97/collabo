@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio } from "antd";
+import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio } from "antd";
 import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { updateColor, updateStatus } from "../../../actions/project";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
 
+  const dispatch = useDispatch();
+  const currentProject = useSelector((state) => state.project.currentProject);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  let ic;
   const [projectName, setProjectName] = useState("");
   const [ProjectIcon, setProjectIcon] = useState("");
   const [showIconTab, setIconTab] = useState(false);
@@ -26,8 +27,8 @@ const ProjectNavigation = (props) => {
   const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
 
   useEffect(() => {
-    setProjectName(props.project.currentProject.name);
-    setProjectDescription(props.project.currentProject.description);
+    dispatch(setProjectName(currentProject.name));
+    dispatch(setProjectDescription(currentProject.description));
   }, [props]);
 
   const moreContent = (
@@ -57,7 +58,7 @@ const ProjectNavigation = (props) => {
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/report`}>
           <FileTextOutlined className="single-navigation__link-icon" />
           <span>Report</span>
         </Link>
@@ -79,11 +80,11 @@ const ProjectNavigation = (props) => {
 
   const handleIconColor = (color) => {
     setIconColorSelection(color);
-    props.updateColor({ id: props.currentProject.id, color: color, project: props.currentProject.id });
+    props.updateColor({ id: currentProject.id, color: color, project: currentProject.id });
   };
 
   const projectStatusHandle = (e) => {
-    props.updateStatus({ id: props.currentProject.id, status: e.target.value, project: props.currentProject.id });
+    props.updateStatus({ id: currentProject.id, status: e.target.value, project: currentProject.id });
   };
 
   const projectInfoMenu = (
@@ -98,11 +99,11 @@ const ProjectNavigation = (props) => {
     <div className="single-navigation">
       <div className="single-navigation__identity">
         <div className="single-navigation__icon">
-          <div style={{ width: "40px", height: "40px", borderRadius: "8px", backgroundColor: props.project.currentProject.color !== null ? props.project.currentProject.color : "grey" }}></div>
+          <div style={{ width: "40px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null ? currentProject.color : "grey" }}></div>
         </div>
         <div className="single-navigation__title">
           <Dropdown overlay={projectInfoMenu} placement="bottomCenter">
-            <span>{props.project ? props.project.currentProject.name : ""}</span>
+            <span>{currentProject && currentProject.name}</span>
           </Dropdown>
         </div>
       </div>
@@ -180,7 +181,7 @@ const ProjectNavigation = (props) => {
             <Input value={projectDescription} />
           </Form.Item>
           <Form.Item>
-            <Radio.Group onChange={projectStatusHandle} defaultValue={props.currentProject.project_status_id}>
+            <Radio.Group onChange={projectStatusHandle} defaultValue={currentProject.project_status_id}>
               <Radio.Button value="0">On Progress</Radio.Button>
               <Radio.Button value="1">Completed</Radio.Button>
               <Radio.Button value="2">Canceled</Radio.Button>
@@ -192,9 +193,4 @@ const ProjectNavigation = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  project: state.project,
-  currentProject: state.project.currentProject
-});
-
-export default connect(mapStateToProps, { updateColor, updateStatus })(ProjectNavigation);
+export default ProjectNavigation;

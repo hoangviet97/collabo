@@ -52,13 +52,14 @@ app.use("/api/timers", timerRoutes);
 
 app.set("io", io);
 
-let users = {};
+let users = [];
 
 app.set("users", users);
 
 io.on("connection", (socket) => {
-  console.log("Connection privded");
-  users;
+  console.log("Success connection");
+  users.push(socket.id);
+  console.log(users);
 
   socket.on("greet", (data) => {
     socket.emit("notify", data);
@@ -80,6 +81,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    socket.removeAllListeners();
     console.log("bye");
   });
 });
