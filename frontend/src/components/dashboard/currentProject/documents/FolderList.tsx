@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import FolderCard from "./FolderCard";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
-const FolderList = ({ files, folders, showModal, match }) => {
-  const [filteredFiles, setfilteredFiles] = useState([]);
-  const [maxVisibleFolders, setMaxVisibleFolders] = useState(4);
+interface Props {
+  files: any;
+  folders: any;
+  showModal: any;
+  match: any;
+}
+
+const FolderList: FC<Props> = ({ files, folders, showModal, match }) => {
+  const [filteredFiles, setfilteredFiles] = useState<Array<any>>([]);
+  const [maxVisibleFolders, setMaxVisibleFolders] = useState<number>(4);
   useEffect(() => {
-    const newArr = folders.map((item) => Object.assign(item, { sum: 0 }));
-    const newFiles = files.filter((item) => item.folders_id !== null);
+    const newArr = folders.map((item: any) => Object.assign(item, { sum: 0 }));
+    const newFiles = files.filter((item: any) => item.folders_id !== null);
 
     for (let { folders_id } of newFiles) {
-      newArr.find((x) => x.id === folders_id)["sum"] += 1;
+      newArr.find((x: any) => x.id === folders_id)["sum"] += 1;
     }
 
     setfilteredFiles(newArr);
@@ -22,11 +29,11 @@ const FolderList = ({ files, folders, showModal, match }) => {
   };
 
   return (
-    <div class="files__folders-container">
-      <div class="files__folders-header">
+    <div className="files__folders-container">
+      <div className="files__folders-header">
         <span style={{ fontSize: "27px", fontWeight: "bold" }}>Folders</span>
         {folders.length > 0 ? (
-          <div class="files__folders-options">
+          <div className="files__folders-options">
             {folders.length > 4 ? <a onClick={viewAllFoldersHandle}>View all</a> : ""}
             <Button type="primary" style={{ borderRadius: "7px" }} onClick={() => showModal("folder")}>
               <PlusCircleOutlined />
@@ -37,7 +44,7 @@ const FolderList = ({ files, folders, showModal, match }) => {
           ""
         )}
       </div>
-      <div class="files__folders-list">
+      <div className="files__folders-list">
         {filteredFiles.length > 0 ? (
           filteredFiles.slice(0, maxVisibleFolders).map((item, index) => {
             return <FolderCard key={index} folder={item} match={match} />;

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Button, Menu, Dropdown } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
-const FolderCard = ({ folder, match }) => {
+interface Props {
+  folder: any;
+  match: any;
+}
+
+const FolderCard: FC<Props> = ({ folder, match }) => {
   const history = useHistory();
   const menu = (
     <Menu>

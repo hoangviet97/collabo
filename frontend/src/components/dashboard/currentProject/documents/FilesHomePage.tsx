@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, FC } from "react";
 import { useDispatch } from "react-redux";
 import NewFileForm from "./NewFileForm";
 import FolderList from "./FolderList";
@@ -8,21 +8,28 @@ import { Form, Input, Button, Modal } from "antd";
 import { createFolder } from "../../../../actions/folder";
 import { UploadOutlined } from "@ant-design/icons";
 
-const FilesHomePage = ({ files, folders, project_id, match }) => {
-  const dispatch = useDispatch();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isFolderModalVisible, setIsFolderModalVisible] = useState(false);
-  const [newFolder, setNewFolder] = useState("");
+interface Props {
+  files: any;
+  folders: any;
+  project_id: any;
+  match: any;
+}
 
-  const showModal = (modalType) => {
+const FilesHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
+  const dispatch = useDispatch();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);
+  const [newFolder, setNewFolder] = useState<string>("");
+
+  const showModal = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(true) : setIsFolderModalVisible(true);
   };
 
-  const handleOk = (modalType) => {
+  const handleOk = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
-  const handleCancel = (modalType) => {
+  const handleCancel = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
@@ -34,12 +41,12 @@ const FilesHomePage = ({ files, folders, project_id, match }) => {
   return (
     <div>
       <div className="files">
-        <div class="files__data">
+        <div className="files__data">
           <FolderList files={files} folders={folders} showModal={showModal} match={match} />
-          <div class="files__recent-files">
-            <div class="files__recent-files-header">
+          <div className="files__recent-files">
+            <div className="files__recent-files-header">
               <span style={{ fontSize: "27px", fontWeight: "bold" }}>All files</span>
-              <div class="files__recent-options">
+              <div className="files__recent-options">
                 <Button type="primary" style={{ borderRadius: "7px" }} onClick={() => showModal("upload")}>
                   <UploadOutlined />
                   Upload file

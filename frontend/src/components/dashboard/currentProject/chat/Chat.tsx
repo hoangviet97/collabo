@@ -54,7 +54,7 @@ const Chat: FC<Props> = ({ match }) => {
     document.querySelector(".chat__window").scrollTop = document.querySelector(".chat__window").scrollHeight;
   }, [messages]);
 
-  const sendMsg = (e) => {
+  const sendMsg = (e: any) => {
     e.preventDefault();
     const postBody = {
       id: user.id,
