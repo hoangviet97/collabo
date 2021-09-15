@@ -41,18 +41,14 @@ const Chat: FC<Props> = ({ match }) => {
   }, [posts]);
 
   useEffect(() => {
-    const newList = [];
-    members.map((i) => newList.push({ id: i.id, display: `${i.firstname} ${i.lastname}` }));
+    const newList: Array<any> = [];
+    members.map((i: any) => newList.push({ id: i.id, display: `${i.firstname} ${i.lastname}` }));
     setMemberList(newList);
   }, [members]);
 
-  const receivedMsg = (data) => {
+  const receivedMsg = (data: any) => {
     setMessages((prev) => [...prev, data]);
   };
-
-  useEffect(() => {
-    document.querySelector(".chat__window").scrollTop = document.querySelector(".chat__window").scrollHeight;
-  }, [messages]);
 
   const sendMsg = (e: any) => {
     e.preventDefault();

@@ -27,9 +27,9 @@ const ProjectNavigation = (props) => {
   const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
 
   useEffect(() => {
-    dispatch(setProjectName(currentProject.name));
-    dispatch(setProjectDescription(currentProject.description));
-  }, [props]);
+    setProjectName(currentProject.name);
+    setProjectDescription(currentProject.description);
+  }, [currentProject]);
 
   const moreContent = (
     <div>
@@ -80,11 +80,11 @@ const ProjectNavigation = (props) => {
 
   const handleIconColor = (color) => {
     setIconColorSelection(color);
-    props.updateColor({ id: currentProject.id, color: color, project: currentProject.id });
+    dispatch(updateColor({ id: currentProject.id, color: color, project: currentProject.id }));
   };
 
   const projectStatusHandle = (e) => {
-    props.updateStatus({ id: currentProject.id, status: e.target.value, project: currentProject.id });
+    dispatch(updateStatus({ id: currentProject.id, status: e.target.value, project: currentProject.id }));
   };
 
   const projectInfoMenu = (

@@ -36,8 +36,6 @@ const MainContent = (props) => {
     props.getAllInvitations();
   }, []);
 
-  console.log(props.match);
-
   return (
     <div className="mainContent">
       <Switch>

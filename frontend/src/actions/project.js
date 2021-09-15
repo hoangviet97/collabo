@@ -37,7 +37,8 @@ export const getProject = (id) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/projects/single", { id: id });
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
-    dispatch({ type: ERROR_SINGLE_PROJECT });
+    console.log(err);
+    //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
 };
 

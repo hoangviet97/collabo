@@ -1,0 +1,60 @@
+.overview {
+  height: calc(100vh - 120px);
+
+  &__card-sm {
+    background-color: white;
+    padding: 25px;
+    width: 50%;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &__chart {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &__project-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &__card-sm-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  &__card-md {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &__tasks-progress {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__progress-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: white;
+    border: 4px solid #95afc0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__left-cards {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+  }
+}
