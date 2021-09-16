@@ -1,19 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import Container from "../../../utils/Container";
-import { Tabs, Input, Badge } from "antd";
+import { Tabs, Badge } from "antd";
 import Members from "./Members";
 import Invitations from "./Invitations";
 import InvitationPanel from "./InvitationPanel";
-import { connect } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getMembers } from "../../../../actions/member";
 import { getAllProjectInvitations } from "../../../../actions/invitation";
 
-const Team = ({ getMembers, getAllProjectInvitations, match, sended }) => {
+interface Props {
+  match: any;
+}
+
+const Team: FC<Props> = ({ match }) => {
   const { TabPane } = Tabs;
+  const dispatch = useDispatch();
+  const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
   useEffect(() => {
-    getMembers({ id: match.params.id });
-    getAllProjectInvitations({ project: match.params.id });
+    dispatch(getMembers({ id: match.params.id }));
+    dispatch(getAllProjectInvitations({ project: match.params.id }));
   }, []);
 
   const inviteHeader = (
@@ -33,7 +39,7 @@ const Team = ({ getMembers, getAllProjectInvitations, match, sended }) => {
             <Members projectId={match.params.id} />
           </TabPane>
           <TabPane tab={inviteHeader} key="3">
-            <Invitations projectId={match.params.id} />
+            <Invitations />
           </TabPane>
         </Tabs>
       </div>
@@ -41,8 +47,4 @@ const Team = ({ getMembers, getAllProjectInvitations, match, sended }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  sended: state.invitation.sended
-});
-
-export default connect(mapStateToProps, { getAllProjectInvitations, getMembers })(Team);
+export default Team;

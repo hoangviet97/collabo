@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { FC } from "react";
 import { getAllProjectInvitations } from "../../../../actions/invitation";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Table } from "antd";
 import moment from "moment";
 
-const Invitations = (props) => {
+const Invitations: FC = () => {
+  const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
   const columns = [
     {
       title: "firstname",
@@ -20,19 +21,15 @@ const Invitations = (props) => {
       title: "created_at",
       dataIndex: "created_at",
       key: "created_at",
-      render: (date) => <span>{moment(date).format("LL")}</span>
+      render: (date: any) => <span>{moment(date).format("LL")}</span>
     }
   ];
 
   return (
     <div className="invitations" style={{ marginTop: "20px" }}>
-      <Table dataSource={props.sended} columns={columns} />;
+      <Table dataSource={sended} columns={columns} />;
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  sended: state.invitation.sended
-});
-
-export default connect(mapStateToProps, { getAllProjectInvitations })(Invitations);
+export default Invitations;

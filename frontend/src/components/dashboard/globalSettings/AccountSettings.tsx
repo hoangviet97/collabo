@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import React, { useEffect, FC } from "react";
+import { Form, Input, Button } from "antd";
 
-const AccountSettings = ({ profile }) => {
-  let formRef = React.createRef();
+interface Props {
+  profile: any;
+}
+
+const AccountSettings: FC<Props> = ({ profile }) => {
+  let formRef = React.createRef<any>();
 
   useEffect(() => {
     formRef.current.setFieldsValue({
@@ -11,17 +15,13 @@ const AccountSettings = ({ profile }) => {
     });
   }, []);
 
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   return (
     <div>
-      <Form name="basic" ref={formRef} onFinish={onFinish}>
+      <Form name="basic" ref={formRef}>
         <Form.Item label="Firstname" name="firstname" rules={[{ required: true, message: "Please input your username!" }]}>
           <Input />
         </Form.Item>

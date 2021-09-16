@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Input, Table, Space, Avatar, Select, Menu, Dropdown } from "antd";
+import React, { FC } from "react";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { Table, Space, Avatar, Select, Menu, Dropdown } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../../../utils/AvatarIcon";
 import { updateMemberRole, deleteMember } from "../../../../actions/member";
 import moment from "moment";
 
-const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
+interface Props {
+  projectId: string;
+}
+
+const Members: FC<Props> = ({ projectId }) => {
+  const dispatch = useDispatch();
+  const members = useSelector((state: RootStateOrAny) => state.member.members);
   const { Option } = Select;
 
-  function roleHandle(id, value) {
-    updateMemberRole({ id: id, project: projectId, role_id: value });
-    console.log(id + " " + value);
+  function roleHandle(id: any, value: any) {
+    dispatch(updateMemberRole({ id: id, project: projectId, role_id: value }));
   }
 
-  const kickMemberHandle = (id) => {
-    deleteMember({ id: id, project: projectId });
+  const kickMemberHandle = (id: any) => {
+    dispatch(deleteMember({ id: id, project: projectId }));
   };
 
-  const menu = (id) => (
+  const menu = (id: string) => (
     <Menu>
       <Menu.Item key="0" onClick={() => kickMemberHandle(id)}>
         <a>Kick member</a>
-      </Menu.Item>
-      <Menu.Item key="1">
-        <a>2nd menu item</a>
       </Menu.Item>
     </Menu>
   );
@@ -34,7 +36,7 @@ const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text, record) => (
+      render: (text: any, record: any) => (
         <Space size="middle">
           <Avatar size="large">
             <AvatarIcon name={record.firstname} />
@@ -54,7 +56,7 @@ const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
       title: "Role",
       dataIndex: "role_id",
       key: "role_id",
-      render: (text, record) => (
+      render: (text: any, record: any) => (
         <Space size="middle">
           <Select showArrow={false} bordered={false} defaultValue={record.role_id} onChange={(value) => roleHandle(record.id, value)} style={{ width: "100%" }}>
             <Option value="0">Owner</Option>
@@ -68,13 +70,13 @@ const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
       title: "Joined",
       dataIndex: "created_at",
       key: "created_at",
-      render: (text) => <span>{moment(text).format("MMM Do YYYY")}</span>
+      render: (text: any) => <span>{moment(text).format("MMM Do YYYY")}</span>
     },
     {
       title: "More",
       dataIndex: "more",
       key: "more",
-      render: (text, record) => (
+      render: (text: any, record: any) => (
         <Space size="middle">
           <Dropdown overlay={() => menu(record.id)} trigger={["click"]}>
             <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
@@ -93,8 +95,4 @@ const Members = ({ members, projectId, updateMemberRole, deleteMember }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  members: state.member.members
-});
-
-export default connect(mapStateToProps, { updateMemberRole, deleteMember })(Members);
+export default Members;

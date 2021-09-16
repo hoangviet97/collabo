@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { FC } from "react";
 import { Tabs } from "antd";
 import Container from "../../utils/Container";
 import AccountSettings from "./AccountSettings";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
 
-const UserSettings = () => {
-  const dispatch = useDispatch();
-  const profile = useSelector((state) => state.auth.user);
+const UserSettings: FC = () => {
+  const profile = useSelector((state: RootStateOrAny) => state.auth.user);
   const { TabPane } = Tabs;
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Container from "../../../utils/Container";
-import { Tabs, Form, Button, Row, Col, Input } from "antd";
+import { Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 
