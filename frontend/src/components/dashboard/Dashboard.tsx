@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC } from "react";
 import Sidebar from "./sidebar/Sidebar";
 import TaskModal from "../modal/TaskModal";
 import MainContent from "./MainContent";
@@ -7,11 +7,11 @@ import Topbar from "./topbar/Topbar";
 import { Route } from "react-router-dom";
 import NewProject from "./newProjectForm/NewProject";
 
-const Dashboard = () => {
+const Dashboard: FC = () => {
   return (
     <div className="dashboard">
       <Sidebar />
-      <div class="content-side">
+      <div className="content-side">
         <Topbar />
         <MainContent />
         <Toolbox />

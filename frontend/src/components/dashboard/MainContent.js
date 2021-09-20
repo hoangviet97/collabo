@@ -20,7 +20,6 @@ import { getAllInvitations } from "../../actions/invitation";
 import { connect } from "react-redux";
 //import io from "socket.io-client";
 import socket from "../../service/socket";
-import { message } from "antd";
 
 const MainContent = (props) => {
   let path = window.location.pathname;

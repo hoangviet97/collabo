@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Modal, Breadcrumb, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
-import TaskHeader from "../../tasks/TaskHeader";
 import Spinner from "../../../utils/Spinner";
 import socket from "../../../../service/socket";
 import TaskDetailModal from "../../../modal/TaskDetailModal";
@@ -27,16 +26,13 @@ const ProjectTasks = (props) => {
   const { TextArea } = Input;
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
-  const [newTaskVisibility, setNewTaskVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
   const [newSection, setNewSection] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [panelName, setPanelName] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [taskDetail, setTaskDetail] = useState({});
-
-  const [taskName, setTaskName] = useState("");
-  const [sectionName, setSectionName] = useState(null);
+  const [newTaskIndexes, setNewTaskIndexes] = useState([]);
 
   const taskHandler = (e) => {
     setNewTask(e.target.value);
@@ -46,16 +42,16 @@ const ProjectTasks = (props) => {
     setNewSection(e.target.value);
   };
 
-  const newTaskVisibilityHandler = () => {
-    setNewTaskVisibility((prev) => !prev);
+  const newTaskVisibilityHandler = (index) => {
+    setNewTaskIndexes({ [index]: true });
   };
 
   const sectionVisibilityHandler = () => {
     setNewSectionVisibility(true);
   };
 
-  const onBlurTaskHandler = (sectionId) => {
-    setNewTaskVisibility((prev) => !prev);
+  const onBlurTaskHandler = (sectionId, index) => {
+    setNewTaskIndexes({ [index]: false });
 
     const values = {
       sectionId: sectionId,
@@ -147,17 +143,17 @@ const ProjectTasks = (props) => {
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {props.sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
-                {props.tasks.map((task, index) => {
+                {props.tasks.map((task, i) => {
                   if (section.id === task.sections_id) {
-                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={props.match.params.id} sectionName={section.name} key={index} assignees={props.assignees} task={task} start_date={task.start_date} />;
+                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={props.match.params.id} sectionName={section.name} key={i} assignees={props.assignees} task={task} start_date={task.start_date} />;
                   }
                 })}
-                {newTaskVisibility ? (
-                  <form onSubmit={() => onBlurTaskHandler(section.id)}>
-                    <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id)} autoFocus />
+                {newTaskIndexes[index] === true ? (
+                  <form onSubmit={() => onBlurTaskHandler(section.id, index)}>
+                    <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id, index)} autoFocus />
                   </form>
                 ) : (
-                  <Button type="link" onClick={newTaskVisibilityHandler}>
+                  <Button type="link" onClick={(i) => newTaskVisibilityHandler(index)}>
                     Add task
                   </Button>
                 )}

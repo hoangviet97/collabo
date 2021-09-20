@@ -1,6 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
-const AvatarIcon = ({ name }) => {
+interface Props {
+  name: string;
+}
+
+const AvatarIcon: FC<Props> = ({ name }) => {
   return (
     <>
       <span style={{ fontSize: "20px" }}>{name && name[0]}</span>

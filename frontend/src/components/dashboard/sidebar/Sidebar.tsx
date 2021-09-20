@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Button } from "antd";
-import { connect } from "react-redux";
+import { Badge } from "antd";
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../../actions/auth";
-
 import { ImportOutlined, BellOutlined, CarryOutOutlined, HomeOutlined } from "@ant-design/icons";
 
-const Sidebar = (props) => {
-  const text = <span>Title</span>;
-
+const Sidebar: FC = () => {
+  const dispatch = useDispatch();
+  const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
   const [invitationNum, setInvitationNum] = useState([]);
 
   useEffect(() => {
-    setInvitationNum(props.invitations.filter((item) => item.seen === 0));
-  }, [props.invitations]);
+    setInvitationNum(invitations.filter((item: any) => item.seen === 0));
+  }, [invitations]);
 
   return (
     <div className="sidebar">
@@ -32,7 +31,7 @@ const Sidebar = (props) => {
         </Link>
       </nav>
       <div className="side-nav__profile">
-        <a onClick={props.logout}>
+        <a onClick={dispatch(logout)}>
           <ImportOutlined style={{ fontSize: "30px", color: "white" }} />
         </a>
       </div>
@@ -40,8 +39,4 @@ const Sidebar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  invitations: state.invitation.invitations
-});
-
-export default connect(mapStateToProps, { logout })(Sidebar);
+export default Sidebar;

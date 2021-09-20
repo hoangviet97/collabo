@@ -17,8 +17,10 @@ const FolderList: FC<Props> = ({ files, folders, showModal, match }) => {
     const newArr = folders.map((item: any) => Object.assign(item, { sum: 0 }));
     const newFiles = files.filter((item: any) => item.folders_id !== null);
 
-    for (let { folders_id } of newFiles) {
-      newArr.find((x: any) => x.id === folders_id)["sum"] += 1;
+    if (newFiles.length > 0) {
+      for (let { folders_id } of newFiles) {
+        newArr.find((x: any) => x.id === folders_id)["sum"] += 1;
+      }
     }
 
     setfilteredFiles(newArr);
