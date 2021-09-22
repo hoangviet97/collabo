@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { getMembers } from "../../actions/member";
 import { createSession } from "../../actions/session";
 import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col } from "antd";
 
 const SessionModal = (props) => {
+  const dispatch = useDispatch();
+  const members = useSelector((state) => state.member.members);
   const { Option } = Select;
   const { TextArea } = Input;
 
@@ -15,6 +17,10 @@ const SessionModal = (props) => {
 
   const timeHandle = (value) => {
     console.log(moment(value._d).format("LT"));
+  };
+
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
   };
 
   const onFinish = (fieldsValue) => {
@@ -45,8 +51,8 @@ const SessionModal = (props) => {
         </Form.Item>
 
         <Form.Item label="Add participants" name="participants">
-          <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select">
-            {props.members.map((item) => (
+          <Select mode="multiple" allowClear style={{ width: "100%" }} onChange={handleChange} placeholder="Please select">
+            {members.map((item) => (
               <Option key={item.id} value={item.id}>
                 {item.firstname} {item.lastname}
               </Option>

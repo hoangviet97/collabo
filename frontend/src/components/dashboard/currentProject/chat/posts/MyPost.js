@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AvatarIcon from "../../../../utils/AvatarIcon";
-import { Avatar, Popover } from "antd";
+import { Comment, Tooltip, Avatar } from "antd";
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from "@ant-design/icons";
 import moment from "moment";
 
 function MyPost({ post }) {

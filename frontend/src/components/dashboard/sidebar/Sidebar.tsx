@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "antd";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../../actions/auth";
-import { ImportOutlined, BellOutlined, CarryOutOutlined, HomeOutlined } from "@ant-design/icons";
+import { ImportOutlined, BellOutlined, HomeOutlined } from "@ant-design/icons";
 
 const Sidebar: FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +20,6 @@ const Sidebar: FC = () => {
       <nav className="side-nav">
         <Link className="side-nav__link" to="/">
           <HomeOutlined className="side-nav__icon" />
-        </Link>
-        <Link className="side-nav__link" to="/tasks">
-          <CarryOutOutlined className="side-nav__icon" />
         </Link>
         <Link className="side-nav__link" to="/notifications">
           <Badge count={invitationNum.length}>

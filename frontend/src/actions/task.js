@@ -37,7 +37,6 @@ export const getPersonalTasks = ({ id }) => async (dispatch) => {
 export const updateTaskStatus = ({ id, statusId, project }) => async (dispatch) => {
   try {
     const res = await axios.patch("http://localhost:9000/api/tasks/update-status", { id, statusId, project });
-    dispatch({ type: UPDATE_TASK_STATUS, payload: { id, statusId } });
     message.success("Task updated!");
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });

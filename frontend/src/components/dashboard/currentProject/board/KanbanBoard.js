@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Container from "../../../utils/Container";
 import { connect } from "react-redux";
-import { getProjectTasks } from "../../../../actions/task";
+import { getProjectTasks, updateTaskStatus } from "../../../../actions/task";
 import Board, { moveCard } from "@asseinfo/react-kanban";
 import "@asseinfo/react-kanban/dist/styles.css";
 
-const KanbanBoard = ({ match, tasks, getProjectTasks }) => {
+const KanbanBoard = ({ match, tasks, getProjectTasks, updateTaskStatus }) => {
   const board = {
     columns: [
       {
@@ -55,6 +55,8 @@ const KanbanBoard = ({ match, tasks, getProjectTasks }) => {
   function handleCardMove(_card, source, destination) {
     const updatedBoard = moveCard(controlledBoard, source, destination);
     setBoard(updatedBoard);
+    console.log(destination);
+    updateTaskStatus({ id: _card.id, statusId: destination.toColumnId, project: match.params.id });
   }
 
   return (
@@ -73,4 +75,4 @@ const mapStateToProps = (state) => ({
   loading: state.task.loading
 });
 
-export default connect(mapStateToProps, { getProjectTasks })(KanbanBoard);
+export default connect(mapStateToProps, { getProjectTasks, updateTaskStatus })(KanbanBoard);
