@@ -5,189 +5,57 @@ import { getProjectTasks } from "../../../../actions/task";
 import Board, { moveCard } from "@asseinfo/react-kanban";
 import "@asseinfo/react-kanban/dist/styles.css";
 
-const KanbanBoard = (props) => {
+const KanbanBoard = ({ match, tasks, getProjectTasks }) => {
+  const board = {
+    columns: [
+      {
+        id: 0,
+        title: "Open",
+        cards: []
+      },
+      {
+        id: 1,
+        title: "In Progress",
+        cards: []
+      },
+      {
+        id: 2,
+        title: "On Hold",
+        cards: []
+      },
+      {
+        id: 3,
+        title: "Completed",
+        cards: []
+      },
+      {
+        id: 4,
+        title: "Canceled",
+        cards: []
+      }
+    ]
+  };
+
+  const [controlledBoard, setBoard] = useState(board);
+
   useEffect(() => {
-    if (props.tasks.length < 1) {
-      props.getProjectTasks({ id: props.match.params.id });
-    }
+    getProjectTasks({ id: match.params.id });
+    console.log(tasks);
   }, []);
 
-  const arr = [
-    {
-      id: 31,
-      title: "test",
-      description: "SDfsfsf"
-    },
-    {
-      id: 33,
-      title: "test 2",
-      description: "SDfsfsf"
-    },
-    {
-      id: 36,
-      title: "test3",
-      description: "SDfsfsf"
-    }
-  ];
-
-  const [controlledBoard, setBoard] = useState({
-    columns: [
-      {
-        id: 0,
-        title: "Open",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 1,
-        title: "In Progress",
-        cards: [
-          {
-            id: 22,
-            title: "Drag-n-drop support",
-            description: "Move a card between the columns"
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "On Hold",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 3,
-        title: "Completed",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 4,
-        title: "Canceled",
-        cards: [
-          {
-            id: 13,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      }
-    ]
-  });
-
-  const [controlledBoard2, setBoard2] = useState({
-    columns: [
-      {
-        id: 0,
-        title: "Open",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 1,
-        title: "In Progress",
-        cards: [
-          {
-            id: 22,
-            title: "Drag-n-drop support",
-            description: "Move a card between the columns"
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "On Hold",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 3,
-        title: "Completed",
-        cards: [
-          {
-            id: 1,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      },
-      {
-        id: 4,
-        title: "Canceled",
-        cards: [
-          {
-            id: 13,
-            title: "Add card",
-            description: "Add capability to add a card in a column"
-          }
-        ]
-      }
-    ]
-  });
-
   useEffect(() => {
-    const arr = props.tasks.filter((item) => item.statusId === "0");
-    const arr2 = props.tasks.filter((item) => item.statusId === "1");
-    const arr3 = props.tasks.filter((item) => item.statusId === "2");
-    const arr4 = props.tasks.filter((item) => item.statusId === "3");
-    const arr5 = props.tasks.filter((item) => item.statusId === "4");
+    const mapa = { ...board };
 
-    setBoard((board) => ({
-      ...board,
-      columns: board.columns.map((column) => (column.id === 0 ? { ...column, cards: arr } : column))
-    }));
+    for (let { id, title, statusId } of tasks) {
+      mapa.columns.find((x) => x.id === parseInt(statusId, 10))["cards"].push({ id: id, title: title, description: "........." });
+    }
+    setBoard(mapa);
+  }, [tasks]);
 
-    setBoard((board) => ({
-      ...board,
-      columns: board.columns.map((column) => (column.id === 1 ? { ...column, cards: arr2 } : column))
-    }));
-
-    setBoard((board) => ({
-      ...board,
-      columns: board.columns.map((column) => (column.id === 2 ? { ...column, cards: arr3 } : column))
-    }));
-
-    setBoard((board) => ({
-      ...board,
-      columns: board.columns.map((column) => (column.id === 3 ? { ...column, cards: arr4 } : column))
-    }));
-
-    setBoard((board) => ({
-      ...board,
-      columns: board.columns.map((column) => (column.id === 4 ? { ...column, cards: arr5 } : column))
-    }));
-  }, [props.tasks]);
-
-  const handleCardMove = (_card, source, destination) => {
-    console.log(source);
+  function handleCardMove(_card, source, destination) {
     const updatedBoard = moveCard(controlledBoard, source, destination);
     setBoard(updatedBoard);
-  };
+  }
 
   return (
     <div className="board" style={{ overflowX: "scroll" }}>

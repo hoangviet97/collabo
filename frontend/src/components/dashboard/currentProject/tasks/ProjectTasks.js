@@ -3,27 +3,24 @@ import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../../../actions/task";
-import { connect } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Modal, Breadcrumb, Spin } from "antd";
+import { connect, useDispatch } from "react-redux";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
 import Spinner from "../../../utils/Spinner";
-import socket from "../../../../service/socket";
 import TaskDetailModal from "../../../modal/TaskDetailModal";
 
 const ProjectTasks = (props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    props.getSections({ id: props.match.params.id });
-    props.getAllAssignees({ id: props.match.params.id });
-    props.getProjectTasks({ id: props.match.params.id });
-    socket.on("test", (data) => {
-      console.log(data);
-    });
+    dispatch(getSections({ id: props.match.params.id }));
+    dispatch(getAllAssignees({ id: props.match.params.id }));
+    dispatch(getProjectTasks({ id: props.match.params.id }));
   }, []);
 
   const { Panel } = Collapse;
   const { Text } = Typography;
-  const { TextArea } = Input;
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -65,8 +62,7 @@ const ProjectTasks = (props) => {
     };
 
     if (newTask.length > 0) {
-      props.createTask({ task: values, projectId: props.match.params.id });
-      console.log(values);
+      dispatch(createTask({ task: values, projectId: props.match.params.id }));
       setNewTask("");
     }
   };
@@ -77,7 +73,7 @@ const ProjectTasks = (props) => {
     if (newSection.length === 0) {
       console.log("empty");
     } else {
-      props.createSection({ id: props.match.params.id, name: newSection });
+      dispatch(createSection({ id: props.match.params.id, name: newSection }));
       setNewSection("");
     }
   };
@@ -113,7 +109,7 @@ const ProjectTasks = (props) => {
         <Text
           type="danger"
           onClick={(event) => {
-            props.deleteSection({ id: selectedSection });
+            dispatch(deleteSection({ id: selectedSection }));
             event.stopPropagation();
           }}
         >
@@ -186,4 +182,4 @@ const mapStateToProps = (state) => ({
   project: state.project.currentProject
 });
 
-export default connect(mapStateToProps, { getSections, getProjectTasks, createTask, createSection, deleteSection, getAllAssignees })(ProjectTasks);
+export default connect(mapStateToProps, {})(ProjectTasks);
