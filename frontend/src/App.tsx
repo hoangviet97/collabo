@@ -1,4 +1,5 @@
 import "./styles/main.scss";
+import * as React from "react";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";

@@ -57,10 +57,6 @@ let users = [];
 app.set("users", users);
 
 io.on("connection", (socket) => {
-  console.log("Success connection");
-  users.push(socket.id);
-  console.log(users);
-
   socket.on("greet", (data) => {
     socket.emit("notify", data);
   });
@@ -81,6 +77,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    users = users.filter((item) => item !== socket.id);
     socket.removeAllListeners();
     console.log("bye");
   });

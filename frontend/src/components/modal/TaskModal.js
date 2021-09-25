@@ -48,15 +48,13 @@ const TaskModal = () => {
       values = {
         ...fieldsValue,
         start_date: null,
-        due_date: null,
-        assigneesArray
+        due_date: null
       };
     } else {
       values = {
         ...fieldsValue,
         start_date: rangeValue[0].format("YYYY-MM-DD"),
-        due_date: rangeValue[1].format("YYYY-MM-DD"),
-        assigneesArray
+        due_date: rangeValue[1].format("YYYY-MM-DD")
       };
     }
 
@@ -110,7 +108,7 @@ const TaskModal = () => {
           <Form.Item name="assignees">
             <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select members">
               {members.map((item) => (
-                <Option key={item.id} value={item.id}>
+                <Option key={item.user_id} value={item.user_id}>
                   {item.firstname} {item.lastname} &nbsp; | &nbsp; {item.email}
                 </Option>
               ))}

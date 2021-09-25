@@ -9,6 +9,7 @@ import TaskDateModal from "../../modal/TaskDateModdal";
 import StatusIcon from "../../utils/StatusIcon";
 import AvatarIcon from "../../utils/AvatarIcon";
 import Timer from "../currentProject/timeTracker/Timer";
+import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const TaskItem = (props) => {
   const [datePicker, setDatePicker] = useState(null);
@@ -104,19 +105,26 @@ const TaskItem = (props) => {
         <span>{props.task.title}</span>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
-        <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-          {props.assignees.map((assignee, index) => {
-            if (assignee.tasks_id === props.task.id) {
-              return (
+        {props.assignees.length > 0 ? (
+          <>
+            <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+              {props.assignees.map((assignee, index) => (
                 <Popover content={assignee.firstname}>
                   <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                     <AvatarIcon name={assignee.firstname} />
                   </Avatar>
                 </Popover>
-              );
-            }
-          })}
-        </Avatar.Group>
+              ))}
+            </Avatar.Group>
+            <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
+            </div>
+          </>
+        ) : (
+          <div style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
+          </div>
+        )}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={props.task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>

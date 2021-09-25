@@ -30,14 +30,30 @@ module.exports = {
         return;
       }
 
-      result(null, newTask);
-      return;
+      if (body.task.assignees === undefined) {
+        result(null, newTask);
+      } else {
+        const arr = [];
+        body.task.assignees.map((item) => arr.push([item, newTask.id]));
+        console.log(arr);
+
+        const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ?`;
+        con.query(sql, [arr], (err, res) => {
+          if (err) {
+            result(err, null);
+            return;
+          }
+
+          result(null, newTask);
+          return;
+        });
+      }
     });
   },
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM sections 
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -128,12 +144,27 @@ module.exports = {
     });
   },
 
+  addAssignees: async function (assignees, task, result) {
+    const arr = assignees.map((item) => "(" + item + ", " + task + ")");
+
+    const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ` + arr;
+    con.query(sql, (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   getAllAssingees: async function (body, result) {
     const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
-                  FROM members_tasks 
-                  INNER JOIN members ON members_tasks.members_id = members.id 
-                  INNER JOIN tasks ON members_tasks.tasks_id = tasks.id 
-                  INNER JOIN users ON members.users_id = users.id
+                  FROM users_has_tasks 
+                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON users_has_tasks.users_id = users.id
+                  INNER JOIN members ON members.users_id = users.id 
                   WHERE members.projects_id = ?`;
     con.query(sql, [body.id], (err, res) => {
       if (err) {

@@ -3,7 +3,7 @@ import Container from "../../../utils/Container";
 import { createSection } from "../../../../actions/section";
 import { getSections, deleteSection } from "../../../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../../../actions/task";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import TaskItem from "../../tasks/TaskItem";
@@ -21,6 +21,8 @@ const ProjectTasks = (props) => {
 
   const { Panel } = Collapse;
   const { Text } = Typography;
+
+  const assignees = useSelector((state) => state.task.assignees);
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -141,7 +143,8 @@ const ProjectTasks = (props) => {
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id, index)}>
                 {props.tasks.map((task, i) => {
                   if (section.id === task.sections_id) {
-                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={props.match.params.id} sectionName={section.name} key={i} assignees={props.assignees} task={task} start_date={task.start_date} />;
+                    const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
+                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={props.match.params.id} sectionName={section.name} key={i} assignees={assigneesArray} task={task} start_date={task.start_date} />;
                   }
                 })}
                 {newTaskIndexes[index] === true ? (

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import Sidebar from "./sidebar/Sidebar";
 import TaskModal from "../modal/TaskModal";
 import MainContent from "./MainContent";
@@ -6,8 +6,11 @@ import Toolbox from "../toolbox/Toolbox";
 import Topbar from "./topbar/Topbar";
 import { Route } from "react-router-dom";
 import NewProject from "./newProjectForm/NewProject";
+import { useSelector, RootStateOrAny } from "react-redux";
 
-const Dashboard: FC = () => {
+const Dashboard = () => {
+  const user = useSelector((state: RootStateOrAny) => state.auth.user);
+
   return (
     <div className="dashboard">
       <Sidebar />
