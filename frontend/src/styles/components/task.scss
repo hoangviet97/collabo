@@ -1,0 +1,10 @@
+.task {
+  &-preview {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ecf0f1;
+    padding: 15px 10px;
+    margin-bottom: 7px;
+    border-radius: 10px;
+  }
+}

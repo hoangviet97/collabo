@@ -2,7 +2,7 @@ import "./styles/main.scss";
 import * as React from "react";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Dashboard from "./components/dashboard/Dashboard";
+import Dashboard from "./components/main/Dashboard";
 import NotFount from "./components/layout/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";

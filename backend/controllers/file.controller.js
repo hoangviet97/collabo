@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = {
   // register new user
   upload: function (req, res) {
-    console.log(req.body.title);
+    console.log(req.file);
     File.upload(req.body, req.file, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
