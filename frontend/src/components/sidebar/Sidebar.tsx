@@ -1,11 +1,15 @@
 import React, { useState, useEffect, FC } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "antd";
-import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { connect, useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../actions/auth";
 import { ImportOutlined, BellOutlined, HomeOutlined } from "@ant-design/icons";
 
-const Sidebar: FC = () => {
+interface Props {
+  logout: any;
+}
+
+const Sidebar: FC<Props> = ({ logout }) => {
   const dispatch = useDispatch();
   const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
   const [invitationNum, setInvitationNum] = useState([]);
@@ -28,7 +32,7 @@ const Sidebar: FC = () => {
         </Link>
       </nav>
       <div className="side-nav__profile">
-        <a onClick={dispatch(logout)}>
+        <a onClick={logout}>
           <ImportOutlined style={{ fontSize: "30px", color: "white" }} />
         </a>
       </div>
@@ -36,4 +40,4 @@ const Sidebar: FC = () => {
   );
 };
 
-export default Sidebar;
+export default connect(null, { logout })(Sidebar);

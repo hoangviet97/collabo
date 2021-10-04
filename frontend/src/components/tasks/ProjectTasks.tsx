@@ -6,7 +6,7 @@ import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-import TaskItem from "./TaskItem";
+import TaskItem from "../tasks/TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 
 interface Props {

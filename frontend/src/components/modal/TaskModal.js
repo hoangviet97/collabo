@@ -8,7 +8,6 @@ import { getProjects } from "../../actions/project";
 import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
-import AssigneeModal from "./AssingeeModal";
 import { withRouter } from "react-router-dom";
 
 const TaskModal = () => {
@@ -17,8 +16,6 @@ const TaskModal = () => {
   const projects = useSelector((state) => state.project.projects);
   const sections = useSelector((state) => state.section.modalSections);
   const members = useSelector((state) => state.member.members);
-  const [assigneeModal, setAssigneeModal] = useState(false);
-  const [assigneesArray, setAssigneesArray] = useState([]);
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;

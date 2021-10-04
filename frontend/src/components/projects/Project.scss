@@ -21,15 +21,28 @@
   }
 
   &__footer {
-    border-top: 0.5px solid rgba(92, 92, 92, 0.233);
-    padding-top: 18px;
-    margin-bottom: -10px;
-
     &-row {
       display: flex;
       justify-content: center;
       align-items: end;
     }
+  }
+}
+
+.ant-progress {
+  display: flex;
+  flex-direction: column;
+
+  &-outer {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  &-text {
+    margin-right: 0 !important;
+    margin-top: 5px;
+    align-self: flex-end;
+    font-weight: 400;
   }
 }
 

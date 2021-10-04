@@ -1,16 +1,14 @@
 import React from "react";
 import { Button } from "antd";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showTaskModal } from "../../actions/modal";
 import { ClockCircleOutlined } from "@ant-design/icons";
 
-interface Props {
-  showTaskModal: any;
-}
+const Toolbox: React.FC = () => {
+  const dispatch = useDispatch();
 
-const Toolbox: React.FC<Props> = ({ showTaskModal }) => {
   const taskModalHandler = () => {
-    showTaskModal();
+    dispatch(showTaskModal());
     //upravit na localni modal
   };
 
@@ -26,4 +24,4 @@ const Toolbox: React.FC<Props> = ({ showTaskModal }) => {
   );
 };
 
-export default connect(null, { showTaskModal })(Toolbox);
+export default Toolbox;

@@ -3,7 +3,7 @@ import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
-const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => {
+const AssigneesModal = ({ assignees, assigneeSelected, assigneeDelete, close }) => {
   const [toggled, setToggle] = useState({});
 
   const toogleHandler = (index) => {
@@ -24,13 +24,13 @@ const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => 
           </Col>
         </Row>
         <div class="assignee-modal__members">
-          {members.map((member, index) => (
+          {assignees.map((item, index) => (
             <div className="assignee-modal__item" key={index}>
               <div class="assignee-modal__identity">
                 <Avatar>
-                  <AvatarIcon name={member.firstname} />
+                  <AvatarIcon name={item.firstname} />
                 </Avatar>{" "}
-                <span>{member.firstname}</span>
+                <span>{item.firstname}</span>
               </div>
               <a
                 onClick={() => {
@@ -38,12 +38,12 @@ const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => 
                 }}
               >
                 {!toggled[index] && (
-                  <div onClick={() => assigneeSelected(member.id)}>
+                  <div onClick={() => assigneeSelected(item.id)}>
                     <PlusOutlined style={{ fontSize: "18px" }} />
                   </div>
                 )}
                 {!!toggled[index] && (
-                  <div onClick={() => assigneeDelete(member.id)}>
+                  <div onClick={() => assigneeDelete(item.id)}>
                     <CheckCircleOutlined style={{ fontSize: "18px", color: "green" }} />
                   </div>
                 )}
@@ -56,4 +56,4 @@ const AssingeeModal = ({ members, assigneeSelected, assigneeDelete, close }) => 
   );
 };
 
-export default AssingeeModal;
+export default AssigneesModal;

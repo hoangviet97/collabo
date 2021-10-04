@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { createProject } from "../../../actions/project";
 
-const NewProject = (props) => {
+interface Props {
+  history: any;
+}
+
+const NewProject: FC<Props> = ({ history }) => {
+  const dispatch = useDispatch();
   const [projectName, setProjectName] = useState({ name: "" });
 
   const { name } = projectName;
 
-  const changeHandler = (e) => {
+  const changeHandler = (e: any) => {
     setProjectName({ name: e.target.value });
   };
 
-  const submitHandler = (e) => {
-    const { push } = props.history;
-    props.createProject({ name, push });
+  const submitHandler = (e: string) => {
+    const { push } = history;
+    dispatch(createProject({ name, push }));
   };
 
   return (
@@ -27,7 +32,7 @@ const NewProject = (props) => {
               <Input value={name} onChange={(e) => changeHandler(e)} placeholder="input placeholder" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" onClick={(e) => submitHandler(e)}>
+              <Button type="primary" onClick={(e: any) => submitHandler(e)}>
                 Create project
               </Button>
             </Form.Item>
@@ -42,4 +47,4 @@ const NewProject = (props) => {
   );
 };
 
-export default withRouter(connect(null, { createProject })(NewProject));
+export default withRouter(NewProject);

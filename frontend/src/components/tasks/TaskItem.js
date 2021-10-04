@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
 import Moment from "react-moment";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { Select } from "antd";
 import TaskDateModal from "../modal/TaskDateModdal";
@@ -10,8 +10,10 @@ import StatusIcon from "../utils/StatusIcon";
 import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import AssigneesModal from "../modal/AssigneesModal";
 
 const TaskItem = (props) => {
+  const dispatch = useDispatch();
   const [datePicker, setDatePicker] = useState(null);
   const [done, setDone] = useState(props.status);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
@@ -78,7 +80,7 @@ const TaskItem = (props) => {
 
   const deleteTaskHandler = (event) => {
     event.stopPropagation();
-    props.deleteTask({ id: props.task.id });
+    dispatch(deleteTask({ id: props.task.id }));
   };
 
   const openDateHandler = (id) => {
@@ -91,11 +93,11 @@ const TaskItem = (props) => {
 
   const switchTaskStatusHandler = (value) => {
     setDone(value);
-    props.updateTaskStatus({ id: props.task.id, statusId: value, project: props.projectId });
+    dispatch(updateTaskStatus({ id: props.task.id, statusId: value, project: props.projectId }));
   };
 
   const switchPriorityHandler = (value) => {
-    props.updateTaskPriority({ id: props.task.id, priorityId: value, project: props.projectId });
+    dispatch(updateTaskPriority({ id: props.task.id, priorityId: value, project: props.projectId }));
   };
 
   return (

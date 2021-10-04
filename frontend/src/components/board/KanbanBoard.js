@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Container from "../utils/Container";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getProjectTasks, updateTaskStatus } from "../../actions/task";
 import Board, { moveCard } from "@asseinfo/react-kanban";
 import "@asseinfo/react-kanban/dist/styles.css";
 import BoardCard from "./BoardCard";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import { Button } from "antd";
+import { showTaskModal } from "../../actions/modal";
 
-const KanbanBoard = ({ match, tasks, getProjectTasks, updateTaskStatus }) => {
+const KanbanBoard = ({ match }) => {
   const board = {
     columns: [
       {
@@ -39,11 +40,14 @@ const KanbanBoard = ({ match, tasks, getProjectTasks, updateTaskStatus }) => {
     ]
   };
 
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.task.tasks);
+  const loading = useSelector((state) => state.task.loading);
+  const [isVisible, setIsVisible] = useState(false);
   const [controlledBoard, setBoard] = useState(board);
 
   useEffect(() => {
-    getProjectTasks({ id: match.params.id });
-    console.log(tasks);
+    dispatch(getProjectTasks({ id: match.params.id }));
   }, []);
 
   useEffect(() => {
@@ -60,19 +64,25 @@ const KanbanBoard = ({ match, tasks, getProjectTasks, updateTaskStatus }) => {
     setBoard(updatedBoard);
     console.log(_card);
     //
-    updateTaskStatus({ id: _card.id, statusId: destination.toColumnId, project: match.params.id });
+    dispatch(updateTaskStatus({ id: _card.id, statusId: destination.toColumnId, project: match.params.id }));
   }
+
+  const newTaskHandler = () => {
+    dispatch(showTaskModal());
+  };
+
+  const showModalHandler = () => {};
 
   return (
     <div className="board" style={{ overflowX: "scroll" }}>
       <Container size="30">
         <Board
           onCardDragEnd={handleCardMove}
-          renderCard={({ id, title, description, priority, due_date }, { dragging }) => <BoardCard id={id} title={title} description={description} priority={priority} due_date={due_date} dragging={dragging} />}
+          renderCard={({ id, title, description, priority, due_date }, { dragging }) => <BoardCard id={id} title={title} description={description} priority={priority} due_date={due_date} dragging={dragging} showModalHandler={showModalHandler} />}
           renderColumnHeader={({ title }) => (
             <div style={{ padding: "0 5px", width: "100%" }}>
               <h2>{title}</h2>
-              <Button type="primary" style={{ width: "100%", borderRadius: "8px" }}>
+              <Button onClick={newTaskHandler} type="primary" style={{ width: "100%", borderRadius: "8px" }}>
                 Add New Card
               </Button>
             </div>
@@ -85,9 +95,4 @@ const KanbanBoard = ({ match, tasks, getProjectTasks, updateTaskStatus }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  tasks: state.task.tasks,
-  loading: state.task.loading
-});
-
-export default connect(mapStateToProps, { getProjectTasks, updateTaskStatus })(KanbanBoard);
+export default KanbanBoard;

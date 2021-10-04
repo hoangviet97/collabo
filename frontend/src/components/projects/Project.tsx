@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../actions/project";
 import { Row, Col, Progress, Avatar } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 
-const Project = ({ project, projectCardHandler, setFavorite }) => {
-  const starStyle = project.favorite === 1 && "#FFD700";
+interface Props {
+  project: any;
+  projectCardHandler: any;
+  setFavorite: any;
+}
 
+const Project: FC<Props> = ({ project, projectCardHandler, setFavorite }) => {
   const favoriteToggle = () => {
     setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
-    console.log(!!project.favorite);
   };
 
   return (
@@ -18,18 +21,19 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
       <div className="project-card__header">
         <Row>
           <Col span={20}>
-            <Progress type="circle" percent={25} width={50} />
+            <h3>{project.name}</h3>
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
-              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: starStyle }} />
+              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: project.favorite === 1 ? "#FFD700" : "black" }} />
               <EllipsisOutlined className="more-icon" />
             </div>
           </Col>
         </Row>
       </div>
       <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
-        <h3>{project.name}</h3>
+        <Progress percent={30} />
+        <h4 style={{ position: "relative", top: "-15px", color: "grey", fontSize: "12px" }}>Task Progress</h4>
       </div>
       <div className="project-card__footer">
         <Row className="project-card__footer-row">
