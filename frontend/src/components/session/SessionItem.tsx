@@ -3,7 +3,8 @@ import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSession } from "../../actions/session";
 import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../actions/talking_point";
-import { Divider, Input, Checkbox } from "antd";
+import { getNote, createNote } from "../../actions/note";
+import { Divider, Input, Checkbox, Button } from "antd";
 import moment from "moment";
 
 interface Params {
@@ -14,14 +15,27 @@ interface Params {
 const SessionItem = () => {
   const dispatch = useDispatch();
   const single = useSelector((state: RootStateOrAny) => state.session.single);
+  const note = useSelector((state: RootStateOrAny) => state.note.note);
   const talking_points = useSelector((state: RootStateOrAny) => state.talking_point.list);
   const [talkingPoint, setTalkingPoint] = useState<string>("");
   const { TextArea } = Input;
+  const [noteText, setNoteText] = useState("");
   let params: Params = useParams();
 
   useEffect(() => {
     dispatch(getSession({ id: params.sessionId }));
     dispatch(getTalkingPoints({ session_id: params.sessionId }));
+    dispatch(getNote({ session_id: params.sessionId }));
+
+    if (note) {
+      setNoteText(note.text);
+    } else {
+      setNoteText("");
+    }
+
+    return () => {
+      setNoteText("");
+    };
   }, [params.sessionId]);
 
   const talkingPointHandle = (e: any) => {
@@ -34,6 +48,10 @@ const SessionItem = () => {
 
   const pointCheckHandle = (e: any, id: string) => {
     dispatch(updateCheckTalkingPoint({ id: id, val: e.target.checked }));
+  };
+
+  const submitNoteText = () => {
+    dispatch(createNote({ session_id: params.sessionId, text: noteText }));
   };
 
   return (
@@ -64,7 +82,8 @@ const SessionItem = () => {
       </div>
       <div className="session__note">
         <span style={{ fontSize: "18px" }}>Notepad</span>
-        <TextArea style={{ padding: "5px 0" }} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
+        <TextArea style={{ padding: "5px 0" }} value={noteText} onChange={(e) => setNoteText(e.target.value)} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
+        <Button onBlur={submitNoteText}>Save</Button>
       </div>
     </div>
   );

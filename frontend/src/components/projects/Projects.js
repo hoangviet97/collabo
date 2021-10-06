@@ -4,17 +4,15 @@ import Project from "./Project";
 import { Button, Skeleton, Select } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
 import socket from "../../service/socket";
 
 const Projects = (props) => {
-  useEffect(() => {
-    props.getProjects();
+  const dispatch = useDispatch();
 
-    socket.on("test2", (data) => {
-      console.log(data);
-    });
+  useEffect(() => {
+    dispatch(getProjects());
   }, []);
 
   useEffect(() => {
@@ -133,4 +131,4 @@ const mapStateToProps = (state) => ({
   loading: state.project.loading
 });
 
-export default connect(mapStateToProps, { getProjects })(withRouter(Projects));
+export default connect(mapStateToProps, {})(withRouter(Projects));

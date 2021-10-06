@@ -1,6 +1,8 @@
-import React, { useState, FC } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../actions/project";
+import { getProjectTasks, getAllAssignees } from "../../actions/task";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Row, Col, Progress, Avatar } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
@@ -12,9 +14,22 @@ interface Props {
 }
 
 const Project: FC<Props> = ({ project, projectCardHandler, setFavorite }) => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
+  const [completedTasks, setCompletedTasks] = useState(0);
+
   const favoriteToggle = () => {
     setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
   };
+
+  useEffect(() => {
+    dispatch(getProjectTasks({ id: project.id }));
+  }, []);
+
+  useEffect(() => {
+    setCompletedTasks(tasks.filter((item: any) => item.statusId === "3").length);
+    console.log(setCompletedTasks);
+  }, [tasks]);
 
   return (
     <div className="project-card">
@@ -32,7 +47,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite }) => {
         </Row>
       </div>
       <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
-        <Progress percent={30} />
+        <Progress percent={completedTasks} />
         <h4 style={{ position: "relative", top: "-15px", color: "grey", fontSize: "12px" }}>Task Progress</h4>
       </div>
       <div className="project-card__footer">

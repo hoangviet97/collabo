@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 
-const FileStorage = () => {
+const SidePanel = () => {
   const data = [
     {
       id: "java",
@@ -45,4 +45,4 @@ const FileStorage = () => {
   );
 };
 
-export default FileStorage;
+export default SidePanel;

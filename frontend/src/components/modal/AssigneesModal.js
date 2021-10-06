@@ -24,32 +24,33 @@ const AssigneesModal = ({ assignees, assigneeSelected, assigneeDelete, close }) 
           </Col>
         </Row>
         <div class="assignee-modal__members">
-          {assignees.map((item, index) => (
-            <div className="assignee-modal__item" key={index}>
-              <div class="assignee-modal__identity">
-                <Avatar>
-                  <AvatarIcon name={item.firstname} />
-                </Avatar>{" "}
-                <span>{item.firstname}</span>
+          {assignees &&
+            assignees.map((item, index) => (
+              <div className="assignee-modal__item" key={index}>
+                <div class="assignee-modal__identity">
+                  <Avatar>
+                    <AvatarIcon name={item.firstname} />
+                  </Avatar>{" "}
+                  <span>{item.firstname}</span>
+                </div>
+                <a
+                  onClick={() => {
+                    toogleHandler(index);
+                  }}
+                >
+                  {!toggled[index] && (
+                    <div onClick={() => assigneeSelected(item.id)}>
+                      <PlusOutlined style={{ fontSize: "18px" }} />
+                    </div>
+                  )}
+                  {!!toggled[index] && (
+                    <div onClick={() => assigneeDelete(item.id)}>
+                      <CheckCircleOutlined style={{ fontSize: "18px", color: "green" }} />
+                    </div>
+                  )}
+                </a>
               </div>
-              <a
-                onClick={() => {
-                  toogleHandler(index);
-                }}
-              >
-                {!toggled[index] && (
-                  <div onClick={() => assigneeSelected(item.id)}>
-                    <PlusOutlined style={{ fontSize: "18px" }} />
-                  </div>
-                )}
-                {!!toggled[index] && (
-                  <div onClick={() => assigneeDelete(item.id)}>
-                    <CheckCircleOutlined style={{ fontSize: "18px", color: "green" }} />
-                  </div>
-                )}
-              </a>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </>

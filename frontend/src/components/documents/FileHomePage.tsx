@@ -1,12 +1,11 @@
-import React, { useState, FC } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, useState } from "react";
 import NewFileForm from "./NewFileForm";
 import FolderList from "./FolderList";
 import FileList from "./FileList";
-import FileStorage from "./FileStorage";
 import { Form, Input, Button, Modal } from "antd";
-import { createFolder } from "../../actions/folder";
 import { UploadOutlined } from "@ant-design/icons";
+import { createFolder } from "../../actions/folder";
+import { useDispatch } from "react-redux";
 
 interface Props {
   files: any;
@@ -15,21 +14,21 @@ interface Props {
   match: any;
 }
 
-const FilesHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
+const FileHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
   const dispatch = useDispatch();
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);
-  const [newFolder, setNewFolder] = useState<string>("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isFolderModalVisible, setIsFolderModalVisible] = useState(false);
+  const [newFolder, setNewFolder] = useState("");
 
-  const showModal = (modalType: string) => {
+  const showModal = (modalType: any) => {
     modalType === "upload" ? setIsModalVisible(true) : setIsFolderModalVisible(true);
   };
 
-  const handleOk = (modalType: string) => {
+  const handleOk = (modalType: any) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
-  const handleCancel = (modalType: string) => {
+  const handleCancel = (modalType: any) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
@@ -69,10 +68,9 @@ const FilesHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
           </Modal>
           <FileList files={files} folders={folders} />
         </div>
-        <FileStorage />
       </div>
     </div>
   );
 };
 
-export default FilesHomePage;
+export default FileHomePage;

@@ -19,6 +19,13 @@ module.exports = {
     });
   },
 
+  getAllByFolder: function (req, res) {
+    File.findByFolder(req.body.folder_id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   download: function (req, res) {
     File.download(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

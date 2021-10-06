@@ -17,6 +17,7 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axios.post("http://localhost:9000/api/tasks/all", { id });
+    console.log(res.data);
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });

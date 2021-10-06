@@ -6,7 +6,7 @@ import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-import TaskItem from "../tasks/TaskItem";
+import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 
 interface Props {
@@ -173,7 +173,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

@@ -18,6 +18,7 @@ const TaskItem = (props) => {
   const [done, setDone] = useState(props.status);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [startTime, setStartTime] = useState(false);
+  const [assignessModalVisible, setAssignessModalVisible] = useState(false);
 
   const due_date =
     props.task.due_date === null ? (
@@ -100,6 +101,15 @@ const TaskItem = (props) => {
     dispatch(updateTaskPriority({ id: props.task.id, priorityId: value, project: props.projectId }));
   };
 
+  const showAssigness = () => {
+    console.log("ok");
+    setAssignessModalVisible(true);
+  };
+
+  const closeAssigness = () => {
+    setAssignessModalVisible(false);
+  };
+
   return (
     <div className="task-column">
       <div onClick={() => props.showModal(props.task, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -118,15 +128,16 @@ const TaskItem = (props) => {
                 </Popover>
               ))}
             </Avatar.Group>
-            <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "9999" }}>
               <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
             </div>
           </>
         ) : (
-          <div style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div onClick={showAssigness} style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
           </div>
         )}
+        {assignessModalVisible && <AssigneesModal assignees={props.assignees} close={closeAssigness} />}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={props.task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>

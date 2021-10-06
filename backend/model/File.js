@@ -47,6 +47,20 @@ module.exports = {
     });
   },
 
+  findByFolder: async function (folder_id, result) {
+    const sql = `SELECT * FROM files WHERE folders_id = ?`;
+
+    con.query(sql, [folder_id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   download: async function (id, result) {
     const sql = `SELECT * FROM files WHERE id = ?`;
 

@@ -34,6 +34,7 @@ const invitationRoutes = require("./routes/api/invitation");
 const fileRoutes = require("./routes/api/files");
 const folderRoutes = require("./routes/api/folders");
 const timerRoutes = require("./routes/api/timers");
+const noteRoutes = require("./routes/api/notes");
 
 const uuid4 = require("uuid4");
 
@@ -48,7 +49,7 @@ app.use("/api/talking-points", talkingPointRoutes);
 app.use("/api/invitation", invitationRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/folders", folderRoutes);
-app.use("/api/timers", timerRoutes);
+app.use("/api/notes", noteRoutes);
 
 app.set("io", io);
 
@@ -57,9 +58,7 @@ let users = [];
 app.set("users", users);
 
 io.on("connection", (socket) => {
-  socket.on("greet", (data) => {
-    socket.emit("notify", data);
-  });
+  const sql = `INSERT INTO posts (id, text, created_at, projects_id, users_id) VALUES (?, ?, ?, ?, ?)`;
 
   socket.on("meet", (data) => {
     console.log(data);

@@ -26,6 +26,7 @@ const upload = multer({
 
 router.post("/upload", [auth, upload.single("file")], fileController.upload);
 router.post("/all", auth, fileController.getAll);
+router.post("/from-folder", auth, fileController.getAllByFolder);
 router.post("/download/:id", auth, fileController.download);
 router.post("/move-folder", auth, fileController.moveToFolder);
 

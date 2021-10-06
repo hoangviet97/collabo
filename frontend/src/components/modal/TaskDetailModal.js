@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button, Modal, Input } from "antd";
+import { Breadcrumb, Button, Modal, Input, Avatar, Popover } from "antd";
+import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import moment from "moment";
+import AvatarIcon from "../utils/AvatarIcon";
 
 const TaskDetailModal = (props) => {
   const [taskTitle, setTaskTitle] = useState(props.task.title);
@@ -30,10 +32,32 @@ const TaskDetailModal = (props) => {
         </header>
         <div className="task__detail-body" style={{ width: "100%", height: "100%", display: "flex" }}>
           <div className="task__detail-data" style={{ width: "55%", height: "100%", padding: "20px" }}>
-            <div class="task__detail__meta">
+            <div class="task__detail__meta" style={{ display: "flex", justifyContent: "space-between" }}>
               <div class="task__detail__created" style={{ display: "flex", flexDirection: "column" }}>
                 <span>Created</span>
                 <span>{moment(props.task.created_at).format("MMM Do YYYY, h:mm:ss a")}</span>
+              </div>
+              <div class="task__detail__assignees" style={{ display: "flex", flexDirection: "column" }}>
+                {props.assignees ? (
+                  <>
+                    <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+                      {props.assignees.map((assignee, index) => (
+                        <Popover content={assignee.firstname}>
+                          <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
+                            <AvatarIcon name={assignee.firstname} />
+                          </Avatar>
+                        </Popover>
+                      ))}
+                    </Avatar.Group>
+                    <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "9999" }}>
+                      <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
+                  </div>
+                )}
               </div>
             </div>
             <Input value={taskTitle} size="large" />

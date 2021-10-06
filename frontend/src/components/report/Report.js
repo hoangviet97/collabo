@@ -26,9 +26,11 @@ const Report = (props) => {
     const base = [];
     members.map((item) => base.push({ id: item.user_id, firstname: item.firstname, lastname: item.lastname, tasks: [] }));
 
-    for (let { user_id, tasks_id } of assignees) {
-      const task = tasks.filter((i) => i.id === tasks_id);
-      base.find((x) => x.id === user_id)["tasks"].push(task[0]);
+    if (tasks) {
+      for (let { user_id, tasks_id } of assignees) {
+        const task = tasks.filter((i) => i.id === tasks_id);
+        base.find((x) => x.id === user_id)["tasks"].push(task[0]);
+      }
     }
 
     setNames(base);

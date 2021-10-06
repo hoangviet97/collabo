@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING, UPDATE_NOTE } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -25,7 +25,7 @@ export const getSession = ({ id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
     const res = await axios.post("http://localhost:9000/api/sessions/single", { id });
-    dispatch({ type: GET_SESSION, payload: res.data[0] });
+    //dispatch({ type: GET_SESSION, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }
