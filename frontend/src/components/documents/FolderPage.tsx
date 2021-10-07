@@ -35,7 +35,7 @@ const FolderPage: FC<Props> = () => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>{folder}</Breadcrumb.Item>
         </Breadcrumb>
-        <Button type="primary">Upload File</Button>
+        <Button type="primary">+</Button>
       </div>
       <div className="file__list">
         {files

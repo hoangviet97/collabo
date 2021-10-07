@@ -39,8 +39,8 @@ const FileHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
 
   return (
     <div>
-      <div className="files">
-        <div className="files__data">
+      <div>
+        <div>
           <FolderList files={files} folders={folders} showModal={showModal} match={match} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">
