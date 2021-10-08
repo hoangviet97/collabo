@@ -4,6 +4,7 @@ const auth = require("../../middleware/auth");
 const router = express.Router();
 
 router.post("/add", auth, folderController.create);
+router.post("/single", auth, folderController.getOne);
 router.post("/all", auth, folderController.getAll);
 
 module.exports = router;

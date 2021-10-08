@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Button } from "antd";
+import { getFolder } from "../../actions/folder";
 import { getProjectTasks } from "../../actions/task";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import FileCard from "./FileCard";
@@ -13,18 +14,16 @@ interface Props {
 const FolderPage: FC<Props> = () => {
   const dispatch = useDispatch();
   const files = useSelector((state: RootStateOrAny) => state.file.files);
-  const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
+  const folder = useSelector((state: RootStateOrAny) => state.folder.folder);
   const params: any = useParams();
-  const [folder, setFolder] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
+    dispatch(getFolder({ id: params.folderId }));
     dispatch(getProjectTasks({ id: params.id }));
   }, []);
 
-  useEffect(() => {
-    const filtered = folders.filter((item: RootStateOrAny) => item.id === params.folderId);
-    setFolder(filtered[0].title);
-  }, [files, folders]);
+  console.log(folder);
 
   return (
     <div>
@@ -33,7 +32,7 @@ const FolderPage: FC<Props> = () => {
           <Breadcrumb.Item>
             <Link to={`/${params.id}/documents`}>Home</Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>{folder}</Breadcrumb.Item>
+          <Breadcrumb.Item>{folder.title}</Breadcrumb.Item>
         </Breadcrumb>
         <Button type="primary">+</Button>
       </div>

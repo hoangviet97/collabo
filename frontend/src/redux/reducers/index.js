@@ -12,6 +12,7 @@ import talking_point from "./talking_point";
 import file from "./file";
 import folder from "./folder";
 import time_record from "./time_record";
+import note from "./note";
 
 const appReducer = combineReducers({
   auth,
@@ -26,7 +27,8 @@ const appReducer = combineReducers({
   talking_point,
   file,
   folder,
-  time_record
+  time_record,
+  note
 });
 
 const rootReducer = (state, action) => {

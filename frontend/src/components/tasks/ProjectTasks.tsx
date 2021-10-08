@@ -3,6 +3,7 @@ import Container from "../utils/Container";
 import { createSection } from "../../actions/section";
 import { getSections, deleteSection } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
+import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
@@ -19,10 +20,12 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const loading = useSelector((state: RootStateOrAny) => state.task.loading);
+  const members = useSelector((state: RootStateOrAny) => state.member.members);
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
 
   useEffect(() => {
     dispatch(getSections({ id: project_id }));
+    dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
     dispatch(getProjectTasks({ id: project_id }));
   }, []);
@@ -147,7 +150,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                 {tasks.map((task: any, i: any) => {
                   if (section.id === task.sections_id) {
                     const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
-                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} task={task} start_date={task.start_date} />;
+                    return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                   }
                 })}
                 {newTaskIndexes[index] === true ? (

@@ -1,7 +1,8 @@
-import { CREATE_FOLDER, GET_FOLDERS } from "../../actions/types";
+import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER } from "../actions/types";
 
 const initialState = {
-  folders: []
+  folders: [],
+  folder: {}
 };
 
 function folderReducer(state = initialState, action) {
@@ -12,6 +13,11 @@ function folderReducer(state = initialState, action) {
       return {
         ...state,
         folders: [...state.folders, payload]
+      };
+    case GET_FOLDER:
+      return {
+        ...state,
+        folder: payload
       };
     case GET_FOLDERS:
       return {

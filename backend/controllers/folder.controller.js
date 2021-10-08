@@ -10,6 +10,13 @@ module.exports = {
     });
   },
 
+  getOne: function (req, res) {
+    Folder.findOne(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getAll: function (req, res) {
     Folder.find(req.body.project_id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

@@ -28,6 +28,20 @@ module.exports = {
     });
   },
 
+  findOne: async function (id, result) {
+    const sql = `SELECT * FROM folders WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   find: async function (project_id, result) {
     const sql = `SELECT * FROM folders WHERE projects_id = ?`;
 
