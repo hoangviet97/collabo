@@ -2,7 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 class Timer {
-  constructor(id, start, end, task_id, user_id, total) {
+  constructor(id, start, end, task_id, user_id, total, description) {
     this.id = id;
     this.start = start;
     this.end = end;
@@ -10,6 +10,7 @@ class Timer {
     this.task_id = task_id;
     this.user_id = user_id;
     this.total = total;
+    this.description = description;
   }
 }
 
@@ -17,7 +18,7 @@ module.exports = {
   Timer,
   // create new member by user or by admin
   create: async function (body, user_id, result) {
-    const newTimer = new Timer(uuid4(), body.start, body.end, body.task_id, user_id, body.total);
+    const newTimer = new Timer(uuid4(), body.start, body.end, body.task_id, user_id, body.total, body.description);
 
     const sql = `INSERT INTO time_records (id, start, end, created_at, tasks_id, users_id, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newTimer.id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.task_id, newTimer.user_id, newTimer.total], (err, res) => {

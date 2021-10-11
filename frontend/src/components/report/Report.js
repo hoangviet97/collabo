@@ -28,8 +28,8 @@ const Report = (props) => {
 
     if (tasks) {
       for (let { user_id, tasks_id } of assignees) {
-        const task = tasks.filter((i) => i.id === tasks_id);
-        base.find((x) => x.id === user_id)["tasks"].push(task[0]);
+        const task = tasks.find((i) => i.id === tasks_id);
+        base.find((x) => x.id === user_id)["tasks"].push(task);
       }
     }
 

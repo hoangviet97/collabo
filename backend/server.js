@@ -49,6 +49,7 @@ app.use("/api/talking-points", talkingPointRoutes);
 app.use("/api/invitation", invitationRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/folders", folderRoutes);
+app.use("/api/timers", timerRoutes);
 app.use("/api/notes", noteRoutes);
 
 app.set("io", io);
