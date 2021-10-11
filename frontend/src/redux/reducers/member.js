@@ -1,4 +1,4 @@
-import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, DELETE_MEMBER } from "../actions/types";
+import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, DELETE_MEMBER } from "../../actions/types";
 
 const initialState = {
   members: []

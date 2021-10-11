@@ -1,4 +1,4 @@
-import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER } from "../actions/types";
+import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER } from "../../actions/types";
 
 const initialState = {
   folders: [],

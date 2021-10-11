@@ -1,4 +1,4 @@
-import { SHOW_TASK_MODAL, CLOSE_TASK_MODAL } from "../actions/types";
+import { SHOW_TASK_MODAL, CLOSE_TASK_MODAL } from "../../actions/types";
 
 const initialState = {
   taskModal: false

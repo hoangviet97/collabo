@@ -159,6 +159,33 @@ module.exports = {
     });
   },
 
+  addAssignee: async function (body, result) {
+    const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (?, ?)`;
+    con.query(sql, [body.user_id, body.task_id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      const data = { user_id: body.user_id, task_id: body.task_id };
+
+      this.getAssingee(data, result);
+    });
+  },
+
+  deleteAssignee: async function (assignee, result) {
+    const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ` + arr;
+    con.query(sql, (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   getAllAssingees: async function (body, result) {
     const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
                   FROM users_has_tasks 
@@ -167,6 +194,23 @@ module.exports = {
                   INNER JOIN members ON members.users_id = users.id 
                   WHERE members.projects_id = ?`;
     con.query(sql, [body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  getAssingee: async function (body, result) {
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
+                  FROM users_has_tasks 
+                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON users_has_tasks.users_id = users.id
+                  WHERE users.id = ? AND tasks_id = ?`;
+    con.query(sql, [body.user_id, body.task_id], (err, res) => {
       if (err) {
         result(err, null);
         return;

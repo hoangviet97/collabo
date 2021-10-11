@@ -24,7 +24,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite }) => {
 
   useEffect(() => {
     dispatch(getProjectTasks({ id: project.id }));
-  }, []);
+  }, [project]);
 
   useEffect(() => {
     setCompletedTasks(tasks.filter((item: any) => item.statusId === "3").length);

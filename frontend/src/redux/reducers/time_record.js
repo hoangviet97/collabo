@@ -1,4 +1,4 @@
-import { CREATE_TIME_RECORD, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_FAIL } from "../actions/types";
+import { CREATE_TIME_RECORD, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_FAIL } from "../../actions/types";
 
 const initialState = {
   records: []

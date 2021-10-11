@@ -1,4 +1,4 @@
-import { GET_FILES, MOVE_TO_FOLDER } from "../actions/types";
+import { GET_FILES, MOVE_TO_FOLDER } from "../../actions/types";
 
 const initialState = {
   files: []
