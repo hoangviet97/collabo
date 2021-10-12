@@ -12,8 +12,8 @@ const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigne
     dispatch(createAssignee({ user_id: id, task_id: task_id }));
   };
 
-  const removeAssignee = (id) => {
-    dispatch(deleteAssignee({ user_id: id, task_id: task_id }));
+  const removeAssignee = (id, email) => {
+    dispatch(deleteAssignee({ user_id: id, task_id: task_id, email: email }));
   };
 
   const isAssigneed = (email, id) => {
@@ -21,7 +21,7 @@ const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigne
 
     if (searcher.length > 0) {
       return (
-        <a onClick={() => removeAssignee(id)}>
+        <a onClick={() => removeAssignee(id, email)}>
           <CheckCircleOutlined />
         </a>
       );
@@ -36,7 +36,7 @@ const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigne
 
   return (
     <>
-      <div className="assignee-modal" style={{ borderRadius: "10px" }}>
+      <div className="assignee-modal" style={{ borderRadius: "10px", zIndex: "99999" }}>
         <Row style={{ marginBottom: "10px" }}>
           <Col span="18">
             <Input size="small" />

@@ -13,6 +13,7 @@ router.patch("/update-start", auth, taskController.updateStartDate);
 router.patch("/update-end", auth, taskController.updateEndDate);
 router.post("/assignees", auth, taskController.getAllAssignees);
 router.post("/new-assignee", auth, taskController.createAssignee);
+router.post("/remove-assignee", auth, taskController.deleteAssignee);
 router.post("/delete", auth, taskController.delete);
 
 module.exports = router;

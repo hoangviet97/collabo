@@ -70,7 +70,7 @@ module.exports = {
   },
 
   deleteAssignee: function (req, res) {
-    Task.getAllAssingees(req.body, (err, result) => {
+    Task.deleteAssignee(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

@@ -173,9 +173,9 @@ module.exports = {
     });
   },
 
-  deleteAssignee: async function (assignee, result) {
-    const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ` + arr;
-    con.query(sql, (err, res) => {
+  deleteAssignee: async function (body, result) {
+    const sql = `DELETE FROM users_has_tasks WHERE users_id = ? AND tasks_id = ?`;
+    con.query(sql, [body.user_id, body.task_id], (err, res) => {
       if (err) {
         result(err, null);
         return;
