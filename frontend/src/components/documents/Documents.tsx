@@ -13,6 +13,7 @@ interface Props {
 const Documents: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const files = useSelector((state: RootStateOrAny) => state.file.files);
+  const fileDetail = useSelector((state: RootStateOrAny) => state.file.fileDetail);
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Documents: FC<Props> = ({ match }) => {
     <Container size="30">
       <div className="files">
         <Content files={files} folders={folders} project_id={match.params.id} match={match} />
-        <SidePanel />
+        <SidePanel file={fileDetail} />
       </div>
     </Container>
   );

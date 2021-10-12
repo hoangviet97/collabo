@@ -1,4 +1,4 @@
-import { GET_FILES, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER } from "./types";
+import { GET_FILES, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, FILE_DETAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -16,6 +16,14 @@ export const moveToFolder = ({ id, folder_id }) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/files/move-folder", { id, folder_id });
     dispatch({ type: MOVE_TO_FOLDER, payload: { id: id, folder_id: folder_id } });
     message.success("This is a success message");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getFileDetail = ({ file }) => (dispatch) => {
+  try {
+    dispatch({ type: FILE_DETAIL, payload: file });
   } catch (err) {
     console.log(err);
   }

@@ -1,12 +1,19 @@
 import React from "react";
 import { Button } from "antd";
-import { EllipsisOutlined, StarFilled, DownloadOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, StarFilled, DownloadOutlined } from "@ant-design/icons";
 import download from "downloadjs";
 import axios from "axios";
 import FileTypeIcon from "../utils/FileTypeIcon";
+import { getFileDetail } from "../../actions/file";
+import { useDispatch } from "react-redux";
 
 const FileCard = ({ file }) => {
+  const dispatch = useDispatch();
   const favoriteToggle = () => {};
+
+  const showDetail = () => {
+    dispatch(getFileDetail({ file: file }));
+  };
 
   const downloadFile = async (id, path, mimetype) => {
     try {
@@ -25,11 +32,11 @@ const FileCard = ({ file }) => {
 
   return (
     <div className="file-card" style={{ backgroundColor: "white" }}>
-      <div class="file-card__header">
+      <div class="file-card__header" style={{ display: "flex", justifyContent: "space-between" }}>
         <StarFilled onClick={favoriteToggle} className="file-card__favorite" />
-        <Button type="text" style={{ padding: 0 }}>
-          <EllipsisOutlined style={{ color: "white", fontSize: "20px" }} />
-        </Button>
+        <div style={{ padding: 0, cursor: "pointer" }} onClick={showDetail}>
+          <InfoCircleOutlined style={{ fontSize: "20px" }} />
+        </div>
       </div>
       <div class="file-card__body" style={{ textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>

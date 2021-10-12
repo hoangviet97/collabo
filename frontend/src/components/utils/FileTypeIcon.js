@@ -5,22 +5,22 @@ import Jpeg from "../../img/icons/formats/Jpeg";
 import Xlsx from "../../img/icons/formats/Xlsx";
 import Other from "../../img/icons/formats/Other";
 
-const FileTypeIcon = ({ type }) => {
+const FileTypeIcon = ({ type, size }) => {
   console.log(type);
   const getTypeIcon = (type) => {
     switch (type) {
       case "pdf":
-        return <Pdf style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "8px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Pdf className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
       case "docx":
-        return <Docx style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "8px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Docx className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
       case "jpeg":
-        return <Jpeg style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "8px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Jpeg className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
       case "jpg":
-        return <Jpeg style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "8px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Jpeg className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
       case "xlsx":
-        return <Xlsx style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "8px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Xlsx className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
       default:
-        return <Other style={{ width: "100px", backgroundColor: "#F8F8FB", padding: "10px", borderRadius: "10px", boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }} />;
+        return <Other className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;
     }
   };
 
