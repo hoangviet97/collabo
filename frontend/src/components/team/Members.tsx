@@ -13,6 +13,7 @@ interface Props {
 const Members: FC<Props> = ({ projectId }) => {
   const dispatch = useDispatch();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const { Option } = Select;
 
   function roleHandle(id: any, value: any) {
@@ -58,11 +59,15 @@ const Members: FC<Props> = ({ projectId }) => {
       key: "role_id",
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Select showArrow={false} bordered={false} defaultValue={record.role_id} onChange={(value) => roleHandle(record.id, value)} style={{ width: "100%" }}>
-            <Option value="0">Owner</Option>
-            <Option value="1">Admin</Option>
-            <Option value="2">Member</Option>
-          </Select>
+          {user_role === "Member" ? (
+            <span>{record.role}</span>
+          ) : (
+            <Select showArrow={false} bordered={false} defaultValue={record.role_id} onChange={(value) => roleHandle(record.id, value)} style={{ width: "100%" }}>
+              <Option value="0">Owner</Option>
+              <Option value="1">Admin</Option>
+              <Option value="2">Member</Option>
+            </Select>
+          )}
         </Space>
       )
     },

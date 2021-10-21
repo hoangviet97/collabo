@@ -1,5 +1,6 @@
-import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, DELETE_MEMBER, LEAVE_PROJECT } from "./types";
+import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, LEAVE_PROJECT } from "./types";
 import axios from "axios";
+import { message } from "antd";
 
 export const getMembers = ({ id }) => async (dispatch) => {
   try {
@@ -16,7 +17,8 @@ export const updateMemberRole = ({ id, project, role_id }) => async (dispatch) =
     console.log(res);
     dispatch({ type: UPDATE_MEMBER_ROLE, payload: { id, role_id } });
   } catch (err) {
-    dispatch({ type: GET_MEMBERS_FAIL });
+    dispatch({ type: UPDATE_MEMBER_ROLE_FAILED });
+    message.error(err.response.data.message);
   }
 };
 

@@ -136,7 +136,9 @@ const Report = (props) => {
 
   const timeEstimateHandle = () => {};
 
-  const timeTrackedHandle = () => {};
+  const timeTrackedHandle = (record) => {
+    return record.tasks.filter((i) => i.statusId === activeTaskStatus).map((item, index) => <div key={index}>{item.title}</div>);
+  };
 
   return (
     <Container size="30">
@@ -153,7 +155,7 @@ const Report = (props) => {
           pagination={false}
           rowKey={(record) => record.id}
           expandable={{
-            expandedRowRender: (record) => record.tasks.filter((i) => i.statusId === activeTaskStatus).map((item, index) => <div key={index}>{item.title}</div>),
+            expandedRowRender: (record) => timeTrackedHandle(record),
             rowExpandable: (record) => record.tasks.length > 0
           }}
         />
