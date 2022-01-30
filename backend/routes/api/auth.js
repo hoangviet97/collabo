@@ -7,5 +7,8 @@ const auth = require("../../middleware/auth");
 router.post("/register", authController.create);
 router.post("/login", authController.login);
 router.get("/profile", auth, userController.getCurrentUser);
+router.post("/reset", authController.resetPassword);
+router.patch("/change", authController.changePassword);
+router.patch("/change-name", authController.changeName);
 
 module.exports = router;

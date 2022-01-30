@@ -1,11 +1,10 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE } from "./types";
+import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, SET_BUDGET, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
-export const createTask = ({ task, projectId }) => async (dispatch) => {
+export const createTask = ({ task }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/tasks/add", { task });
-    console.log(res.data);
     message.success("New task");
     dispatch({ type: CREATE_TASK, payload: res.data });
   } catch (err) {
@@ -39,6 +38,17 @@ export const updateTaskStatus = ({ id, statusId, project }) => async (dispatch) 
   try {
     const res = await axios.patch("http://localhost:9000/api/tasks/update-status", { id, statusId, project });
     message.success("Task updated!");
+  } catch (err) {
+    dispatch({ type: UPDATE_TASK_FAIL });
+    message.error(err.response.data.message);
+  }
+};
+
+export const setBudget = ({ id, budget, project }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/tasks/budget", { id, budget, project });
+    message.success("Task updated!");
+    dispatch({ type: SET_BUDGET, payload: res.data });
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });
     message.error(err.response.data.message);
@@ -83,9 +93,9 @@ export const getAllAssignees = ({ id }) => async (dispatch) => {
   }
 };
 
-export const createAssignee = ({ user_id, task_id }) => async (dispatch) => {
+export const createAssignee = ({ user_id, task_id, project }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/tasks/new-assignee", { user_id, task_id });
+    const res = await axios.post("http://localhost:9000/api/tasks/new-assignee", { user_id, task_id, project });
     console.log(res.data[0]);
     dispatch({ type: CREATE_ASSIGNEE, payload: res.data[0] });
   } catch (err) {

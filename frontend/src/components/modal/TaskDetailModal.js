@@ -3,10 +3,13 @@ import { Breadcrumb, Button, Modal, Input, Avatar, Popover } from "antd";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
+import { useDispatch, useSelector } from "react-redux";
 
 const TaskDetailModal = (props) => {
   const [taskTitle, setTaskTitle] = useState(props.task.title);
+  const [budget, setBudget] = useState(props.task.budget);
   const { TextArea } = Input;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTaskTitle(props.task.title);
@@ -15,6 +18,10 @@ const TaskDetailModal = (props) => {
       setTaskTitle("");
     };
   }, [props]);
+
+  const budgetHandler = () => {
+    dispatch();
+  };
 
   return (
     <Modal visible={props.isVisible} width="95%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
@@ -63,8 +70,8 @@ const TaskDetailModal = (props) => {
             <Input value={taskTitle} size="large" />
             <TextArea placeholder="Autosize height based on content lines" autoSize={{ minRows: 8, maxRows: 10 }} />
           </div>
-          <div className="task__detail-comments" style={{ backgroundColor: "red", width: "45%", height: "100%" }}>
-            fe
+          <div className="task__detail-comments" style={{ width: "45%", height: "100%" }}>
+            Budget: <Input value={budget} onChange={(e) => setBudget(e.target.value)} />
           </div>
         </div>
       </div>

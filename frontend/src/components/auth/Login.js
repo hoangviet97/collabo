@@ -3,9 +3,6 @@ import { Form, Input, Button } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
-import Google from "../../img/icons/Google";
-import Facebook from "../../img/icons/Facebook";
-import Apple from "../../img/icons/Apple";
 
 const Login = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -37,24 +34,6 @@ const Login = (props) => {
           <span style={{ fontWeight: "lighter" }}>COLLA</span>
           <span style={{ color: "#031428" }}>BOAT</span>
         </h1>
-        <div class="auth__external-services" style={{ width: "50%" }}>
-          <Link>
-            <button className="auth__services-btn">
-              <Google />
-            </button>
-          </Link>
-          <Link>
-            <button className="auth__services-btn">
-              <Facebook />
-            </button>
-          </Link>
-          <Link>
-            <button className="auth__services-btn">
-              <Apple />
-            </button>
-          </Link>
-        </div>
-        <div className="auth__divider">Or</div>
         <Form onFinish={submitHandler} className="auth__form">
           <Form.Item name="email" className="auth__element">
             <label for="email">e-mail</label>
@@ -68,7 +47,7 @@ const Login = (props) => {
 
           <Form.Item className="auth__element">
             <span>Forgot your password?</span>
-            <Link to="/recover"> Retrieve</Link>
+            <Link to="/reset"> Retrieve</Link>
           </Form.Item>
 
           <Form.Item className="auth__element">

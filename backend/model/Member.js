@@ -16,7 +16,6 @@ module.exports = {
   // create new member by user or by admin
   create: async function (userId, projectId, result) {
     const newMember = new Member(uuid4(), userId, 0, projectId);
-
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
     con.query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at], (err, res) => {
       if (err) {

@@ -13,8 +13,7 @@ export const getMembers = ({ id }) => async (dispatch) => {
 
 export const updateMemberRole = ({ id, project, role_id }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/members/role", { id, project, role_id });
-    console.log(res);
+    const res = await axios.patch(`http://localhost:9000/api/members/role`, { id, project, role_id });
     dispatch({ type: UPDATE_MEMBER_ROLE, payload: { id, role_id } });
   } catch (err) {
     dispatch({ type: UPDATE_MEMBER_ROLE_FAILED });
@@ -24,8 +23,7 @@ export const updateMemberRole = ({ id, project, role_id }) => async (dispatch) =
 
 export const deleteMember = ({ id, project }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/members/delete", { id, project });
-    console.log(res);
+    const res = await axios.post(`http://localhost:9000/api/members/delete`, { id, project });
     dispatch({ type: DELETE_MEMBER, payload: { id } });
   } catch (err) {
     //
@@ -35,7 +33,6 @@ export const deleteMember = ({ id, project }) => async (dispatch) => {
 export const leaveProject = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/members/leave", { project_id });
-    console.log(res);
     //dispatch({ type: DELETE_MEMBER, payload: { id } });
   } catch (err) {
     //

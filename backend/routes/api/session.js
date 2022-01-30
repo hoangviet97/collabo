@@ -7,5 +7,6 @@ const router = express.Router();
 router.post("/add", [auth, permit("Owner", "Admin")], sessionController.create);
 router.post("/single", auth, sessionController.getOne);
 router.post("/all", auth, sessionController.getAll);
+router.delete("/:id", auth, sessionController.delete);
 
 module.exports = router;

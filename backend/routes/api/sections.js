@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/add", auth, sectionController.create);
 router.post("/all", auth, sectionController.getAll);
-router.post("/delete", auth, sectionController.delete);
+router.delete("/delete", auth, sectionController.delete);
 
 module.exports = router;

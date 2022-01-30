@@ -53,7 +53,7 @@ module.exports = {
 
   // get all tasks
   getAllTasks: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.budget, tasks.created_at 
                     FROM sections 
                     INNER JOIN tasks ON sections.id = tasks.sections_id 
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
@@ -134,6 +134,19 @@ module.exports = {
   updateEndDate: async function (body, result) {
     const sql = `UPDATE tasks SET due_date = ? WHERE id = ?`;
     con.query(sql, [body.date, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
+  setBudget: async function (body, result) {
+    const sql = `UPDATE tasks SET budget = ? WHERE id = ?`;
+    con.query(sql, [body.budget, body.id], (err, res) => {
       if (err) {
         result(err, null);
         return;

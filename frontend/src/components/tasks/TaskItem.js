@@ -137,7 +137,7 @@ const TaskItem = (props) => {
             <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
           </div>
         )}
-        {assignessModalVisible && <AssigneesModal task_id={props.task.id} assignees={props.assignees} members={props.members} close={closeAssigness} />}
+        {assignessModalVisible && <AssigneesModal task_id={props.task.id} assignees={props.assignees} members={props.members} close={closeAssigness} project={props.projectId} />}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={props.task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>

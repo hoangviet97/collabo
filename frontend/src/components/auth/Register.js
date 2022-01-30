@@ -41,24 +41,6 @@ const Register = (props) => {
           <span style={{ fontWeight: "lighter" }}>COLLA</span>
           <span style={{ color: "#031428" }}>BOAT</span>
         </h1>
-        <div class="auth__external-services" style={{ width: "50%" }}>
-          <Link>
-            <button className="auth__services-btn">
-              <Google />
-            </button>
-          </Link>
-          <Link>
-            <button className="auth__services-btn">
-              <Facebook />
-            </button>
-          </Link>
-          <Link>
-            <button className="auth__services-btn">
-              <Apple />
-            </button>
-          </Link>
-        </div>
-        <div className="auth__divider">Or</div>
         <Form onFinish={submitHandler} className="auth__form">
           <div className="name-box">
             <Form.Item name="firstname" rules={[{ required: true, message: "Firstname required!" }]} style={{ display: "inline-block", width: "calc(50% - 8px)" }}>

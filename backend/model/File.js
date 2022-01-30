@@ -89,5 +89,19 @@ module.exports = {
       result(null, "success");
       return;
     });
+  },
+
+  delete: async function (id, result) {
+    const sql = `delete * FROM files WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res[0]);
+      return;
+    });
   }
 };

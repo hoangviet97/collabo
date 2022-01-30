@@ -44,8 +44,6 @@ const Timer = ({ localstorage }) => {
       const date2 = moment(new Date());
       setTimer(date2.diff(date1, "seconds"));
       handleStart();
-    } else {
-      console.log("its not there");
     }
   }, []);
 

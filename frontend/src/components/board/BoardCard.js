@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { Tag, Popconfirm } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import moment from "moment";

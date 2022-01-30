@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import FileTypeIcon from "../utils/FileTypeIcon";
 

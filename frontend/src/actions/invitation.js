@@ -41,3 +41,11 @@ export const updateSeenStatus = ({ id }) => async (dispatch) => {
     dispatch({ type: GET_INVITATIONS_FAIL });
   }
 };
+
+export const deleteInvitation = ({ id }) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`http://localhost:9000/api/invitation/delete/${id}`);
+  } catch (err) {
+    dispatch({ type: GET_INVITATIONS_FAIL });
+  }
+};

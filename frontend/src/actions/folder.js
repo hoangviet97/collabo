@@ -14,7 +14,7 @@ export const createFolder = ({ title, project_id }) => async (dispatch) => {
 
 export const getFolder = ({ id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/folders/single", { id });
+    const res = await axios.post(`http://localhost:9000/api/folders/single`, { id });
     dispatch({ type: GET_FOLDER, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: GET_FOLDERS_FAIL });

@@ -41,6 +41,32 @@ export const login = ({ email, password }) => async (dispatch) => {
   }
 };
 
+export const changeName = ({ id, firstname, lastname }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/change-name", { id, firstname, lastname });
+    console.log(res);
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const changePassword = ({ id, password }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/change-pwd", { id, password });
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const reset = ({ email }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/reset", { email });
+    console.log(res);
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
 };

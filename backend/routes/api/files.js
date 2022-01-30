@@ -29,5 +29,6 @@ router.post("/all", auth, fileController.getAll);
 router.post("/from-folder", auth, fileController.getAllByFolder);
 router.post("/download/:id", auth, fileController.download);
 router.post("/move-folder", auth, fileController.moveToFolder);
+router.delete("/delete", auth, fileController.delete);
 
 module.exports = router;

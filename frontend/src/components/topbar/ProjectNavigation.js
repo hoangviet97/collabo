@@ -2,43 +2,33 @@ import React, { useState, useEffect } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio } from "antd";
 import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateColor, updateStatus } from "../../actions/project";
+import { getProjectTasks } from "../../actions/task";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
 
   const dispatch = useDispatch();
   const currentProject = useSelector((state) => state.project.currentProject);
+  const tasks = useSelector((state) => state.task.tasks);
+  const [totalBudget, setTotalBudget] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [projectName, setProjectName] = useState("");
-  const [ProjectIcon, setProjectIcon] = useState("");
   const [showIconTab, setIconTab] = useState(false);
   const [projectDescription, setProjectDescription] = useState("");
-  const iconSet = [
-    { name: "ThunderboltOutlined", icon: <ThunderboltOutlined /> },
-    { name: "TrophyOutlined", icon: <TrophyOutlined /> },
-    { name: "ShareAltOutlined", icon: <ShareAltOutlined /> },
-    { name: "FireOutlined", icon: <FireOutlined /> },
-    { name: "DingtalkOutlined", icon: <DingtalkOutlined /> },
-    { name: "CrownOutlined", icon: <CrownOutlined /> }
-  ];
   const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
   const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
 
   useEffect(() => {
     setProjectName(currentProject.name);
     setProjectDescription(currentProject.description);
+
+    tasks.map((i) => totalBudget.push(i.budget));
   }, [currentProject]);
 
   const moreContent = (
     <div>
-      <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
-          <TeamOutlined className="single-navigation__link-icon" />
-          <span>Team</span>
-        </Link>
-      </p>
       <p>
         <Link className="single-navigation__item" to={`/${path.split("/")[1]}/sessions`}>
           <FundProjectionScreenOutlined className="single-navigation__link-icon" />
@@ -133,9 +123,9 @@ const ProjectNavigation = (props) => {
           </Link>
         </li>
         <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/chat`}>
-            <NumberOutlined className="single-navigation__link-icon" />
-            <span>Chat</span>
+          <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
+            <TeamOutlined className="single-navigation__link-icon" />
+            <span>Team</span>
           </Link>
         </li>
         <li className="single-navigation__item">
@@ -148,20 +138,11 @@ const ProjectNavigation = (props) => {
       </nav>
       <Modal title="Project Details" width="70%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <div class="project-detail__icon-box" style={{ display: "flex", gap: "10px" }}>
-          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}>
-            <ThunderboltOutlined />
-          </div>
+          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
           <div className="icon-box__select">
             <Button onClick={() => setIconTab((prev) => !prev)}>Change Icon</Button>
             {showIconTab && (
               <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
-                <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-                  {iconSet.map((icon) => (
-                    <div className="icon-custombox-item" style={{ fontSize: "30px" }}>
-                      {icon.icon}
-                    </div>
-                  ))}
-                </div>
                 <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                   {colorSet.map((item, index) => (
                     <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
@@ -188,6 +169,9 @@ const ProjectNavigation = (props) => {
             </Radio.Group>
           </Form.Item>
         </Form>
+        <div>
+          <div class="total__budget">Total budget: {totalBudget}</div>
+        </div>
       </Modal>
     </div>
   );

@@ -12,7 +12,6 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    req.app.get("io").emit("test", "test sucess");
     Task.getAllTasks(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
@@ -78,6 +77,13 @@ module.exports = {
 
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setBudget: function (req, res) {
+    Task.setBudget(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

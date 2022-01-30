@@ -47,7 +47,7 @@ const FileCard = ({ file }) => {
       <div class="file-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div class="file-card__filesize" style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
           <span>Filesize:</span>
-          <span>{file.size}</span>
+          <span>{file.size} Kb</span>
         </div>
         <div className="file-card__download">
           <Button type="primary" icon={<DownloadOutlined />} onClick={() => downloadFile(file.id, file.file_path, file.file_mimetype)} />

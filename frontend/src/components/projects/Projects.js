@@ -6,7 +6,6 @@ import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
-import socket from "../../service/socket";
 
 const Projects = (props) => {
   const dispatch = useDispatch();

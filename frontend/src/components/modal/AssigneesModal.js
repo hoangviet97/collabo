@@ -5,7 +5,7 @@ import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
-const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigneeDelete, close }) => {
+const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigneeDelete, close, project }) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
 
@@ -14,7 +14,7 @@ const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigne
   };
 
   const addNewAssignee = (id) => {
-    dispatch(createAssignee({ user_id: id, task_id: task_id }));
+    dispatch(createAssignee({ user_id: id, task_id: task_id, project: project }));
   };
 
   const removeAssignee = (id, email) => {

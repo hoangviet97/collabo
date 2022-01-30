@@ -8,8 +8,7 @@
   padding: 20px;
 
   &__item {
-    width: 25%;
-    border-right: 0.8px solid #ecf0f1;
+    width: 50%;
   }
 
   &__container {
@@ -35,7 +34,7 @@
   &__chart {
     padding: 0 00px;
     background-color: white;
-    width: 50%;
+    width: 100%;
     height: inherit;
     border-radius: 12px;
     display: flex;

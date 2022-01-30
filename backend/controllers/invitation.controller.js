@@ -32,5 +32,13 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  delete: function (req, res) {
+    console.log(req.params.id);
+    Invitation.deleteInvitation(req.params.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

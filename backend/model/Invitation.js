@@ -90,5 +90,19 @@ module.exports = {
       result(null, 1);
       return;
     });
+  },
+
+  deleteInvitation: async function (id, result) {
+    const sql = `DELETE from invitations WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, id);
+      return;
+    });
   }
 };

@@ -57,7 +57,6 @@ const TimerBody = ({ records }) => {
           }}
         />
       </div>
-      <div className="time-body__chart" style={{ backgroundColor: "white", width: "50%", height: "inherit", borderRadius: "12px", clear: "both" }}></div>
     </div>
   );
 };

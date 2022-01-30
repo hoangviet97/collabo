@@ -25,8 +25,6 @@ module.exports = {
     Project.find(req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      //req.app.get("io").emit("test2", req.user.id);
-
       return res.json(result);
     });
   },

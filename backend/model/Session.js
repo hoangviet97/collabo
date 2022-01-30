@@ -58,5 +58,19 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  delete: async function (id, result) {
+    const sql = `DELETE FROM sessions WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };
