@@ -2,13 +2,13 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 class Timer {
-  constructor(id, start, end, task_id, user_id, total, description) {
+  constructor(id, task_id, member_id, start, end, total, description) {
     this.id = id;
+    this.task_id = task_id;
+    this.member_id = member_id;
     this.start = start;
     this.end = end;
     this.created_at = new Date();
-    this.task_id = task_id;
-    this.user_id = user_id;
     this.total = total;
     this.description = description;
   }
@@ -17,11 +17,12 @@ class Timer {
 module.exports = {
   Timer,
   // create new member by user or by admin
-  create: async function (body, user_id, result) {
-    const newTimer = new Timer(uuid4(), body.start, body.end, body.task_id, user_id, body.total, body.description);
+  create: async function (body, member, result) {
+    const newTimer = new Timer(uuid4(), body.task_id, member, body.start, body.end, body.total, body.description);
 
-    const sql = `INSERT INTO time_records (id, start, end, created_at, tasks_id, users_id, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newTimer.id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.task_id, newTimer.user_id, newTimer.total], (err, res) => {
+    console.log(member);
+    const sql = `INSERT INTO time_records (id, tasks_id, members_id, start, end, created_at, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newTimer.id, newTimer.task_id, newTimer.member_id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.total], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -35,18 +36,10 @@ module.exports = {
   find: async function (id, column, result) {
     let sql = "";
 
-    if (column === "project") {
-      sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
-                INNER JOIN tasks ON time_records.tasks_id = tasks.id 
-                INNER JOIN sections ON tasks.sections_id = sections.id 
-                INNER JOIN projects ON sections.projects_id = projects.id 
-                WHERE projects.id = ?`;
-    } else {
-      sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
+    sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
               INNER JOIN tasks ON time_records.tasks_id = tasks.id 
               INNER JOIN sections ON tasks.sections_id = sections.id  
-              WHERE users_id = ?`;
-    }
+              WHERE time_records.members_id = ?`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {
@@ -54,6 +47,7 @@ module.exports = {
         return;
       }
 
+      console.log(res);
       result(null, res);
       return;
     });

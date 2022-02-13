@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/add", auth, taskController.create);
 router.post("/all", auth, taskController.getAll);
+router.post("/all2", auth, taskController.getAll2);
 router.post("/personal", auth, taskController.getPersonal);
 router.patch("/budget", [auth], taskController.updateStatus);
 router.patch("/update-status", [auth], taskController.updateStatus);

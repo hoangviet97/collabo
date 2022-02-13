@@ -44,7 +44,7 @@ const MainContent = (props) => {
         <Route path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
         <Route exact path="/:id/team" component={Team} />
-        <Route exact path="/:id/report" component={Report} />
+        <Route path="/:id/report" component={Report} />
         <Route path="/:id/sessions" component={Session} />
         <Route exact path="/:id" component={ProjectTasks} />
         <Route component={NotFound} />

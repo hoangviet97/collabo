@@ -6,12 +6,15 @@ import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getTimeRecords } from "../../actions/time_record";
 
-const TimeTracker = () => {
+const TimeTracker = ({ match }) => {
+  const project_id = match.params.id;
   const dispatch = useDispatch();
   const records = useSelector((state) => state.time_record.records);
 
+  console.log(`... ${project_id}`);
+
   useEffect(() => {
-    dispatch(getTimeRecords());
+    dispatch(getTimeRecords({ project_id: project_id }));
   }, []);
 
   return (

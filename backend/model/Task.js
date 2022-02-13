@@ -72,6 +72,27 @@ module.exports = {
   },
 
   // get all tasks
+  getAllTasks2: async function (id, result) {
+    const sql = `SELECT tasks.id, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at, tasks.budget, sections.name AS section, task_status.id AS statusId, task_status.name AS status, priorities.name AS priority
+                    FROM tasks
+                    INNER JOIN sections ON tasks.sections_id = sections.id
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    WHERE sections.projects_id
+                    ORDER BY tasks.created_at`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  // get all tasks
   getPersonalTasks: async function (id, userId, result) {
     const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, task_status.id AS statusId, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at 
                     FROM members_tasks 

@@ -27,8 +27,24 @@ module.exports = {
         return;
       }
 
-      result(null, newSession);
-      return;
+      if (body.session.participants === undefined) {
+        result(null, newSession);
+      } else {
+        const arr = [];
+        body.session.participants.map((item) => arr.push([item, newSession.id]));
+        console.log(arr);
+
+        const sql = `INSERT INTO members_has_sessions (members_id, sessions_id) VALUES ?`;
+        con.query(sql, [arr], (err, res) => {
+          if (err) {
+            result(err, null);
+            return;
+          }
+
+          result(null, newSession);
+          return;
+        });
+      }
     });
   },
 
@@ -62,6 +78,23 @@ module.exports = {
 
   delete: async function (id, result) {
     const sql = `DELETE FROM sessions WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  findParticipants: async function (id, result) {
+    const sql = `SELECT users.firstname, users.lastname, users.email
+                  FROM users_has_sessions 
+                  INNER JOIN users ON users_has_sessions.users_id = users.id
+                  WHERE users_has_sessions.sessions_id = ?`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {

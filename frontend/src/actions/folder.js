@@ -29,3 +29,12 @@ export const getAllFolders = ({ project_id }) => async (dispatch) => {
     dispatch({ type: GET_FOLDERS_FAIL });
   }
 };
+
+export const deleteFolders = ({ project_id, folder_id }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/folders/delete", { project_id, folder_id });
+    dispatch({ type: GET_FOLDERS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_FOLDERS_FAIL });
+  }
+};

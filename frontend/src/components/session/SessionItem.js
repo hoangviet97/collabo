@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSession } from "../../actions/session";
+import { getSession, getParticipants } from "../../actions/session";
 import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../actions/talking_point";
 import { getNote, createNote } from "../../actions/note";
-import { Divider, Input, Checkbox, Button } from "antd";
+import { Divider, Input, Checkbox, Button, Avatar, Tooltip } from "antd";
 import moment from "moment";
 
 const SessionItem = () => {
@@ -19,6 +19,7 @@ const SessionItem = () => {
 
   useEffect(() => {
     dispatch(getSession({ id: params.sessionId }));
+    dispatch(getParticipants({ id: params.sessionId }));
     dispatch(getTalkingPoints({ session_id: params.sessionId }));
     dispatch(getNote({ session_id: params.sessionId }));
 
@@ -55,6 +56,14 @@ const SessionItem = () => {
         <span style={{ fontSize: "20px" }}>{single.name}</span>
         <div>
           <span>Created {moment(single.created_at).startOf("hour").fromNow()}</span>
+        </div>
+        <div>
+          <Avatar.Group maxCount={2} maxPopoverTrigger="click" size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
+            <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
+            <Tooltip title="Ant User" placement="top">
+              <Avatar style={{ backgroundColor: "#87d068" }} />
+            </Tooltip>
+          </Avatar.Group>
         </div>
       </header>
       <Divider />

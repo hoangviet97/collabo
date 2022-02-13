@@ -9,6 +9,7 @@ const FolderList = ({ files, folders, showModal, match }) => {
   useEffect(() => {
     const newArr = folders.map((item) => Object.assign(item, { sum: 0 }));
     const newFiles = files.filter((item) => item.folders_id !== null);
+    console.log(newFiles);
 
     if (newFiles.length > 0) {
       for (let { folders_id } of newFiles) {

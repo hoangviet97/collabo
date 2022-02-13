@@ -4,7 +4,7 @@ import moment from "moment";
 import { createTimeRecord } from "../../actions/time_record";
 import { useDispatch } from "react-redux";
 
-const Timer = ({ localstorage }) => {
+const Timer = ({ localstorage, project_id }) => {
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(0);
   let finalFormat = "";
@@ -31,7 +31,7 @@ const Timer = ({ localstorage }) => {
     setIsActive(false);
     const datem = moment(JSON.parse(localStorage.getItem(`timer${localstorage}`)));
     const datem2 = moment(new Date());
-    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds") }));
+    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds"), project_id: project_id }));
     localStorage.removeItem(`timer${localstorage}`);
     setTimer(0);
   };

@@ -19,7 +19,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
     <div className="project-card">
       <div className="project-card__header">
         <Row>
-          <Col span={20}>
+          <Col span={20} onClick={() => projectCardHandler(project.id)}>
             <h3>{project.name}</h3>
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
@@ -30,10 +30,7 @@ const Project = ({ project, projectCardHandler, setFavorite }) => {
           </Col>
         </Row>
       </div>
-      <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
-        <Progress />
-        <h4 style={{ position: "relative", top: "-15px", color: "grey", fontSize: "12px" }}>Task Progress</h4>
-      </div>
+      <div className="project-card__body" onClick={() => projectCardHandler(project.id)}></div>
       <div className="project-card__footer">
         <Row className="project-card__footer-row">
           <Col span={12}>

@@ -16,7 +16,16 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axios.post("http://localhost:9000/api/tasks/all", { id });
-    console.log(res.data);
+    dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
+export const getProjectTasks2 = ({ id }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.post("http://localhost:9000/api/tasks/all2", { id });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
@@ -28,7 +37,6 @@ export const getPersonalTasks = ({ id }) => async (dispatch) => {
     dispatch(setTasksLoading());
     const res = await axios.post("http://localhost:9000/api/tasks/personal", { id });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
-    console.log(res);
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
   }

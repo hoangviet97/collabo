@@ -20,13 +20,15 @@ const SessionModal = (props) => {
   };
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    console.log(value);
   };
 
   const onFinish = (fieldsValue) => {
     const dateVal = fieldsValue.date._d;
     const startTime = fieldsValue.start._d;
     const endTime = fieldsValue.end._d;
+
+    console.log(fieldsValue);
 
     const values = {
       ...fieldsValue,

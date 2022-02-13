@@ -14,10 +14,6 @@ const AccountSettings = ({ profile }) => {
     });
   }, []);
 
-  const onFinish = (values) => {
-    dispatch(changePassword({ id: profile.id, password: password }));
-  };
-
   return (
     <div>
       <Form name="basic" ref={formRef}>

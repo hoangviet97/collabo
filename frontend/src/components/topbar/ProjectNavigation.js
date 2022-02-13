@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio } from "antd";
-import { ThunderboltOutlined, TrophyOutlined, ShareAltOutlined, FireOutlined, DingtalkOutlined, CrownOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CommentOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateColor, updateStatus } from "../../actions/project";
@@ -23,8 +23,6 @@ const ProjectNavigation = (props) => {
   useEffect(() => {
     setProjectName(currentProject.name);
     setProjectDescription(currentProject.description);
-
-    tasks.map((i) => totalBudget.push(i.budget));
   }, [currentProject]);
 
   const moreContent = (
@@ -123,6 +121,12 @@ const ProjectNavigation = (props) => {
           </Link>
         </li>
         <li className="single-navigation__item">
+          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/calendar`}>
+            <CommentOutlined className="single-navigation__link-icon" />
+            <span>Chat</span>
+          </Link>
+        </li>
+        <li className="single-navigation__item">
           <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
             <TeamOutlined className="single-navigation__link-icon" />
             <span>Team</span>
@@ -169,9 +173,6 @@ const ProjectNavigation = (props) => {
             </Radio.Group>
           </Form.Item>
         </Form>
-        <div>
-          <div class="total__budget">Total budget: {totalBudget}</div>
-        </div>
       </Modal>
     </div>
   );

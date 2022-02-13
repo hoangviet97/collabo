@@ -31,7 +31,9 @@ const TimerBody = ({ records }) => {
       for (let { day, total } of clearedArr) {
         baseArr.find((x) => x.day === day)["sum"] += total;
       }
+      console.log(baseArr);
     }
+
     setFinalArr(baseArr);
   }, [records]);
 

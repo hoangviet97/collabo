@@ -81,7 +81,7 @@ module.exports = {
 
   // get current logged in user --> client loaduser()
   getUser: function (id, result) {
-    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at FROM users WHERE users.id = '${id}'`;
+    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at FROM users WHERE id = '${id}'`;
     con.query(sql, async (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -18,6 +18,13 @@ module.exports = {
     });
   },
 
+  getAll2: function (req, res) {
+    Task.getAllTasks2(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getPersonal: function (req, res) {
     Task.getPersonalTasks(req.body.id, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
@@ -56,6 +63,7 @@ module.exports = {
 
   getAllAssignees: function (req, res) {
     Task.getAllAssingees(req.body, (err, result) => {
+      console.log(result);
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
