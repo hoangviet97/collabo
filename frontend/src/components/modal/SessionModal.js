@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { getMembers } from "../../actions/member";
 import { createSession } from "../../actions/session";
-import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col } from "antd";
+import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col, message } from "antd";
 
 const SessionModal = (props) => {
   const dispatch = useDispatch();
@@ -38,7 +38,11 @@ const SessionModal = (props) => {
       project_id: props.project_id
     };
 
-    props.createSession({ session: values, project: props.project_id });
+    if (startTime > endTime) {
+      message.error("End time cannot be sooner than start time!");
+    } else {
+      props.createSession({ session: values, project: props.project_id });
+    }
   };
 
   return (

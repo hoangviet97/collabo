@@ -34,6 +34,8 @@ export const getSession = ({ id }) => async (dispatch) => {
 export const getParticipants = ({ id }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/sessions/participants", { id });
+
+    console.log(res.data);
     dispatch({ type: GET_PARTICIPANTS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });

@@ -34,6 +34,7 @@ module.exports = {
 
   getParticipants: function (req, res) {
     Session.findParticipants(req.body.id, (err, result) => {
+      console.log(result);
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

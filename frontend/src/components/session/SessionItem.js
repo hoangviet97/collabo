@@ -6,10 +6,12 @@ import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from ".
 import { getNote, createNote } from "../../actions/note";
 import { Divider, Input, Checkbox, Button, Avatar, Tooltip } from "antd";
 import moment from "moment";
+import AvatarIcon from "../utils/AvatarIcon";
 
 const SessionItem = () => {
   const dispatch = useDispatch();
   const single = useSelector((state) => state.session.single);
+  const participants = useSelector((state) => state.session.participants);
   const note = useSelector((state) => state.note.note);
   const talking_points = useSelector((state) => state.talking_point.list);
   const [talkingPoint, setTalkingPoint] = useState("");
@@ -55,14 +57,18 @@ const SessionItem = () => {
       <header>
         <span style={{ fontSize: "20px" }}>{single.name}</span>
         <div>
-          <span>Created {moment(single.created_at).startOf("hour").fromNow()}</span>
+          <span>Created {single.created_at}</span>
         </div>
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div>Participants:&nbsp;&nbsp;</div>
           <Avatar.Group maxCount={2} maxPopoverTrigger="click" size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-            <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-            <Tooltip title="Ant User" placement="top">
-              <Avatar style={{ backgroundColor: "#87d068" }} />
-            </Tooltip>
+            {participants.map((item) => (
+              <Tooltip title={item.email} placement="top">
+                <Avatar style={{ backgroundColor: "#87d068" }}>
+                  <AvatarIcon name={item.firstname} />
+                </Avatar>
+              </Tooltip>
+            ))}
           </Avatar.Group>
         </div>
       </header>

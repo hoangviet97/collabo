@@ -92,9 +92,10 @@ module.exports = {
 
   findParticipants: async function (id, result) {
     const sql = `SELECT users.firstname, users.lastname, users.email
-                  FROM users_has_sessions 
-                  INNER JOIN users ON users_has_sessions.users_id = users.id
-                  WHERE users_has_sessions.sessions_id = ?`;
+                  FROM members_has_sessions 
+                  INNER JOIN members ON members_has_sessions.members_id = members.id
+                  INNER JOIN users ON members.users_id = users.id
+                  WHERE members_has_sessions.sessions_id = ?`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {
