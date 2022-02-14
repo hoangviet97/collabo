@@ -1,4 +1,4 @@
-import { CREATE_INVITATION, UPDATE_SEEN_INVITATION, GET_PROJECT_INVITATIONS, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "./types";
+import { CREATE_INVITATION, DELETE_INVITATION, UPDATE_SEEN_INVITATION, GET_PROJECT_INVITATIONS, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL, RESET_SECTIONS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -9,6 +9,16 @@ export const createInvitation = ({ receiver_email, project }) => async (dispatch
     console.log(res.data);
   } catch (err) {
     message.error(err.response.data.message);
+  }
+};
+
+export const acceptInvitation = ({ id, project }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/invitation/accept", { id, project });
+    console.log(res.data);
+    //dispatch({ type: GET_PROJECT_INVITATIONS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_INVITATIONS_FAIL });
   }
 };
 
@@ -44,7 +54,9 @@ export const updateSeenStatus = ({ id }) => async (dispatch) => {
 
 export const deleteInvitation = ({ id }) => async (dispatch) => {
   try {
-    const res = await axios.patch(`http://localhost:9000/api/invitation/delete/${id}`);
+    const res = await axios.post(`http://localhost:9000/api/invitation/delete`, { id });
+    dispatch({ type: DELETE_INVITATION, payload: id });
+    message.success("Invitation has been deleted successuly");
   } catch (err) {
     dispatch({ type: GET_INVITATIONS_FAIL });
   }

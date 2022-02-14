@@ -1,18 +1,20 @@
 import React from "react";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteInvitation } from "../../actions/invitation";
+import { deleteInvitation, acceptInvitation } from "../../actions/invitation";
 
 const InvitationItem = ({ data }) => {
   const dispatch = useDispatch();
 
   const acceptHandler = () => {
-    dispatch();
+    dispatch(acceptInvitation({ id: data.id, project: data.projects_id }));
   };
 
   const rejectHandler = () => {
-    dispatch(deleteInvitation());
+    dispatch(deleteInvitation({ id: data.id }));
   };
+
+  console.log(data);
 
   return (
     <div style={{ backgroundColor: "grey" }}>

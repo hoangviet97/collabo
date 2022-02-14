@@ -13,6 +13,13 @@ module.exports = {
     });
   },
 
+  accept: function (req, res) {
+    Invitation.accept(req.body.id, req.user.id, req.body.project, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getAll: function (req, res) {
     Invitation.findAll(req.body.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
@@ -35,8 +42,7 @@ module.exports = {
   },
 
   delete: function (req, res) {
-    console.log(req.params.id);
-    Invitation.deleteInvitation(req.params.id, (err, result) => {
+    Invitation.deleteInvitation(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
