@@ -16,21 +16,26 @@ const getThisWeekDates = () => {
 const TimerBody = ({ records }) => {
   const [finalArr, setFinalArr] = useState([]); // final array for chart
   const [viewAsMinutes, setViewAsMinutes] = useState(true);
+  const [recordsObj, setRecordsObj] = useState([]);
 
   useEffect(() => {
+    setRecordsObj([records]);
+    console.log(typeof recordsObj);
     const currentWeek = getThisWeekDates(); // array of days of the week
     console.log(currentWeek);
     const baseArr = [];
     const clearedArr = [];
     currentWeek.map((date) => baseArr.push({ day: moment(date._d).format("MMM Do YY"), sum: 0, dayText: moment(date._d).format("dddd") }));
+    console.log(records);
+    //records.filter((item) => moment(item.start).format("MMM Do YY") >= moment(currentWeek[0]).format("MMM Do YY") || moment(item.start).format("MMM Do YY") >= moment(currentWeek[6]).format("MMM Do YY")).map((item) => clearedArr.push({ day: moment(item.start).format("MMM Do YY"), total: viewAsMinutes ? Math.floor(item.total / 60) : Math.floor(item.total / 3600) }));
+
     console.log(baseArr);
-    records.filter((item) => moment(item.start).format("MMM Do YY") >= moment(currentWeek[0]).format("MMM Do YY") || moment(item.start).format("MMM Do YY") >= moment(currentWeek[6]).format("MMM Do YY")).map((item) => clearedArr.push({ day: moment(item.start).format("MMM Do YY"), total: viewAsMinutes ? Math.floor(item.total / 60) : Math.floor(item.total / 3600) }));
-    console.log(clearedArr);
-    if (clearedArr > 0) {
-      for (let { day, total } of clearedArr) {
-        baseArr.find((x) => x.day === day)["sum"] += total;
-      }
-    }
+
+    records.forEach((element) => {
+      baseArr.find((x) => x.day === moment(element.starts).format("MMM Do YY"))["sum"] += Math.floor(element.total / 60);
+    });
+
+    console.log(baseArr);
 
     setFinalArr(baseArr);
   }, [records]);
@@ -41,7 +46,7 @@ const TimerBody = ({ records }) => {
         <ResponsiveBar
           data={finalArr}
           keys={["sum"]}
-          indexBy="dayText"
+          indexBy="day"
           margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
           padding={0.4}
           valueScale={{ type: "linear" }}

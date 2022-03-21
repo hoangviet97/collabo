@@ -54,7 +54,7 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
       <div className="board-card-description">{description !== null ? description : <span style={{ color: "#bdc3c7" }}>No description</span>}</div>
       <div className="board-card-footer" style={{ display: "flex", justifyContent: "space-between" }}>
         <Tag color={priorityColor}>{priority}</Tag>
-        <div className="board-card-">{due_date === null ? "" : <span style={{ fontSize: "12px", color: dayColor }}>{moment(due_date).diff(moment(), "days")} days left</span>}</div>
+        <div className="board-card-">{due_date === null ? "" : <span style={{ fontSize: "12px", color: dayColor }}>{moment(due_date).diff(moment(), "days") > 0 ? "days left" : `${moment(due_date).diff(moment(), "days") * -1} days behind`}</span>}</div>
       </div>
     </div>
   );

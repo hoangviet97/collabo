@@ -3,6 +3,7 @@ import Container from "../utils/Container";
 import { createSection } from "../../actions/section";
 import { getSections, deleteSection } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
+import { getTagsByTasks } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin } from "antd";
@@ -18,12 +19,14 @@ const ProjectTasks = ({ match }) => {
   const loading = useSelector((state) => state.task.loading);
   const members = useSelector((state) => state.member.members);
   const assignees = useSelector((state) => state.task.assignees);
+  const tags = useSelector((state) => state.tag.taskTags);
 
   useEffect(() => {
     dispatch(getSections({ id: project_id }));
     dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
     dispatch(getProjectTasks({ id: project_id }));
+    dispatch(getTagsByTasks({ project: project_id }));
   }, []);
 
   const { Panel } = Collapse;
@@ -115,7 +118,6 @@ const ProjectTasks = ({ match }) => {
         key="1"
         onClick={(event) => {
           dispatch(deleteSection({ id: selectedSection }));
-          event.stopPropagation();
         }}
       >
         <Text type="danger">Delete</Text>
@@ -125,8 +127,10 @@ const ProjectTasks = ({ match }) => {
 
   const showModal = (task, section) => {
     Object.assign(task, { section_name: section });
+    const filteredTags = tags.filter((x) => x.tasks_id === task.id);
+    Object.assign(task, { tags: filteredTags });
+    console.log(tags);
     setTaskDetail(task);
-    console.log(task);
     setIsModalVisible(true);
   };
 
@@ -140,6 +144,9 @@ const ProjectTasks = ({ match }) => {
         <Spin size="large" />
       ) : (
         <Container size="30">
+          <header>
+            <Button>Filter by tags</Button>
+          </header>
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
@@ -172,7 +179,7 @@ const ProjectTasks = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} projectId={project_id} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

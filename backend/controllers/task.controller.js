@@ -25,6 +25,28 @@ module.exports = {
     });
   },
 
+  getAllLimit: function (req, res) {
+    Task.getAllTasksWithLimit(req.params.id, req.params.limit, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getByStatus: function (req, res) {
+    Task.getTasksByStatus(req.body.id, req.body.status, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getStatusGroup: function (req, res) {
+    Task.getStatusGroup(req.body.id, (err, result) => {
+      console.log(result);
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getPersonal: function (req, res) {
     Task.getPersonalTasks(req.body.id, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
@@ -63,7 +85,13 @@ module.exports = {
 
   getAllAssignees: function (req, res) {
     Task.getAllAssingees(req.body, (err, result) => {
-      console.log(result);
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAssigneesByStatus: function (req, res) {
+    Task.getAssingeesByStatus(req.body.id, req.body.status, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
@@ -92,6 +120,13 @@ module.exports = {
 
   setBudget: function (req, res) {
     Task.setBudget(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setProgress: function (req, res) {
+    Task.setProgress(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

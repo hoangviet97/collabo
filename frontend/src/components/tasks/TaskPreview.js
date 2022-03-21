@@ -4,7 +4,7 @@ import moment from "moment";
 const TaskPreview = ({ task }) => {
   return (
     <div className="task-preview">
-      <span>{task.name}</span>
+      <span>{task.title}</span>
       <span>{moment(task.due_date).format("MMM Do YY")}</span>
     </div>
   );

@@ -49,9 +49,39 @@ module.exports = {
   },
 
   find: async function (projectId, result) {
+    const currDate = new Date();
     const sql = `SELECT * FROM sessions WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  findOld: async function (projectId, result) {
+    const currDate = new Date();
+    const sql = `SELECT * FROM sessions WHERE projects_id = ? AND date > ${currDate}`;
+
+    con.query(sql, [projectId], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  findWithLimit: async function (projectId, limit, result) {
+    const sql = `SELECT * FROM sessions WHERE projects_id = ? LIMIT ?`;
+
+    con.query(sql, [projectId, limit], (err, res) => {
       if (err) {
         result(err, null);
         return;

@@ -1,4 +1,4 @@
-export const colors = [
+export const colorList = [
   {
     id: 0,
     code: "#f9ca24"
@@ -30,5 +30,5 @@ export const colors = [
 ];
 
 export default {
-  colors
+  colorList
 };

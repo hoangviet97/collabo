@@ -6,12 +6,16 @@ import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
+import { getMembers2 } from "../../actions/member";
+import colorList from "../utils/colors";
 
 const Projects = (props) => {
   const dispatch = useDispatch();
+  let randNum = Math.floor(Math.random() * 6);
 
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getMembers2());
   }, []);
 
   useEffect(() => {
@@ -68,7 +72,8 @@ const Projects = (props) => {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
         {filteredData.map((project) => {
-          return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} />;
+          let membersArr = props.members.filter((x) => x.project_id === project.id);
+          return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} members={membersArr} />;
         })}
       </div>
     );
@@ -127,7 +132,8 @@ const Projects = (props) => {
 const mapStateToProps = (state) => ({
   projects: state.project.projects,
   auth: state.auth,
-  loading: state.project.loading
+  loading: state.project.loading,
+  members: state.member.members
 });
 
 export default connect(mapStateToProps, {})(withRouter(Projects));

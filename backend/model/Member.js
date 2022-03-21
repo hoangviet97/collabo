@@ -46,6 +46,22 @@ module.exports = {
     });
   },
 
+  findAll: async function (result) {
+    const sql = `SELECT members.id, members.projects_id AS project_id, users.id AS user_id, users.email, users.firstname, users.lastname
+                  FROM members 
+                  INNER JOIN users ON members.users_id = users.id `;
+
+    con.query(sql, (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
   updateRole: async function (body, result) {
     const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
 

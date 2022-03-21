@@ -2,15 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Table } from "antd";
-import { getProjectTasks2, getAllAssignees } from "../../actions/task";
+import { getProjectTasks2, getAllAssignees, getProjectTasksByStatus, getAssigneesByStatus } from "../../actions/task";
 import { getMembers } from "../../actions/member";
 import ReportTableList from "./ReportTableList";
 
 const ActiveTasksReport = ({ project_id, match }) => {
-  function sor(value) {
-    return value === "Open" || value === "In Progress" || value === "On Hold";
-  }
-
   const dispatch = useDispatch();
   const data = useSelector((state) => state.task.tasks);
   const assignees = useSelector((state) => state.task.assignees);
@@ -20,14 +16,13 @@ const ActiveTasksReport = ({ project_id, match }) => {
 
   useEffect(() => {
     dispatch(getMembers({ id: project_id }));
-    dispatch(getAllAssignees({ id: project_id }));
-    dispatch(getProjectTasks2({ id: project_id }));
+    dispatch(getAssigneesByStatus({ id: project_id, status: statusArr }));
+    dispatch(getProjectTasksByStatus({ id: project_id, status: statusArr }));
   }, []);
 
   useEffect(() => {
     members.forEach(function (element) {
       element.tasks = [];
-      let prom = [];
 
       assignees.forEach(function (e) {
         if (e.email === element.email) {
@@ -37,6 +32,7 @@ const ActiveTasksReport = ({ project_id, match }) => {
       });
     });
 
+    console.log(data);
     console.log(members);
   }, [data, assignees]);
 
@@ -55,7 +51,7 @@ const ActiveTasksReport = ({ project_id, match }) => {
         expandable={{
           expandedRowRender: (record) => (
             <div style={{ margin: 0 }}>
-              <ReportTableList tasks={record.tasks} statusArr={statusArr} />
+              <ReportTableList tasks={record.tasks} />
             </div>
           ),
           rowExpandable: (record) => record.name !== "Not Expandable"

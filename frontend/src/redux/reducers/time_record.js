@@ -1,7 +1,8 @@
-import { CREATE_TIME_RECORD, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_FAIL } from "../../actions/types";
+import { CREATE_TIME_RECORD, TIME_RECORD_SUM, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_FAIL } from "../../actions/types";
 
 const initialState = {
-  records: []
+  records: [],
+  sum: 0
 };
 
 function timeRecordsReducer(state = initialState, action) {
@@ -21,6 +22,11 @@ function timeRecordsReducer(state = initialState, action) {
       return {
         ...state,
         records: payload
+      };
+    case TIME_RECORD_SUM:
+      return {
+        ...state,
+        sum: payload
       };
     case GET_TIME_RECORDS_FAIL:
       return {

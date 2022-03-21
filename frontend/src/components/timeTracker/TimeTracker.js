@@ -11,8 +11,6 @@ const TimeTracker = ({ match }) => {
   const dispatch = useDispatch();
   const records = useSelector((state) => state.time_record.records);
 
-  console.log(`... ${project_id}`);
-
   useEffect(() => {
     dispatch(getTimeRecords({ project_id: project_id }));
   }, []);
@@ -21,7 +19,6 @@ const TimeTracker = ({ match }) => {
     <div>
       <Container size="30">
         <TimerHeader records={records} />
-        <TimerBody records={records} />
         <TimerLogger records={records} />
       </Container>
     </div>

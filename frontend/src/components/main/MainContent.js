@@ -10,6 +10,8 @@ import ProjectCalendar from "../calendar/ProjectCalendar";
 import Documents from "../documents/Documents";
 import Invitations from "../invitations/Invitations";
 import Team from "../team/Team";
+import Tags from "../tags/Tags";
+import Messages from "../messages/Messages";
 import Report from "../report/Report";
 import NotFound from "../layout/NotFound";
 import Session from "../session/Session";
@@ -41,8 +43,10 @@ const MainContent = (props) => {
         <Route exact path="/notify" component={Invitations} />
         <Route exact path="/:id/calendar" component={ProjectCalendar} />
         <Route exact path="/:id/board" component={KanbanBoard} />
+        <Route exact path="/:id/tags" component={Tags} />
         <Route path="/:id/documents" component={Documents} />
         <Route exact path="/:id/tracker" component={TimeTracker} />
+        <Route exact path="/:id/messages" component={Messages} />
         <Route exact path="/:id/team" component={Team} />
         <Route path="/:id/report" component={Report} />
         <Route path="/:id/sessions" component={Session} />

@@ -16,25 +16,15 @@ const Report = ({ match }) => {
           <div>
             <PlusOutlined style={{ fontSize: "50px" }} />
           </div>
-          <Link to={`${match.url}/custom`}>Custom report</Link>
+          <Link to={`${match.url}/custom`}>
+            Custom report <br /> (coming soon)
+          </Link>
         </div>
         <div class="report__option-item">
-          <Link to={`${match.url}/active`}>Active tasks</Link>
+          <Link to={`${match.url}/active`}>Task - Time</Link>
         </div>
         <div class="report__option-item">
-          <Link to={`${match.url}/completed`}>Completed tasks</Link>
-        </div>
-        <div class="report__option-item">
-          <Link to="">Unassigned tasks</Link>
-        </div>
-        <div class="report__option-item">
-          <Link to="">Overdue tasks</Link>
-        </div>
-        <div class="report__option-item">
-          <Link to="">Time tracked</Link>
-        </div>
-        <div class="report__option-item">
-          <Link to="">Time report</Link>
+          <Link to={`${match.url}/completed`}>Member - Time</Link>
         </div>
       </div>
     </Container>

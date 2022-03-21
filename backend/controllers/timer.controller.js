@@ -18,6 +18,20 @@ module.exports = {
     });
   },
 
+  getByProject: function (req, res) {
+    Timer.findByProject(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getSum: function (req, res) {
+    Timer.getSum(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getAllPersonal: function (req, res) {
     console.log(req.member);
     Timer.find(req.member, "user", (err, result) => {

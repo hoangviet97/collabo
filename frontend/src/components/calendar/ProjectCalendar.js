@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import Calendar from "react-awesome-calendar";
-import { colors } from "../utils/Colors";
+import { colorList } from "../utils/colors";
 import moment from "moment";
 import { connect } from "react-redux";
 import { getProjectTasks } from "../../actions/task";
@@ -49,7 +49,7 @@ const ProjectCalendar = (props) => {
   useEffect(() => {
     props.tasks.map((item) => {
       let randNum = Math.floor(Math.random() * 6);
-      events.push({ id: item.id, color: colors[randNum].code, from: item.start_date, to: item.due_date, title: item.title });
+      events.push({ id: item.id, color: colorList[randNum].code, from: item.start_date, to: item.due_date, title: item.title });
     });
     console.log(events);
   }, [props.tasks]);

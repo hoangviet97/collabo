@@ -1,4 +1,4 @@
-import { CREATE_TASK, CREATE_TASK_FAIL, DELETE_TASK, SET_BUDGET, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE } from "./types";
+import { CREATE_TASK, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -22,10 +22,41 @@ export const getProjectTasks = ({ id }) => async (dispatch) => {
   }
 };
 
+export const getStatusGroup = ({ id }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.post(`http://localhost:9000/api/tasks/statusgroup`, { id });
+    dispatch({ type: GET_STATUS_GROUP, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
 export const getProjectTasks2 = ({ id }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axios.post("http://localhost:9000/api/tasks/all2", { id });
+    dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
+export const getProjectTasksWithLimit = ({ id, limit }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.get(`http://localhost:9000/api/tasks/${id}/${limit}`);
+    console.log(res.data);
+    dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
+export const getProjectTasksByStatus = ({ id, status }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.post("http://localhost:9000/api/tasks/all-status", { id, status });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
@@ -56,7 +87,16 @@ export const setBudget = ({ id, budget, project }) => async (dispatch) => {
   try {
     const res = await axios.patch("http://localhost:9000/api/tasks/budget", { id, budget, project });
     message.success("Task updated!");
-    dispatch({ type: SET_BUDGET, payload: res.data });
+  } catch (err) {
+    dispatch({ type: UPDATE_TASK_FAIL });
+    message.error(err.response.data.message);
+  }
+};
+
+export const setProgress = ({ id, progress }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/tasks/progress", { id, progress });
+    message.success("Task updated!");
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });
     message.error(err.response.data.message);
@@ -101,6 +141,15 @@ export const getAllAssignees = ({ id }) => async (dispatch) => {
   }
 };
 
+export const getAssigneesByStatus = ({ id, status }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/tasks/assignees-status", { id, status });
+    dispatch({ type: GET_ASSIGNEES, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_ASSIGNEES_FAIL });
+  }
+};
+
 export const createAssignee = ({ user_id, task_id, project }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/tasks/new-assignee", { user_id, task_id, project });
@@ -121,9 +170,9 @@ export const deleteAssignee = ({ user_id, task_id, email }) => async (dispatch) 
   }
 };
 
-export const deleteTask = ({ id }) => async (dispatch) => {
+export const deleteTask = ({ id, project }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/tasks/delete", { id });
+    const res = await axios.post("http://localhost:9000/api/tasks/delete", { id, project });
     dispatch({ type: DELETE_TASK, payload: id });
     message.success("Task deleted!");
   } catch (err) {

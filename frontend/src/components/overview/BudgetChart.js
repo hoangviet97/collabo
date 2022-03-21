@@ -1,26 +1,57 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
+import { Pie } from "@ant-design/plots";
 
 const BudgetChart = () => {
   const data = [
     {
-      id: "java",
-      label: "java",
-      value: 30,
-      color: "hsl(90, 70%, 50%)"
+      type: "分类一",
+      value: 27
     },
     {
-      id: "erlang",
-      label: "erlang",
-      value: 70,
-      color: "hsl(56, 70%, 50%)"
+      type: "分类二",
+      value: 25
+    },
+    {
+      type: "分类三",
+      value: 18
+    },
+    {
+      type: "分类四",
+      value: 15
+    },
+    {
+      type: "分类五",
+      value: 10
+    },
+    {
+      type: "其他",
+      value: 5
     }
   ];
-  return (
-    <>
-      <ResponsivePie data={data} margin={{ top: 30, right: 30, bottom: 30, left: 30 }} innerRadius={0.5} padAngle={0.7} cornerRadius={3} activeOuterRadiusOffset={8} borderWidth={1} borderColor={{ from: "color", modifiers: [["darker", 0.2]] }} arcLinkLabelsSkipAngle={10} arcLinkLabelsTextColor="#333333" arcLinkLabelsThickness={2} arcLinkLabelsColor={{ from: "color" }} arcLabelsSkipAngle={10} arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }} />
-    </>
-  );
+  const config = {
+    appendPadding: 10,
+    data,
+    angleField: "value",
+    colorField: "type",
+    width: 50,
+    radius: 0.9,
+    label: {
+      type: "inner",
+      offset: "-10%",
+      content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+      style: {
+        fontSize: 14,
+        textAlign: "center"
+      }
+    },
+    interactions: [
+      {
+        type: "element-active"
+      }
+    ]
+  };
+  return <Pie {...config} />;
 };
 
 export default BudgetChart;

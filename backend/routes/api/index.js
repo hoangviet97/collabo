@@ -11,6 +11,7 @@ const fileRoutes = require("./files");
 const folderRoutes = require("./folders");
 const timerRoutes = require("./timers");
 const noteRoutes = require("./notes");
+const tagRoutes = require("./tags");
 const router = express.Router();
 
 router.use("/", authRoutes);
@@ -25,5 +26,6 @@ router.use("/files", fileRoutes);
 router.use("/folders", folderRoutes);
 router.use("/timers", timerRoutes);
 router.use("/notes", noteRoutes);
+router.use("/tags", tagRoutes);
 
 module.exports = router;

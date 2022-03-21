@@ -18,6 +18,20 @@ module.exports = {
     });
   },
 
+  getOld: function (req, res) {
+    Session.findOld(req.body.project_id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAllWithLimit: function (req, res) {
+    Session.findWithLimit(req.body.project_id, req.body.limit, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getOne: function (req, res) {
     Session.findOne(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

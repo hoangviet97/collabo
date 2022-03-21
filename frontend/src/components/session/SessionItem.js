@@ -57,7 +57,13 @@ const SessionItem = () => {
       <header>
         <span style={{ fontSize: "20px" }}>{single.name}</span>
         <div>
-          <span>Created {single.created_at}</span>
+          <span>Date: {single.created_at}</span>
+        </div>
+        <div>
+          <span>Time: {single.created_at}</span>
+        </div>
+        <div>
+          <span>Place: {single.created_at}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>Participants:&nbsp;&nbsp;</div>

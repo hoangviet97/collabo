@@ -51,5 +51,41 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  getSum: async function (id, result) {
+    let sql = "";
+
+    sql = `SELECT SUM(time_records.total) AS sum
+              FROM time_records
+              INNER JOIN members ON time_records.members_id = members.id  
+              WHERE members.projects_id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+      console.log(res[0].sum);
+      result(null, res[0].sum);
+      return;
+    });
+  },
+
+  findByProject: async function (id, result) {
+    let sql = `SELECT * FROM time_records 
+              INNER JOIN members ON time_records.members_id = members.id
+              WHERE members.projects_id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      console.log(res);
+      result(null, res);
+      return;
+    });
   }
 };

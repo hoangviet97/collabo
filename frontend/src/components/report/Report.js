@@ -17,10 +17,10 @@ const Report = ({ match }) => {
         <Route exact path={`${match.path}/`}>
           <ReportHome project_id={match.params.id} match={match} />
         </Route>
-        <Route exact path={`${match.path}/completed`}>
+        <Route exact path={`${match.path}/tasks`}>
           <CompletedTasksReport project_id={match.params.id} match={match} />
         </Route>
-        <Route exact path={`${match.path}/active`}>
+        <Route exact path={`${match.path}/members`}>
           <ActiveTasksReport project_id={match.params.id} match={match} />
         </Route>
       </Switch>

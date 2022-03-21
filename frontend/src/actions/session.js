@@ -21,6 +21,26 @@ export const getSessions = ({ project_id }) => async (dispatch) => {
   }
 };
 
+export const getPastSessions = ({ project_id }) => async (dispatch) => {
+  try {
+    dispatch(setSessionLoading());
+    const res = await axios.post("http://localhost:9000/api/sessions/all-past", { project_id });
+    dispatch({ type: GET_SESSIONS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_SESSIONS_FAIL });
+  }
+};
+
+export const getSessionsLimit = ({ project_id, limit }) => async (dispatch) => {
+  try {
+    dispatch(setSessionLoading());
+    const res = await axios.post("http://localhost:9000/api/sessions/all-limit", { project_id, limit });
+    dispatch({ type: GET_SESSIONS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_SESSIONS_FAIL });
+  }
+};
+
 export const getSession = ({ id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());

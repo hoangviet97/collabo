@@ -13,6 +13,7 @@ import file from "./file";
 import folder from "./folder";
 import time_record from "./time_record";
 import note from "./note";
+import tag from "./tag";
 
 const appReducer = combineReducers({
   auth,
@@ -28,7 +29,8 @@ const appReducer = combineReducers({
   file,
   folder,
   time_record,
-  note
+  note,
+  tag
 });
 
 const rootReducer = (state, action) => {

@@ -16,7 +16,8 @@ const ControlPanel = ({ sessions, match, addNewSession }) => {
   }, []);
 
   useEffect(() => {
-    setFilteredSessions(sessions);
+    const upcoming = sessions.filter((item) => moment(item.date).format("MMM Do YY") > moment(calendarDay).format("MMM Do YY"));
+    setFilteredSessions(upcoming);
   }, [sessions]);
 
   const dateSelectHandle = () => {
@@ -25,7 +26,8 @@ const ControlPanel = ({ sessions, match, addNewSession }) => {
   };
 
   const showAllSessions = () => {
-    setFilteredSessions(sessions);
+    const upcoming = sessions.filter((item) => moment(item.date).format("MMM Do YY") > moment(calendarDay).format("MMM Do YY"));
+    setFilteredSessions(upcoming);
   };
 
   const showTodaySessions = () => {
@@ -34,13 +36,20 @@ const ControlPanel = ({ sessions, match, addNewSession }) => {
     setFilteredSessions(todaySessions);
   };
 
+  const showPastSessions = () => {
+    const pastSessions = sessions.filter((item) => moment(item.date).format("MMM Do YY") < moment(today).format("MMM Do YY"));
+
+    setFilteredSessions(pastSessions);
+  };
+
   return (
     <div className="session__control-panel">
       <div className="meeting__control-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div className="meeting__control-filter" style={{ display: "flex", gap: "5px" }}>
           <span style={{ fontSize: "20px", marginRight: "10px" }}>Sessions</span>
-          <Button onClick={showAllSessions}>All</Button>
+          <Button onClick={showAllSessions}>Active</Button>
           <Button onClick={showTodaySessions}>Today</Button>
+          <Button onClick={showPastSessions}>Past</Button>
           <div style={{ position: "relative" }}>
             <Button type="text" onClick={() => setCalendarVisible((prev) => !prev)}>
               <CalendarOutlined />
