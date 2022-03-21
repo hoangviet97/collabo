@@ -12,6 +12,7 @@ export const getAllPosts = ({ id }) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/posts/all", { id });
     dispatch({ type: GET_POSTS, payload: res.data });
   } catch (err) {
+    bitm;
     dispatch({ type: GET_POSTS_FAIL });
   }
 };

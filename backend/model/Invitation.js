@@ -62,6 +62,29 @@ module.exports = {
     });
   },
 
+  accept: async function (id, user, project, result) {
+    const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
+
+    con.query(sql, [uuid4(), user, 0, project, new Date()], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      const sql = `DELETE from invitations WHERE id = ?`;
+
+      con.query(sql, [id], (err, res) => {
+        if (err) {
+          result(err, null);
+          return;
+        }
+
+        result(null, res);
+        return;
+      });
+    });
+  },
+
   // Get all invitations
   findAll: async function (project, result) {
     const sql = `SELECT invitations.*, users.firstname, users.lastname FROM invitations INNER JOIN users ON invitations.receiver = users.id WHERE projects_id = ?`;
@@ -88,6 +111,20 @@ module.exports = {
       }
 
       result(null, 1);
+      return;
+    });
+  },
+
+  deleteInvitation: async function (id, result) {
+    const sql = `DELETE from invitations WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "sucess");
       return;
     });
   }

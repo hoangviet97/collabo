@@ -26,5 +26,26 @@ module.exports = {
       console.log(req.body);
       return res.json(result);
     });
+  },
+
+  resetPassword: function (req, res) {
+    User.resetPwd(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changeName: function (req, res) {
+    User.changeName(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changePassword: function (req, res) {
+    User.changePwd(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

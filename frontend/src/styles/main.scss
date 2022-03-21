@@ -7,6 +7,7 @@
 @import "./layout/sidebar.scss";
 @import "./pages/new_project.scss";
 @import "./components/projects.scss";
+@import "./components/task.scss";
 @import "./components/icons.scss";
 @import "./components/modals.scss";
 @import "./vendors/custom_antd.scss";
@@ -14,10 +15,19 @@
 @import "./pages/auth.scss";
 @import "./components/timer.scss";
 @import "./components/files.scss";
+@import "./components/sessions.scss";
+@import "./components/chat.scss";
+@import "./components/posts.scss";
+@import "./components/overview.scss";
+@import "./components/report.scss";
 
 .name-box {
   display: flex;
   justify-content: space-between;
+}
+
+table tr td {
+  padding: 8px 0;
 }
 
 .dashboard {
@@ -474,4 +484,16 @@
     "card-md";
   width: 100%;
   height: 100%;
+}
+
+.react-kanban-column {
+  border-radius: 10px !important;
+  background-color: #ecf0f1 !important;
+}
+
+.react-kanban-card {
+  border-radius: 10px !important;
+  padding: 15px 15px !important;
+  margin-bottom: 12px !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
 }

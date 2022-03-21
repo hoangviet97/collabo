@@ -16,7 +16,7 @@ module.exports = {
   create: async function (body, result) {
     const newNote = new Note(uuid4(), body.session_id, body.text);
 
-    const sql = `INSERT INTO talking_points (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
+    const sql = `INSERT INTO notes (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at], (err, res) => {
       if (err) {
         result(err, null);
@@ -29,9 +29,23 @@ module.exports = {
   },
 
   find: async function (session_id, result) {
-    const sql = `SELECT * FROM talking_points WHERE sessions_id = ?`;
+    const sql = `SELECT * FROM notes WHERE sessions_id = ?`;
 
     con.query(sql, [session_id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  update: async function (id, text, result) {
+    const sql = `UPDATE notes SET text = ? WHERE id = ?`;
+
+    con.query(sql, [id, text], (err, res) => {
       if (err) {
         result(err, null);
         return;

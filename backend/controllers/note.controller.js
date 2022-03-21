@@ -10,8 +10,15 @@ module.exports = {
     });
   },
 
-  getAll: function (req, res) {
+  getNote: function (req, res) {
     Note.find(req.body.session_id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  update: function (req, res) {
+    Note.update(req.body.id, req.body.text, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

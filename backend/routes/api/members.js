@@ -5,6 +5,9 @@ const permit = require("../../middleware/permission");
 const router = express.Router();
 
 router.post("/all", auth, memberController.getAll);
+router.get("/all2", auth, memberController.getAll2);
 router.patch("/role", [auth, permit("Owner", "Admin")], memberController.updateRole);
+router.delete("/delete", [auth, permit("Owner", "Admin")], memberController.deleteMember);
+router.delete("/leave", [auth], memberController.leave);
 
 module.exports = router;

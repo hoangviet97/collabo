@@ -10,6 +10,8 @@ class Project {
     this.color = "#535c68";
     this.status = 0;
     this.favorite = false;
+    this.budget = 0;
+    this.currency = "czk";
   }
 }
 
@@ -19,9 +21,10 @@ module.exports = {
   create: async function (data, result) {
     let randId = randomInt(10000000, 99999999);
     const newProject = new Project(randId, data.name, data.description);
+    const color = data.color !== null ? data.color : "#535c68";
 
-    const sql = `INSERT INTO projects (id, name, description, created_at, color, project_status_id, favorite) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, newProject.color, newProject.status, newProject.favorite], (err, res) => {
+    const sql = `INSERT INTO projects (id, name, description, created_at, color, project_status_id, favorite, budget, currency) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newProject.id, newProject.name, newProject.description, newProject.created_at, color, newProject.status, newProject.favorite, newProject.budget, newProject.currency], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -87,6 +90,32 @@ module.exports = {
   },
 
   // get current project
+  setBudget: function (body, result) {
+    const sql = `UPDATE projects SET budget = ? WHERE id = ?`;
+    con.query(sql, [body.budget, body.project], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
+  setCurrency: function (body, result) {
+    const sql = `UPDATE projects SET currency = ? WHERE id = ?`;
+    con.query(sql, [body.currency, body.project], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  // get current project
   updateColor: function (body, result) {
     const sql = `UPDATE projects SET color = ? WHERE id = ?`;
     con.query(sql, [body.color, body.id], (err, res) => {
@@ -109,6 +138,20 @@ module.exports = {
       }
 
       result(null, res);
+    });
+  },
+
+  delete: async function (id, result) {
+    const sql = `DELETE from projects WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
     });
   }
 };

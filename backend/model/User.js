@@ -2,7 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { object } = require("joi");
+const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 
@@ -81,7 +81,7 @@ module.exports = {
 
   // get current logged in user --> client loaduser()
   getUser: function (id, result) {
-    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at FROM users WHERE users.id = '${id}'`;
+    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at FROM users WHERE id = '${id}'`;
     con.query(sql, async (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -91,6 +91,81 @@ module.exports = {
 
       result(null, res);
       return;
+    });
+  },
+
+  changePwd: function (id, result) {
+    const sql = `UPDATE users SET password = ? WHERE id = ?`;
+    con.query(sql, async (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  changeName: function (id, result) {
+    const sql = `UPDATE users SET firstname = ? AND lastname = ? WHERE id = ?`;
+    con.query(sql, async (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  resetPwd: function (body, result) {
+    const sql = `SELECT id FROM users WHERE email = '${body.email}'`;
+    con.query(sql, async (err, res) => {
+      if (Object.keys(res).length === 0) {
+        result("User doesnt exists", null);
+        return;
+      }
+
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "acerik97@gmail.com",
+          pass: "Dobroviz192"
+        }
+      });
+
+      const newPwd = uuid4();
+
+      let mailOpt = {
+        from: "acerik97@gmail.com",
+        to: body.email,
+        subject: "Password reset",
+        text: `Your temporary password: ${newPwd}`
+      };
+
+      transport.sendMail(mailOpt, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(info.response);
+        }
+      });
+
+      const sql2 = `UPDATE users password = '${newPwd}' WHERE email = '${body.email}'`;
+
+      con.query(sql2, async (err, res) => {
+        if (err) {
+          result(err, null);
+          return;
+        }
+
+        result(null, res);
+        return;
+      });
     });
   }
 };

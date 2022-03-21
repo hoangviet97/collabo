@@ -1,12 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 
-const Container = (props) => {
+const Container = ({ size, children }) => {
   const style = {
-    padding: props.size + "px"
+    padding: size + "px"
   };
   return (
     <div className="container" style={style}>
-      {props.children}
+      {children}
     </div>
   );
 };

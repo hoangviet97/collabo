@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
 const AvatarIcon = ({ name }) => {
   return (
     <>
-      <span style={{ fontSize: "20px" }}>{name[0]}</span>
+      <span style={{ fontSize: "20px" }}>{name && name[0]}</span>
     </>
   );
 };

@@ -1,0 +1,16 @@
+.chat {
+  &__window {
+    width: 100%;
+    height: 67vh;
+    overflow-y: scroll;
+  }
+
+  &__footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+    border: 0.5px solid #dfe6e9;
+  }
+}

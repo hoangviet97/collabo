@@ -25,8 +25,6 @@ module.exports = {
     Project.find(req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
-      //req.app.get("io").emit("test2", req.user.id);
-
       return res.json(result);
     });
   },
@@ -45,6 +43,20 @@ module.exports = {
     });
   },
 
+  setBudget: function (req, res) {
+    Project.setBudget(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setCurrency: function (req, res) {
+    Project.setCurrency(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   updateColor: function (req, res) {
     Project.updateColor(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
@@ -54,6 +66,13 @@ module.exports = {
 
   updateStatus: function (req, res) {
     Project.updateStatus(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  deleteProject: function (req, res) {
+    Project.delete(req.body.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

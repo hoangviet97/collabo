@@ -1,0 +1,25 @@
+.report {
+  &__option-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+  }
+
+  &__option-item {
+    background-color: white;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+
+  &__option-item:hover {
+    transform: translateY(-10px);
+  }
+}

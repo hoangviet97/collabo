@@ -12,8 +12,36 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    req.app.get("io").emit("test", "test sucess");
     Task.getAllTasks(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAll2: function (req, res) {
+    Task.getAllTasks2(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAllLimit: function (req, res) {
+    Task.getAllTasksWithLimit(req.params.id, req.params.limit, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getByStatus: function (req, res) {
+    Task.getTasksByStatus(req.body.id, req.body.status, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getStatusGroup: function (req, res) {
+    Task.getStatusGroup(req.body.id, (err, result) => {
+      console.log(result);
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
@@ -62,8 +90,43 @@ module.exports = {
     });
   },
 
+  getAssigneesByStatus: function (req, res) {
+    Task.getAssingeesByStatus(req.body.id, req.body.status, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  createAssignee: function (req, res) {
+    Task.addAssignee(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  deleteAssignee: function (req, res) {
+    Task.deleteAssignee(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   delete: function (req, res) {
     Task.deleteTask(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setBudget: function (req, res) {
+    Task.setBudget(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  setProgress: function (req, res) {
+    Task.setProgress(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
