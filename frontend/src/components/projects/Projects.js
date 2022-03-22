@@ -7,11 +7,9 @@ import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
-import colorList from "../utils/colors";
 
 const Projects = (props) => {
   const dispatch = useDispatch();
-  let randNum = Math.floor(Math.random() * 6);
 
   useEffect(() => {
     dispatch(getProjects());

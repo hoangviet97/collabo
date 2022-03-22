@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import Calendar from "react-awesome-calendar";
-import { colorList } from "../utils/colors";
+import { colorList } from "../utils/Colors";
 import moment from "moment";
 import { connect } from "react-redux";
 import { getProjectTasks } from "../../actions/task";

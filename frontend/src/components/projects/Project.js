@@ -7,7 +7,7 @@ import { Row, Col, Progress, Button, Avatar, Tooltip } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
-import colorList from "../utils/colors";
+import colorList from "../utils/Colors";
 import { truncade } from "../utils/textManipulation";
 
 const Project = ({ project, projectCardHandler, setFavorite, members }) => {

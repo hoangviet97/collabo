@@ -145,7 +145,7 @@ const TaskDetailModal = (props) => {
                             ))}
                           </Avatar.Group>
                           <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-40px", borderRadius: "50%", marginLeft: "32px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "9999" }}>
-                            <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
+                            <EditOutlined style={{ fontSize: "7px", color: "#bdc3c7" }} />
                           </div>
                         </>
                       ) : (
@@ -159,24 +159,19 @@ const TaskDetailModal = (props) => {
               </div>
               <Divider />
               <div>
-                <div class="description__header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+                <div class="description__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
                   <h4>Description</h4>
                   <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
-                {showTextArea ? <TextArea rows="5" onBlur={showTextAreaHandler} /> : <p>{props.task.description}</p>}
+                <div>{showTextArea ? <TextArea rows="5" onBlur={showTextAreaHandler} /> : <p>{props.task.description}</p>}</div>
               </div>
               <Divider />
               <div class="task-budget">
-                <h4>Tags</h4>
-                <div>
-                  {tagGroup && tagGroup.map((item) => <Tag>{item.name}</Tag>)}
-                  {!tagInputVisible && (
-                    <Tag onClick={() => setTagInputVisible(true)} className="site-tag-plus">
-                      <PlusOutlined /> New Tag
-                    </Tag>
-                  )}
-                  {tagInputVisible && <Input type="text" size="small" style={{ width: 78 }} value={tagInputValue} onChange={(e) => setTagInputValue(e.target.value)} onBlur={tagInputConfirmHandler} onPressEnter={tagInputConfirmHandler} />}
+                <div className="tag__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                  <h4>Tags</h4>
+                  <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
+                <div>{tagGroup && tagGroup.map((item) => <Tag>{item.name}</Tag>)}</div>
               </div>
               <Divider />
               <div class="task-budget">
