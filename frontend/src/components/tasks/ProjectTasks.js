@@ -36,6 +36,7 @@ const ProjectTasks = ({ match }) => {
   const [showTagSelector, setShowTagSelector] = useState(false);
   const [taskTags, setTaskTags] = useState([]);
   const [selectedVal, setSelectedVal] = useState([]);
+  const [taskContainer, setTaskContainer] = useState([]);
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -55,8 +56,7 @@ const ProjectTasks = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    const pom3 = tasks.map((x) => x.id);
-    setTaskTags(pom3);
+    setTaskContainer(tasks);
   }, [tasks]);
 
   useEffect(() => {
@@ -180,17 +180,22 @@ const ProjectTasks = ({ match }) => {
   };
 
   const tagSelectorHandler = (val) => {
-    console.log(val);
-    if (val.length === 0) {
-      const pom3 = tasks.map((x) => x.id);
-      setTaskTags(pom3);
-    }
-
     setSelectedVal(val);
-    const pom = tags.filter((x) => val.includes(x.tags_id));
-    const pom2 = pom.map((x) => x.tasks_id);
+    const tasksIds = tags.filter((x) => val.includes(x.tags_id));
+    const pom = tasksIds.map((x) => x.tasks_id);
+    console.log(pom);
+    const newTasks = tasks.filter((item) => pom.includes(item.id));
 
-    setTaskTags(pom2);
+    if (val.length > 0) {
+      setTaskContainer(newTasks);
+    } else {
+      setTaskContainer(tasks);
+    }
+  };
+
+  const statusSelectorHandler = () => {
+    const newTasks = tasks.filter((x) => x.title.includes("2"));
+    setTaskContainer(newTasks);
   };
 
   return (
@@ -201,14 +206,14 @@ const ProjectTasks = ({ match }) => {
         <Container size="30">
           <header>
             <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%", borderRadius: "10px" }} />
+              <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
               <div>
                 <span>Filter by: &nbsp;</span>
                 <Button onClick={showTagSelectorHandler}>
                   <TagsOutlined />
                   Tags
                 </Button>
-                <Button onClick={showTagSelectorHandler}>
+                <Button onClick={statusSelectorHandler}>
                   <TagsOutlined />
                   Status
                 </Button>
@@ -222,7 +227,7 @@ const ProjectTasks = ({ match }) => {
               </div>
             </div>
             {showTagSelector && (
-              <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Please select" onChange={tagSelectorHandler}>
+              <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
                 {children}
               </Select>
             )}
@@ -231,12 +236,9 @@ const ProjectTasks = ({ match }) => {
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
-                {tasks
+                {taskContainer
                   .filter((x) => {
                     return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
-                  })
-                  .filter((y) => {
-                    return taskTags.includes(y.id);
                   })
                   .map((task, i) => {
                     if (section.id === task.sections_id) {
