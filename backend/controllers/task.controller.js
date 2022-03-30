@@ -125,6 +125,14 @@ module.exports = {
     });
   },
 
+  setDescription: function (req, res) {
+    console.log(req.body);
+    Task.setDescription(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   setProgress: function (req, res) {
     Task.setProgress(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

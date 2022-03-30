@@ -13,6 +13,7 @@ router.post("/all-status", auth, taskController.getByStatus);
 router.post("/personal", auth, taskController.getPersonal);
 router.patch("/budget", [auth, permit("Owner")], taskController.setBudget);
 router.patch("/progress", [auth], taskController.setProgress);
+router.patch("/desc", [auth], taskController.setDescription);
 router.patch("/update-status", [auth], taskController.updateStatus);
 router.patch("/update-priority", [auth], taskController.updatePriority);
 router.patch("/update-start", auth, taskController.updateStartDate);

@@ -213,6 +213,20 @@ module.exports = {
     });
   },
 
+  setDescription: async function (body, result) {
+    console.log(body.id);
+    const sql = `UPDATE tasks SET description = ? WHERE id = ?`;
+    con.query(sql, [body.description, body.id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
   addAssignees: async function (assignees, task, result) {
     const arr = assignees.map((item) => "(" + item + ", " + task + ")");
 

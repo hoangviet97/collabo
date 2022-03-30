@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button, Modal, Input, Avatar, Popover, Divider, Progress, Tag } from "antd";
-import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Modal, Input, Select, Avatar, Popover, Divider, Progress, Tag } from "antd";
+import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { TweenOneGroup } from "rc-tween-one";
 import { createTag } from "../../actions/tag";
-import { setBudget, setProgress } from "../../actions/task";
+import { setBudget, setProgress, setDescription } from "../../actions/task";
 
 const TaskDetailModal = (props) => {
   const [taskTitle, setTaskTitle] = useState(props.task.title);
+  const [taskDescription, setTaskDescription] = useState(props.task.description);
   const [tagGroup, setTagGroup] = useState([]);
   const [budget, setmyBudget] = useState(props.task.budget);
   const [showTitleInput, setShowTitleInput] = useState(false);
@@ -18,15 +18,14 @@ const TaskDetailModal = (props) => {
   const [tagInputVisible, setTagInputVisible] = useState(false);
   const [tagInputValue, setTagInputValue] = useState("");
   const { TextArea } = Input;
+  const { Option } = Select;
   const dispatch = useDispatch();
-
-  console.log(props.task.id);
 
   useEffect(() => {
     setTaskTitle(props.task.title);
     setmyBudget(props.task.budget);
     setPercent(props.task.progress);
-    setTagGroup(props.task.tags);
+    setTaskDescription(props.task.description);
 
     return () => {
       setTaskTitle("");
@@ -34,7 +33,13 @@ const TaskDetailModal = (props) => {
   }, [props]);
 
   const showTextAreaHandler = () => {
-    setShowTextArea((prev) => !prev);
+    setShowTextArea(true);
+  };
+
+  const confirmDescription = () => {
+    console.log(taskDescription);
+    dispatch(setDescription({ id: props.task.id, description: taskDescription }));
+    setShowTextArea(false);
   };
 
   const showTitleInputHandler = () => {
@@ -117,7 +122,17 @@ const TaskDetailModal = (props) => {
                       <span>Priority</span>
                     </td>
                     <td>
-                      <span>{props.task.priorityName}</span>
+                      <Select className="task-select" defaultValue={props.task.priorityId} showArrow={false} style={{ width: "50%" }} bordered={false}>
+                        <Option value="0">
+                          <Tag color="gold">Low</Tag>
+                        </Option>
+                        <Option value="1">
+                          <Tag color="orange">Medium</Tag>
+                        </Option>
+                        <Option value="2">
+                          <Tag color="red">High</Tag>
+                        </Option>
+                      </Select>
                     </td>
                   </tr>
                   <tr>
@@ -125,7 +140,7 @@ const TaskDetailModal = (props) => {
                       <span>Deadline</span>
                     </td>
                     <td>
-                      <span>{moment(props.task.due_date).format("MMM Do YYYY")}</span>
+                      <span>{props.task.due_date !== null ? moment(props.task.due_date).format("MMM Do YYYY") : "set date"}</span>
                     </td>
                   </tr>
                   <tr>
@@ -161,9 +176,9 @@ const TaskDetailModal = (props) => {
               <div>
                 <div class="description__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
                   <h4>Description</h4>
-                  <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
+                  {showTextArea ? <Button onClick={confirmDescription} shape="round" type="dashed" icon={<CheckOutlined />}></Button> : <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>}
                 </div>
-                <div>{showTextArea ? <TextArea rows="5" onBlur={showTextAreaHandler} /> : <p>{props.task.description}</p>}</div>
+                <div>{showTextArea ? <TextArea rows="5" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{props.task.description}</p>}</div>
               </div>
               <Divider />
               <div class="task-budget">
@@ -171,7 +186,7 @@ const TaskDetailModal = (props) => {
                   <h4>Tags</h4>
                   <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
-                <div>{tagGroup && tagGroup.map((item) => <Tag>{item.name}</Tag>)}</div>
+                <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select"></Select>
               </div>
               <Divider />
               <div class="task-budget">

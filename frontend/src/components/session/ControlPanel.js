@@ -26,7 +26,7 @@ const ControlPanel = ({ sessions, match, addNewSession }) => {
   };
 
   const showAllSessions = () => {
-    const upcoming = sessions.filter((item) => moment(item.date).format("MMM Do YY") > moment(calendarDay).format("MMM Do YY"));
+    const upcoming = sessions.filter((item) => moment(item.date).format("MMM Do YY") >= moment(calendarDay).format("MMM Do YY"));
     setFilteredSessions(upcoming);
   };
 

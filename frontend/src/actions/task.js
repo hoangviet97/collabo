@@ -103,6 +103,15 @@ export const setProgress = ({ id, progress }) => async (dispatch) => {
   }
 };
 
+export const setDescription = ({ id, description }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/tasks/desc", { id, description });
+    message.success("Task updated!");
+  } catch (err) {
+    dispatch({ type: UPDATE_TASK_FAIL });
+  }
+};
+
 export const updateTaskPriority = ({ id, priorityId, project }) => async (dispatch) => {
   try {
     const res = await axios.patch("http://localhost:9000/api/tasks/update-priority", { id, priorityId, project });
