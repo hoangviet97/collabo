@@ -12,10 +12,10 @@ export const createTask = ({ task }) => async (dispatch) => {
   }
 };
 
-export const getProjectTasks = ({ id }) => async (dispatch) => {
+export const getProjectTasks = ({ project }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());
-    const res = await axios.post("http://localhost:9000/api/tasks/all", { id });
+    const res = await axios.post("http://localhost:9000/api/tasks/all", { project });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });

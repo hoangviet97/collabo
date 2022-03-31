@@ -28,7 +28,7 @@ const Projects = (props) => {
   const [filteredData, setFilteredData] = useState([]);
 
   const projectCardHandler = (index) => {
-    console.log("test");
+    const { push } = history;
     const path = "/" + index + "/tasks";
     history.push(path);
   };

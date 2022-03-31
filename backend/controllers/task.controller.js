@@ -12,7 +12,7 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    Task.getAllTasks(req.body.id, (err, result) => {
+    Task.getAllTasks(req.body.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

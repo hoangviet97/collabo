@@ -12,10 +12,10 @@ export const createSection = ({ id, name }) => async (dispatch) => {
   }
 };
 
-export const getSections = ({ id }) => async (dispatch) => {
+export const getSections = ({ project }) => async (dispatch) => {
   try {
     dispatch(setSectionLoading());
-    const res = await axios.post("http://localhost:9000/api/sections/all", { id });
+    const res = await axios.post("http://localhost:9000/api/sections/all", { project });
     dispatch({ type: GET_SECTIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_SECTIONS_FAIL });

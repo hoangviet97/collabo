@@ -141,6 +141,18 @@ module.exports = {
     });
   },
 
+  check: function (project, id, result) {
+    const sql = `SELECT * FROM members WHERE projects_id = ? AND users_id = ?`;
+    con.query(sql, [project, id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
   delete: async function (id, result) {
     const sql = `DELETE from projects WHERE id = ?`;
 

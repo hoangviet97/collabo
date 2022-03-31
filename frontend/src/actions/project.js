@@ -27,13 +27,13 @@ export const getProjects = () => async (dispatch) => {
   }
 };
 
-export const getProject = (id) => async (dispatch) => {
+export const getProject = ({ project }) => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
     dispatch(setProjectLoading());
-    const res = await axios.post("http://localhost:9000/api/projects/single", { id: id });
+    const res = await axios.post("http://localhost:9000/api/projects/single", { project });
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
     console.log(err.response);

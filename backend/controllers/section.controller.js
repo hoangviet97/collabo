@@ -18,7 +18,7 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    Section.find(req.body.id, (err, result) => {
+    Section.find(req.body.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

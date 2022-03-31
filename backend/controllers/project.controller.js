@@ -30,7 +30,7 @@ module.exports = {
   },
 
   getOne: function (req, res) {
-    Project.findOne(req.body.id, req.user.id, (err, result) => {
+    Project.findOne(req.body.project, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
@@ -66,6 +66,13 @@ module.exports = {
 
   updateStatus: function (req, res) {
     Project.updateStatus(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  checkMembership: function (req, res) {
+    Project.check(req.body.id, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

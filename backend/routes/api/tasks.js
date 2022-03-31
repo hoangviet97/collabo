@@ -2,11 +2,12 @@ const express = require("express");
 const taskController = require("../../controllers/task.controller");
 const auth = require("../../middleware/auth");
 const permit = require("../../middleware/permission");
+const check = require("../../middleware/checkMembership");
 const router = express.Router();
 
 router.post("/add", auth, taskController.create);
-router.post("/all", auth, taskController.getAll);
-router.post("/all2", auth, taskController.getAll2);
+router.post("/all", [auth, check], taskController.getAll);
+router.post("/all2", [auth], taskController.getAll2);
 router.get("/:id/:limit", auth, taskController.getAllLimit);
 router.post("/statusgroup", auth, taskController.getStatusGroup);
 router.post("/all-status", auth, taskController.getByStatus);

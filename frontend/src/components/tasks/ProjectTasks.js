@@ -47,10 +47,10 @@ const ProjectTasks = ({ match }) => {
   const [newTaskIndexes, setNewTaskIndexes] = useState([]);
 
   useEffect(() => {
-    dispatch(getSections({ id: project_id }));
+    dispatch(getSections({ project: project_id }));
     dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
-    dispatch(getProjectTasks({ id: project_id }));
+    dispatch(getProjectTasks({ project: project_id }));
     dispatch(getTagsByTasks({ project: project_id }));
     dispatch(getTags({ project: project_id }));
   }, []);
@@ -272,7 +272,7 @@ const ProjectTasks = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} projectId={project_id} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

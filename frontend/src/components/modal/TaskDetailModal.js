@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Button, Modal, Input, Select, Avatar, Popover, Divider, Progress, Tag } from "antd";
-import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined } from "@ant-design/icons";
+import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const TaskDetailModal = (props) => {
   const [percent, setPercent] = useState(props.task.progress);
   const [tagInputVisible, setTagInputVisible] = useState(false);
   const [tagInputValue, setTagInputValue] = useState("");
+  const [children, setChildren] = useState([]);
   const { TextArea } = Input;
   const { Option } = Select;
   const dispatch = useDispatch();
@@ -31,6 +32,23 @@ const TaskDetailModal = (props) => {
       setTaskTitle("");
     };
   }, [props]);
+
+  useEffect(() => {
+    const child = [];
+    for (let i = 0; i < props.tags.length; i++) {
+      child.push(
+        <Option key={props.tags[i].id}>
+          <div>
+            <TagsOutlined />
+            &nbsp;
+            {props.tags[i].name}
+          </div>
+        </Option>
+      );
+    }
+
+    setChildren(child);
+  }, [props.tags]);
 
   const showTextAreaHandler = () => {
     setShowTextArea(true);
@@ -186,7 +204,9 @@ const TaskDetailModal = (props) => {
                   <h4>Tags</h4>
                   <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
-                <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select"></Select>
+                <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select">
+                  {children}
+                </Select>
               </div>
               <Divider />
               <div class="task-budget">

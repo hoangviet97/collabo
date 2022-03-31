@@ -25,7 +25,8 @@ const MainContent = (props) => {
 
   useEffect(() => {
     if (pathValue.length === 8 && isNaN(pathValue) === false) {
-      props.getProject(pathValue);
+      props.getProject({ project: pathValue });
+      console.log(props.history);
     }
   }, [props.match]);
 
