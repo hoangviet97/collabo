@@ -43,7 +43,7 @@ const ProjectCalendar = (props) => {
   ];
 
   useEffect(() => {
-    props.getProjectTasks({ id: props.match.params.id });
+    props.getProjectTasks({ project: props.match.params.id });
   }, []);
 
   useEffect(() => {

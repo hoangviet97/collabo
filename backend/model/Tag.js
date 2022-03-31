@@ -60,5 +60,19 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  deleteTag: async function (id, result) {
+    const sql = `DELETE FROM tags WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
   }
 };

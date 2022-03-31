@@ -22,5 +22,13 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  deleteTag: function (req, res) {
+    console.log(req.body.id);
+    Tag.deleteTag(req.body.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

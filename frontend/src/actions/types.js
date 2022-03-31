@@ -122,6 +122,7 @@ export const GET_STATUS_GROUP = "GET_STATUS_GROUP";
 export const CREATE_TAG = "CREATE_TAG";
 export const GET_TAGS = "GET_TAGS";
 export const GET_TASK_TAGS = "GET_TASK_TAGS";
+export const DELETE_TAGS = "DELETE_TAGS";
 
 export const SET_PROGRESS = "SET_PROGRESS";
 
