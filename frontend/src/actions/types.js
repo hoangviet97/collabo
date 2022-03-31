@@ -124,3 +124,5 @@ export const GET_TAGS = "GET_TAGS";
 export const GET_TASK_TAGS = "GET_TASK_TAGS";
 
 export const SET_PROGRESS = "SET_PROGRESS";
+
+export const GET_PROJECT_AUTH = "GET_PROJECT_AUTH";

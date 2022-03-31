@@ -17,9 +17,12 @@ import NotFound from "../layout/NotFound";
 import Session from "../session/Session";
 import { getProject } from "../../actions/project";
 import { getAllInvitations } from "../../actions/invitation";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+import Unauthorized from "../layout/Unauthorized";
 
 const MainContent = (props) => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.project.authorized);
   let path = window.location.pathname;
   let pathValue = path.split("/")[1];
 
@@ -30,30 +33,30 @@ const MainContent = (props) => {
     }
   }, [props.match]);
 
-  useEffect(() => {
-    props.getAllInvitations();
-  }, []);
-
   return (
     <div className="mainContent">
-      <Switch>
-        <Route exact path="/" component={Projects} />
-        <Route exact path="/settings" component={UserSettings} />
-        <Route exact path="/:id/tasks" component={ProjectTasks} />
-        <Route exact path="/:id/overview" component={Overview} />
-        <Route exact path="/notify" component={Invitations} />
-        <Route exact path="/:id/calendar" component={ProjectCalendar} />
-        <Route exact path="/:id/board" component={KanbanBoard} />
-        <Route exact path="/:id/tags" component={Tags} />
-        <Route path="/:id/documents" component={Documents} />
-        <Route exact path="/:id/tracker" component={TimeTracker} />
-        <Route exact path="/:id/messages" component={Messages} />
-        <Route exact path="/:id/team" component={Team} />
-        <Route path="/:id/report" component={Report} />
-        <Route path="/:id/sessions" component={Session} />
-        <Route exact path="/:id" component={ProjectTasks} />
-        <Route component={NotFound} />
-      </Switch>
+      {auth === false ? (
+        <Unauthorized />
+      ) : (
+        <Switch>
+          <Route exact path="/" component={Projects} />
+          <Route exact path="/settings" component={UserSettings} />
+          <Route exact path="/:id/tasks" component={ProjectTasks} />
+          <Route exact path="/:id/overview" component={Overview} />
+          <Route exact path="/notify" component={Invitations} />
+          <Route exact path="/:id/calendar" component={ProjectCalendar} />
+          <Route exact path="/:id/board" component={KanbanBoard} />
+          <Route exact path="/:id/tags" component={Tags} />
+          <Route path="/:id/documents" component={Documents} />
+          <Route exact path="/:id/tracker" component={TimeTracker} />
+          <Route exact path="/:id/messages" component={Messages} />
+          <Route exact path="/:id/team" component={Team} />
+          <Route path="/:id/report" component={Report} />
+          <Route path="/:id/sessions" component={Session} />
+          <Route exact path="/:id" component={ProjectTasks} />
+          <Route component={NotFound} />
+        </Switch>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, GET_PROJECTS, LOAD_PROJECTS_FAIL, UPDATE_PROJECT_COLOR, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "./types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECT_AUTH, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, GET_PROJECTS, LOAD_PROJECTS_FAIL, UPDATE_PROJECT_COLOR, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "./types";
 import axios from "axios";
 import { message } from "antd";
 import setAuthToken from "../helpers/setAuthToken";
@@ -37,7 +37,18 @@ export const getProject = ({ project }) => async (dispatch) => {
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
     console.log(err.response);
+    dispatch({ type: GET_PROJECT_AUTH });
+    message.error("unathorized");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
+  }
+};
+
+export const goToProject = ({ project, pusher }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/projects/check", { project });
+    console.log(res);
+  } catch (err) {
+    console.log(err.response);
   }
 };
 

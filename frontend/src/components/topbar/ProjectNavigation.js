@@ -15,6 +15,7 @@ const ProjectNavigation = (props) => {
   const { Option } = Select;
   const dispatch = useDispatch();
   const currentProject = useSelector((state) => state.project.currentProject);
+  const auth = useSelector((state) => state.project.authorized);
   const tasks = useSelector((state) => state.task.tasks);
   const [totalBudget, setTotalBudget] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -111,118 +112,124 @@ const ProjectNavigation = (props) => {
   );
 
   return (
-    <div className="single-navigation">
-      <div className="single-navigation__identity">
-        <div className="single-navigation__icon">
-          <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null ? currentProject.color : "grey" }}>
-            <AvatarIcon name={currentProject.name} />
-          </div>
-        </div>
-        <div className="single-navigation__title">
-          <Dropdown overlay={projectInfoMenu} placement="bottomCenter">
-            <span>{currentProject && currentProject.name}</span>
-          </Dropdown>
-        </div>
-      </div>
-      <nav className="single-navigation__list">
-        <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/overview`}>
-            <LayoutOutlined className="single-navigation__link-icon" />
-            <span>Overview</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tasks`}>
-            <BarsOutlined className="single-navigation__link-icon" />
-            <span>Tasks</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/board`}>
-            <ProjectOutlined className="single-navigation__link-icon" />
-            <span>Board</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/calendar`}>
-            <CalendarOutlined className="single-navigation__link-icon" />
-            <span>Calendar</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Link className="single-navigation__link" to={`/${path.split("/")[1]}/messages`}>
-            <CommentOutlined className="single-navigation__link-icon" />
-            <span>Messages</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
-            <TeamOutlined className="single-navigation__link-icon" />
-            <span>Team</span>
-          </Link>
-        </li>
-        <li className="single-navigation__item">
-          <Popover className="popover" placement="bottom" content={moreContent} trigger="click">
-            <Link className="single-navigation__link" to="">
-              <EllipsisOutlined className="single-navigation__link-icon" style={{ fontSize: "25px" }} />
-            </Link>
-          </Popover>
-        </li>
-      </nav>
-      <Modal title="Project Details" width="40%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <div class="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-          <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
-          <div className="icon-box__select">
-            <Button onClick={() => setIconTab((prev) => !prev)}>Change Color</Button>
-            {showIconTab && (
-              <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
-                <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {colorSet.map((item, index) => (
-                    <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <Form>
-          <Form.Item>
-            <label>Project name</label>
-            <Input value={projectName} />
-          </Form.Item>
-          <Form.Item>
-            <label>Project description</label>
-            <TextArea rows={4} value={projectDescription} placeholder="Set new description..." />
-          </Form.Item>
-          <Form.Item>
-            <label style={{ display: "block" }}>Project budget</label>
-            <Input style={{ width: "40%", marginRight: "10px" }} type="number" value={totalBudget} onBlur={onBudgetBlur} onChange={(e) => setTotalBudget(e.target.value)} />
-            <Select defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
-              <Option value="czk">CZK</Option>
-              <Option value="usd">USD</Option>
-              <Option value="eur">EUR</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <div>
-                <p>Project status</p>
-                <Radio.Group onChange={projectStatusHandle} defaultValue={currentProject.project_status_id}>
-                  <Radio.Button value="0">On Progress</Radio.Button>
-                  <Radio.Button value="1">Completed</Radio.Button>
-                  <Radio.Button value="2">Canceled</Radio.Button>
-                </Radio.Group>
-              </div>
-              <div>
-                <Button onClick={deleteHandler} type="primary" danger>
-                  Delete Project
-                </Button>
+    <>
+      {auth === false ? (
+        ""
+      ) : (
+        <div className="single-navigation">
+          <div className="single-navigation__identity">
+            <div className="single-navigation__icon">
+              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null ? currentProject.color : "grey" }}>
+                <AvatarIcon name={currentProject.name} />
               </div>
             </div>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </div>
+            <div className="single-navigation__title">
+              <Dropdown overlay={projectInfoMenu} placement="bottomCenter">
+                <span>{currentProject && currentProject.name}</span>
+              </Dropdown>
+            </div>
+          </div>
+          <nav className="single-navigation__list">
+            <li className="single-navigation__item">
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/overview`}>
+                <LayoutOutlined className="single-navigation__link-icon" />
+                <span>Overview</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tasks`}>
+                <BarsOutlined className="single-navigation__link-icon" />
+                <span>Tasks</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/board`}>
+                <ProjectOutlined className="single-navigation__link-icon" />
+                <span>Board</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/calendar`}>
+                <CalendarOutlined className="single-navigation__link-icon" />
+                <span>Calendar</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/messages`}>
+                <CommentOutlined className="single-navigation__link-icon" />
+                <span>Messages</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
+                <TeamOutlined className="single-navigation__link-icon" />
+                <span>Team</span>
+              </Link>
+            </li>
+            <li className="single-navigation__item">
+              <Popover className="popover" placement="bottom" content={moreContent} trigger="click">
+                <Link className="single-navigation__link" to="">
+                  <EllipsisOutlined className="single-navigation__link-icon" style={{ fontSize: "25px" }} />
+                </Link>
+              </Popover>
+            </li>
+          </nav>
+          <Modal title="Project Details" width="40%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <div class="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+              <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
+              <div className="icon-box__select">
+                <Button onClick={() => setIconTab((prev) => !prev)}>Change Color</Button>
+                {showIconTab && (
+                  <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
+                    <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                      {colorSet.map((item, index) => (
+                        <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <Form>
+              <Form.Item>
+                <label>Project name</label>
+                <Input value={projectName} />
+              </Form.Item>
+              <Form.Item>
+                <label>Project description</label>
+                <TextArea rows={4} value={projectDescription} placeholder="Set new description..." />
+              </Form.Item>
+              <Form.Item>
+                <label style={{ display: "block" }}>Project budget</label>
+                <Input style={{ width: "40%", marginRight: "10px" }} type="number" value={totalBudget} onBlur={onBudgetBlur} onChange={(e) => setTotalBudget(e.target.value)} />
+                <Select defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
+                  <Option value="czk">CZK</Option>
+                  <Option value="usd">USD</Option>
+                  <Option value="eur">EUR</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+                  <div>
+                    <p>Project status</p>
+                    <Radio.Group onChange={projectStatusHandle} defaultValue={currentProject.project_status_id}>
+                      <Radio.Button value="0">On Progress</Radio.Button>
+                      <Radio.Button value="1">Completed</Radio.Button>
+                      <Radio.Button value="2">Canceled</Radio.Button>
+                    </Radio.Group>
+                  </div>
+                  <div>
+                    <Button onClick={deleteHandler} type="primary" danger>
+                      Delete Project
+                    </Button>
+                  </div>
+                </div>
+              </Form.Item>
+            </Form>
+          </Modal>
+        </div>
+      )}
+    </>
   );
 };
 

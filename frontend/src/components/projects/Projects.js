@@ -5,7 +5,7 @@ import { Button, Skeleton, Select } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { getProjects } from "../../actions/project";
+import { getProjects, goToProject } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 
 const Projects = (props) => {
@@ -31,6 +31,7 @@ const Projects = (props) => {
     const { push } = history;
     const path = "/" + index + "/tasks";
     history.push(path);
+    dispatch(goToProject({ project: index, pusher: push }));
   };
 
   const setList = () => {

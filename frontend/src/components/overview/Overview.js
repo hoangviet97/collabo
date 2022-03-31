@@ -9,7 +9,6 @@ import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
 import { getTimeRecordsSum } from "../../actions/time_record";
 import { getSessionsLimit } from "../../actions/session";
-import TaskPreview from "../tasks/TaskPreview";
 
 const Overview = ({ match }) => {
   const dispatch = useDispatch();
@@ -23,7 +22,6 @@ const Overview = ({ match }) => {
   useEffect(() => {
     dispatch(getProjectTasks({ id: match.params.id }));
     dispatch(getStatusGroup({ id: match.params.id }));
-    dispatch(getProject({ id: match.params.id }));
     dispatch(getMembers({ id: match.params.id }));
     dispatch(getTimeRecordsSum({ id: match.params.id }));
     dispatch(getSessionsLimit({ project_id: match.params.id, limit: 4 }));
@@ -64,7 +62,7 @@ const Overview = ({ match }) => {
           <div class="d" style={{ display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
             <div>
               <h3>Budget spent</h3>
-              <span>{project.budget === null ? "Data is not available" : project.budget}</span>
+              <span>{project.budget === null ? "Data is not available. Please set your budget first." : project.budget}</span>
             </div>
           </div>
           <div class="e">
