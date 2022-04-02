@@ -176,4 +176,4 @@ const TaskItem = (props) => {
   );
 };
 
-export default connect(null, { deleteTask, updateTaskStatus, updateTaskPriority })(TaskItem);
+export default TaskItem;

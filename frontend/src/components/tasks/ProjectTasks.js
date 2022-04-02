@@ -178,6 +178,8 @@ const ProjectTasks = ({ match }) => {
   };
 
   const showTagSelectorHandler = () => {
+    setShowStatusSelector(false);
+    setShowPrioritySelector(false);
     setShowTagSelector((prev) => !prev);
   };
 
@@ -195,9 +197,33 @@ const ProjectTasks = ({ match }) => {
     }
   };
 
-  const statusSelectorHandler = () => {
-    const newTasks = tasks.filter((x) => x.title.includes("2"));
+  const showStatusSelectorHandler = () => {
+    setShowTagSelector(false);
+    setShowPrioritySelector(false);
+    setShowStatusSelector((prev) => !prev);
+  };
+
+  const StatusSelectorHandler = (value) => {
+    console.log(value);
+
+    const newTasks = tasks.filter((item) => item.statusId === value);
+    console.log(newTasks);
     setTaskContainer(newTasks);
+  };
+
+  const showPrioritySelectorHandler = () => {
+    setShowTagSelector(false);
+    setShowStatusSelector(false);
+    setShowPrioritySelector((prev) => !prev);
+  };
+
+  const prioritySelectorHandler = (value) => {
+    if (value === "x") {
+      setTaskContainer(tasks);
+    } else {
+      const newTasks = tasks.filter((item) => item.priorityId === value);
+      setTaskContainer(newTasks);
+    }
   };
 
   return (
@@ -215,24 +241,41 @@ const ProjectTasks = ({ match }) => {
                   <TagsOutlined />
                   Tags
                 </Button>
-                <Button onClick={statusSelectorHandler}>
+                <Button onClick={showStatusSelectorHandler}>
                   <TagsOutlined />
                   Status
                 </Button>
-                <Button onClick={showTagSelectorHandler}>
+                <Button onClick={showPrioritySelectorHandler}>
                   <TagsOutlined />
                   Priority
                 </Button>
-                <Button onClick={showTagSelectorHandler}>
-                  <StarFilled />
-                </Button>
               </div>
             </div>
-            {showTagSelector && (
-              <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
-                {children}
-              </Select>
-            )}
+            <div>
+              {showTagSelector && (
+                <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
+                  {children}
+                </Select>
+              )}
+              {showStatusSelector && (
+                <Select showSearch placeholder="Select a status" style={{ width: 200, marginTop: "5px" }} onChange={StatusSelectorHandler}>
+                  <Option value="x">All</Option>
+                  <Option value="0">Open</Option>
+                  <Option value="1">In Progress</Option>
+                  <Option value="2">On Hold</Option>
+                  <Option value="3">Completed</Option>
+                  <Option value="4">Cancelled</Option>
+                </Select>
+              )}
+              {showPrioritySelector && (
+                <Select showSearch placeholder="Select a priority" style={{ width: 200, marginTop: "5px" }} onChange={prioritySelectorHandler}>
+                  <Option value="x">All</Option>
+                  <Option value="0">Low</Option>
+                  <Option value="1">Medium</Option>
+                  <Option value="2">High</Option>
+                </Select>
+              )}
+            </div>
           </header>
           <Divider />
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
