@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "../utils/Container";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input, Spin } from "antd";
 import TagGroup from "./TagGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { createTag, getTags } from "../../actions/tag";
@@ -38,6 +38,7 @@ const Tags = ({ match }) => {
   const [tagName, setTagName] = useState("");
   const dispatch = useDispatch();
   const tags = useSelector((state) => state.tag.tags);
+  const loading = useSelector((state) => state.tag.loading);
 
   const createTagHandler = () => {
     dispatch(createTag({ project: match.params.id, name: tagName, color: "green" }));
@@ -55,14 +56,17 @@ const Tags = ({ match }) => {
             Add new tag
           </Button>
         </header>
-        <div class="tag__groups">
-          {groupList.map((i) => {
-            const letter = i.title;
-            console.log(letter.toLocaleLowerCase());
-            const tagslist = tags.filter((x) => x.name.charAt(0) === i.title.toLocaleLowerCase());
-            return <TagGroup title={i.title} tags={tagslist} />;
-          })}
-        </div>
+        {loading ? (
+          <Spin />
+        ) : (
+          <div class="tag__groups">
+            {groupList.map((i) => {
+              const letter = i.title;
+              const tagslist = tags.filter((x) => x.name.charAt(0) === i.title.toLocaleLowerCase());
+              return <TagGroup title={i.title} tags={tagslist} />;
+            })}
+          </div>
+        )}
         <Modal title="Tag" width="500px" visible={modalvisible} onCancel={() => setModalVisible(false)} footer={null}>
           <Form>
             <Form.Item>

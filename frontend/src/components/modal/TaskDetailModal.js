@@ -226,10 +226,6 @@ const TaskDetailModal = (props) => {
                   </Button>
                 </Button.Group>
               </div>
-              <Divider />
-              <div class="task-budget">
-                <h4>Time Tracking</h4>
-              </div>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ const Overview = ({ match }) => {
   const sessions = useSelector((state) => state.session.sessions);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ id: match.params.id }));
+    dispatch(getProjectTasks({ project: match.params.id }));
     dispatch(getStatusGroup({ id: match.params.id }));
     dispatch(getMembers({ id: match.params.id }));
     dispatch(getTimeRecordsSum({ id: match.params.id }));

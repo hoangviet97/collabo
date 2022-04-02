@@ -21,7 +21,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import Unauthorized from "../layout/Unauthorized";
 
 const MainContent = (props) => {
-  const dispatch = useDispatch();
   const auth = useSelector((state) => state.project.authorized);
   let path = window.location.pathname;
   let pathValue = path.split("/")[1];
@@ -29,7 +28,6 @@ const MainContent = (props) => {
   useEffect(() => {
     if (pathValue.length === 8 && isNaN(pathValue) === false) {
       props.getProject({ project: pathValue });
-      console.log(props.history);
     }
   }, [props.match]);
 

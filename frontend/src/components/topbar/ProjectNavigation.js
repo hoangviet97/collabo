@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
-import { CommentOutlined, TagsOutlined, CalendarOutlined, DownOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
 import { getProjectTasks } from "../../actions/task";
 import AvatarIcon from "../utils/AvatarIcon";
+import ColorList, { colorList } from "../utils/Colors";
 
 const ProjectNavigation = (props) => {
   let path = window.location.pathname;
@@ -124,9 +125,10 @@ const ProjectNavigation = (props) => {
               </div>
             </div>
             <div className="single-navigation__title">
-              <Dropdown overlay={projectInfoMenu} placement="bottomCenter">
-                <span>{currentProject && currentProject.name}</span>
-              </Dropdown>
+              <div>
+                <span style={{ marginRight: "4px" }}>{currentProject && currentProject.name}</span>
+                <InfoCircleOutlined onClick={() => setIsModalVisible(true)} />
+              </div>
             </div>
           </div>
           <nav className="single-navigation__list">
@@ -182,8 +184,8 @@ const ProjectNavigation = (props) => {
                 {showIconTab && (
                   <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
                     <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                      {colorSet.map((item, index) => (
-                        <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                      {colorList.map((item, index) => (
+                        <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
                       ))}
                     </div>
                   </div>

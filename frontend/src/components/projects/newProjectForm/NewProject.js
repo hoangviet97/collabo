@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { connect, useDispatch } from "react-redux";
 import { createProject } from "../../../actions/project";
+import ColorCubic from "../../utils/ColorCubic";
 
 const NewProject = ({ history }) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const NewProject = ({ history }) => {
 
   const [projectName, setProjectName] = useState({ name: "" });
   const [color, setColor] = useState("");
+  const [chosen, setChosen] = useState("");
 
   const { name } = projectName;
 
@@ -37,7 +39,15 @@ const NewProject = ({ history }) => {
             <Form.Item label="Choose your color">
               <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 {colorSet.map((item, index) => (
-                  <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                  <ColorCubic
+                    onClick={() => {
+                      handleIconColor(item);
+                      setChosen(index);
+                    }}
+                    active={index === chosen}
+                    key={index}
+                    color={item}
+                  />
                 ))}
               </div>
             </Form.Item>

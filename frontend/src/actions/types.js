@@ -123,7 +123,9 @@ export const CREATE_TAG = "CREATE_TAG";
 export const GET_TAGS = "GET_TAGS";
 export const GET_TASK_TAGS = "GET_TASK_TAGS";
 export const DELETE_TAGS = "DELETE_TAGS";
+export const TAGS_LOADING = "TAGS_LOADING";
 
 export const SET_PROGRESS = "SET_PROGRESS";
+export const RESET_AUTH = "RESET_AUTH";
 
 export const GET_PROJECT_AUTH = "GET_PROJECT_AUTH";

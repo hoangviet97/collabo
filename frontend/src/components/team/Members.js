@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Table, Space, Avatar, Select, Menu, Dropdown } from "antd";
+import { Table, Space, Avatar, Select, Menu, Dropdown, Drawer } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../utils/AvatarIcon";
 import { updateMemberRole, deleteMember } from "../../actions/member";
@@ -11,6 +11,7 @@ const Members = ({ projectId }) => {
   const members = useSelector((state) => state.member.members);
   const user_role = useSelector((state) => state.project.currentProject.role);
   const { Option } = Select;
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   function roleHandle(id, value) {
     dispatch(updateMemberRole({ id: id, project: projectId, role_id: value }));
@@ -18,6 +19,10 @@ const Members = ({ projectId }) => {
 
   const kickMemberHandle = (id) => {
     dispatch(deleteMember({ id: id, project: projectId }));
+  };
+
+  const drawerCloseHandler = () => {
+    setDrawerVisible(false);
   };
 
   const menu = (id) => (
@@ -38,7 +43,7 @@ const Members = ({ projectId }) => {
           <Avatar size="large">
             <AvatarIcon name={record.firstname} />
           </Avatar>
-          <a>
+          <a onClick={() => setDrawerVisible(true)}>
             {record.firstname} {record.lastname}
           </a>
         </Space>
@@ -92,6 +97,12 @@ const Members = ({ projectId }) => {
   return (
     <div className="members" style={{ marginTop: "20px" }}>
       <Table dataSource={members} columns={columns} />;
+      <Drawer width={640} placement="right" closable={false} onClose={drawerCloseHandler} visible={drawerVisible}>
+        <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
+          User Profile
+        </p>
+        <p className="site-description-item-profile-p">Personal</p>
+      </Drawer>
     </div>
   );
 };

@@ -34,6 +34,8 @@ const ProjectTasks = ({ match }) => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [children, setChildren] = useState([]);
   const [showTagSelector, setShowTagSelector] = useState(false);
+  const [showStatusSelector, setShowStatusSelector] = useState(false);
+  const [showPrioritySelector, setShowPrioritySelector] = useState(false);
   const [taskTags, setTaskTags] = useState([]);
   const [selectedVal, setSelectedVal] = useState([]);
   const [taskContainer, setTaskContainer] = useState([]);
