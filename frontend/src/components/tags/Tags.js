@@ -41,7 +41,7 @@ const Tags = ({ match }) => {
   const loading = useSelector((state) => state.tag.loading);
 
   const createTagHandler = () => {
-    dispatch(createTag({ project: match.params.id, name: tagName, color: "green" }));
+    dispatch(createTag({ project: match.params.id, name: tagName.toLocaleLowerCase(), color: "green" }));
   };
 
   useEffect(() => {

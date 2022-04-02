@@ -2,23 +2,15 @@ import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import Project from "./Project";
 import { Button, Skeleton, Select } from "antd";
-import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled, CloseOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects, goToProject } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
+import "./Project.scss";
 
 const Projects = (props) => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProjects());
-    dispatch(getMembers2());
-  }, []);
-
-  useEffect(() => {
-    setFilteredData(props.projects);
-  }, [props.projects]);
 
   const history = useHistory();
   const { Option } = Select;
@@ -26,6 +18,17 @@ const Projects = (props) => {
   const [activeCards, setActiveCards] = useState("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [isFvorite, setIsFavorite] = useState();
+
+  useEffect(() => {
+    dispatch(getProjects());
+    dispatch(getMembers2());
+    setIsFavorite(false);
+  }, []);
+
+  useEffect(() => {
+    setFilteredData(props.projects);
+  }, [props.projects]);
 
   const projectCardHandler = (index) => {
     const { push } = history;
@@ -57,7 +60,14 @@ const Projects = (props) => {
   }
 
   const showFavorite = () => {
+    setIsFavorite(true);
     const data = props.projects.filter((item) => item.favorite === 1);
+    setFilteredData(data);
+  };
+
+  const showAll = () => {
+    setIsFavorite(false);
+    const data = props.projects.filter((item) => item.favorite === 0 || item.favorite === 1);
     setFilteredData(data);
   };
 
@@ -102,9 +112,15 @@ const Projects = (props) => {
           </div>
           <div className="projects-toolbar__right-side" style={{ display: "flex", gap: "15px" }}>
             <div class="projects__favorite-filter">
-              <Button onClick={showFavorite} style={{ borderRadius: "10px" }}>
-                <StarFilled />
-              </Button>
+              {!isFvorite ? (
+                <Button onClick={showFavorite} style={{ borderRadius: "10px" }}>
+                  <StarFilled />
+                </Button>
+              ) : (
+                <Button onClick={showAll} style={{ borderRadius: "10px" }}>
+                  <CloseOutlined />
+                </Button>
+              )}
             </div>
             <div className="projects__sort">
               <Select style={{ width: 150, borderRadius: "10px" }} onChange={handleChange}>
