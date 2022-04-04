@@ -129,3 +129,6 @@ export const SET_PROGRESS = "SET_PROGRESS";
 export const RESET_AUTH = "RESET_AUTH";
 
 export const GET_PROJECT_AUTH = "GET_PROJECT_AUTH";
+
+export const FILTER_STATUS = "FILTER_STATUS";
+export const FILTER_PRIORITY = "FILTER_PRIORITY";

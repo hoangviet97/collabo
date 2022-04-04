@@ -2,7 +2,7 @@ import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
 import { createSection } from "../../actions/section";
 import { getSections, deleteSection } from "../../actions/section";
-import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
+import { getProjectTasks, createTask, getAllAssignees, filterTaskByStatus, filterTaskByPriority } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ const ProjectTasks = ({ match }) => {
 
   // Selectors
   const sections = useSelector((state) => state.section.sections);
-  const tasks = useSelector((state) => state.task.tasks);
+  const tasks = useSelector((state) => state.task.filtered);
   const loading = useSelector((state) => state.task.loading);
   const members = useSelector((state) => state.member.members);
   const assignees = useSelector((state) => state.task.assignees);
@@ -31,11 +31,9 @@ const ProjectTasks = ({ match }) => {
 
   // States
   const [taskNameForSearch, setTaskNameForSearch] = useState("");
-  const [filteredTasks, setFilteredTasks] = useState([]);
   const [children, setChildren] = useState([]);
   const [showTagSelector, setShowTagSelector] = useState(false);
   const [showStatusSelector, setShowStatusSelector] = useState(false);
-  const [showPrioritySelector, setShowPrioritySelector] = useState(false);
   const [taskTags, setTaskTags] = useState([]);
   const [selectedVal, setSelectedVal] = useState([]);
   const [taskContainer, setTaskContainer] = useState([]);
@@ -179,7 +177,6 @@ const ProjectTasks = ({ match }) => {
 
   const showTagSelectorHandler = () => {
     setShowStatusSelector(false);
-    setShowPrioritySelector(false);
     setShowTagSelector((prev) => !prev);
   };
 
@@ -199,31 +196,11 @@ const ProjectTasks = ({ match }) => {
 
   const showStatusSelectorHandler = () => {
     setShowTagSelector(false);
-    setShowPrioritySelector(false);
     setShowStatusSelector((prev) => !prev);
   };
 
   const StatusSelectorHandler = (value) => {
-    console.log(value);
-
-    const newTasks = tasks.filter((item) => item.statusId === value);
-    console.log(newTasks);
-    setTaskContainer(newTasks);
-  };
-
-  const showPrioritySelectorHandler = () => {
-    setShowTagSelector(false);
-    setShowStatusSelector(false);
-    setShowPrioritySelector((prev) => !prev);
-  };
-
-  const prioritySelectorHandler = (value) => {
-    if (value === "x") {
-      setTaskContainer(tasks);
-    } else {
-      const newTasks = tasks.filter((item) => item.priorityId === value);
-      setTaskContainer(newTasks);
-    }
+    dispatch(filterTaskByStatus(value));
   };
 
   return (
@@ -245,10 +222,6 @@ const ProjectTasks = ({ match }) => {
                   <TagsOutlined />
                   Status
                 </Button>
-                <Button onClick={showPrioritySelectorHandler}>
-                  <TagsOutlined />
-                  Priority
-                </Button>
               </div>
             </div>
             <div>
@@ -267,21 +240,13 @@ const ProjectTasks = ({ match }) => {
                   <Option value="4">Cancelled</Option>
                 </Select>
               )}
-              {showPrioritySelector && (
-                <Select showSearch placeholder="Select a priority" style={{ width: 200, marginTop: "5px" }} onChange={prioritySelectorHandler}>
-                  <Option value="x">All</Option>
-                  <Option value="0">Low</Option>
-                  <Option value="1">Medium</Option>
-                  <Option value="2">High</Option>
-                </Select>
-              )}
             </div>
           </header>
           <Divider />
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
-                {taskContainer
+                {tasks
                   .filter((x) => {
                     return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
                   })

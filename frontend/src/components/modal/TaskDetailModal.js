@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { createTag } from "../../actions/tag";
 import { setBudget, setProgress, setDescription } from "../../actions/task";
 
-const TaskDetailModal = (props) => {
-  const [taskTitle, setTaskTitle] = useState(props.task.title);
-  const [taskDescription, setTaskDescription] = useState(props.task.description);
+const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeModal }) => {
+  const [taskTitle, setTaskTitle] = useState(task.title);
+  const [taskDescription, setTaskDescription] = useState(task.description);
   const [tagGroup, setTagGroup] = useState([]);
-  const [budget, setmyBudget] = useState(props.task.budget);
+  const [budget, setmyBudget] = useState(task.budget);
   const [showTitleInput, setShowTitleInput] = useState(false);
   const [showTextArea, setShowTextArea] = useState(false);
-  const [percent, setPercent] = useState(props.task.progress);
+  const [percent, setPercent] = useState(task.progress);
   const [tagInputVisible, setTagInputVisible] = useState(false);
   const [tagInputValue, setTagInputValue] = useState("");
   const [children, setChildren] = useState([]);
@@ -23,32 +23,32 @@ const TaskDetailModal = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTaskTitle(props.task.title);
-    setmyBudget(props.task.budget);
-    setPercent(props.task.progress);
-    setTaskDescription(props.task.description);
+    setTaskTitle(task.title);
+    setmyBudget(task.budget);
+    setPercent(task.progress);
+    setTaskDescription(task.description);
 
     return () => {
       setTaskTitle("");
     };
-  }, [props]);
+  }, [task]);
 
   useEffect(() => {
     const child = [];
-    for (let i = 0; i < props.tags.length; i++) {
+    for (let i = 0; i < tags.length; i++) {
       child.push(
-        <Option key={props.tags[i].id}>
+        <Option key={tags[i].id}>
           <div>
             <TagsOutlined />
             &nbsp;
-            {props.tags[i].name}
+            {tags[i].name}
           </div>
         </Option>
       );
     }
 
     setChildren(child);
-  }, [props.tags]);
+  }, [tags]);
 
   const showTextAreaHandler = () => {
     setShowTextArea(true);
@@ -56,7 +56,7 @@ const TaskDetailModal = (props) => {
 
   const confirmDescription = () => {
     console.log(taskDescription);
-    dispatch(setDescription({ id: props.task.id, description: taskDescription }));
+    dispatch(setDescription({ id: task.id, description: taskDescription }));
     setShowTextArea(false);
   };
 
@@ -84,29 +84,29 @@ const TaskDetailModal = (props) => {
 
   const tagInputConfirmHandler = () => {
     if (tagInputValue.length > 0) {
-      dispatch(createTag({ project: props.projectId, name: tagInputValue, color: "green" }));
+      dispatch(createTag({ project: projectId, name: tagInputValue, color: "green" }));
     }
     setTagInputVisible(false);
   };
 
   const setBudgetHandler = () => {
-    dispatch(setBudget({ id: props.task.id, budget: budget, project: props.projectId }));
+    dispatch(setBudget({ id: task.id, budget: budget, project: projectId }));
   };
 
   const setProgressHandler = () => {
-    dispatch(setProgress({ id: props.task.id, progress: percent }));
+    dispatch(setProgress({ id: task.id, progress: percent }));
   };
 
   return (
-    <Modal visible={props.isVisible} width="50%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
+    <Modal visible={isVisible} width="50%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
       <div className="task__detail">
         <header className="task__detail__header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#f5f6fa", padding: "8px 12px" }}>
           <div className="task__detail-bread" style={{ backgroundColor: "white", padding: "5px 12px", border: "0.5px solid grey", borderRadius: "10px" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>{props.task.section_name}</Breadcrumb.Item>
+              <Breadcrumb.Item>{task.section_name}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
-          <Button style={{ borderRadius: "10px" }} onClick={() => props.closeModal()}>
+          <Button style={{ borderRadius: "10px" }} onClick={() => closeModal()}>
             X
           </Button>
         </header>
@@ -124,7 +124,7 @@ const TaskDetailModal = (props) => {
                       <span>Created</span>
                     </td>
                     <td>
-                      <span>{moment(props.task.created_at).format("MMM Do YYYY")}</span>
+                      <span>{moment(task.created_at).format("MMM Do YYYY")}</span>
                     </td>
                   </tr>
                   <tr>
@@ -132,7 +132,7 @@ const TaskDetailModal = (props) => {
                       <span>Status</span>
                     </td>
                     <td>
-                      <span>{props.task.statusName}</span>
+                      <span>{task.statusName}</span>
                     </td>
                   </tr>
                   <tr>
@@ -140,7 +140,7 @@ const TaskDetailModal = (props) => {
                       <span>Priority</span>
                     </td>
                     <td>
-                      <Select className="task-select" defaultValue={props.task.priorityId} showArrow={false} style={{ width: "50%" }} bordered={false}>
+                      <Select className="task-select" defaultValue={task.priorityId} showArrow={false} style={{ width: "50%" }} bordered={false}>
                         <Option value="0">
                           <Tag color="gold">Low</Tag>
                         </Option>
@@ -158,7 +158,7 @@ const TaskDetailModal = (props) => {
                       <span>Deadline</span>
                     </td>
                     <td>
-                      <span>{props.task.due_date !== null ? moment(props.task.due_date).format("MMM Do YYYY") : "set date"}</span>
+                      <span>{task.due_date !== null ? moment(task.due_date).format("MMM Do YYYY") : "set date"}</span>
                     </td>
                   </tr>
                   <tr>
@@ -166,10 +166,10 @@ const TaskDetailModal = (props) => {
                       <span>Participants</span>
                     </td>
                     <td>
-                      {props.assignees ? (
+                      {assignees ? (
                         <>
                           <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-                            {props.assignees.map((assignee, index) => (
+                            {assignees.map((assignee, index) => (
                               <Popover content={assignee.firstname}>
                                 <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                                   <AvatarIcon name={assignee.firstname} />
@@ -196,7 +196,7 @@ const TaskDetailModal = (props) => {
                   <h4>Description</h4>
                   {showTextArea ? <Button onClick={confirmDescription} shape="round" type="dashed" icon={<CheckOutlined />}></Button> : <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>}
                 </div>
-                <div>{showTextArea ? <TextArea rows="5" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{props.task.description}</p>}</div>
+                <div>{showTextArea ? <TextArea rows="5" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{task.description}</p>}</div>
               </div>
               <Divider />
               <div class="task-budget">
