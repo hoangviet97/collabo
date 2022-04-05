@@ -17,7 +17,6 @@ const Overview = ({ match }) => {
   const members = useSelector((state) => state.member.members);
   const time = useSelector((state) => state.time_record.sum);
   const project = useSelector((state) => state.project.currentProject);
-  const sessions = useSelector((state) => state.session.sessions);
 
   useEffect(() => {
     dispatch(getProjectTasks({ project: match.params.id }));

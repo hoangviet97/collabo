@@ -4,13 +4,16 @@ import Project from "./Project";
 import { Button, Skeleton, Select } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled, CloseOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
-import { connect, useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProjects, goToProject } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
 
-const Projects = (props) => {
+const Projects = () => {
   const dispatch = useDispatch();
+  const projects = useSelector((state) => state.project.projects);
+  const members = useSelector((state) => state.member.members);
+  const loading = useSelector((state) => state.project.loading);
 
   const history = useHistory();
   const { Option } = Select;
@@ -27,8 +30,8 @@ const Projects = (props) => {
   }, []);
 
   useEffect(() => {
-    setFilteredData(props.projects);
-  }, [props.projects]);
+    setFilteredData(projects);
+  }, [projects]);
 
   const projectCardHandler = (index) => {
     const { push } = history;
@@ -51,23 +54,23 @@ const Projects = (props) => {
 
   function handleChange(value) {
     if (value === "newest") {
-      const data = [...props.projects].sort((a, b) => (new Date(a.created_at) < new Date(b.created_at) ? 1 : -1));
+      const data = [...projects].sort((a, b) => (new Date(a.created_at) < new Date(b.created_at) ? 1 : -1));
       setFilteredData(data);
     } else if (value === "oldest") {
-      const data = [...props.projects].sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
+      const data = [...projects].sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
       setFilteredData(data);
     }
   }
 
   const showFavorite = () => {
     setIsFavorite(true);
-    const data = props.projects.filter((item) => item.favorite === 1);
+    const data = projects.filter((item) => item.favorite === 1);
     setFilteredData(data);
   };
 
   const showAll = () => {
     setIsFavorite(false);
-    const data = props.projects.filter((item) => item.favorite === 0 || item.favorite === 1);
+    const data = projects.filter((item) => item.favorite === 0 || item.favorite === 1);
     setFilteredData(data);
   };
 
@@ -75,13 +78,13 @@ const Projects = (props) => {
 
   let content;
 
-  if (props.loading) {
+  if (loading) {
     content = <Skeleton />;
-  } else if (props.projects) {
+  } else if (projects) {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
         {filteredData.map((project) => {
-          let membersArr = props.members.filter((x) => x.project_id === project.id);
+          let membersArr = members.filter((x) => x.project_id === project.id);
           return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} members={membersArr} />;
         })}
       </div>
@@ -144,11 +147,4 @@ const Projects = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  projects: state.project.projects,
-  auth: state.auth,
-  loading: state.project.loading,
-  members: state.member.members
-});
-
-export default connect(mapStateToProps, {})(withRouter(Projects));
+export default withRouter(Projects);

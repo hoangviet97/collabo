@@ -91,10 +91,6 @@ function taskReducer(state = initialState, action) {
         ...state,
         tasks: state.tasks.map((item) => (item.id === payload.id ? { ...item, due_date: payload.date } : item))
       };
-    case UPDATE_TASK_FAIL:
-      return {
-        ...state
-      };
     case DELETE_TASK:
       return {
         ...state,
@@ -104,14 +100,10 @@ function taskReducer(state = initialState, action) {
       return {
         ...state
       };
-    case DELETE_TASK_FAIL:
-      return {
-        ...state
-      };
     case FILTER_STATUS:
       return {
         ...state,
-        filtered: state.tasks.filter((item) => item.statusId === payload)
+        tasks: state.tasks.filter((item) => item.statusId === payload)
       };
     case FILTER_PRIORITY:
       return {

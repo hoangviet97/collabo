@@ -12,19 +12,19 @@ import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
 
-const TaskItem = (props) => {
+const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, members, task, start_date }) => {
   const dispatch = useDispatch();
   const [datePicker, setDatePicker] = useState(null);
-  const [done, setDone] = useState(props.status);
+  const [done, setDone] = useState(task.statusId);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [startTime, setStartTime] = useState(false);
   const [assignessModalVisible, setAssignessModalVisible] = useState(false);
 
   const due_date =
-    props.task.due_date === null ? (
+    task.due_date === null ? (
       <CalendarOutlined
         onClick={(e) => {
-          openDateHandler(props.task.id);
+          openDateHandler(task.id);
           getE(e);
         }}
         className="task-calendar__icon"
@@ -32,11 +32,11 @@ const TaskItem = (props) => {
     ) : (
       <span
         onClick={(e) => {
-          openDateHandler(props.task.id);
+          openDateHandler(task.id);
           getE(e);
         }}
       >
-        <Moment format="D MMM YYYY">{props.task.due_date}</Moment>
+        <Moment format="D MMM YYYY">{task.due_date}</Moment>
       </span>
     );
   const { Text } = Typography;
@@ -50,7 +50,7 @@ const TaskItem = (props) => {
           Rename
         </span>
       </Menu.Item>
-      <Menu.Item key="1" onClick={() => console.log(props.task.id + " " + props.task.name)}>
+      <Menu.Item key="1">
         <span>
           <CopyOutlined />
           Duplicate
@@ -80,7 +80,7 @@ const TaskItem = (props) => {
   };
 
   const deleteTaskHandler = (event) => {
-    dispatch(deleteTask({ id: props.task.id, project: props.projectId }));
+    dispatch(deleteTask({ id: task.id, project: projectId }));
   };
 
   const openDateHandler = (id) => {
@@ -93,11 +93,11 @@ const TaskItem = (props) => {
 
   const switchTaskStatusHandler = (value) => {
     setDone(value);
-    dispatch(updateTaskStatus({ id: props.task.id, statusId: value, project: props.projectId }));
+    dispatch(updateTaskStatus({ id: task.id, statusId: value, project: projectId }));
   };
 
   const switchPriorityHandler = (value) => {
-    dispatch(updateTaskPriority({ id: props.task.id, priorityId: value, project: props.projectId }));
+    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project: projectId }));
   };
 
   const showAssigness = () => {
@@ -111,15 +111,15 @@ const TaskItem = (props) => {
 
   return (
     <div className="task-column">
-      <div onClick={() => props.showModal(props.task, props.sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div onClick={() => showModal(task, sectionName)} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
-        <span>{props.task.title}</span>
+        <span>{task.title}</span>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
-        {props.assignees.length > 0 ? (
+        {assignees.length > 0 ? (
           <>
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-              {props.assignees.map((assignee, index) => (
+              {assignees.map((assignee, index) => (
                 <Popover content={assignee.firstname}>
                   <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                     <AvatarIcon name={assignee.firstname} />
@@ -127,7 +127,7 @@ const TaskItem = (props) => {
                 </Popover>
               ))}
             </Avatar.Group>
-            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: props.assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "999" }}>
+            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "999" }}>
               <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
             </div>
           </>
@@ -136,10 +136,10 @@ const TaskItem = (props) => {
             <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
           </div>
         )}
-        {assignessModalVisible && <AssigneesModal task_id={props.task.id} assignees={props.assignees} members={props.members} close={closeAssigness} project={props.projectId} />}
+        {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
-        <Select className="task-select" defaultValue={props.task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">Open</Option>
           <Option value="1">In Progress</Option>
           <Option value="2">On Hold</Option>
@@ -148,7 +148,7 @@ const TaskItem = (props) => {
         </Select>
       </div>
       <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Select className="task-select" defaultValue={props.task.priorityId} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={task.priorityId} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
             <Tag color="gold">Low</Tag>
           </Option>
@@ -162,10 +162,10 @@ const TaskItem = (props) => {
       </div>
       <div className="task-column__item task-column__due-date">
         {due_date}
-        <TaskDateModal taskId={props.task.id} start_date={props.start_date} due_date={props.task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
+        <TaskDateModal taskId={task.id} start_date={task.start_date} due_date={task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
-        <Timer localstorage={props.task.id} project_id={props.projectId} />
+        <Timer localstorage={task.id} project_id={projectId} />
       </div>
       <div className="task-column__item task-column__more">
         <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">

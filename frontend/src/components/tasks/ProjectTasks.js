@@ -10,6 +10,7 @@ import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divi
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
+import { alltasks } from "../../redux/selectors/task.selectors";
 
 const ProjectTasks = ({ match }) => {
   const dispatch = useDispatch();
@@ -20,9 +21,12 @@ const ProjectTasks = ({ match }) => {
   const { Text } = Typography;
   const { Option } = Select;
 
+  const [selectedStatus, setSelectedStatus] = useState("0");
+
   // Selectors
+  const myt = useSelector((state) => alltasks(state, selectedStatus));
   const sections = useSelector((state) => state.section.sections);
-  const tasks = useSelector((state) => state.task.filtered);
+  const tasks = useSelector((state) => state.task.tasks);
   const loading = useSelector((state) => state.task.loading);
   const members = useSelector((state) => state.member.members);
   const assignees = useSelector((state) => state.task.assignees);
@@ -57,6 +61,7 @@ const ProjectTasks = ({ match }) => {
 
   useEffect(() => {
     setTaskContainer(tasks);
+    console.log(myt);
   }, [tasks]);
 
   useEffect(() => {
@@ -166,7 +171,9 @@ const ProjectTasks = ({ match }) => {
     Object.assign(task, { section_name: section });
     const filteredTags = tags.filter((x) => x.tasks_id === task.id);
     Object.assign(task, { tags: filteredTags });
-    console.log(tags);
+    const filteredAssignees = assignees.filter((x) => x.tasks_id === task.id);
+    Object.assign(task, { assignees: filteredAssignees });
+    console.log(task);
     setTaskDetail(task);
     setIsModalVisible(true);
   };
@@ -184,7 +191,6 @@ const ProjectTasks = ({ match }) => {
     setSelectedVal(val);
     const tasksIds = tags.filter((x) => val.includes(x.tags_id));
     const pom = tasksIds.map((x) => x.tasks_id);
-    console.log(pom);
     const newTasks = tasks.filter((item) => pom.includes(item.id));
 
     if (val.length > 0) {
@@ -200,7 +206,8 @@ const ProjectTasks = ({ match }) => {
   };
 
   const StatusSelectorHandler = (value) => {
-    dispatch(filterTaskByStatus(value));
+    const newTasks = value === "x" ? tasks : tasks.filter((x) => x.statusId === value);
+    setTaskContainer(newTasks);
   };
 
   return (
@@ -246,7 +253,7 @@ const ProjectTasks = ({ match }) => {
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
-                {tasks
+                {taskContainer
                   .filter((x) => {
                     return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
                   })
