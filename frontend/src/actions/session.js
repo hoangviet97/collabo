@@ -45,7 +45,7 @@ export const getSession = ({ id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
     const res = await axios.post("http://localhost:9000/api/sessions/single", { id });
-    //dispatch({ type: GET_SESSION, payload: res.data[0] });
+    dispatch({ type: GET_SESSION, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }

@@ -7,10 +7,11 @@ import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider } from "antd";
-import { EllipsisOutlined, TagsOutlined, PlusOutlined, StarFilled } from "@ant-design/icons";
+import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import { alltasks } from "../../redux/selectors/task.selectors";
+import TaskCard from "./TaskCard";
 
 const ProjectTasks = ({ match }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,6 @@ const ProjectTasks = ({ match }) => {
   const [selectedStatus, setSelectedStatus] = useState("0");
 
   // Selectors
-  const myt = useSelector((state) => alltasks(state, selectedStatus));
   const sections = useSelector((state) => state.section.sections);
   const tasks = useSelector((state) => state.task.tasks);
   const loading = useSelector((state) => state.task.loading);
@@ -41,6 +41,9 @@ const ProjectTasks = ({ match }) => {
   const [taskTags, setTaskTags] = useState([]);
   const [selectedVal, setSelectedVal] = useState([]);
   const [taskContainer, setTaskContainer] = useState([]);
+  const [activeCards, setActiveCards] = useState(false);
+  const [activeList, setActiveList] = useState(true);
+  const [taskVisual, setTaskVisual] = useState("card");
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -61,7 +64,6 @@ const ProjectTasks = ({ match }) => {
 
   useEffect(() => {
     setTaskContainer(tasks);
-    console.log(myt);
   }, [tasks]);
 
   useEffect(() => {
@@ -210,6 +212,14 @@ const ProjectTasks = ({ match }) => {
     setTaskContainer(newTasks);
   };
 
+  const setCards = () => {
+    setTaskVisual("card");
+  };
+
+  const setList = () => {
+    setTaskVisual("list");
+  };
+
   return (
     <div className="project-tasks">
       {loading ? (
@@ -219,7 +229,7 @@ const ProjectTasks = ({ match }) => {
           <header>
             <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
               <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
-              <div>
+              <div style={{ display: "flex" }}>
                 <span>Filter by: &nbsp;</span>
                 <Button onClick={showTagSelectorHandler}>
                   <TagsOutlined />
@@ -229,6 +239,14 @@ const ProjectTasks = ({ match }) => {
                   <TagsOutlined />
                   Status
                 </Button>
+                <div className="projects-dimension">
+                  <Button onClick={setCards}>
+                    <AppstoreOutlined />
+                  </Button>
+                  <Button onClick={setList}>
+                    <MenuOutlined />
+                  </Button>
+                </div>
               </div>
             </div>
             <div>
@@ -253,25 +271,33 @@ const ProjectTasks = ({ match }) => {
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section, index) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
-                {taskContainer
-                  .filter((x) => {
-                    return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
-                  })
-                  .map((task, i) => {
-                    if (section.id === task.sections_id) {
-                      const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
-                      return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
-                    }
-                  })}
-                {newTaskIndexes[index] === true ? (
-                  <form onSubmit={() => onBlurTaskHandler(section.id, index)}>
-                    <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id, index)} autoFocus />
-                  </form>
-                ) : (
-                  <Button type="link" onClick={(i) => newTaskVisibilityHandler(index)}>
-                    Add task
-                  </Button>
-                )}
+                <div className={`task__visual-${taskVisual}`}>
+                  {taskContainer
+                    .filter((x) => {
+                      return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
+                    })
+                    .map((task, i) => {
+                      if (section.id === task.sections_id) {
+                        const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
+                        if (taskVisual === "list") {
+                          return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
+                        } else if (taskVisual === "card") {
+                          return <TaskCard task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} />;
+                        }
+                      }
+                    })}
+                </div>
+                <div style={{ marginTop: "15px" }}>
+                  {newTaskIndexes[index] === true ? (
+                    <form onSubmit={() => onBlurTaskHandler(section.id, index)}>
+                      <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id, index)} autoFocus />
+                    </form>
+                  ) : (
+                    <Button type="link" style={{ display: "block" }} onClick={(i) => newTaskVisibilityHandler(index)}>
+                      Add task
+                    </Button>
+                  )}
+                </div>
               </Panel>
             ))}
           </Collapse>

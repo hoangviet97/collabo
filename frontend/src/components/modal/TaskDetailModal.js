@@ -132,7 +132,13 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                       <span>Status</span>
                     </td>
                     <td>
-                      <span>{task.statusName}</span>
+                      <Select className="task-select" defaultValue={task.statusId} showArrow={false} style={{ width: "100%" }} bordered={false}>
+                        <Option value="0">Open</Option>
+                        <Option value="1">In Progress</Option>
+                        <Option value="2">On Hold</Option>
+                        <Option value="3">Completed</Option>
+                        <Option value="4">Canceled</Option>
+                      </Select>
                     </td>
                   </tr>
                   <tr>
@@ -155,6 +161,14 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                   </tr>
                   <tr>
                     <td style={{ width: "40%" }}>
+                      <span>Start</span>
+                    </td>
+                    <td>
+                      <span>{task.start_date !== null ? moment(task.start_date).format("MMM Do YYYY") : "set date"}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: "40%" }}>
                       <span>Deadline</span>
                     </td>
                     <td>
@@ -166,7 +180,7 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                       <span>Participants</span>
                     </td>
                     <td>
-                      {task.assignees.length > 0 ? (
+                      {task.assignees ? (
                         <>
                           <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
                             {task.assignees.map((assignee, index) => (

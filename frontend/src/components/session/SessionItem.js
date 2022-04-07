@@ -25,6 +25,8 @@ const SessionItem = () => {
     dispatch(getTalkingPoints({ session_id: params.sessionId }));
     dispatch(getNote({ session_id: params.sessionId }));
 
+    console.log(single);
+
     if (note) {
       setNoteText(note.text);
     } else {
@@ -57,14 +59,12 @@ const SessionItem = () => {
       <header>
         <span style={{ fontSize: "20px" }}>{single.name}</span>
         <div>
-          <span>Date: {single.created_at}</span>
+          <span>Date: {moment(single.created_at).format("MMM Do YYYY")}</span>
         </div>
         <div>
           <span>Time: {single.created_at}</span>
         </div>
-        <div>
-          <span>Place: {single.created_at}</span>
-        </div>
+
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>Participants:&nbsp;&nbsp;</div>
           <Avatar.Group maxCount={2} maxPopoverTrigger="click" size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
