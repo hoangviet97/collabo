@@ -1,8 +1,8 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import { createSection } from "../../actions/section";
 import { getSections, deleteSection } from "../../actions/section";
-import { getProjectTasks, createTask, getAllAssignees, filterTaskByStatus, filterTaskByPriority } from "../../actions/task";
+import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divi
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
-import { alltasks } from "../../redux/selectors/task.selectors";
 import TaskCard from "./TaskCard";
 
 const ProjectTasks = ({ match }) => {
