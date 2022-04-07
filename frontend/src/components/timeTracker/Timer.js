@@ -64,11 +64,11 @@ const Timer = ({ localstorage, project_id }) => {
           <span>{formatTime()}</span>
           <div className="buttons">
             {!isActive ? (
-              <button onClick={handleStart}>
+              <button style={{ border: "none", backgroundColor: "transparent" }} onClick={handleStart}>
                 <CaretRightOutlined />
               </button>
             ) : (
-              <button onClick={handleReset}>
+              <button style={{ border: "none", backgroundColor: "transparent" }} onClick={handleReset}>
                 <PauseOutlined />
               </button>
             )}

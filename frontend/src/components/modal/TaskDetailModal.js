@@ -182,7 +182,7 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                     <td>
                       {task.assignees ? (
                         <>
-                          <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+                          <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
                             {task.assignees.map((assignee, index) => (
                               <Popover key={index} content={assignee.firstname}>
                                 <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>

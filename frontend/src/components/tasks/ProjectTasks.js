@@ -43,7 +43,7 @@ const ProjectTasks = ({ match }) => {
   const [taskContainer, setTaskContainer] = useState([]);
   const [activeCards, setActiveCards] = useState(false);
   const [activeList, setActiveList] = useState(true);
-  const [taskVisual, setTaskVisual] = useState("card");
+  const [taskVisual, setTaskVisual] = useState("");
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -54,6 +54,11 @@ const ProjectTasks = ({ match }) => {
   const [newTaskIndexes, setNewTaskIndexes] = useState([]);
 
   useEffect(() => {
+    if (localStorage.getItem("task_visual") === null) {
+      localStorage.setItem("task_visual", "list");
+    } else {
+      setTaskVisual(localStorage.getItem("task_visual"));
+    }
     dispatch(getSections({ project: project_id }));
     dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
@@ -212,12 +217,9 @@ const ProjectTasks = ({ match }) => {
     setTaskContainer(newTasks);
   };
 
-  const setCards = () => {
-    setTaskVisual("card");
-  };
-
-  const setList = () => {
-    setTaskVisual("list");
+  const setVisualHandler = (value) => {
+    setTaskVisual(value);
+    localStorage.setItem("task_visual", value);
   };
 
   return (
@@ -240,10 +242,10 @@ const ProjectTasks = ({ match }) => {
                   Status
                 </Button>
                 <div className="projects-dimension">
-                  <Button onClick={setCards}>
+                  <Button onClick={() => setVisualHandler("card")}>
                     <AppstoreOutlined />
                   </Button>
-                  <Button onClick={setList}>
+                  <Button onClick={() => setVisualHandler("list")}>
                     <MenuOutlined />
                   </Button>
                 </div>
@@ -282,7 +284,7 @@ const ProjectTasks = ({ match }) => {
                         if (taskVisual === "list") {
                           return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                         } else if (taskVisual === "card") {
-                          return <TaskCard task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} />;
+                          return <TaskCard task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
                       }
                     })}

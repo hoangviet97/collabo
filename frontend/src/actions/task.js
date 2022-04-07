@@ -96,7 +96,7 @@ export const setBudget = ({ id, budget, project }) => async (dispatch) => {
 export const setProgress = ({ id, progress }) => async (dispatch) => {
   try {
     const res = await axios.patch("http://localhost:9000/api/tasks/progress", { id, progress });
-    message.success("Task updated!");
+    dispatch({ type: SET_PROGRESS, payload: { id: id, progress: progress } });
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });
     message.error(err.response.data.message);
