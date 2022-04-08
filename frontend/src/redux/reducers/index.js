@@ -6,7 +6,7 @@ import member from "./member";
 import section from "./section";
 import task from "./task";
 import invitation from "./invitation";
-import post from "./post";
+import message from "./message";
 import session from "./session";
 import talking_point from "./talking_point";
 import file from "./file";
@@ -23,7 +23,7 @@ const appReducer = combineReducers({
   section,
   task,
   invitation,
-  post,
+  message,
   session,
   talking_point,
   file,

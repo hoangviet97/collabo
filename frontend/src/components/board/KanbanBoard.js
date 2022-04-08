@@ -62,7 +62,6 @@ const KanbanBoard = ({ match }) => {
   function handleCardMove(_card, source, destination) {
     const updatedBoard = moveCard(controlledBoard, source, destination);
     setBoard(updatedBoard);
-    console.log(_card);
     //
     dispatch(updateTaskStatus({ id: _card.id, statusId: destination.toColumnId, project: match.params.id }));
   }

@@ -12,6 +12,7 @@ const folderRoutes = require("./folders");
 const timerRoutes = require("./timers");
 const noteRoutes = require("./notes");
 const tagRoutes = require("./tags");
+const messageRoutes = require("./messages");
 const router = express.Router();
 
 router.use("/", authRoutes);
@@ -27,5 +28,6 @@ router.use("/folders", folderRoutes);
 router.use("/timers", timerRoutes);
 router.use("/notes", noteRoutes);
 router.use("/tags", tagRoutes);
+router.use("/messages", messageRoutes);
 
 module.exports = router;
