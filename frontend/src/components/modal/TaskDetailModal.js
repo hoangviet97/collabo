@@ -4,10 +4,12 @@ import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlin
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { createTag } from "../../actions/tag";
+import { createTaskTag } from "../../actions/tag";
 import { setBudget, setProgress, setDescription } from "../../actions/task";
+import AvatarPreview from "../avatar/AvatarPreview";
+import AssigneesModal from "./AssigneesModal";
 
-const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeModal }) => {
+const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible, closeModal }) => {
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [taskDescription, setTaskDescription] = useState(task.description);
   const [tagGroup, setTagGroup] = useState([]);
@@ -16,8 +18,9 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
   const [showTextArea, setShowTextArea] = useState(false);
   const [percent, setPercent] = useState(task.progress);
   const [tagInputVisible, setTagInputVisible] = useState(false);
-  const [tagInputValue, setTagInputValue] = useState("");
+  const [tagSelected, setTagSelected] = useState("");
   const [children, setChildren] = useState([]);
+  const [AssignessModalVisible, setAssignessModalVisible] = useState(false);
   const { TextArea } = Input;
   const { Option } = Select;
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
     setmyBudget(task.budget);
     setPercent(task.progress);
     setTaskDescription(task.description);
-
+    console.log(assignees);
     return () => {
       setTaskTitle("");
     };
@@ -80,21 +83,29 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
     setPercent(per);
   };
 
-  const tagInputValueHandler = () => {};
-
-  const tagInputConfirmHandler = () => {
-    if (tagInputValue.length > 0) {
-      dispatch(createTag({ project: projectId, name: tagInputValue, color: "green" }));
-    }
-    setTagInputVisible(false);
-  };
-
   const setBudgetHandler = () => {
     dispatch(setBudget({ id: task.id, budget: budget, project: projectId }));
   };
 
   const setProgressHandler = () => {
     dispatch(setProgress({ id: task.id, progress: percent }));
+  };
+
+  const tagSelectorHandler = (value) => {
+    setTagSelected(value);
+  };
+
+  const submitNewTag = () => {
+    dispatch(createTaskTag({ task: task.id, tag: tagSelected }));
+    setTagSelected("");
+  };
+
+  const showAssigness = () => {
+    setAssignessModalVisible(true);
+  };
+
+  const closeAssigness = () => {
+    setAssignessModalVisible(false);
   };
 
   return (
@@ -180,26 +191,8 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                       <span>Participants</span>
                     </td>
                     <td>
-                      {task.assignees ? (
-                        <>
-                          <Avatar.Group size={32} maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-                            {task.assignees.map((assignee, index) => (
-                              <Popover key={index} content={assignee.firstname}>
-                                <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
-                                  <AvatarIcon name={assignee.firstname} />
-                                </Avatar>
-                              </Popover>
-                            ))}
-                          </Avatar.Group>
-                          <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-40px", borderRadius: "50%", marginLeft: "32px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "9999" }}>
-                            <EditOutlined style={{ fontSize: "7px", color: "#bdc3c7" }} />
-                          </div>
-                        </>
-                      ) : (
-                        <div style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
-                        </div>
-                      )}
+                      <AvatarPreview assignees={assignees} showAssigness={showAssigness} max={3} />
+                      {AssignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
                     </td>
                   </tr>
                 </table>
@@ -218,9 +211,13 @@ const TaskDetailModal = ({ task, tags, projectId, assignees, isVisible, closeMod
                   <h4>Tags</h4>
                   <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
-                <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select">
+                <Select allowClear style={{ width: "50%" }} onChange={tagSelectorHandler} placeholder="Please select">
                   {children}
                 </Select>
+                <Button type="primary" onClick={submitNewTag}>
+                  Add
+                </Button>
+                <div style={{ marginTop: "20px" }}>{task.tags && task.tags.map((item) => <Tag>{item.name}</Tag>)}</div>
               </div>
               <Divider />
               <div class="task-budget">

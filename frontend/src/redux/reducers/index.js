@@ -14,6 +14,7 @@ import folder from "./folder";
 import time_record from "./time_record";
 import note from "./note";
 import tag from "./tag";
+import poll from "./poll";
 
 const appReducer = combineReducers({
   auth,
@@ -30,7 +31,8 @@ const appReducer = combineReducers({
   folder,
   time_record,
   note,
-  tag
+  tag,
+  poll
 });
 
 const rootReducer = (state, action) => {

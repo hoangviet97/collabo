@@ -168,9 +168,9 @@ export const createAssignee = ({ user_id, task_id, project }) => async (dispatch
   }
 };
 
-export const deleteAssignee = ({ user_id, task_id, email }) => async (dispatch) => {
+export const deleteAssignee = ({ user_id, task_id, email, project }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/tasks/remove-assignee", { user_id, task_id });
+    const res = await axios.post("http://localhost:9000/api/tasks/remove-assignee", { user_id, task_id, project });
     dispatch({ type: DELETE_ASSIGNEE, payload: { user_id, task_id } });
   } catch (err) {
     dispatch({ type: GET_ASSIGNEES_FAIL });

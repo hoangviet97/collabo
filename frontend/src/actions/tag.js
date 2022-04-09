@@ -1,4 +1,4 @@
-import { CREATE_TAG, GET_TAGS, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING } from "./types";
+import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING } from "./types";
 import axios from "axios";
 
 export const createTag = ({ project, name, color }) => async (dispatch) => {
@@ -8,6 +8,15 @@ export const createTag = ({ project, name, color }) => async (dispatch) => {
     dispatch({ type: CREATE_TAG, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_TALKING_POINT_FAIL });
+  }
+};
+
+export const createTaskTag = ({ task, tag }) => async (dispatch) => {
+  try {
+    const res = await axios.post("http://localhost:9000/api/tags/task-tag", { task, tag });
+    dispatch({ type: CREATE_TASK_TAG, payload: { task, tag } });
+  } catch (err) {
+    dispatch({ type: GET_TALKING_POINTS_FAIL });
   }
 };
 

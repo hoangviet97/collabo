@@ -18,7 +18,7 @@ const AssigneesModal = ({ task_id, assignees, members, assigneeSelected, assigne
   };
 
   const removeAssignee = (id, email) => {
-    dispatch(deleteAssignee({ user_id: id, task_id: task_id, email: email }));
+    dispatch(deleteAssignee({ user_id: id, task_id: task_id, email: email, project: project }));
   };
 
   const isAssigneed = (email, id) => {

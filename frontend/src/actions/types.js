@@ -120,6 +120,7 @@ export const GET_NOTE = "GET_NOTE";
 export const GET_STATUS_GROUP = "GET_STATUS_GROUP";
 
 export const CREATE_TAG = "CREATE_TAG";
+export const CREATE_TASK_TAG = "CREATE_TASK_TAG";
 export const GET_TAGS = "GET_TAGS";
 export const GET_TASK_TAGS = "GET_TASK_TAGS";
 export const DELETE_TAGS = "DELETE_TAGS";
@@ -132,3 +133,5 @@ export const GET_PROJECT_AUTH = "GET_PROJECT_AUTH";
 
 export const FILTER_STATUS = "FILTER_STATUS";
 export const FILTER_PRIORITY = "FILTER_PRIORITY";
+
+export const CREATE_POLL = "CREATE_POLL";

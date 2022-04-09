@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input } from "antd";
 import OptionPreview from "./OptionPreview";
 
-const PollEditor = ({ setPollWindow }) => {
+const PollEditor = ({ setPollWindow, getPollData }) => {
   const [question, setQuestion] = useState("");
   const [viewData, setViewData] = useState(false);
   const [optionArr, setOptionArr] = useState([]);
@@ -12,6 +12,10 @@ const PollEditor = ({ setPollWindow }) => {
     e.preventDefault();
     setOptionArr([...optionArr, option]);
     setOption("");
+  };
+
+  const submitPollHandler = () => {
+    getPollData(question, optionArr, false);
   };
 
   return (
@@ -35,7 +39,7 @@ const PollEditor = ({ setPollWindow }) => {
           <form onSubmit={submitOptionHandler}>
             <Input value={option} onChange={(e) => setOption(e.target.value)} placeholder="Enter the option..." />
           </form>
-          <Button>Create</Button>
+          <Button onClick={submitPollHandler}>Create</Button>
         </div>
       )}
     </div>

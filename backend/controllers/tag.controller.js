@@ -10,6 +10,13 @@ module.exports = {
     });
   },
 
+  createTaskTag: function (req, res) {
+    Tag.createTaskTag(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
   getAll: function (req, res) {
     Tag.find(req.body.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

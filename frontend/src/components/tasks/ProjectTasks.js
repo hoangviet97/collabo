@@ -43,6 +43,7 @@ const ProjectTasks = ({ match }) => {
   const [activeCards, setActiveCards] = useState(false);
   const [activeList, setActiveList] = useState(true);
   const [taskVisual, setTaskVisual] = useState("");
+  const [filteredAssignees, setFilteredAssignees] = useState([]);
 
   const [newSectionVisibility, setNewSectionVisibility] = useState(false);
   const [newTask, setNewTask] = useState("");
@@ -179,7 +180,8 @@ const ProjectTasks = ({ match }) => {
     Object.assign(task, { tags: filteredTags });
     const filteredAssignees = assignees.filter((x) => x.tasks_id === task.id);
     Object.assign(task, { assignees: filteredAssignees });
-    console.log(task);
+    const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
+    setFilteredAssignees(assigneesArray);
     setTaskDetail(task);
     setIsModalVisible(true);
   };
@@ -316,7 +318,7 @@ const ProjectTasks = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} assignees={assignees} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} assignees={filteredAssignees} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>
