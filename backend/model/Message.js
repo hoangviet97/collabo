@@ -75,7 +75,7 @@ module.exports = {
   },
 
   find: async function (id, result) {
-    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname 
+    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname
                     FROM messages 
                     INNER JOIN members ON messages.members_id = members.id
                     INNER JOIN users ON members.users_id = users.id
