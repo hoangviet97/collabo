@@ -12,12 +12,11 @@ import AssigneesModal from "./AssigneesModal";
 const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible, closeModal }) => {
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [taskDescription, setTaskDescription] = useState(task.description);
-  const [tagGroup, setTagGroup] = useState([]);
+  const [tagGroup, setTagGroup] = useState(task.tags);
   const [budget, setmyBudget] = useState(task.budget);
   const [showTitleInput, setShowTitleInput] = useState(false);
   const [showTextArea, setShowTextArea] = useState(false);
   const [percent, setPercent] = useState(task.progress);
-  const [tagInputVisible, setTagInputVisible] = useState(false);
   const [tagSelected, setTagSelected] = useState("");
   const [children, setChildren] = useState([]);
   const [AssignessModalVisible, setAssignessModalVisible] = useState(false);
@@ -29,6 +28,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
     setTaskTitle(task.title);
     setmyBudget(task.budget);
     setPercent(task.progress);
+    setTagGroup(task.tags);
     setTaskDescription(task.description);
     console.log(assignees);
     return () => {
@@ -40,7 +40,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
     const child = [];
     for (let i = 0; i < tags.length; i++) {
       child.push(
-        <Option key={tags[i].id}>
+        <Option key={`${tags[i].id}/${tags[i].name}`}>
           <div>
             <TagsOutlined />
             &nbsp;
@@ -96,7 +96,9 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   };
 
   const submitNewTag = () => {
-    dispatch(createTaskTag({ task: task.id, tag: tagSelected }));
+    const str = tagSelected.split("/");
+    dispatch(createTaskTag({ task: task.id, tag: str[0] }));
+    setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
     setTagSelected("");
   };
 
@@ -217,7 +219,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                 <Button type="primary" onClick={submitNewTag}>
                   Add
                 </Button>
-                <div style={{ marginTop: "20px" }}>{task.tags && task.tags.map((item) => <Tag>{item.name}</Tag>)}</div>
+                <div style={{ marginTop: "20px" }}>{tagGroup && tagGroup.map((item) => <Tag closable={true}>{item.name}</Tag>)}</div>
               </div>
               <Divider />
               <div class="task-budget">

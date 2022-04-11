@@ -1,11 +1,11 @@
 import { CREATE_MESSAGE, GET_MESSAGES, DATA_LOADING } from "./types";
 import axios from "axios";
 
-export const createMessage = ({ project, text }) => async (dispatch) => {
+export const createMessage = ({ project, text, question, options }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/messages/add", { project, text });
+    const res = await axios.post("http://localhost:9000/api/messages/add", { project, text, question, options });
     console.log(res.data);
-    dispatch({ type: CREATE_MESSAGE, payload: res.data });
+    //dispatch({ type: CREATE_MESSAGE, payload: res.data });
   } catch (err) {
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }

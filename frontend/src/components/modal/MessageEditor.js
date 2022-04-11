@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, Form, Switch } from "antd";
+import { Modal, Button, Input, Form, message } from "antd";
 import { createMessage } from "../../actions/message";
 import { useDispatch } from "react-redux";
 import { PlusCircleOutlined, UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
@@ -10,11 +10,16 @@ const MessageEditor = ({ project, visible, handleCancel, handleOk }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const [pollWindow, setPollWindow] = useState(false);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState("g");
   const [options, setOptions] = useState([]);
 
   const submitHandler = () => {
-    dispatch(createMessage({ project: project, text: value }));
+    if (value.length < 1) {
+      message.error("Text cannot be empty!");
+    } else {
+      console.log(question);
+      dispatch(createMessage({ project: project, text: value, question: question, options: options }));
+    }
   };
 
   const getPollData = (question, arr, bl) => {
@@ -45,7 +50,7 @@ const MessageEditor = ({ project, visible, handleCancel, handleOk }) => {
             </Button>
           </div>
           <Button type="primary" onClick={submitHandler}>
-            Create
+            Create message
           </Button>
         </footer>
         {pollWindow && (

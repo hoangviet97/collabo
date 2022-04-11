@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
 import Editor from "./Editor";
 import AvatarIcon from "../utils/AvatarIcon";
-import NewMessage from "./NewMessage";
 import MessageEditor from "../modal/MessageEditor";
 import { getMessages } from "../../actions/message";
 
