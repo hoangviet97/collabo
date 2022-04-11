@@ -11,9 +11,10 @@ function messageReducer(state = initialState, action) {
 
   switch (type) {
     case CREATE_MESSAGE:
+      const mergedMsg = Object.assign(payload.msg, { poll: payload.poll }, { options: payload.options });
       return {
         ...state,
-        messages: [...state.messages, payload]
+        messages: [mergedMsg]
       };
     case CREATE_MESSAGE_FAIL:
       return {

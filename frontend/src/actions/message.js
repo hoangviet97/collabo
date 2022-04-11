@@ -4,8 +4,8 @@ import axios from "axios";
 export const createMessage = ({ project, text, question, options }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/messages/add", { project, text, question, options });
+    dispatch({ type: CREATE_MESSAGE, payload: res.data });
     console.log(res.data);
-    //dispatch({ type: CREATE_MESSAGE, payload: res.data });
   } catch (err) {
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }

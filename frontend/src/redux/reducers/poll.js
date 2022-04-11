@@ -1,7 +1,8 @@
 import { CREATE_POLL } from "../../actions/types";
 
 const initialState = {
-  polls: {}
+  polls: [],
+  options: []
 };
 
 function pollReducer(state = initialState, action) {

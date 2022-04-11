@@ -41,7 +41,7 @@ const Messages = ({ match }) => {
           </Avatar>
           <Input onClick={openModal} style={{ borderRadius: "20px", padding: "0 15px", marginLeft: "10px" }} />
         </div>
-        <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>{loading ? "loading..." : messages.map((item) => <Message name={`${item.firstname} ${item.lastname}`} text={item.text} />)}</div>
+        <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>{loading ? "loading..." : messages.map((item) => <Message data={item} name={`${item.firstname} ${item.lastname}`} text={item.text} />)}</div>
       </div>
       <MessageEditor project={match.params.id} visible={isEditorVisible} handleCancel={handleCancel} handleOk={handleOk} />
     </Container>
