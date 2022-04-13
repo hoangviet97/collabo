@@ -10,7 +10,7 @@ const MessageEditor = ({ project, visible, handleCancel, handleOk }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const [pollWindow, setPollWindow] = useState(false);
-  const [question, setQuestion] = useState("g");
+  const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([]);
 
   const submitHandler = () => {

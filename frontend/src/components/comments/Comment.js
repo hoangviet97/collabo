@@ -31,7 +31,7 @@ const Comment = ({ data }) => {
       </div>
       <div class="comment__body" style={{ marginBottom: "15px" }}>
         <p>{data.text}</p>
-        {data.poll ? <Poll poll={data.poll} options={data.options} /> : ""}
+        {data.pollData.length === 0 ? "" : <Poll pollData={data.pollData} />}
       </div>
       <div class="comment__footer">
         <Button type="link" style={{ padding: "0px", fontSize: "12px" }}>

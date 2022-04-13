@@ -14,6 +14,11 @@ const PollEditor = ({ setPollWindow, getPollData }) => {
     setOption("");
   };
 
+  const removeOption = (value) => {
+    const newArr = optionArr.filter((x) => x !== value);
+    setOptionArr(newArr);
+  };
+
   const submitPollHandler = () => {
     getPollData(question, optionArr, false);
   };
@@ -32,8 +37,8 @@ const PollEditor = ({ setPollWindow, getPollData }) => {
         <div className="" style={{ marginTop: "20px" }}>
           <h2>{question}</h2>
           <div className="option__preview" style={{ marginBottom: "10px" }}>
-            {optionArr.map((item) => (
-              <OptionPreview text={item} />
+            {optionArr.map((item, index) => (
+              <OptionPreview key={index} text={item} removeOption={removeOption} />
             ))}
           </div>
           <form onSubmit={submitOptionHandler}>

@@ -82,14 +82,54 @@ module.exports = {
                     WHERE messages.projects_id = ?
                     ORDER BY created_at desc`;
 
-    con.query(sql, [id], (err, res) => {
+    con.query(sql, [id], (err, mesRes) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      result(null, res);
-      return;
+      const pollSql = `SELECT polls.* FROM polls
+                        INNER JOIN messages ON polls.messages_id = messages.id
+                        WHERE messages.projects_id = ?`;
+
+      con.query(pollSql, [id], (err, pollRes) => {
+        if (err) {
+          result(err, null);
+          return;
+        }
+
+        const optionSql = `SELECT * FROM poll_options
+                            INNER JOIN polls ON poll_options.polls_id = polls.id
+                            INNER JOIN messages ON polls.messages_id = messages.id
+                            WHERE messages.projects_id = ?`;
+
+        con.query(optionSql, [id], (err, optionRes) => {
+          if (err) {
+            result(err, null);
+            return;
+          }
+
+          const pollOptionMerge = pollRes.map((pollitem) => {
+            const helper = optionRes.filter((i) => i.polls_id === pollitem.id);
+            return { ...pollitem, optionArray: helper };
+          });
+
+          const messagePollMerger = mesRes.map((mesItem) => {
+            const pollData = pollOptionMerge.find((x) => x.messages_id === mesItem.id);
+            return { ...mesItem, pollData: pollData ? pollData : [] };
+          });
+
+          result(null, messagePollMerger);
+          return;
+        });
+      });
+    });
+  },
+
+  addVote: async function (body, result) {
+    const sql = `INSERT INTO members_has_poll_options (members_id, poll_options_id) VALUES (?, ?)`;
+    con.query(sql, [body.poll_id], (err, res) => {
+      result(null, "success");
     });
   }
 };
