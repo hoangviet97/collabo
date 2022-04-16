@@ -19,14 +19,14 @@ module.exports = {
   },
 
   addVote: function (req, res) {
-    Message.addVote(req.body, (err, result) => {
+    Message.addVote(req.body, req.member, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   deleteVote: function (req, res) {
-    Message.deleteVote(req.body, (err, result) => {
+    Message.deleteVote(req.body, req.member, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

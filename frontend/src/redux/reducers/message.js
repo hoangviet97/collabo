@@ -1,8 +1,8 @@
-import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING } from "../../actions/types";
+import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE } from "../../actions/types";
 
 const initialState = {
   messages: [],
-  replies: [],
+  votes: [],
   loading: false
 };
 
@@ -24,11 +24,24 @@ function messageReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        messages: payload
+        messages: payload.messages,
+        votes: payload.votes
       };
     case GET_MESSAGES_FAIL:
       return {
         ...state
+      };
+    case UPDATE_VOTE:
+      console.log(state.messages);
+      return {
+        ...state,
+        votes: [...state.votes, payload]
+      };
+    case DELETE_VOTE:
+      console.log(payload.option_id);
+      return {
+        ...state,
+        votes: state.votes.filter((vote) => vote.option_id !== payload.option_id && payload.email.includes(vote.email))
       };
     case DATA_LOADING:
       return {

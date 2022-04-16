@@ -98,7 +98,7 @@ module.exports = {
           return;
         }
 
-        const optionSql = `SELECT * FROM poll_options
+        const optionSql = `SELECT poll_options.* FROM poll_options
                             INNER JOIN polls ON poll_options.polls_id = polls.id
                             INNER JOIN messages ON polls.messages_id = messages.id
                             WHERE messages.projects_id = ?`;
@@ -109,27 +109,44 @@ module.exports = {
             return;
           }
 
-          const pollOptionMerge = pollRes.map((pollitem) => {
-            const helper = optionRes.filter((i) => i.polls_id === pollitem.id);
-            return { ...pollitem, optionArray: helper };
-          });
+          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, users.firstname, users.lastname, users.email FROM members_has_poll_options
+                            INNER JOIN members ON members_has_poll_options.members_id = members.id
+                            INNER JOIN poll_options ON members_has_poll_options.poll_options_id = poll_options.id
+                            INNER JOIN users ON members.users_id = users.id
+                            WHERE members.projects_id = ?`;
 
-          const messagePollMerger = mesRes.map((mesItem) => {
-            const pollData = pollOptionMerge.find((x) => x.messages_id === mesItem.id);
-            return { ...mesItem, pollData: pollData ? pollData : [] };
-          });
+          con.query(voteSql, [id], (err, voteRes) => {
+            const pollOptionMerge = pollRes.map((pollitem) => {
+              const helper = optionRes.filter((i) => i.polls_id === pollitem.id);
+              return { ...pollitem, optionArray: helper };
+            });
 
-          result(null, messagePollMerger);
-          return;
+            const messagePollMerger = mesRes.map((mesItem) => {
+              const pollData = pollOptionMerge.find((x) => x.messages_id === mesItem.id);
+              return { ...mesItem, pollData: pollData ? pollData : [] };
+            });
+
+            result(null, { messages: messagePollMerger, votes: voteRes });
+            return;
+          });
         });
       });
     });
   },
 
-  addVote: async function (body, result) {
+  addVote: async function (body, member, result) {
     const sql = `INSERT INTO members_has_poll_options (members_id, poll_options_id) VALUES (?, ?)`;
-    con.query(sql, [body.poll_id], (err, res) => {
-      result(null, "success");
+    con.query(sql, [member, body.option_id], (err, res) => {
+      const resData = { member_id: member, option_id: body.option_id };
+      result(null, resData);
+    });
+  },
+
+  deleteVote: async function (body, member, result) {
+    const sql = `DELETE FROM members_has_poll_options WHERE members_id = ? AND poll_options_id = ?`;
+    con.query(sql, [member, body.option_id], (err, res) => {
+      const deletedItem = { member_id: member, option_id: body.option_id };
+      result(null, deletedItem);
     });
   }
 };

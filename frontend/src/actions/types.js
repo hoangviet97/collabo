@@ -135,3 +135,5 @@ export const FILTER_STATUS = "FILTER_STATUS";
 export const FILTER_PRIORITY = "FILTER_PRIORITY";
 
 export const CREATE_POLL = "CREATE_POLL";
+export const UPDATE_VOTE = "UPDATE_VOTE";
+export const DELETE_VOTE = "DELETE_VOTE";

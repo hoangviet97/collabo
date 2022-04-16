@@ -42,7 +42,7 @@ const Messages = ({ match }) => {
           </Avatar>
           <Input onClick={openModal} style={{ borderRadius: "20px", padding: "0 15px", marginLeft: "10px" }} />
         </div>
-        <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>{loading ? "loading..." : messages.map((item) => <Comment data={item} />)}</div>
+        <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>{loading ? "loading..." : messages.map((item, index) => <Comment key={index} data={item} match={match} />)}</div>
       </div>
       <MessageEditor project={match.params.id} visible={isEditorVisible} handleCancel={handleCancel} handleOk={handleOk} />
     </Container>
