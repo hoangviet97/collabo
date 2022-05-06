@@ -19,6 +19,9 @@ const MessageEditor = ({ project, visible, handleCancel, handleOk }) => {
     } else {
       console.log(question);
       dispatch(createMessage({ project: project, text: value, question: question, options: options }));
+      setValue("");
+      setQuestion("");
+      setOptions([]);
     }
   };
 

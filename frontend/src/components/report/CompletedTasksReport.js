@@ -40,7 +40,7 @@ const CompletedTasksReport = ({ project_id, match }) => {
     <div>
       <Breadcrumb>
         <Breadcrumb.Item>
-          <Link to={`/${params.id}/report`}>Reports</Link>
+          <Link to={`/${params.id}/report`}>Home</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>Completed tasks</Breadcrumb.Item>
       </Breadcrumb>

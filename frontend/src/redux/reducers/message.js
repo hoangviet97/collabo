@@ -1,9 +1,10 @@
-import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE } from "../../actions/types";
+import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, SEND_MESSAGE, GET_REPLIES, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE } from "../../actions/types";
 
 const initialState = {
   messages: [],
   votes: [],
-  loading: false
+  loading: false,
+  replies: []
 };
 
 function messageReducer(state = initialState, action) {
@@ -11,10 +12,12 @@ function messageReducer(state = initialState, action) {
 
   switch (type) {
     case CREATE_MESSAGE:
-      const mergedMsg = Object.assign(payload.msg, { poll: payload.poll }, { options: payload.options });
+      const pollMerger = Object.assign(payload.poll, { optionArray: payload.options });
+      const mergedMsg = Object.assign(payload.msg, { pollData: pollMerger });
+      console.log(mergedMsg);
       return {
         ...state,
-        messages: [mergedMsg]
+        messages: [...state.messages, mergedMsg]
       };
     case CREATE_MESSAGE_FAIL:
       return {
@@ -30,6 +33,16 @@ function messageReducer(state = initialState, action) {
     case GET_MESSAGES_FAIL:
       return {
         ...state
+      };
+    case SEND_MESSAGE:
+      return {
+        ...state,
+        replies: [...state.replies, payload]
+      };
+    case GET_REPLIES:
+      return {
+        ...state,
+        replies: payload
       };
     case UPDATE_VOTE:
       console.log(state.messages);

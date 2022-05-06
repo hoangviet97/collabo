@@ -10,7 +10,7 @@ const FolderCard = ({ folder, match }) => {
       <Menu.Item>
         <a>Rename</a>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item onClick={deleteFolderHandle}>
         <a>Delete</a>
       </Menu.Item>
     </Menu>
@@ -19,6 +19,8 @@ const FolderCard = ({ folder, match }) => {
   const redirectHandle = () => {
     history.push(match.url + "/folders/" + folder.id);
   };
+
+  const deleteFolderHandle = () => {};
 
   return (
     <div className="folder-card" onClick={redirectHandle}>

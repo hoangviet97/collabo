@@ -30,5 +30,19 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  sendReply: function (req, res) {
+    Message.sendReply(req.body, req.member, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getAllReplies: function (req, res) {
+    Message.getAll(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
   }
 };

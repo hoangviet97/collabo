@@ -25,9 +25,11 @@ const PollEditor = ({ setPollWindow, getPollData }) => {
 
   return (
     <div>
-      <Button onClick={() => setPollWindow(false)}>Cancel</Button>
+      <Button style={{ marginTop: "-5px" }} onClick={() => setPollWindow(false)}>
+        Cancel
+      </Button>
       {!viewData && (
-        <div>
+        <div style={{ display: "flex", marginTop: "10px" }}>
           <Input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." />
           <Button onClick={() => setViewData(true)}>Set</Button>
         </div>
@@ -44,7 +46,11 @@ const PollEditor = ({ setPollWindow, getPollData }) => {
           <form onSubmit={submitOptionHandler}>
             <Input value={option} onChange={(e) => setOption(e.target.value)} placeholder="Enter the option..." />
           </form>
-          <Button onClick={submitPollHandler}>Create</Button>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+            <Button type="primary" onClick={submitPollHandler}>
+              Create
+            </Button>
+          </div>
         </div>
       )}
     </div>

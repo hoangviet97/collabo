@@ -35,7 +35,7 @@ const Project = ({ project, projectCardHandler, setFavorite, members }) => {
       </div>
       <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
         <h2>{truncade(project.name, 40)}</h2>
-        <p>{truncade("N description here.....................mjiomkloiu", 50)}</p>
+        <span style={{ marginTop: "-10px" }}>{project.description === null ? "No description" : truncade(project.description, 50)}</span>
       </div>
       <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Avatar.Group maxCount={2} maxPopoverTrigger="click" size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>

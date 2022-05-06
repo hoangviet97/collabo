@@ -29,10 +29,21 @@ class PollOption {
   }
 }
 
+class Reply {
+  constructor(id, message, member, text, created_at) {
+    this.id = id;
+    this.message = message;
+    this.member = member;
+    this.text = text;
+    this.created_at = created_at;
+  }
+}
+
 module.exports = {
   Message,
   Poll,
   PollOption,
+  Reply,
   // create new member by user or by admin
   create: async function (body, member, result) {
     console.log(body);
@@ -44,8 +55,9 @@ module.exports = {
         return;
       }
 
-      if (body.question === null || body.question === undefined || body.question.length < 1) {
+      if (body.question.length === 1) {
         result(null, newMessage);
+        return;
       } else {
         const newPoll = new Poll(uuid4(), newMessage.id, body.question);
         const pollSql = `INSERT INTO polls (id, messages_id, question, created_at) VALUES (?, ?, ?, ?)`;
@@ -109,9 +121,10 @@ module.exports = {
             return;
           }
 
-          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, users.firstname, users.lastname, users.email FROM members_has_poll_options
+          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, polls.id AS poll_id, users.firstname, users.lastname, users.email FROM members_has_poll_options
                             INNER JOIN members ON members_has_poll_options.members_id = members.id
                             INNER JOIN poll_options ON members_has_poll_options.poll_options_id = poll_options.id
+                            INNER JOIN polls ON poll_options.polls_id = polls.id
                             INNER JOIN users ON members.users_id = users.id
                             WHERE members.projects_id = ?`;
 
@@ -147,6 +160,25 @@ module.exports = {
     con.query(sql, [member, body.option_id], (err, res) => {
       const deletedItem = { member_id: member, option_id: body.option_id };
       result(null, deletedItem);
+    });
+  },
+
+  sendReply: async function (body, member, result) {
+    const newReply = new Reply(uuid4(), body.message, member, body.text, new Date());
+    const sql = `INSERT INTO message_replies (id, messages_id, members_id, text, created_at) VALUES (?, ?, ?, ?, ?)`;
+    con.query(sql, [newReply.id, newReply.message, newReply.member, newReply.text, newReply.created_at], (err, res) => {
+      result(null, newReply);
+    });
+  },
+
+  getAll: async function (body, result) {
+    const sql = `SELECT message_replies.*, users.firstname, users.lastname
+                    FROM message_replies 
+                    INNER JOIN members ON message_replies.members_id = members.id 
+                    INNER JOIN users ON members.users_id = users.id
+                    WHERE members.projects_id = ?`;
+    con.query(sql, [body.project], (err, res) => {
+      result(null, res);
     });
   }
 };

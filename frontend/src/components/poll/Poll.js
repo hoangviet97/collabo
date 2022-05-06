@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Poll = ({ pollData, project }) => {
   const dispatch = useDispatch();
+  const [voteC, setVoteC] = useState([]);
   const profile = useSelector((state) => state.auth.user);
   const votes = useSelector((state) => state.message.votes);
+  const voteCount = votes;
 
   const setVoteHandler = (option) => {
     dispatch(setPoolVote({ project: project, firstname: profile.firstname, lastname: profile.lastname, email: profile.email, poll: pollData.id, option_id: option }));
@@ -21,8 +23,8 @@ const Poll = ({ pollData, project }) => {
       <h3>{pollData.question}</h3>
       <div style={{ marginTop: "10px" }}>
         {pollData.optionArray.map((item, index) => {
-          const filteredVotes = votes.filter((i) => i.option_id === item.id);
-          return <Option key={index} data={item} votes={filteredVotes} setVoteHandler={setVoteHandler} deleteVotehandler={deleteVoteHandler} />;
+          let filteredVotes = votes.filter((i) => i.option_id === item.id);
+          return <Option key={index} data={item} voteCount={voteCount} votes={filteredVotes} setVoteHandler={setVoteHandler} deleteVotehandler={deleteVoteHandler} />;
         })}
       </div>
     </div>
