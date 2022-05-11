@@ -1,12 +1,12 @@
 import React, { useState, useEffect, FC } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Button } from "antd";
-import { getFolder } from "../../actions/folder";
-import { getProjectTasks } from "../../actions/task";
+import { getFolder } from "../../../actions/folder";
+import { getProjectTasks } from "../../../actions/task";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import FileCard from "./FileCard";
+import FileCard from "../files/FileCard";
 
-const FolderPage = () => {
+const FolderDetail = () => {
   const dispatch = useDispatch();
   const files = useSelector((state) => state.file.files);
   const folder = useSelector((state) => state.folder.folder);
@@ -42,4 +42,4 @@ const FolderPage = () => {
   );
 };
 
-export default FolderPage;
+export default FolderDetail;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button, Modal, Input, Select, Avatar, Popover, Divider, Progress, Tag } from "antd";
+import { Breadcrumb, Button, Modal, Input, Avatar, Select, Divider, Progress, Tag } from "antd";
 import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
@@ -19,12 +19,16 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   const [percent, setPercent] = useState(task.progress);
   const [tagSelected, setTagSelected] = useState("");
   const [children, setChildren] = useState([]);
+  const [assigneeBase, setAssigneeBase] = useState([]);
   const [AssignessModalVisible, setAssignessModalVisible] = useState(false);
+
   const { TextArea } = Input;
   const { Option } = Select;
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const assigneesArr = assignees.map((i) => i.email);
+    setAssigneeBase(assigneesArr);
     setTaskTitle(task.title);
     setmyBudget(task.budget);
     setPercent(task.progress);
@@ -186,15 +190,6 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                     </td>
                     <td>
                       <span>{task.due_date !== null ? moment(task.due_date).format("MMM Do YYYY") : "set date"}</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: "40%" }}>
-                      <span>Participants</span>
-                    </td>
-                    <td>
-                      <AvatarPreview assignees={assignees} showAssigness={showAssigness} max={3} />
-                      {AssignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
                     </td>
                   </tr>
                 </table>

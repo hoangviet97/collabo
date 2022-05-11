@@ -64,6 +64,12 @@ const ProjectNavigation = (props) => {
           <span>Tags</span>
         </Link>
       </p>
+      <p>
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/budget`}>
+          <TagsOutlined className="single-navigation__link-icon" />
+          <span>Budget</span>
+        </Link>
+      </p>
     </div>
   );
 

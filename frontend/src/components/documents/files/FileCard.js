@@ -3,8 +3,8 @@ import { Button } from "antd";
 import { InfoCircleOutlined, StarFilled, DownloadOutlined } from "@ant-design/icons";
 import download from "downloadjs";
 import axios from "axios";
-import FileTypeIcon from "../utils/FileTypeIcon";
-import { getFileDetail } from "../../actions/file";
+import FileTypeIcon from "../../utils/FileTypeIcon";
+import { getFileDetail } from "../../../actions/file";
 import { useDispatch } from "react-redux";
 
 const FileCard = ({ file }) => {

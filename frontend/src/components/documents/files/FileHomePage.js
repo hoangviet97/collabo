@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import NewFileForm from "./NewFileForm";
-import FolderList from "./FolderList";
+import FolderList from "../folders/FolderList";
 import FileList from "./FileList";
 import { Form, Input, Button, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { createFolder } from "../../actions/folder";
+import { createFolder } from "../../../actions/folder";
 import { useDispatch } from "react-redux";
 
 const FileHomePage = ({ files, folders, project_id, match }) => {

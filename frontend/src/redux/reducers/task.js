@@ -1,4 +1,5 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE } from "../../actions/types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE } from "../../actions/types";
+import moment from "moment";
 
 const initialState = {
   tasks: [],
@@ -54,6 +55,20 @@ function taskReducer(state = initialState, action) {
         ...state,
         tasks: payload,
         filtered: payload,
+        loading: false
+      };
+    case GET_CALENDAR_TASKS:
+      const filteredTasks = payload.filter((x) => x.start_date !== null && x.due_date !== null);
+      const formatedTasks = [];
+
+      for (let i = 0; i < filteredTasks.length; i++) {
+        let obj = { id: filteredTasks[i].id, from: moment(filteredTasks[i].start_date).format(), to: moment(filteredTasks[i].due_date).format(), title: filteredTasks[i].title };
+        formatedTasks.push(obj);
+      }
+
+      return {
+        ...state,
+        tasks: formatedTasks,
         loading: false
       };
     case GET_PROJECT_TASKS_FAIL:

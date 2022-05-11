@@ -5,7 +5,9 @@ import { Button } from "antd";
 
 const FolderList = ({ files, folders, showModal, match }) => {
   const [filteredFiles, setfilteredFiles] = useState([]);
-  const [maxVisibleFolders, setMaxVisibleFolders] = useState(4);
+  const [maxVisibleFolders, setMaxVisibleFolders] = useState(5);
+  const [showFolders, setShowFolders] = useState(false);
+
   useEffect(() => {
     const newArr = folders.map((item) => Object.assign(item, { sum: 0 }));
     const newFiles = files.filter((item) => item.folders_id !== null);
@@ -22,6 +24,12 @@ const FolderList = ({ files, folders, showModal, match }) => {
 
   const viewAllFoldersHandle = () => {
     setMaxVisibleFolders(folders.length);
+    setShowFolders(true);
+  };
+
+  const hideAllFoldersHandle = () => {
+    setMaxVisibleFolders(5);
+    setShowFolders(false);
   };
 
   return (
@@ -30,7 +38,7 @@ const FolderList = ({ files, folders, showModal, match }) => {
         <span style={{ fontSize: "27px", fontWeight: "bold" }}>Folders</span>
         {folders.length > 0 ? (
           <div className="files__folders-options">
-            {folders.length > 4 ? <a onClick={viewAllFoldersHandle}>View all</a> : ""}
+            {!showFolders ? <a onClick={viewAllFoldersHandle}>View all</a> : <a onClick={hideAllFoldersHandle}>Hide</a>}
             <Button type="primary" style={{ borderRadius: "7px" }} onClick={() => showModal("folder")}>
               <PlusCircleOutlined />
               Add folder

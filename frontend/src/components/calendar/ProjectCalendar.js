@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import { colorList } from "../utils/Colors";
+import { getCalendarTasks } from "../../actions/task";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "../../../node_modules/react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
 
-const ProjectCalendar = (props) => {
+const ProjectCalendar = ({ match }) => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.task.tasks);
+
+  useEffect(() => {
+    dispatch(getCalendarTasks({ project: match.params.id }));
+  }, []);
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
+
   const events = [
     {
       id: 1,
-      color: "#fd3153",
       from: "2022-05-02T18:00:00+00:00",
       to: "2022-05-05T19:00:00+00:00",
       title: "This is an event"
@@ -35,7 +47,7 @@ const ProjectCalendar = (props) => {
   return (
     <div className="calendar">
       <Container size="30">
-        <Calendar style={{ height: "calc(100vh - 120px)" }} localizer={localizer} events={events} startAccessor="from" endAccessor="to" />
+        <Calendar style={{ height: "calc(100vh - 120px)" }} localizer={localizer} events={tasks} startAccessor="from" endAccessor="to" />
       </Container>
     </div>
   );

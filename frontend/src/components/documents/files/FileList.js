@@ -5,7 +5,7 @@ import moment from "moment";
 import download from "downloadjs";
 import axios from "axios";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { moveToFolder } from "../../actions/file";
+import { moveToFolder } from "../../../actions/file";
 
 const FileList = (props) => {
   const dispatch = useDispatch();
