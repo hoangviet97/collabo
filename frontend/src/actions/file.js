@@ -1,6 +1,41 @@
-import { GET_FILES, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, FILE_DETAIL } from "./types";
+import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING } from "./types";
 import axios from "axios";
 import { message } from "antd";
+
+export const uploadFile = ({ formData }) => async (dispatch) => {
+  dispatch(setFileLoading());
+  try {
+    const res = await axios.post("http://localhost:9000/api/files/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    dispatch({ type: UPLOAD_FILE, payload: "" });
+    message.success("File successfuly uploaded");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const downloadFile = () => async (dispatch) => {
+  try {
+    const res = await axios.get("http://localhost:9000/api/files/download");
+    //dispatch({ type: GET_FILES, payload: res.data });
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteFile = ({ id }) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`http://localhost:9000/api/files/${id}`);
+    //dispatch({ type: GET_FILES, payload: res.data });
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const getAllFiles = ({ project_id }) => async (dispatch) => {
   try {
@@ -27,4 +62,10 @@ export const getFileDetail = ({ file }) => (dispatch) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const setFileLoading = () => {
+  return {
+    type: FILE_LOADING
+  };
 };

@@ -22,7 +22,7 @@ module.exports = {
     if (error) return apiResponse.validationErrorWithData(res, error.message, error);
 
     User.loginUser(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err);
       console.log(req.body);
       return res.json(result);
     });
@@ -30,6 +30,13 @@ module.exports = {
 
   resetPassword: function (req, res) {
     User.resetPwd(req.body, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  verify: function (req, res) {
+    User.verify(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

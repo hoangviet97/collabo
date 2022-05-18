@@ -2,6 +2,7 @@ import "./styles/main.scss";
 import * as React from "react";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import Verification from "./components/auth/Verification";
 import Reset from "./components/auth/Reset";
 import Dashboard from "./components/main/Dashboard";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -26,6 +27,7 @@ const App = () => {
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/verify/:id" component={Verification} />
           <Route exact path="/reset" component={Reset} />
           <ProtectedRoute path="/" component={Dashboard} />
         </Switch>

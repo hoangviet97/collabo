@@ -1,10 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { uploadFile } from "../../../actions/file";
 
 const NewFileForm = (props) => {
   const API_URL = "http://localhost:9000/api/files/upload";
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null); // state for storing actual image
   const [state, setState] = useState({
     title: "",
@@ -13,6 +16,7 @@ const NewFileForm = (props) => {
   const dropRef = useRef();
   const { TextArea } = Input;
   const [errorMsg, setErrorMsg] = useState("");
+  const loading = useSelector((state) => state.file.loading);
 
   const handleInputChange = (event) => {
     setState({
@@ -43,11 +47,11 @@ const NewFileForm = (props) => {
         formData.append("description", description);
         setErrorMsg("");
 
-        await axios.post(`${API_URL}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        });
+        dispatch(uploadFile({ formData: formData }));
+
+        if (!loading) {
+          setFile(null);
+        }
       } else {
         setErrorMsg("Please select a file to add.");
       }
@@ -101,7 +105,7 @@ const NewFileForm = (props) => {
         </Row>
         {errorMsg}
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button onClick={handleOnSubmit} type="primary" htmlType="submit">
+          <Button onClick={handleOnSubmit} type="primary" htmlType="submit" loading={loading}>
             Upload
           </Button>
         </Form.Item>

@@ -54,21 +54,6 @@ function taskReducer(state = initialState, action) {
       return {
         ...state,
         tasks: payload,
-        filtered: payload,
-        loading: false
-      };
-    case GET_CALENDAR_TASKS:
-      const filteredTasks = payload.filter((x) => x.start_date !== null && x.due_date !== null);
-      const formatedTasks = [];
-
-      for (let i = 0; i < filteredTasks.length; i++) {
-        let obj = { id: filteredTasks[i].id, from: moment(filteredTasks[i].start_date).format(), to: moment(filteredTasks[i].due_date).format(), title: filteredTasks[i].title };
-        formatedTasks.push(obj);
-      }
-
-      return {
-        ...state,
-        tasks: formatedTasks,
         loading: false
       };
     case GET_PROJECT_TASKS_FAIL:

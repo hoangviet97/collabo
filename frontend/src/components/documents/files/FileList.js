@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Table, Space, Dropdown, Menu, Typography, Modal, Button, Select, message } from "antd";
 import moment from "moment";
-import download from "downloadjs";
 import axios from "axios";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { moveToFolder } from "../../../actions/file";
+import { moveToFolder, deleteFile } from "../../../actions/file";
+import fileDownload from "js-file-download";
 
 const FileList = (props) => {
   const dispatch = useDispatch();
@@ -21,19 +21,19 @@ const FileList = (props) => {
     setClearedFiles(arr);
   }, [props.files]);
 
-  const downloadFile = async (id, path, mimetype) => {
-    try {
-      const result = await axios.post(`http://localhost:9000/api/files/download/${id}`, {
-        responseType: "blob"
-      });
-      const split = path.split("/");
-      const filename = split[split.length - 1];
-      return download(result.data, filename, mimetype);
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        console.log("Error while downloading file. Try again later");
-      }
-    }
+  const download = (record) => {
+    axios({
+      url: `http://localhost:9000/api/files/download/${record.id}`, //your url
+      method: "GET",
+      responseType: "blob" // important
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data, `${record.title}.${record.file_mimetype}`);
+    });
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(deleteFile({ id: id }));
   };
 
   const columns = [
@@ -78,13 +78,15 @@ const FileList = (props) => {
   const menu = (record) => (
     <Menu>
       <Menu.Item key="0">
-        <a onClick={() => downloadFile(record.id, record.file_path, record.file_mimetype)}>Download</a>
+        <a onClick={() => download(record)}>Download</a>
       </Menu.Item>
       <Menu.Item onClick={() => handleModalInfo(record.id)} key="1">
         <Text>Move to folder</Text>
       </Menu.Item>
       <Menu.Item key="2">
-        <Text type="danger">Delete</Text>
+        <Text type="danger" onClick={deleteHandler(record.id)}>
+          Delete
+        </Text>
       </Menu.Item>
     </Menu>
   );

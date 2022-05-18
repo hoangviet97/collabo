@@ -15,7 +15,6 @@ const FolderDetail = () => {
 
   useEffect(() => {
     dispatch(getFolder({ id: params.folderId }));
-    dispatch(getProjectTasks({ id: params.id }));
   }, []);
 
   console.log(folder);

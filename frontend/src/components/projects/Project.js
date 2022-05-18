@@ -41,7 +41,6 @@ const Project = ({ project, projectCardHandler, setFavorite, members }) => {
         <Avatar.Group maxCount={2} maxPopoverTrigger="click" size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
           {members.map((item) => {
             let randNum = Math.floor(Math.random() * 6);
-            console.log(colorList.colorList[randNum].code);
             return (
               <Tooltip title={item.email} placement="top">
                 <Avatar style={{ backgroundColor: `${colorList.colorList[randNum].code}` }}>

@@ -187,16 +187,6 @@ export const deleteTask = ({ id, project }) => async (dispatch) => {
   }
 };
 
-export const getCalendarTasks = ({ project }) => async (dispatch) => {
-  try {
-    dispatch(setTasksLoading());
-    const res = await axios.post("http://localhost:9000/api/tasks/all", { project });
-    dispatch({ type: GET_CALENDAR_TASKS, payload: res.data });
-  } catch (err) {
-    dispatch({ type: GET_PROJECT_TASKS_FAIL });
-  }
-};
-
 export const setTasksLoading = () => {
   return {
     type: TASKS_LOADING

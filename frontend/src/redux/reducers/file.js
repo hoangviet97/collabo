@@ -1,14 +1,20 @@
-import { GET_FILES, MOVE_TO_FOLDER, FILE_DETAIL } from "../../actions/types";
+import { GET_FILES, UPLOAD_FILE, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING } from "../../actions/types";
 
 const initialState = {
   files: [],
-  fileDetail: {}
+  fileDetail: {},
+  loading: false
 };
 
 function fileReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case UPLOAD_FILE:
+      return {
+        ...state,
+        loading: false
+      };
     case GET_FILES:
       return {
         ...state,
@@ -23,6 +29,11 @@ function fileReducer(state = initialState, action) {
       return {
         ...state,
         fileDetail: payload
+      };
+    case FILE_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

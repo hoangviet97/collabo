@@ -20,12 +20,20 @@ export const register = ({ firstname, lastname, email, password, push }) => asyn
   try {
     const res = await axios.post("http://localhost:9000/api/register", { firstname, lastname, email, password });
     dispatch({ type: REGISTER_SUCCESS, payload: res });
-    push("/login");
     message.success("Registration Success!");
   } catch (err) {
     message.error(err.response.data.message);
     console.log(err.response.data.message);
     dispatch({ type: REGISTER_FAIL });
+  }
+};
+
+export const verifyAccount = ({ id }) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/verify/${id}`);
+    console.log(res);
+  } catch (err) {
+    console.log(err.response);
   }
 };
 
@@ -36,7 +44,7 @@ export const login = ({ email, password }) => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
-    message.error("failed");
+    message.error(err.response.data.message);
     dispatch({ type: LOGIN_FAIL });
   }
 };
