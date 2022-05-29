@@ -10,6 +10,7 @@ module.exports = function (req, res, next) {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 
       if (dbResponse.length > 0) {
+        console.log(dbResponse);
         next();
       } else {
         return apiResponse.unauthorizedResponse(res, "Access denied");

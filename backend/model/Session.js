@@ -2,7 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 class Session {
-  constructor(id, projectId, name, date, start, end, description) {
+  constructor(id, projectId, name, date, start, end, description, place) {
     this.id = id;
     this.projectId = projectId;
     this.name = name;
@@ -11,6 +11,7 @@ class Session {
     this.end = end;
     this.description = description;
     this.created_at = new Date();
+    this.place = place;
   }
 }
 
@@ -18,10 +19,10 @@ module.exports = {
   Session,
   // create new member by user or by admin
   create: async function (body, result) {
-    const newSession = new Session(uuid4(), body.session.project_id, body.session.name, body.session.date, body.session.start, body.session.end, body.session.description);
+    const newSession = new Session(uuid4(), body.session.project_id, body.session.name, body.session.date, body.session.start, body.session.end, body.session.description, body.session.place);
 
-    const sql = `INSERT INTO sessions (id, projects_id, name, date, start, end, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at], (err, res) => {
+    const sql = `INSERT INTO sessions (id, projects_id, name, date, start, end, description, created_at, place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    con.query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at, newSession.place], (err, res) => {
       if (err) {
         result(err, null);
         return;

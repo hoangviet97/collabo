@@ -2,7 +2,7 @@ import { CREATE_PROJECT, RESET_AUTH, GET_PROJECT_AUTH, CREATE_PROJECT_FAIL, SET_
 
 const initialState = {
   loading: false,
-  authorized: "",
+  authorized: false,
   projects: [],
   currentProject: {}
 };
@@ -19,18 +19,17 @@ function projectReducer(state = initialState, action) {
       };
     case CREATE_PROJECT_FAIL:
       return {
-        ...state,
-        inProject: false
+        ...state
       };
     case GET_PROJECT_AUTH:
       return {
         ...state,
-        authorized: false
+        authorized: true
       };
     case RESET_AUTH:
       return {
         ...state,
-        authorized: null
+        authorized: false
       };
     case GET_PROJECTS:
       return {

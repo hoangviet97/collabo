@@ -285,7 +285,7 @@ const ProjectTasks = ({ match }) => {
                         if (taskVisual === "list") {
                           return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                         } else if (taskVisual === "card") {
-                          return <TaskCard task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
+                          return <TaskCard key={i} task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
                       }
                     })}

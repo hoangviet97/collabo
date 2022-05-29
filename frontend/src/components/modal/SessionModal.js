@@ -46,7 +46,7 @@ const SessionModal = (props) => {
   };
 
   return (
-    <Modal title="Basic Modal" width="600px" visible={props.visible} onCancel={props.handleCancel} footer={null}>
+    <Modal title="Create New Session" width="600px" visible={props.visible} onCancel={props.handleCancel} footer={null}>
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item label="Event title" name="name">
           <Input />
@@ -54,6 +54,10 @@ const SessionModal = (props) => {
 
         <Form.Item label="Description" name="description">
           <TextArea rows={4} />
+        </Form.Item>
+
+        <Form.Item label="Place" name="place">
+          <TextArea rows={2} />
         </Form.Item>
 
         <Form.Item label="Add participants" name="participants">

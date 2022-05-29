@@ -27,7 +27,7 @@ export const getProjects = () => async (dispatch) => {
   }
 };
 
-export const getProject = ({ project }) => async (dispatch) => {
+export const getProject = ({ project, push }) => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
@@ -36,8 +36,11 @@ export const getProject = ({ project }) => async (dispatch) => {
     const res = await axios.post("http://localhost:9000/api/projects/single", { project });
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
-    console.log(err.response);
+    console.log(err.response.status);
     dispatch({ type: GET_PROJECT_AUTH });
+    if (err.response.status === 400) {
+      push(`/`);
+    }
     message.error("unathorized");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
