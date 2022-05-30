@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
 import Moment from "react-moment";
@@ -12,13 +12,23 @@ import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
 
-const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, members, task, start_date }) => {
+interface Props {
+  showModal: any;
+  closeModal: any;
+  projectId: string;
+  sectionName: string;
+  assignees: any;
+  members: any;
+  task: any;
+  start_date: any;
+}
+
+const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, assignees, members, task, start_date }) => {
   const dispatch = useDispatch();
-  const [datePicker, setDatePicker] = useState(null);
+  const [datePicker, setDatePicker] = useState<any | null>(null);
   const [done, setDone] = useState(task.statusId);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
-  const [startTime, setStartTime] = useState(false);
-  const [assignessModalVisible, setAssignessModalVisible] = useState(false);
+  const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
 
   const due_date =
     task.due_date === null ? (
@@ -62,8 +72,8 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
           Add to favorite
         </span>
       </Menu.Item>
-      <Menu.Item key="3">
-        <Text type="danger" onClick={deleteTaskHandler}>
+      <Menu.Item key="3" onClick={deleteTaskHandler}>
+        <Text type="danger">
           <DeleteOutlined />
           Delete
         </Text>
@@ -71,7 +81,7 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
     </Menu>
   );
 
-  const getE = (e) => {
+  const getE = (e: any) => {
     var elem = e.target;
     var rect = elem.getBoundingClientRect();
     var scrollTop = document.documentElement.scrollTop;
@@ -79,11 +89,11 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
     setDatePosition({ x: e.pageX, y: absoluteY });
   };
 
-  const deleteTaskHandler = (event) => {
+  const deleteTaskHandler = () => {
     dispatch(deleteTask({ id: task.id, project: projectId }));
   };
 
-  const openDateHandler = (id) => {
+  const openDateHandler = (id: any) => {
     setDatePicker(id);
   };
 
@@ -91,17 +101,16 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
     setDatePicker(null);
   };
 
-  const switchTaskStatusHandler = (value) => {
+  const switchTaskStatusHandler = (value: any) => {
     setDone(value);
     dispatch(updateTaskStatus({ id: task.id, statusId: value, project: projectId }));
   };
 
-  const switchPriorityHandler = (value) => {
+  const switchPriorityHandler = (value: any) => {
     dispatch(updateTaskPriority({ id: task.id, priorityId: value, project: projectId }));
   };
 
   const showAssigness = () => {
-    console.log("ok");
     setAssignessModalVisible(true);
   };
 
@@ -119,7 +128,7 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
         {assignees.length > 0 ? (
           <>
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-              {assignees.map((assignee, index) => (
+              {assignees.map((assignee: any, index: number) => (
                 <Popover content={assignee.firstname}>
                   <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                     <AvatarIcon name={assignee.firstname} />
@@ -127,7 +136,7 @@ const TaskItem = ({ showModal, closeModal, projectId, sectionName, assignees, me
                 </Popover>
               ))}
             </Avatar.Group>
-            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "999" }}>
+            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
             </div>
           </>

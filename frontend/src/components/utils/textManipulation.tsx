@@ -1,4 +1,4 @@
-export function truncade(str, num) {
+export function truncade(str: string, num: number) {
   if (str.length > num) {
     return str.slice(0, num) + "...";
   } else {

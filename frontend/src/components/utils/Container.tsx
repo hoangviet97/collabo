@@ -1,6 +1,11 @@
 import React, { FC } from "react";
 
-const Container = ({ size, children }) => {
+interface Props {
+  size: any;
+  children: any;
+}
+
+const Container: FC<Props> = ({ size, children }) => {
   const style = {
     padding: size + "px"
   };

@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
-import doneLogo from "../../img/done.png";
+import React, { useEffect, FC } from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { verifyAccount } from "../../actions/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
-const Verification = ({ match }) => {
+interface Props {
+  match: any;
+}
+
+const Verification: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const verified = useSelector((state) => state.auth.verified);
+  const verified = useSelector((state: RootStateOrAny) => state.auth.verified);
 
   useEffect(() => {
     dispatch(verifyAccount({ id: match.params.id }));
@@ -15,9 +18,8 @@ const Verification = ({ match }) => {
 
   const success = () => {
     return (
-      <div class="verify-container" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
+      <div className="verify-container" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
         <h1>Account Activated</h1>
-        <img style={{ width: "160px", height: "auto" }} src={doneLogo}></img>
 
         <div style={{ marginTop: "30px" }}>
           <span>Thank you, your e-mail has been verified. Your account is now active.</span>

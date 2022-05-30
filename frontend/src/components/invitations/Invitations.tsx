@@ -3,6 +3,7 @@ import InvitationItem from "./InvitationItem";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getAllInvitations } from "../../actions/invitation";
 import Container from "../utils/Container";
+import { Table, Space } from "antd";
 
 const Invitations = () => {
   const dispatch = useDispatch();
@@ -13,16 +14,16 @@ const Invitations = () => {
   }, []);
 
   return (
-    <div>
-      <Container size="30">
+    <Container size="30">
+      <div className="invitations" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <h1>Invitations</h1>
-        <div className="invitation__box">
+        <div className="invitation__box" style={{ width: "50%" }}>
           {invitations.map((item: any) => (
             <InvitationItem data={item} />
           ))}
         </div>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 };
 

@@ -8,8 +8,6 @@ module.exports = {
   create: function (req, res) {
     const { error } = projectValidation(req.body);
 
-    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
-
     Project.create(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
 

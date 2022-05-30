@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Button, Input } from "antd";
 import OptionPreview from "./OptionPreview";
 
-const PollEditor = ({ setPollWindow, getPollData }) => {
-  const [question, setQuestion] = useState("");
-  const [viewData, setViewData] = useState(false);
-  const [optionArr, setOptionArr] = useState([]);
-  const [option, setOption] = useState("");
+interface Props {
+  setPollWindow: any;
+  getPollData: any;
+}
 
-  const submitOptionHandler = (e) => {
+const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
+  const [question, setQuestion] = useState<string>("");
+  const [viewData, setViewData] = useState<boolean>(false);
+  const [optionArr, setOptionArr] = useState<any>([]);
+  const [option, setOption] = useState<string>("");
+
+  const submitOptionHandler = (e: any) => {
     e.preventDefault();
     setOptionArr([...optionArr, option]);
     setOption("");
   };
 
-  const removeOption = (value) => {
-    const newArr = optionArr.filter((x) => x !== value);
+  const removeOption = (value: any) => {
+    const newArr = optionArr.filter((x: any) => x !== value);
     setOptionArr(newArr);
   };
 
@@ -39,7 +44,7 @@ const PollEditor = ({ setPollWindow, getPollData }) => {
         <div className="" style={{ marginTop: "20px" }}>
           <h2>{question}</h2>
           <div className="option__preview" style={{ marginBottom: "10px" }}>
-            {optionArr.map((item, index) => (
+            {optionArr.map((item: any, index: number) => (
               <OptionPreview key={index} text={item} removeOption={removeOption} />
             ))}
           </div>

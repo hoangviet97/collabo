@@ -19,14 +19,21 @@ const InvitationItem: FC<Props> = ({ data }) => {
   };
 
   return (
-    <div style={{ backgroundColor: "grey" }}>
-      <p>
-        {data.firstname} {data.lastname} invited you to {data.project_name}
-      </p>
-      <p>
-        <Button onClick={acceptHandler}>Accept</Button>
-        <Button onClick={rejectHandler}>Reject</Button>
-      </p>
+    <div style={{ backgroundColor: "white", borderRadius: "10px", boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px", padding: "15px 20px" }}>
+      <div style={{ fontSize: "16px" }}>
+        <span style={{ fontWeight: "bolder" }}>
+          {data.firstname} {data.lastname}
+        </span>{" "}
+        invited you to project <span style={{ fontWeight: "bolder" }}>{data.project_name}</span>
+      </div>
+      <div style={{ display: "flex", marginTop: "10px" }}>
+        <Button style={{ marginRight: "5px", borderRadius: "5px" }} type="primary" onClick={acceptHandler}>
+          Accept
+        </Button>
+        <Button style={{ borderRadius: "5px" }} type="ghost" onClick={rejectHandler}>
+          Reject
+        </Button>
+      </div>
     </div>
   );
 };

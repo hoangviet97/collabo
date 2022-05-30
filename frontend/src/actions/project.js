@@ -38,10 +38,6 @@ export const getProject = ({ project, push }) => async (dispatch) => {
   } catch (err) {
     console.log(err.response.status);
     dispatch({ type: GET_PROJECT_AUTH });
-    if (err.response.status === 400) {
-      push(`/`);
-    }
-    message.error("unathorized");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
 };

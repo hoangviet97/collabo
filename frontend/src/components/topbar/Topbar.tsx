@@ -9,6 +9,9 @@ const Topbar = () => {
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
   let path = window.location.pathname;
+  let pathValue: string = path.split("/")[1];
+
+  console.log(pathValue);
 
   const menu = (
     <Menu>
@@ -20,7 +23,7 @@ const Topbar = () => {
 
   return (
     <div className="topbar">
-      {path.split("/")[1].length === 8 ? <ProjectNavigation /> : null}
+      {pathValue.length === 8 && /^\d+$/.test(pathValue) ? <ProjectNavigation /> : null}
       <div className="topbar__profile">
         <Avatar size="large">
           <AvatarIcon name={user.firstname} />

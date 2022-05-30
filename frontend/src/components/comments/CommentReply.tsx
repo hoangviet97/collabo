@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Input, Button } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 
-const CommentReply = ({ show, reply }) => {
-  const [text, setText] = useState("");
+interface Props {
+  show: any;
+  reply: any;
+}
+
+const CommentReply: FC<Props> = ({ show, reply }) => {
+  const [text, setText] = useState<string>("");
 
   return (
     <div style={{ display: "flex" }}>

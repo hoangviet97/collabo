@@ -1,9 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar } from "antd";
 import moment from "moment";
 
-const Reply = ({ data }) => {
+interface Props {
+  data: any;
+}
+
+const Reply: FC<Props> = ({ data }) => {
   return (
     <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
       <div style={{ marginRight: "12px" }}>

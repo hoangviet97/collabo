@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
 import { createSection } from "../../actions/section";
 import { getSections, deleteSection } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider } from "antd";
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
 
-const ProjectTasks = ({ match }) => {
+interface Props {
+  match: any;
+}
+
+const ProjectTasks: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const project_id = match.params.id;
 
@@ -24,34 +28,34 @@ const ProjectTasks = ({ match }) => {
   const [selectedStatus, setSelectedStatus] = useState("0");
 
   // Selectors
-  const sections = useSelector((state) => state.section.sections);
-  const tasks = useSelector((state) => state.task.tasks);
-  const loading = useSelector((state) => state.task.loading);
-  const members = useSelector((state) => state.member.members);
-  const assignees = useSelector((state) => state.task.assignees);
-  const tags = useSelector((state) => state.tag.taskTags);
-  const allTags = useSelector((state) => state.tag.tags);
+  const sections = useSelector((state: RootStateOrAny) => state.section.sections);
+  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
+  const loading = useSelector((state: RootStateOrAny) => state.task.loading);
+  const members = useSelector((state: RootStateOrAny) => state.member.members);
+  const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
+  const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
+  const allTags = useSelector((state: RootStateOrAny) => state.tag.tags);
 
   // States
-  const [taskNameForSearch, setTaskNameForSearch] = useState("");
+  const [taskNameForSearch, setTaskNameForSearch] = useState<string>("");
   const [children, setChildren] = useState([]);
-  const [showTagSelector, setShowTagSelector] = useState(false);
-  const [showStatusSelector, setShowStatusSelector] = useState(false);
+  const [showTagSelector, setShowTagSelector] = useState<boolean>(false);
+  const [showStatusSelector, setShowStatusSelector] = useState<boolean>(false);
   const [taskTags, setTaskTags] = useState([]);
   const [selectedVal, setSelectedVal] = useState([]);
   const [taskContainer, setTaskContainer] = useState([]);
-  const [activeCards, setActiveCards] = useState(false);
-  const [activeList, setActiveList] = useState(true);
-  const [taskVisual, setTaskVisual] = useState("");
+  const [activeCards, setActiveCards] = useState<boolean>(false);
+  const [activeList, setActiveList] = useState<boolean>(true);
+  const [taskVisual, setTaskVisual] = useState<string | null>("");
   const [filteredAssignees, setFilteredAssignees] = useState([]);
 
-  const [newSectionVisibility, setNewSectionVisibility] = useState(false);
-  const [newTask, setNewTask] = useState("");
-  const [newSection, setNewSection] = useState("");
-  const [selectedSection, setSelectedSection] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [newSectionVisibility, setNewSectionVisibility] = useState<boolean>(false);
+  const [newTask, setNewTask] = useState<string>("");
+  const [newSection, setNewSection] = useState<string>("");
+  const [selectedSection, setSelectedSection] = useState<string>("");
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [taskDetail, setTaskDetail] = useState({});
-  const [newTaskIndexes, setNewTaskIndexes] = useState([]);
+  const [newTaskIndexes, setNewTaskIndexes] = useState<any>([]);
 
   useEffect(() => {
     if (localStorage.getItem("task_visual") === null) {
@@ -71,32 +75,15 @@ const ProjectTasks = ({ match }) => {
     setTaskContainer(tasks);
   }, [tasks]);
 
-  useEffect(() => {
-    const child = [];
-    for (let i = 0; i < allTags.length; i++) {
-      child.push(
-        <Option key={allTags[i].id}>
-          <div>
-            <TagsOutlined />
-            &nbsp;
-            {allTags[i].name}
-          </div>
-        </Option>
-      );
-    }
-
-    setChildren(child);
-  }, [allTags]);
-
-  const taskHandler = (e) => {
+  const taskHandler = (e: any) => {
     setNewTask(e.target.value);
   };
 
-  const sectionHandler = (e) => {
+  const sectionHandler = (e: any) => {
     setNewSection(e.target.value);
   };
 
-  const newTaskVisibilityHandler = (index) => {
+  const newTaskVisibilityHandler = (index: any) => {
     setNewTaskIndexes({ [index]: true });
   };
 
@@ -104,7 +91,7 @@ const ProjectTasks = ({ match }) => {
     setNewSectionVisibility(true);
   };
 
-  const onBlurTaskHandler = (sectionId, index) => {
+  const onBlurTaskHandler = (sectionId: string, index: number) => {
     setNewTaskIndexes({ [index]: false });
 
     const values = {
@@ -136,7 +123,7 @@ const ProjectTasks = ({ match }) => {
     }
   };
 
-  const panelHeader = (name, id) => (
+  const panelHeader = (name: string, id: string) => (
     <React.Fragment>
       <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <span className="panel-header__title" style={{ fontSize: "20px" }}>
@@ -174,13 +161,13 @@ const ProjectTasks = ({ match }) => {
     </Menu>
   );
 
-  const showModal = (task, section) => {
+  const showModal = (task: any, section: any) => {
     Object.assign(task, { section_name: section });
-    const filteredTags = tags.filter((x) => x.tasks_id === task.id);
+    const filteredTags = tags.filter((x: any) => x.tasks_id === task.id);
     Object.assign(task, { tags: filteredTags });
-    const filteredAssignees = assignees.filter((x) => x.tasks_id === task.id);
+    const filteredAssignees = assignees.filter((x: any) => x.tasks_id === task.id);
     Object.assign(task, { assignees: filteredAssignees });
-    const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
+    const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
     setFilteredAssignees(assigneesArray);
     setTaskDetail(task);
     setIsModalVisible(true);
@@ -195,11 +182,11 @@ const ProjectTasks = ({ match }) => {
     setShowTagSelector((prev) => !prev);
   };
 
-  const tagSelectorHandler = (val) => {
+  const tagSelectorHandler = (val: any) => {
     setSelectedVal(val);
-    const tasksIds = tags.filter((x) => val.includes(x.tags_id));
-    const pom = tasksIds.map((x) => x.tasks_id);
-    const newTasks = tasks.filter((item) => pom.includes(item.id));
+    const tasksIds = tags.filter((x: any) => val.includes(x.tags_id));
+    const pom = tasksIds.map((x: any) => x.tasks_id);
+    const newTasks = tasks.filter((item: any) => pom.includes(item.id));
 
     if (val.length > 0) {
       setTaskContainer(newTasks);
@@ -213,12 +200,12 @@ const ProjectTasks = ({ match }) => {
     setShowStatusSelector((prev) => !prev);
   };
 
-  const StatusSelectorHandler = (value) => {
-    const newTasks = value === "x" ? tasks : tasks.filter((x) => x.statusId === value);
+  const StatusSelectorHandler = (value: string) => {
+    const newTasks = value === "x" ? tasks : tasks.filter((x: any) => x.statusId === value);
     setTaskContainer(newTasks);
   };
 
-  const setVisualHandler = (value) => {
+  const setVisualHandler = (value: string) => {
     setTaskVisual(value);
     localStorage.setItem("task_visual", value);
   };
@@ -255,7 +242,7 @@ const ProjectTasks = ({ match }) => {
             <div>
               {showTagSelector && (
                 <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
-                  {children}
+                  {allTags && allTags.map((item: any) => <Option value={item.id}>{item.name}</Option>)}
                 </Select>
               )}
               {showStatusSelector && (
@@ -272,16 +259,16 @@ const ProjectTasks = ({ match }) => {
           </header>
           <Divider />
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-            {sections.map((section, index) => (
+            {sections.map((section: any, index: number) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
                 <div className={`task__visual-${taskVisual}`}>
                   {taskContainer
-                    .filter((x) => {
+                    .filter((x: any) => {
                       return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
                     })
-                    .map((task, i) => {
+                    .map((task: any, i: number) => {
                       if (section.id === task.sections_id) {
-                        const assigneesArray = assignees.filter((i) => i.tasks_id === task.id);
+                        const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
                           return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                         } else if (taskVisual === "card") {

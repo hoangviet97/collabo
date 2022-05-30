@@ -2,10 +2,11 @@ import React, { FC } from "react";
 import { Tabs } from "antd";
 import Container from "../utils/Container";
 import AccountSettings from "./AccountSettings";
-import { useSelector } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
+import AccountDetails from "./AccountDetails";
 
 const UserSettings = () => {
-  const profile = useSelector((state) => state.auth.user);
+  const profile = useSelector((state: RootStateOrAny) => state.auth.user);
   const { TabPane } = Tabs;
 
   return (
@@ -13,10 +14,12 @@ const UserSettings = () => {
       <Container size="30">
         <h1>My Settings</h1>
         <div className="user-settings-content">
-          <Tabs defaultActiveKey="1" tabPosition="left">
-            <TabPane tab="Appereances" key="1"></TabPane>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="My Details" key="1">
+              <AccountDetails profile={profile} />
+            </TabPane>
             <TabPane tab="Account Settings" key="2">
-              <AccountSettings profile={profile} />
+              <AccountSettings />
             </TabPane>
             <TabPane tab="Security" key="3">
               Content of Tab Pane 3

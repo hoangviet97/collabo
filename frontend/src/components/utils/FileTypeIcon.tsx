@@ -1,13 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 import Docx from "../../img/icons/formats/Docx";
 import Pdf from "../../img/icons/formats/Pdf";
 import Jpeg from "../../img/icons/formats/Jpeg";
 import Xlsx from "../../img/icons/formats/Xlsx";
 import Other from "../../img/icons/formats/Other";
 
-const FileTypeIcon = ({ type, size }) => {
-  console.log(type);
-  const getTypeIcon = (type) => {
+interface Props {
+  type: string;
+  size: string;
+}
+
+const FileTypeIcon: FC<Props> = ({ type, size }) => {
+  const getTypeIcon = (type: string) => {
     switch (type) {
       case "pdf":
         return <Pdf className="file__icon" style={{ width: size ? `${size}px` : "100px" }} />;

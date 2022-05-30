@@ -10,7 +10,6 @@ import ActiveTasksReport from "./ActiveTasksReport";
 import { Switch, Route } from "react-router-dom";
 
 const Report = ({ match }) => {
-  console.log(match.path);
   return (
     <Container size="30">
       <Switch>

@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { Checkbox, Avatar, Tooltip } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
-import { useSelector } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
 
-const Option = ({ data, voteCount, votes, setVoteHandler, deleteVotehandler }) => {
-  const [isChecked, setIsChecked] = useState();
-  const [voteLength, setVoteLength] = useState(0);
-  const profile = useSelector((state) => state.auth.user.email);
+interface Props {
+  data: any;
+  voteCount: any;
+  votes: any;
+  setVoteHandler: any;
+  deleteVotehandler: any;
+}
+
+const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVotehandler }) => {
+  const [isChecked, setIsChecked] = useState<boolean>();
+  const [voteLength, setVoteLength] = useState<number>(0);
+  const profile = useSelector((state: RootStateOrAny) => state.auth.user.email);
 
   useEffect(() => {
-    const pom = votes.find((x) => x.email === profile);
-    const res = pom === undefined ? false : true;
+    const pom = votes.find((x: any) => x.email === profile);
+    const res: any | undefined = pom === undefined ? false : true;
     setIsChecked(res);
   }, [votes]);
 
-  const checkboxHandler = (e) => {
+  const checkboxHandler = (e: any) => {
     if (e.target.checked) {
       setVoteHandler(data.id);
       setIsChecked((prev) => !prev);
@@ -36,7 +44,7 @@ const Option = ({ data, voteCount, votes, setVoteHandler, deleteVotehandler }) =
               <span style={{ marginLeft: "10px", color: isChecked ? "white" : "black" }}>{data.text}</span>
             </div>
             <Avatar.Group>
-              {votes.map((item, index) => (
+              {votes.map((item: any, index: number) => (
                 <Avatar key={index}>
                   <AvatarIcon name={item.firstname} />
                 </Avatar>

@@ -1,4 +1,4 @@
-import { CREATE_INVITATION, DELETE_INVITATION, UPDATE_SEEN_INVITATION, GET_PROJECT_INVITATIONS, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL, RESET_SECTIONS } from "./types";
+import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, UPDATE_SEEN_INVITATION, GET_PROJECT_INVITATIONS, CREATE_INVITATION_FAIL, GET_INVITATIONS, GET_INVITATIONS_FAIL, RESET_SECTIONS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -16,7 +16,7 @@ export const acceptInvitation = ({ id, project }) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:9000/api/invitation/accept", { id, project });
     console.log(res.data);
-    //dispatch({ type: GET_PROJECT_INVITATIONS, payload: res.data });
+    dispatch({ type: DELETE_INVITATION, payload: id });
   } catch (err) {
     dispatch({ type: GET_INVITATIONS_FAIL });
   }

@@ -1,9 +1,7 @@
 import { MinusCircleFilled, RightCircleFilled, PauseCircleFilled, CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import React from "react";
 
-const StatusIcon = (status) => {
-  let icon = null;
-
+const StatusIcon = (status: string) => {
   switch (status) {
     case "0":
       return <MinusCircleFilled />;
