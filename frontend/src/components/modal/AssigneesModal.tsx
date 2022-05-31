@@ -1,28 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { useDispatch } from "react-redux";
 import { createAssignee, deleteAssignee } from "../../actions/task";
 import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
-const AssigneesModal = ({ task_id, assignees, members, close, project }) => {
-  const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState("");
+interface Props {
+  task_id: string;
+  assignees: any;
+  members: any;
+  close: any;
+  project: any;
+}
 
-  const searchTextHandle = (e) => {
+const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close, project }) => {
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState<string>("");
+
+  const searchTextHandle = (e: any) => {
     setSearchText(e.target.value);
   };
 
-  const addNewAssignee = (id) => {
+  const addNewAssignee = (id: string) => {
     dispatch(createAssignee({ user_id: id, task_id: task_id, project: project }));
   };
 
-  const removeAssignee = (id, email) => {
+  const removeAssignee = (id: string, email: string) => {
     dispatch(deleteAssignee({ user_id: id, task_id: task_id, email: email, project: project }));
   };
 
-  const isAssigneed = (email, id) => {
-    const searcher = assignees.filter((i) => i.email === email);
+  const isAssigneed = (email: string, id: string) => {
+    const searcher = assignees.filter((i: any) => i.email === email);
 
     if (searcher.length > 0) {
       return (
@@ -41,7 +49,7 @@ const AssigneesModal = ({ task_id, assignees, members, close, project }) => {
 
   return (
     <>
-      <div className="assignee-modal" style={{ borderRadius: "10px", zIndex: "99999" }}>
+      <div className="assignee-modal" style={{ borderRadius: "10px", zIndex: 99999 }}>
         <Row style={{ marginBottom: "10px" }}>
           <Col span="18">
             <Input size="small" onChange={(e) => searchTextHandle(e)} />
@@ -52,14 +60,14 @@ const AssigneesModal = ({ task_id, assignees, members, close, project }) => {
             </a>
           </Col>
         </Row>
-        <div class="assignee-modal__members">
+        <div className="assignee-modal__members">
           {members
-            .filter((i) => {
+            .filter((i: any) => {
               return i.firstname.toLowerCase().includes(searchText.toLowerCase()) || i.lastname.toLowerCase().includes(searchText.toLowerCase()) || i.email.toLowerCase().includes(searchText.toLowerCase());
             })
-            .map((item, index) => (
+            .map((item: any, index: number) => (
               <div className="assignee-modal__item" key={index}>
-                <div class="assignee-modal__identity">
+                <div className="assignee-modal__identity">
                   <Avatar>
                     <AvatarIcon name={item.firstname} />
                   </Avatar>{" "}

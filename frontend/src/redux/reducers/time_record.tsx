@@ -5,7 +5,7 @@ const initialState = {
   sum: 0
 };
 
-function timeRecordsReducer(state = initialState, action) {
+function timeRecordsReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

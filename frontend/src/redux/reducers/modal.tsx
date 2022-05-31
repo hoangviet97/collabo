@@ -4,7 +4,7 @@ const initialState = {
   taskModal: false
 };
 
-function modalReducer(state = initialState, action) {
+function modalReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

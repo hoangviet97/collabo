@@ -7,7 +7,7 @@ const initialState = {
   user: null
 };
 
-function authReducer(state = initialState, action) {
+function authReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

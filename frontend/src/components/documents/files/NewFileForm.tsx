@@ -1,31 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, FC } from "react";
 import { Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { uploadFile } from "../../../actions/file";
 
-const NewFileForm = (props) => {
-  const API_URL = "http://localhost:9000/api/files/upload";
+interface Props {
+  project_id: string;
+}
+
+const NewFileForm: FC<Props> = ({ project_id }) => {
   const dispatch = useDispatch();
-  const [file, setFile] = useState(null); // state for storing actual image
+  const [file, setFile] = useState<any | null>(null); // state for storing actual image
   const [state, setState] = useState({
     title: "",
     description: ""
   });
-  const dropRef = useRef();
+  const dropRef: any = useRef();
   const { TextArea } = Input;
-  const [errorMsg, setErrorMsg] = useState("");
-  const loading = useSelector((state) => state.file.loading);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const loading = useSelector((state: RootStateOrAny) => state.file.loading);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     setState({
       ...state,
       [event.target.name]: event.target.value
     });
   };
 
-  const updateBorder = (dragState) => {
+  const updateBorder = (dragState: any) => {
     if (dragState === "over") {
       dropRef.current.style.border = "2px solid #000";
     } else if (dragState === "leave") {
@@ -33,7 +35,7 @@ const NewFileForm = (props) => {
     }
   };
 
-  const handleOnSubmit = async (event) => {
+  const handleOnSubmit = async (event: any) => {
     event.preventDefault();
 
     try {
@@ -43,7 +45,7 @@ const NewFileForm = (props) => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("title", title);
-        formData.append("project_id", props.project_id);
+        formData.append("project_id", project_id);
         formData.append("description", description);
         setErrorMsg("");
 
@@ -56,11 +58,11 @@ const NewFileForm = (props) => {
         setErrorMsg("Please select a file to add.");
       }
     } catch (error) {
-      error.response && console.log(error.response.data);
+      //console.log(error.response.data);
     }
   };
 
-  const onDrop = (files) => {
+  const onDrop = (files: any) => {
     const [uploadedFile] = files;
     setFile(uploadedFile);
   };
@@ -88,7 +90,7 @@ const NewFileForm = (props) => {
               <Dropzone onDrop={onDrop} onDragEnter={() => updateBorder("over")} onDragLeave={() => updateBorder("leave")}>
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps({ className: "drop-zone" })} style={{ width: "100%", padding: "30px 30px", height: "inherit", border: "0.5px solid black", display: "flex", justifyContent: "center", alignItems: "center" }} ref={dropRef}>
-                    <div class="drop-container">
+                    <div className="drop-container">
                       <input {...getInputProps()} />
                       <p>Drag and drop a file OR click here to select a file</p>
                       {file && (

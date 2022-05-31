@@ -7,7 +7,7 @@ import Other from "../../img/icons/formats/Other";
 
 interface Props {
   type: string;
-  size: string;
+  size?: string;
 }
 
 const FileTypeIcon: FC<Props> = ({ type, size }) => {

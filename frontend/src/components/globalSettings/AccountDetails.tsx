@@ -9,9 +9,6 @@ const AccountDetails: FC<Props> = ({ profile }) => {
   const [firstname, setFirstname] = useState(profile.firstname);
   const [lastname, setLastname] = useState(profile.lastname);
   const [email, setEmail] = useState(profile.email);
-  const [showPwd, setShowPwd] = useState(false);
-  const [firstPwd, setFirstPwd] = useState("");
-  const [rePwd, setRePwd] = useState("");
 
   const firstnameHandler = () => {
     if (firstname !== profile.firstname) {
@@ -25,13 +22,6 @@ const AccountDetails: FC<Props> = ({ profile }) => {
 
   const emailHandler = () => {
     if (firstname !== profile.email) {
-    }
-  };
-
-  const changePwdHandler = () => {
-    if (firstPwd === rePwd) {
-    } else {
-      return message.error("Passwords doesn't match!");
     }
   };
 
@@ -58,21 +48,6 @@ const AccountDetails: FC<Props> = ({ profile }) => {
           <div style={{ display: "flex", flexDirection: "row", flex: "1" }}>
             <Input style={{ width: "410px" }} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="firstname" />
           </div>
-        </div>
-      </div>
-      <Divider />
-      <div style={{ width: "60%" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
-          <div style={{ flex: "2", fontWeight: "bolder" }}>Password</div>
-          {!showPwd ? (
-            <Button onClick={() => setShowPwd(true)}>Change Password</Button>
-          ) : (
-            <div style={{ flex: "1" }}>
-              <Input style={{ width: "410px", marginBottom: "10px" }} placeholder="Current password" />
-              <Input style={{ width: "410px", marginBottom: "10px" }} placeholder="New password" />
-              <Input style={{ width: "410px" }} placeholder="Re-type new password" />
-            </div>
-          )}
         </div>
       </div>
       <Divider />

@@ -5,7 +5,7 @@ const initialState = {
   folder: {}
 };
 
-function folderReducer(state = initialState, action) {
+function folderReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

@@ -4,7 +4,7 @@ const initialState = {
   members: []
 };
 
-function memberReducer(state = initialState, action) {
+function memberReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -21,7 +21,7 @@ function memberReducer(state = initialState, action) {
     case UPDATE_MEMBER_ROLE:
       return {
         ...state,
-        members: state.members.map((item) => (item.id === payload.id ? { ...item, role_id: payload.role_id } : item))
+        members: state.members.map((item: any) => (item.id === payload.id ? { ...item, role_id: payload.role_id } : item))
       };
     case UPDATE_MEMBER_ROLE_FAILED:
       return {
@@ -30,7 +30,7 @@ function memberReducer(state = initialState, action) {
     case DELETE_MEMBER:
       return {
         ...state,
-        members: state.members.filter((item) => item.id !== payload.id)
+        members: state.members.filter((item: any) => item.id !== payload.id)
       };
     default:
       return state;

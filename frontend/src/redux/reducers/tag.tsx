@@ -6,7 +6,7 @@ const initialState = {
   loading: false
 };
 
-function tagReducer(state = initialState, action) {
+function tagReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -34,7 +34,7 @@ function tagReducer(state = initialState, action) {
     case DELETE_TAGS:
       return {
         ...state,
-        tags: state.tags.filter((x) => x.id !== payload)
+        tags: state.tags.filter((x: any) => x.id !== payload)
       };
     case TAGS_LOADING:
       return {

@@ -7,7 +7,7 @@ const initialState = {
   participants: []
 };
 
-function sessionReducer(state = initialState, action) {
+function sessionReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

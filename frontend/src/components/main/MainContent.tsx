@@ -33,8 +33,6 @@ const MainContent: FC<Props> = ({ match, history }) => {
   let path = window.location.pathname;
   let pathValue: string = path.split("/")[1];
 
-  console.log(/^\d+$/.test(pathValue));
-
   useEffect(() => {
     if (pathValue.length === 8 && /^\d+$/.test(pathValue)) {
       dispatch(getProject({ project: pathValue, push: push }));

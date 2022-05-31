@@ -5,7 +5,7 @@ const initialState = {
   options: []
 };
 
-function pollReducer(state = initialState, action) {
+function pollReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

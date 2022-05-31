@@ -7,21 +7,28 @@ import { UploadOutlined } from "@ant-design/icons";
 import { createFolder } from "../../../actions/folder";
 import { useDispatch } from "react-redux";
 
-const FileHomePage = ({ files, folders, project_id, match }) => {
-  const dispatch = useDispatch();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isFolderModalVisible, setIsFolderModalVisible] = useState(false);
-  const [newFolder, setNewFolder] = useState("");
+interface Props {
+  files: any;
+  folders: any;
+  project_id: string;
+  match: any;
+}
 
-  const showModal = (modalType) => {
+const FileHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
+  const dispatch = useDispatch();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);
+  const [newFolder, setNewFolder] = useState<string>("");
+
+  const showModal = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(true) : setIsFolderModalVisible(true);
   };
 
-  const handleOk = (modalType) => {
+  const handleOk = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 
-  const handleCancel = (modalType) => {
+  const handleCancel = (modalType: string) => {
     modalType === "upload" ? setIsModalVisible(false) : setIsFolderModalVisible(false);
   };
 

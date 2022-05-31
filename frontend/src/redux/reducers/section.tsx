@@ -6,7 +6,7 @@ const initialState = {
   loading: false
 };
 
-function sectionReducer(state = initialState, action) {
+function sectionReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -33,7 +33,7 @@ function sectionReducer(state = initialState, action) {
     case DELETE_SECTION:
       return {
         ...state,
-        sections: state.sections.filter((item) => item.id !== payload)
+        sections: state.sections.filter((item: any) => item.id !== payload)
       };
     case DELETE_SECTION_FAIL:
       return {

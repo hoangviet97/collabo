@@ -7,7 +7,7 @@ const initialState = {
   replies: []
 };
 
-function messageReducer(state = initialState, action) {
+function messageReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -54,7 +54,7 @@ function messageReducer(state = initialState, action) {
       console.log(payload.option_id);
       return {
         ...state,
-        votes: state.votes.filter((vote) => vote.option_id !== payload.option_id && payload.email.includes(vote.email))
+        votes: state.votes.filter((vote: any) => vote.option_id !== payload.option_id && payload.email.includes(vote.email))
       };
     case DATA_LOADING:
       return {

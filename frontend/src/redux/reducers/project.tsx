@@ -7,7 +7,7 @@ const initialState = {
   currentProject: {}
 };
 
-function projectReducer(state = initialState, action) {
+function projectReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -76,22 +76,22 @@ function projectReducer(state = initialState, action) {
     case LEAVE_PROJECT:
       return {
         ...state,
-        projects: state.projects.filter((item) => item.id !== payload)
+        projects: state.projects.filter((item: any) => item.id !== payload)
       };
     case SET_FAVORITE_PROJECT:
       return {
         ...state,
-        projects: state.projects.map((item) => (item.id === payload.id ? { ...item, favorite: payload.status } : item))
+        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, favorite: payload.status } : item))
       };
     case SET_PROJECT_BUDGET:
       return {
         ...state,
-        projects: state.projects.map((item) => (item.id === payload.id ? { ...item, budget: payload.budget } : item))
+        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, budget: payload.budget } : item))
       };
     case SET_PROJECT_CURRENCY:
       return {
         ...state,
-        projects: state.projects.map((item) => (item.id === payload.id ? { ...item, currency: payload.currency } : item))
+        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, currency: payload.currency } : item))
       };
     case SET_FAVORITE_PROJECT_FAIL:
       return {

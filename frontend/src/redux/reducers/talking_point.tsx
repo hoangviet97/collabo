@@ -5,7 +5,7 @@ const initialState = {
   loading: false
 };
 
-function talkingPointReducer(state = initialState, action) {
+function talkingPointReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -31,7 +31,7 @@ function talkingPointReducer(state = initialState, action) {
     case UPDATE_CHECK_STATUS:
       return {
         ...state,
-        list: state.list.map((item) => (item.id === payload.id ? { ...item, checked: payload.val } : item))
+        list: state.list.map((item: any) => (item.id === payload.id ? { ...item, checked: payload.val } : item))
       };
     default:
       return state;

@@ -4,7 +4,7 @@ const initialState = {
   note: {}
 };
 
-function noteReducer(state = initialState, action) {
+function noteReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
 import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
 import { getProjectTasks } from "../../actions/task";
 import AvatarIcon from "../utils/AvatarIcon";
 import ColorList, { colorList } from "../utils/Colors";
 
-const ProjectNavigation = (props) => {
+interface Props {
+  history: any;
+}
+
+const ProjectNavigation: FC<Props> = ({ history }) => {
   let path = window.location.pathname;
-  const { push } = props.history;
+  const { push } = history;
 
   const { TextArea } = Input;
   const { Option } = Select;
   const dispatch = useDispatch();
-  const currentProject = useSelector((state) => state.project.currentProject);
-  const auth = useSelector((state) => state.project.authorized);
-  const tasks = useSelector((state) => state.task.tasks);
-  const [totalBudget, setTotalBudget] = useState(0);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [projectName, setProjectName] = useState("");
-  const [showIconTab, setIconTab] = useState(false);
-  const [projectDescription, setProjectDescription] = useState("");
+  const currentProject = useSelector((state: RootStateOrAny) => state.project.currentProject);
+  const auth = useSelector((state: RootStateOrAny) => state.project.authorized);
+  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
+  const [totalBudget, setTotalBudget] = useState<any>(0);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [projectName, setProjectName] = useState<string>("");
+  const [showIconTab, setIconTab] = useState<boolean>(false);
+  const [projectDescription, setProjectDescription] = useState<string>("");
   const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
   const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
 
@@ -89,20 +93,20 @@ const ProjectNavigation = (props) => {
     setIsModalVisible(false);
   };
 
-  const handleIconColor = (color) => {
+  const handleIconColor = (color: string) => {
     setIconColorSelection(color);
     dispatch(updateColor({ id: currentProject.id, color: color, project: currentProject.id }));
   };
 
-  const projectStatusHandle = (e) => {
+  const projectStatusHandle = (e: any) => {
     dispatch(updateStatus({ id: currentProject.id, status: e.target.value, project: currentProject.id }));
   };
 
-  const budgetChangeHandle = (e) => {
+  const budgetChangeHandle = (e: any) => {
     setTotalBudget(e);
   };
 
-  const currencyHandle = (value) => {
+  const currencyHandle = (value: string) => {
     dispatch(setCurrency({ projectId: currentProject.id, currency: value }));
   };
 
@@ -183,14 +187,14 @@ const ProjectNavigation = (props) => {
             </li>
           </nav>
           <Modal title="Project Details" width="40%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-            <div class="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-              <div class="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
+            <div className="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+              <div className="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
               <div className="icon-box__select">
                 <Button onClick={() => setIconTab((prev) => !prev)}>Change Color</Button>
                 {showIconTab && (
-                  <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: "99999", backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
-                    <div class="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                      {colorList.map((item, index) => (
+                  <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: 99999, backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
+                    <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                      {colorList.map((item: any, index: number) => (
                         <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
                       ))}
                     </div>

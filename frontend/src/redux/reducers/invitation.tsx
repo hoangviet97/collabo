@@ -5,7 +5,7 @@ const initialState = {
   invitations: []
 };
 
-function invitationReducer(state = initialState, action) {
+function invitationReducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -36,12 +36,12 @@ function invitationReducer(state = initialState, action) {
     case DELETE_INVITATION:
       return {
         ...state,
-        invitations: state.invitations.filter((item) => item.id !== payload)
+        invitations: state.invitations.filter((item: any) => item.id !== payload)
       };
     case UPDATE_SEEN_INVITATION:
       return {
         ...state,
-        invitations: state.invitations.map((item) => (item.id === payload.id ? { ...item, seen: payload.seenStatus } : item))
+        invitations: state.invitations.map((item: any) => (item.id === payload.id ? { ...item, seen: payload.seenStatus } : item))
       };
     default:
       return state;

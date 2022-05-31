@@ -87,7 +87,7 @@ module.exports = {
 
   // Get all invitations
   findAll: async function (project, result) {
-    const sql = `SELECT invitations.*, users.firstname, users.lastname FROM invitations INNER JOIN users ON invitations.receiver = users.id WHERE projects_id = ?`;
+    const sql = `SELECT invitations.*, users.email FROM invitations INNER JOIN users ON invitations.receiver = users.id WHERE projects_id = ?`;
 
     con.query(sql, [project], (err, res) => {
       if (err) {
