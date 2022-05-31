@@ -5,7 +5,7 @@ const permit = require("../../middleware/permission");
 const router = express.Router();
 
 router.post("/add", [auth, permit("Owner", "Admin")], sessionController.create);
-router.post("/single", auth, sessionController.getOne);
+router.get("/:id", auth, sessionController.getOne);
 router.post("/all", auth, sessionController.getAll);
 router.post("/all-past", auth, sessionController.getOld);
 router.post("/all-limit", auth, sessionController.getAllWithLimit);

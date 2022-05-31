@@ -9,6 +9,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
+  z-index: 99999;
 
   &__logo {
     font-size: 40px;

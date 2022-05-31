@@ -28,6 +28,7 @@ module.exports = {
     const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, title, description, start_date, due_date, created_at, budget, progress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newTask.id, newTask.sections_id, newTask.priorityId, newTask.statusId, newTask.title, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at, newTask.budget, newTask.progress], (err, res) => {
       if (err) {
+        console.log(err);
         result(err, null);
         return;
       }

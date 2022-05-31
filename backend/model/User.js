@@ -54,7 +54,7 @@ module.exports = {
             }
           });
 
-          const url = `http://localhost:9000/verify/${newUser.token}`;
+          const url = `http://localhost:3001/verify/${newUser.token}`;
 
           let mailOpt = {
             from: "hoangviet97@outlook.com",
