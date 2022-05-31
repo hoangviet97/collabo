@@ -22,7 +22,7 @@ const SessionItem = () => {
   useEffect(() => {
     dispatch(getSession({ id: params.sessionId, project_id: params.id }));
     dispatch(getParticipants({ id: params.sessionId, project_id: params.id }));
-    dispatch(getTalkingPoints({ session_id: params.sessionId }));
+    dispatch(getTalkingPoints({ session_id: params.sessionId, project_id: params.id }));
     dispatch(getNote({ session_id: params.sessionId }));
 
     if (note) {
@@ -39,13 +39,13 @@ const SessionItem = () => {
   const talkingPointHandle = (e: any) => {
     e.preventDefault();
     if (talkingPoint.length > 0) {
-      dispatch(createTalkingPoint({ session_id: params.sessionId, text: talkingPoint }));
+      dispatch(createTalkingPoint({ session_id: params.sessionId, project_id: params.id, text: talkingPoint }));
       setTalkingPoint("");
     }
   };
 
   const pointCheckHandle = (e: any, id: string) => {
-    dispatch(updateCheckTalkingPoint({ id: id, val: e.target.checked }));
+    dispatch(updateCheckTalkingPoint({ session_id: params.sessionId, id: id, project_id: params.id, val: e.target.checked }));
   };
 
   const submitNoteText = () => {
@@ -69,9 +69,9 @@ const SessionItem = () => {
         <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
           <div>Participants:&nbsp;&nbsp;</div>
           <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-            {participants.map((item: any) => (
+            {participants.map((item: any, index: number) => (
               <Tooltip title={item.email} placement="top">
-                <Avatar style={{ backgroundColor: "#87d068" }}>
+                <Avatar key={index} style={{ backgroundColor: "#87d068" }}>
                   <AvatarIcon name={item.firstname} />
                 </Avatar>
               </Tooltip>

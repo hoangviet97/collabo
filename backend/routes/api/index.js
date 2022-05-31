@@ -22,7 +22,7 @@ router.use("/members", memberRoutes);
 router.use("/sections", sectionRoutes);
 router.use("/tasks", taskRoutes);
 router.use(sessionRoutes);
-router.use("/talking-points", talkingPointRoutes);
+router.use(talkingPointRoutes);
 router.use("/invitation", invitationRoutes);
 router.use("/files", fileRoutes);
 router.use("/folders", folderRoutes);

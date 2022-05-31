@@ -14,8 +14,8 @@ class TalkingPoint {
 module.exports = {
   TalkingPoint,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newTalkingPoint = new TalkingPoint(uuid4(), body.session_id, body.text);
+  create: async function (text, id, result) {
+    const newTalkingPoint = new TalkingPoint(uuid4(), id, text);
 
     const sql = `INSERT INTO talking_points (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newTalkingPoint.id, newTalkingPoint.session_id, newTalkingPoint.text, newTalkingPoint.created_at], (err, res) => {
@@ -43,9 +43,9 @@ module.exports = {
     });
   },
 
-  updateCheck: async function (body, result) {
+  updateCheck: async function (text, id, result) {
     const sql = `UPDATE talking_points SET checked = ? WHERE id = ?`;
-    con.query(sql, [body.val, body.id], (err, res) => {
+    con.query(sql, [text, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
