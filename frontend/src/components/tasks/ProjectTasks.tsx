@@ -67,8 +67,8 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
     dispatch(getProjectTasks({ project: project_id }));
-    dispatch(getTagsByTasks({ project: project_id }));
-    dispatch(getTags({ project: project_id }));
+    dispatch(getTagsByTasks({ project_id: project_id }));
+    dispatch(getTags({ project_id: project_id }));
   }, []);
 
   useEffect(() => {

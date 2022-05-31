@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Tag, Divider } from "antd";
+import { useParams } from "react-router-dom";
 import { deleteTag } from "../../actions/tag";
 import { useDispatch } from "react-redux";
 
@@ -10,9 +11,11 @@ interface Props {
 
 const TagGroup: FC<Props> = ({ title, tags }) => {
   const dispatch = useDispatch();
+  let params: any = useParams();
 
   const deleteHandler = (id: String) => {
-    dispatch(deleteTag({ id: id }));
+    console.log(id);
+    dispatch(deleteTag({ project_id: params.id, id: id }));
   };
 
   return (

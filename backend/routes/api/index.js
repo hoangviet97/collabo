@@ -28,7 +28,7 @@ router.use("/files", fileRoutes);
 router.use("/folders", folderRoutes);
 router.use("/timers", timerRoutes);
 router.use("/notes", noteRoutes);
-router.use("/tags", tagRoutes);
+router.use(tagRoutes);
 router.use("/messages", messageRoutes);
 router.use("/polls", pollRoutes);
 

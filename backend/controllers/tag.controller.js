@@ -18,14 +18,14 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    Tag.find(req.body.project, (err, result) => {
+    Tag.find(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   getTagsByTasks: function (req, res) {
-    Tag.findByTasks(req.body.project, (err, result) => {
+    Tag.findByTasks(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
@@ -33,7 +33,7 @@ module.exports = {
 
   deleteTag: function (req, res) {
     console.log(req.body.id);
-    Tag.deleteTag(req.body.id, (err, result) => {
+    Tag.deleteTag(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

@@ -101,7 +101,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
 
   const submitNewTag = () => {
     const str = tagSelected.split("/");
-    dispatch(createTaskTag({ task: task.id, tag: str[0] }));
+    dispatch(createTaskTag({ project_id: projectId, task: task.id, tag: str[0] }));
     setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
     setTagSelected("");
   };

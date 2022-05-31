@@ -45,11 +45,11 @@ const Tags: FC<Props> = ({ match }) => {
   const loading = useSelector((state: RootStateOrAny) => state.tag.loading);
 
   const createTagHandler = () => {
-    dispatch(createTag({ project: match.params.id, name: tagName.toLocaleLowerCase(), color: "green" }));
+    dispatch(createTag({ project_id: match.params.id, name: tagName.toLocaleLowerCase(), color: "green" }));
   };
 
   useEffect(() => {
-    dispatch(getTags({ project: match.params.id }));
+    dispatch(getTags({ project_id: match.params.id }));
   }, []);
 
   return (
