@@ -7,7 +7,6 @@ import { getProjectTasks, getStatusGroup } from "../../actions/task";
 import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
 import { getTimeRecordsSum } from "../../actions/time_record";
-import { getSessionsLimit } from "../../actions/session";
 
 interface Props {
   match: any;
@@ -26,7 +25,6 @@ const Overview: FC<Props> = ({ match }) => {
     dispatch(getStatusGroup({ id: match.params.id }));
     dispatch(getMembers({ id: match.params.id }));
     dispatch(getTimeRecordsSum({ id: match.params.id }));
-    dispatch(getSessionsLimit({ project_id: match.params.id, limit: 4 }));
   }, []);
 
   return (

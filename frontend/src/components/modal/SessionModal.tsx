@@ -42,7 +42,7 @@ const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }
     if (startTime > endTime) {
       message.error("End time cannot be sooner than start time!");
     } else {
-      dispatch(createSession({ session: values, project: project_id }));
+      dispatch(createSession({ session: values, project_id: project_id }));
     }
   };
 

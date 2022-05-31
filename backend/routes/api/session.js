@@ -4,12 +4,10 @@ const auth = require("../../middleware/auth");
 const permit = require("../../middleware/permission");
 const router = express.Router();
 
-router.post("/add", [auth, permit("Owner", "Admin")], sessionController.create);
-router.get("/:id", auth, sessionController.getOne);
-router.post("/all", auth, sessionController.getAll);
-router.post("/all-past", auth, sessionController.getOld);
-router.post("/all-limit", auth, sessionController.getAllWithLimit);
-router.delete("/:id", auth, sessionController.delete);
-router.post("/participants", auth, sessionController.getParticipants);
+router.post("/:project/sessions/add", [auth], sessionController.create);
+router.get("/:project/sessions/:id", auth, sessionController.getOne);
+router.get("/:project/sessions", auth, sessionController.getAll);
+router.delete("/:project/sessions/:id", auth, sessionController.delete);
+router.get("/:project/sessions/:id/participants", auth, sessionController.getParticipants);
 
 module.exports = router;

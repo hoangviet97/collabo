@@ -2,9 +2,9 @@ import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GE
 import axios from "axios";
 import { message } from "antd";
 
-export const createSession = ({ session, project }) => async (dispatch) => {
+export const createSession = ({ session, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/sessions/add", { session, project });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/sessions/add`, { session });
     dispatch({ type: CREATE_SESSION, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_SESSION_FAIL });
@@ -14,46 +14,36 @@ export const createSession = ({ session, project }) => async (dispatch) => {
 export const getSessions = ({ project_id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
-    const res = await axios.post("http://localhost:9000/api/sessions/all", { project_id });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/sessions`);
     dispatch({ type: GET_SESSIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_SESSIONS_FAIL });
   }
 };
 
-export const getPastSessions = ({ project_id }) => async (dispatch) => {
+export const getSession = ({ id, project_id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
-    const res = await axios.post("http://localhost:9000/api/sessions/all-past", { project_id });
-    dispatch({ type: GET_SESSIONS, payload: res.data });
-  } catch (err) {
-    dispatch({ type: GET_SESSIONS_FAIL });
-  }
-};
-
-export const getSessionsLimit = ({ project_id, limit }) => async (dispatch) => {
-  try {
-    dispatch(setSessionLoading());
-    const res = await axios.post("http://localhost:9000/api/sessions/all-limit", { project_id, limit });
-    dispatch({ type: GET_SESSIONS, payload: res.data });
-  } catch (err) {
-    dispatch({ type: GET_SESSIONS_FAIL });
-  }
-};
-
-export const getSession = ({ id }) => async (dispatch) => {
-  try {
-    dispatch(setSessionLoading());
-    const res = await axios.get(`http://localhost:9000/api/sessions/${id}`);
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/sessions/${id}`);
     dispatch({ type: GET_SESSION, payload: res.data[0] });
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }
 };
 
-export const getParticipants = ({ id }) => async (dispatch) => {
+export const deleteSession = ({ id, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/sessions/participants", { id });
+    dispatch(setSessionLoading());
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/sessions/${id}`);
+    dispatch({ type: GET_SESSION, payload: res.data[0] });
+  } catch (err) {
+    dispatch({ type: GET_SESSION_FAIL });
+  }
+};
+
+export const getParticipants = ({ id, project_id }) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/sessions/${id}/participants`);
 
     console.log(res.data);
     dispatch({ type: GET_PARTICIPANTS, payload: res.data });

@@ -21,7 +21,7 @@ router.use("/projects", projectRoutes);
 router.use("/members", memberRoutes);
 router.use("/sections", sectionRoutes);
 router.use("/tasks", taskRoutes);
-router.use("/sessions", sessionRoutes);
+router.use(sessionRoutes);
 router.use("/talking-points", talkingPointRoutes);
 router.use("/invitation", invitationRoutes);
 router.use("/files", fileRoutes);

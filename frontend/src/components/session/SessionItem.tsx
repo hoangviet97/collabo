@@ -20,8 +20,8 @@ const SessionItem = () => {
   let params: any = useParams();
 
   useEffect(() => {
-    dispatch(getSession({ id: params.sessionId }));
-    dispatch(getParticipants({ id: params.sessionId }));
+    dispatch(getSession({ id: params.sessionId, project_id: params.id }));
+    dispatch(getParticipants({ id: params.sessionId, project_id: params.id }));
     dispatch(getTalkingPoints({ session_id: params.sessionId }));
     dispatch(getNote({ session_id: params.sessionId }));
 

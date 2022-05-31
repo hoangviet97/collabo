@@ -18,8 +18,8 @@ class Session {
 module.exports = {
   Session,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newSession = new Session(uuid4(), body.session.project_id, body.session.name, body.session.date, body.session.start, body.session.end, body.session.description, body.session.place);
+  create: async function (session, project, result) {
+    const newSession = new Session(uuid4(), project, session.name, session.date, session.start, session.end, session.description, session.place);
 
     const sql = `INSERT INTO sessions (id, projects_id, name, date, start, end, description, created_at, place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at, newSession.place], (err, res) => {
@@ -28,12 +28,11 @@ module.exports = {
         return;
       }
 
-      if (body.session.participants === undefined) {
+      if (session.participants === undefined) {
         result(null, newSession);
       } else {
         const arr = [];
-        body.session.participants.map((item) => arr.push([item, newSession.id]));
-        console.log(arr);
+        session.participants.map((item) => arr.push([item, newSession.id]));
 
         const sql = `INSERT INTO members_has_sessions (members_id, sessions_id) VALUES ?`;
         con.query(sql, [arr], (err, res) => {
@@ -54,35 +53,6 @@ module.exports = {
     const sql = `SELECT * FROM sessions WHERE projects_id = ?`;
 
     con.query(sql, [projectId], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  findOld: async function (projectId, result) {
-    const currDate = new Date();
-    const sql = `SELECT * FROM sessions WHERE projects_id = ? AND date > ${currDate}`;
-
-    con.query(sql, [projectId], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  findWithLimit: async function (projectId, limit, result) {
-    const sql = `SELECT * FROM sessions WHERE projects_id = ? LIMIT ?`;
-
-    con.query(sql, [projectId, limit], (err, res) => {
       if (err) {
         result(err, null);
         return;
