@@ -1,27 +1,29 @@
 // AUTH
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_FAIL = "REGISTER_FAIL";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAIL = "LOGIN_FAIL";
-export const USER_LOADED = "USER_LOADED";
-export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGOUT = "LOGOUT";
+export const REGISTER_SUCCESS: string = "REGISTER_SUCCESS";
+export const REGISTER_FAIL: string = "REGISTER_FAIL";
+export const LOGIN_SUCCESS: string = "LOGIN_SUCCESS";
+export const LOGIN_FAIL: string = "LOGIN_FAIL";
+export const USER_LOADED: string = "USER_LOADED";
+export const AUTH_ERROR: string = "AUTH_ERROR";
+export const CHANGE_FIRSTNAME: string = "CHANGE_FIRSTNAME";
+export const CHANGE_LASTNAME: string = "CHANGE_LASTNAME";
+export const LOGOUT: string = "LOGOUT";
 // PROJECTS
-export const CREATE_PROJECT = "CREATE_PROJECT";
-export const CREATE_PROJECT_FAIL = "CREATE_PROJECT_FAIL";
-export const GET_PROJECTS = "GET_PROJECTS";
-export const LOAD_PROJECTS_FAIL = "LOAD_PROJECTS_FAIL";
-export const GET_SINGLE_PROJECT = "GET_SINGLE_PROJECT";
-export const ERROR_SINGLE_PROJECT = "ERROR_SINGLE_PROJECT";
-export const PROJECT_LOADING = "PROJECT_LOADING";
-export const LEAVE_PROJECT = "LEAVE_PROJECT";
-export const UPDATE_PROJECT_STATUS = "UPDATE_PROJECT_STATUS";
-export const UPDATE_PROJECT_STATUS_FAIL = "UPDATE_PROJECT_STATUS_FAIL";
-export const SET_PROJECT_BUDGET = "SET_PROJECT_BUDGET";
-export const SET_PROJECT_CURRENCY = "SET_PROJECT_CURRENCY";
+export const CREATE_PROJECT: string = "CREATE_PROJECT";
+export const CREATE_PROJECT_FAIL: string = "CREATE_PROJECT_FAIL";
+export const GET_PROJECTS: string = "GET_PROJECTS";
+export const LOAD_PROJECTS_FAIL: string = "LOAD_PROJECTS_FAIL";
+export const GET_SINGLE_PROJECT: string = "GET_SINGLE_PROJECT";
+export const ERROR_SINGLE_PROJECT: string = "ERROR_SINGLE_PROJECT";
+export const PROJECT_LOADING: string = "PROJECT_LOADING";
+export const LEAVE_PROJECT: string = "LEAVE_PROJECT";
+export const UPDATE_PROJECT_STATUS: string = "UPDATE_PROJECT_STATUS";
+export const UPDATE_PROJECT_STATUS_FAIL: string = "UPDATE_PROJECT_STATUS_FAIL";
+export const SET_PROJECT_BUDGET: string = "SET_PROJECT_BUDGET";
+export const SET_PROJECT_CURRENCY: string = "SET_PROJECT_CURRENCY";
 // MODAL
-export const SHOW_TASK_MODAL = "SHOW_TASK_MODAL";
-export const CLOSE_TASK_MODAL = "CLOSE_TASK_MODAL";
+export const SHOW_TASK_MODAL: string = "SHOW_TASK_MODAL";
+export const CLOSE_TASK_MODAL: string = "CLOSE_TASK_MODAL";
 // MEMBERS
 export const GET_MEMBERS = "GET_MEMBERS";
 export const GET_MEMBERS_FAIL = "GET_MEMBERS_FAIL";
@@ -82,7 +84,7 @@ export const GET_MESSAGES_FAIL = "GET_MESSAGES_FAIL";
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const GET_REPLIES = "GET_REPLIES";
 // COLORS
-export const UPDATE_PROJECT_COLOR = "UPDATE_PROJECT_COLOR";
+export const UPDATE_PROJECT_COLOR: string = "UPDATE_PROJECT_COLOR";
 // SESSIONS
 export const CREATE_SESSION = "CREATE_SESSION";
 export const CREATE_SESSION_FAIL = "CREATE_SESSION_FAIL";
@@ -93,7 +95,7 @@ export const GET_SESSION_FAIL = "GET_SESSION_FAIL";
 export const SESSIONS_LOADING = "SECTIONS_LOADING";
 export const GET_PARTICIPANTS = "GET_PARTICIPANTS";
 
-export const DATA_LOADING = "DATA_LOADING";
+export const DATA_LOADING: string = "DATA_LOADING";
 
 export const CREATE_TALKING_POINT = "CREATE_TALKING_POINT";
 export const CREATE_TALKING_POINT_FAIL = "CREATE_TALKING_POINT_FAIL";
@@ -123,7 +125,7 @@ export const CREATE_NOTE = "CREATE_NOTE";
 export const UPDATE_NOTE = "UPDATE_NOTE";
 export const GET_NOTE = "GET_NOTE";
 
-export const GET_STATUS_GROUP = "GET_STATUS_GROUP";
+export const GET_STATUS_GROUP: string = "GET_STATUS_GROUP";
 
 export const CREATE_TAG = "CREATE_TAG";
 export const CREATE_TASK_TAG = "CREATE_TASK_TAG";
@@ -132,14 +134,14 @@ export const GET_TASK_TAGS = "GET_TASK_TAGS";
 export const DELETE_TAGS = "DELETE_TAGS";
 export const TAGS_LOADING = "TAGS_LOADING";
 
-export const SET_PROGRESS = "SET_PROGRESS";
-export const RESET_AUTH = "RESET_AUTH";
+export const SET_PROGRESS: string = "SET_PROGRESS";
+export const RESET_AUTH: string = "RESET_AUTH";
 
-export const GET_PROJECT_AUTH = "GET_PROJECT_AUTH";
+export const GET_PROJECT_AUTH: string = "GET_PROJECT_AUTH";
 
-export const FILTER_STATUS = "FILTER_STATUS";
-export const FILTER_PRIORITY = "FILTER_PRIORITY";
+export const FILTER_STATUS: string = "FILTER_STATUS";
+export const FILTER_PRIORITY: string = "FILTER_PRIORITY";
 
-export const CREATE_POLL = "CREATE_POLL";
-export const UPDATE_VOTE = "UPDATE_VOTE";
-export const DELETE_VOTE = "DELETE_VOTE";
+export const CREATE_POLL: string = "CREATE_POLL";
+export const UPDATE_VOTE: string = "UPDATE_VOTE";
+export const DELETE_VOTE: string = "DELETE_VOTE";

@@ -38,6 +38,7 @@ export const getProject = ({ project, push }) => async (dispatch) => {
   } catch (err) {
     console.log(err.response.status);
     dispatch({ type: GET_PROJECT_AUTH });
+    push("/");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
 };

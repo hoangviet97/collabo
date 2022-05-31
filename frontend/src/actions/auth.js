@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USER_LOADED, AUTH_ERROR } from "./types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USER_LOADED, AUTH_ERROR, CHANGE_FIRSTNAME, CHANGE_LASTNAME } from "./types";
 import axios from "axios";
 import setAuthToken from "../helpers/setAuthToken";
 import { message } from "antd";
@@ -49,9 +49,20 @@ export const login = ({ email, password }) => async (dispatch) => {
   }
 };
 
-export const changeName = ({ id, firstname, lastname }) => async (dispatch) => {
+export const changeFirstname = ({ firstname }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/change-name", { id, firstname, lastname });
+    const res = await axios.patch("http://localhost:9000/api/firstname", { firstname });
+    dispatch({ type: CHANGE_FIRSTNAME, payload: firstname });
+    console.log(res);
+  } catch (err) {
+    console.log(err.response);
+  }
+};
+
+export const changeLastname = ({ lastname }) => async (dispatch) => {
+  try {
+    const res = await axios.patch("http://localhost:9000/api/lastname", { lastname });
+    dispatch({ type: CHANGE_LASTNAME, payload: lastname });
     console.log(res);
   } catch (err) {
     console.log(err.response);

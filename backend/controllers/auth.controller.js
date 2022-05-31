@@ -42,8 +42,15 @@ module.exports = {
     });
   },
 
-  changeName: function (req, res) {
-    User.changeName(req.body, (err, result) => {
+  changeFirstname: function (req, res) {
+    User.changeFirstname(req.user.id, req.body.firstname, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changeLastname: function (req, res) {
+    User.changeLastname(req.user.id, req.body.lastname, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

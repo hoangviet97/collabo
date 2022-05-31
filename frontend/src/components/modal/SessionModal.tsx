@@ -1,52 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, FC } from "react";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { getMembers } from "../../actions/member";
 import { createSession } from "../../actions/session";
 import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col, message } from "antd";
 
-const SessionModal = (props) => {
+interface Props {
+  project_id: string;
+  visible: boolean;
+  handleCancel: any;
+  handleOk: any;
+}
+
+const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }) => {
   const dispatch = useDispatch();
-  const members = useSelector((state) => state.member.members);
+  const members = useSelector((state: RootStateOrAny) => state.member.members);
   const { Option } = Select;
   const { TextArea } = Input;
 
   useEffect(() => {
-    props.getMembers({ id: props.project_id });
+    dispatch(getMembers({ id: project_id }));
   }, []);
 
-  const timeHandle = (value) => {
+  const timeHandle = (value: any) => {
     console.log(moment(value._d).format("LT"));
   };
 
-  const handleChange = (value) => {
-    console.log(value);
-  };
-
-  const onFinish = (fieldsValue) => {
+  const onFinish = (fieldsValue: any) => {
     const dateVal = fieldsValue.date._d;
     const startTime = fieldsValue.start._d;
     const endTime = fieldsValue.end._d;
-
-    console.log(fieldsValue);
 
     const values = {
       ...fieldsValue,
       date: moment(dateVal).format("YYYY-MM-DD"),
       start: moment(startTime).format("YYYY-MM-DD hh:mm:ss"),
       end: moment(endTime).format("YYYY-MM-DD hh:mm:ss"),
-      project_id: props.project_id
+      project_id: project_id
     };
 
     if (startTime > endTime) {
       message.error("End time cannot be sooner than start time!");
     } else {
-      props.createSession({ session: values, project: props.project_id });
+      dispatch(createSession({ session: values, project: project_id }));
     }
   };
 
   return (
-    <Modal title="Create New Session" width="600px" visible={props.visible} onCancel={props.handleCancel} footer={null}>
+    <Modal title="Create New Session" width="600px" visible={visible} onCancel={handleCancel} footer={null}>
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item label="Event title" name="name">
           <Input />
@@ -61,8 +62,8 @@ const SessionModal = (props) => {
         </Form.Item>
 
         <Form.Item label="Add participants" name="participants">
-          <Select mode="multiple" allowClear style={{ width: "100%" }} onChange={handleChange} placeholder="Please select">
-            {members.map((item) => (
+          <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select">
+            {members.map((item: any) => (
               <Option key={item.id} value={item.id}>
                 {item.firstname} {item.lastname}
               </Option>
@@ -92,8 +93,4 @@ const SessionModal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  members: state.member.members
-});
-
-export default connect(mapStateToProps, { getMembers, createSession })(SessionModal);
+export default SessionModal;

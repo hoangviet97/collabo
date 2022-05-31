@@ -10,6 +10,7 @@ router.get("/profile", auth, userController.getCurrentUser);
 router.get("/verify/:id", authController.verify);
 router.post("/reset", authController.resetPassword);
 router.patch("/change", authController.changePassword);
-router.patch("/change-name", authController.changeName);
+router.patch("/firstname", auth, authController.changeFirstname);
+router.patch("/lastname", auth, authController.changeLastname);
 
 module.exports = router;

@@ -169,9 +169,23 @@ module.exports = {
     });
   },
 
-  changeName: function (id, result) {
-    const sql = `UPDATE users SET firstname = ? AND lastname = ? WHERE id = ?`;
-    con.query(sql, async (err, res) => {
+  changeFirstname: function (id, name, result) {
+    const sql = `UPDATE users SET firstname = ? WHERE id = ?`;
+    con.query(sql, [name, id], async (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  changeLastname: function (id, name, result) {
+    const sql = `UPDATE users SET lastname = ? WHERE id = ?`;
+    con.query(sql, [name, id], async (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
