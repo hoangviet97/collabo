@@ -13,8 +13,8 @@ class Note {
 module.exports = {
   Note,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newNote = new Note(uuid4(), body.session_id, body.text);
+  create: async function (id, text, result) {
+    const newNote = new Note(uuid4(), id, text);
 
     const sql = `INSERT INTO notes (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at], (err, res) => {
@@ -45,7 +45,7 @@ module.exports = {
   update: async function (id, text, result) {
     const sql = `UPDATE notes SET text = ? WHERE id = ?`;
 
-    con.query(sql, [id, text], (err, res) => {
+    con.query(sql, [text, id], (err, res) => {
       if (err) {
         result(err, null);
         return;

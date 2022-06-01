@@ -3,7 +3,7 @@ import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSession, getParticipants } from "../../actions/session";
 import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../actions/talking_point";
-import { getNote, createNote } from "../../actions/note";
+import { getNote, updateNote, createNote } from "../../actions/note";
 import { Divider, Input, Checkbox, Button, Avatar, Tooltip } from "antd";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
@@ -23,18 +23,18 @@ const SessionItem = () => {
     dispatch(getSession({ id: params.sessionId, project_id: params.id }));
     dispatch(getParticipants({ id: params.sessionId, project_id: params.id }));
     dispatch(getTalkingPoints({ session_id: params.sessionId, project_id: params.id }));
-    dispatch(getNote({ session_id: params.sessionId }));
+    dispatch(getNote({ project_id: params.id, session_id: params.sessionId }));
 
-    if (note) {
+    if (note !== undefined) {
       setNoteText(note.text);
-    } else {
-      setNoteText("");
     }
-
-    return () => {
-      setNoteText("");
-    };
   }, [params.sessionId]);
+
+  useEffect(() => {
+    if (note !== undefined) {
+      setNoteText(note.text);
+    }
+  }, [note]);
 
   const talkingPointHandle = (e: any) => {
     e.preventDefault();
@@ -49,7 +49,11 @@ const SessionItem = () => {
   };
 
   const submitNoteText = () => {
-    dispatch(createNote({ session_id: params.sessionId, text: noteText }));
+    if (note === undefined) {
+      dispatch(createNote({ project_id: params.id, session_id: params.sessionId, text: noteText }));
+    } else {
+      dispatch(updateNote({ project_id: params.id, session_id: params.sessionId, id: note.id, text: noteText }));
+    }
   };
 
   return (
@@ -99,8 +103,7 @@ const SessionItem = () => {
       </div>
       <div className="session__note">
         <span style={{ fontSize: "18px" }}>Notepad</span>
-        <TextArea style={{ padding: "5px 0" }} value={noteText} onChange={(e) => setNoteText(e.target.value)} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
-        <Button onBlur={submitNoteText}>Save</Button>
+        <TextArea style={{ padding: "5px 0" }} value={noteText} onChange={(e) => setNoteText(e.target.value)} onBlur={submitNoteText} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
       </div>
     </div>
   );

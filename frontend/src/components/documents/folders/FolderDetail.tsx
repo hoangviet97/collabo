@@ -13,7 +13,7 @@ const FolderDetail = () => {
   const params: any = useParams();
 
   useEffect(() => {
-    dispatch(getFolder({ id: params.folderId }));
+    dispatch(getFolder({ id: params.folderId, project_id: params.id }));
   }, []);
 
   return (

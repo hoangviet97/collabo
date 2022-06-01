@@ -13,8 +13,8 @@ class Folder {
 module.exports = {
   Folder,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newFolder = new Folder(uuid4(), body.title, body.project_id);
+  create: async function (title, id, result) {
+    const newFolder = new Folder(uuid4(), title, id);
 
     const sql = `INSERT INTO folders (id, title, created_at, projects_id) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newFolder.id, newFolder.title, newFolder.created_at, newFolder.project_id], (err, res) => {
