@@ -2,9 +2,9 @@ import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, UPDATE_SEEN_IN
 import axios from "axios";
 import { message } from "antd";
 
-export const createInvitation = ({ receiver_email, project }) => async (dispatch) => {
+export const createInvitation = ({ receiver_email, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/invitation/new", { receiver_email, project });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/invitations/new`, { receiver_email });
     dispatch({ type: CREATE_INVITATION, payload: res.data });
     console.log(res.data);
   } catch (err) {
@@ -12,9 +12,9 @@ export const createInvitation = ({ receiver_email, project }) => async (dispatch
   }
 };
 
-export const acceptInvitation = ({ id, project }) => async (dispatch) => {
+export const acceptInvitation = ({ id, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/invitation/accept", { id, project });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/invitations/${id}/accept`);
     console.log(res.data);
     dispatch({ type: DELETE_INVITATION, payload: id });
   } catch (err) {
@@ -22,18 +22,18 @@ export const acceptInvitation = ({ id, project }) => async (dispatch) => {
   }
 };
 
-export const getAllInvitations = () => async (dispatch) => {
+export const getAllInvitations = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:9000/api/invitation/private");
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/invitations/private`);
     dispatch({ type: GET_INVITATIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_INVITATIONS_FAIL });
   }
 };
 
-export const getAllProjectInvitations = ({ project }) => async (dispatch) => {
+export const getAllProjectInvitations = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/invitation/all", { project });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/invitations`);
     console.log(res.data);
     dispatch({ type: GET_PROJECT_INVITATIONS, payload: res.data });
   } catch (err) {
@@ -41,9 +41,9 @@ export const getAllProjectInvitations = ({ project }) => async (dispatch) => {
   }
 };
 
-export const updateSeenStatus = ({ id }) => async (dispatch) => {
+export const updateSeenStatus = ({ project_id, id }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/invitation/seen", { id });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/invitations/${id}/seen`);
     console.log(res.data);
     dispatch({ type: UPDATE_SEEN_INVITATION, payload: { id: id, seenStatus: res.data } });
     console.log(res.data);
@@ -52,9 +52,9 @@ export const updateSeenStatus = ({ id }) => async (dispatch) => {
   }
 };
 
-export const deleteInvitation = ({ id }) => async (dispatch) => {
+export const deleteInvitation = ({ project_id, id }) => async (dispatch) => {
   try {
-    const res = await axios.post(`http://localhost:9000/api/invitation/delete`, { id });
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/invitations/${id}`);
     dispatch({ type: DELETE_INVITATION, payload: id });
     message.success("Invitation has been deleted successuly");
   } catch (err) {

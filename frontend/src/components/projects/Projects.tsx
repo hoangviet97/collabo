@@ -80,7 +80,7 @@ const Projects = () => {
   } else if (projects) {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
-        {filteredData.map((project) => {
+        {filteredData.map((project: any, index: number) => {
           let membersArr = members.filter((x: any) => x.project_id === project.id);
           return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} members={membersArr} />;
         })}

@@ -7,6 +7,7 @@ import { getProjectTasks, getStatusGroup } from "../../actions/task";
 import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
 import { getTimeRecordsSum } from "../../actions/time_record";
+import MainSpinner from "../utils/spinners/MainSpinner";
 
 interface Props {
   match: any;
@@ -67,6 +68,7 @@ const Overview: FC<Props> = ({ match }) => {
           </div>
           <div className="e">
             <h3>Upcoming tasks</h3>
+            <MainSpinner />
           </div>
         </div>
       </div>

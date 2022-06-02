@@ -20,7 +20,7 @@ const Team: FC<Props> = ({ match }) => {
 
   useEffect(() => {
     dispatch(getMembers({ id: match.params.id }));
-    dispatch(getAllProjectInvitations({ project: match.params.id }));
+    dispatch(getAllProjectInvitations({ project_id: match.params.id }));
   }, []);
 
   const inviteHeader = (

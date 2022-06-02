@@ -13,7 +13,7 @@ const InvitationPanel: FC<Props> = ({ project }) => {
 
   const submitHandle = (e: any) => {
     e.preventDefault();
-    dispatch(createInvitation({ receiver_email: email, project: project }));
+    dispatch(createInvitation({ receiver_email: email, project_id: project }));
     setEmail("");
   };
 

@@ -63,7 +63,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     } else {
       setTaskVisual(localStorage.getItem("task_visual"));
     }
-    dispatch(getSections({ project: project_id }));
+    dispatch(getSections({ project_id: project_id }));
     dispatch(getMembers({ id: project_id }));
     dispatch(getAllAssignees({ id: project_id }));
     dispatch(getProjectTasks({ project: project_id }));
@@ -118,7 +118,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     if (newSection.length === 0) {
       console.log("empty");
     } else {
-      dispatch(createSection({ id: project_id, name: newSection }));
+      dispatch(createSection({ project_id: project_id, name: newSection }));
       setNewSection("");
     }
   };
@@ -153,7 +153,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
       <Menu.Item
         key="1"
         onClick={(event) => {
-          dispatch(deleteSection({ id: selectedSection }));
+          dispatch(deleteSection({ project_id: project_id, id: selectedSection }));
         }}
       >
         <Text type="danger">Delete</Text>

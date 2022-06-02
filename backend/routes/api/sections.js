@@ -4,8 +4,8 @@ const auth = require("../../middleware/auth");
 const check = require("../../middleware/checkMembership");
 const router = express.Router();
 
-router.post("/add", auth, sectionController.create);
-router.post("/all", [auth, check], sectionController.getAll);
-router.post("/delete", auth, sectionController.delete);
+router.post("/:project/sections/add", auth, sectionController.create);
+router.get("/:project/sections", [auth], sectionController.getAll);
+router.delete("/:project/sections/:id", auth, sectionController.delete);
 
 module.exports = router;

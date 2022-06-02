@@ -24,25 +24,6 @@ class File {
 module.exports = {
   File,
 
-  // create new member by user or by admin
-  upload: async function (id, body, file, result) {
-    const clearedType = file.originalname.split(".");
-
-    const fileTitle = body.title === undefined || body.title === null || body.title === "" ? file.originalname : body.title;
-    const newFile = new File(uuid4(), fileTitle, body.description, file.size, file.path, clearedType[clearedType.length - 1], id);
-
-    const sql = `INSERT INTO files (id, title, description, size, file_path, file_mimetype, created_at, projects_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newFile.id, newFile.title, newFile.description, newFile.size, newFile.file_path, newFile.file_mimetype, newFile.created_at, newFile.project_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, newFile);
-      return;
-    });
-  },
-
   upload2: async function (id, body, file, result) {
     console.log(file);
     console.log(body);
@@ -101,20 +82,6 @@ module.exports = {
       }
 
       result(null, res);
-      return;
-    });
-  },
-
-  download: async function (id, result) {
-    const sql = `SELECT * FROM files WHERE id = ?`;
-
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res[0]);
       return;
     });
   },

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Spinner from "../utils/Spinner";
 
 const ProtectedProjectRoute = ({ component: Component, authorized, ...rest }) => {
-  return <Route {...rest} render={(props) => (authorized === false ? <Spinner /> : <Component {...props} />)} />;
+  return <Route {...rest} render={(props) => (authorized === false ? "" : <Component {...props} />)} />;
 };
 
 const mapStateToProps = (state) => ({
