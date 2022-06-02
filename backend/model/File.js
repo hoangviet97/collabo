@@ -25,11 +25,11 @@ module.exports = {
   File,
 
   // create new member by user or by admin
-  upload: async function (body, file, result) {
+  upload: async function (id, body, file, result) {
     const clearedType = file.originalname.split(".");
 
     const fileTitle = body.title === undefined || body.title === null || body.title === "" ? file.originalname : body.title;
-    const newFile = new File(uuid4(), fileTitle, body.description, file.size, file.path, clearedType[clearedType.length - 1], body.project_id);
+    const newFile = new File(uuid4(), fileTitle, body.description, file.size, file.path, clearedType[clearedType.length - 1], id);
 
     const sql = `INSERT INTO files (id, title, description, size, file_path, file_mimetype, created_at, projects_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newFile.id, newFile.title, newFile.description, newFile.size, newFile.file_path, newFile.file_mimetype, newFile.created_at, newFile.project_id], (err, res) => {
@@ -43,7 +43,7 @@ module.exports = {
     });
   },
 
-  upload2: async function (body, file, result) {
+  upload2: async function (id, body, file, result) {
     console.log(file);
     console.log(body);
     const fileId = uuid4();
@@ -62,7 +62,7 @@ module.exports = {
       }
 
       const clearedType = file.originalname.split(".");
-      const newFile = new File(fileId, body.project_id, file.originalname, body.description, file.size, clearedType[clearedType.length - 1]);
+      const newFile = new File(fileId, id, file.originalname, body.description, file.size, clearedType[clearedType.length - 1]);
 
       const sql = `INSERT INTO files (id, projects_id, title, description, size, file_mimetype, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
       con.query(sql, [newFile.id, newFile.project_id, newFile.title, newFile.description, newFile.size, newFile.file_mimetype, newFile.created_at], (err, res) => {
@@ -77,10 +77,10 @@ module.exports = {
     });
   },
 
-  find: async function (project_id, result) {
+  find: async function (id, result) {
     const sql = `SELECT * FROM files WHERE projects_id = ?`;
 
-    con.query(sql, [project_id], (err, res) => {
+    con.query(sql, [id], (err, res) => {
       if (err) {
         result(err, null);
         return;

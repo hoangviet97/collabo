@@ -49,7 +49,7 @@ const NewFileForm: FC<Props> = ({ project_id }) => {
         formData.append("description", description);
         setErrorMsg("");
 
-        dispatch(uploadFile({ formData: formData }));
+        dispatch(uploadFile({ project_id: project_id, formData: formData }));
 
         if (!loading) {
           setFile(null);

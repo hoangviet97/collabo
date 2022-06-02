@@ -18,6 +18,7 @@ const Documents: FC<Props> = ({ match }) => {
   useEffect(() => {
     dispatch(getAllFolders({ project_id: match.params.id }));
     dispatch(getAllFiles({ project_id: match.params.id }));
+    console.log(match.params.id);
   }, []);
 
   return (

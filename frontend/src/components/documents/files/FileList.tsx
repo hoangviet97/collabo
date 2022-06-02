@@ -120,8 +120,10 @@ const FileList: FC<Props> = ({ files, folders }) => {
       </div>
       <Modal title="Select folder" width="500px" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Select style={{ width: 200 }} onChange={handleFolderName} placeholder="Select a person">
-          {folders.map((item: any) => (
-            <Option value={item.id}>{item.title}</Option>
+          {folders.map((item: any, index: number) => (
+            <Option key={index} value={item.id}>
+              {item.title}
+            </Option>
           ))}
         </Select>
         <Button onClick={submitHandle}>Move</Button>

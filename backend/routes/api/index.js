@@ -24,7 +24,7 @@ router.use("/tasks", taskRoutes);
 router.use(sessionRoutes);
 router.use(talkingPointRoutes);
 router.use("/invitation", invitationRoutes);
-router.use("/files", fileRoutes);
+router.use(fileRoutes);
 router.use(folderRoutes);
 router.use("/timers", timerRoutes);
 router.use(noteRoutes);

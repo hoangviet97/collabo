@@ -8,14 +8,15 @@ module.exports = {
   // register new user
   upload: function (req, res) {
     console.log(req.file);
-    File.upload2(req.body, req.file, (err, result) => {
+    File.upload2(req.params.project, req.body, req.file, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   getAll: function (req, res) {
-    File.find(req.body.project_id, (err, result) => {
+    console.log("ok");
+    File.find(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

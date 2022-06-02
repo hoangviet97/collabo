@@ -2,10 +2,10 @@ import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, FILE_DETA
 import axios from "axios";
 import { message } from "antd";
 
-export const uploadFile = ({ formData }) => async (dispatch) => {
+export const uploadFile = ({ project_id, formData }) => async (dispatch) => {
   dispatch(setFileLoading());
   try {
-    const res = await axios.post("http://localhost:9000/api/files/upload", formData, {
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/files/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
@@ -38,8 +38,9 @@ export const deleteFile = ({ id }) => async (dispatch) => {
 };
 
 export const getAllFiles = ({ project_id }) => async (dispatch) => {
+  console.log(project_id);
   try {
-    const res = await axios.post("http://localhost:9000/api/files/all", { project_id });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/files`);
     dispatch({ type: GET_FILES, payload: res.data });
   } catch (err) {
     console.log(err);
