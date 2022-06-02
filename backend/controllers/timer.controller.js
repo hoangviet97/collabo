@@ -12,21 +12,14 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    Timer.find(req.body.id, "project", (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
-  },
-
-  getByProject: function (req, res) {
-    Timer.findByProject(req.body.id, (err, result) => {
+    Timer.findByProject(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   getSum: function (req, res) {
-    Timer.getSum(req.body.id, (err, result) => {
+    Timer.getSum(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

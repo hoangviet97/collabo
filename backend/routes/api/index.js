@@ -26,7 +26,7 @@ router.use(talkingPointRoutes);
 router.use(invitationRoutes);
 router.use(fileRoutes);
 router.use(folderRoutes);
-router.use("/timers", timerRoutes);
+router.use(timerRoutes);
 router.use(noteRoutes);
 router.use(tagRoutes);
 router.use("/messages", messageRoutes);
