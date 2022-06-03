@@ -35,7 +35,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
 
   useEffect(() => {
     if (pathValue.length === 8 && /^\d+$/.test(pathValue)) {
-      dispatch(getProject({ project: pathValue, push: push }));
+      dispatch(getProject({ project_id: pathValue, push: push }));
     }
   }, [match]);
 

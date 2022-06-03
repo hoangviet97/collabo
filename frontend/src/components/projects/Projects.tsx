@@ -5,7 +5,7 @@ import { Button, Skeleton, Select } from "antd";
 import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled, CloseOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { getProjects, goToProject } from "../../actions/project";
+import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
 

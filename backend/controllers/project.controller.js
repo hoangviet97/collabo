@@ -27,57 +27,51 @@ module.exports = {
     });
   },
 
+  // Get specific project
   getOne: function (req, res) {
-    Project.findOne(req.body.project, req.user.id, (err, result) => {
+    Project.findOne(req.params.id, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
   },
 
   setFavorite: function (req, res) {
-    Project.setFavoriteProject(req.body, (err, result) => {
+    Project.setFavoriteProject(req.body.status, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   setBudget: function (req, res) {
-    Project.setBudget(req.body, (err, result) => {
+    Project.setBudget(req.body.budget, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   setCurrency: function (req, res) {
-    Project.setCurrency(req.body, (err, result) => {
+    Project.setCurrency(req.body.currency, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   updateColor: function (req, res) {
-    Project.updateColor(req.body, (err, result) => {
+    Project.updateColor(req.body.color, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   updateStatus: function (req, res) {
-    Project.updateStatus(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
-  },
-
-  checkMembership: function (req, res) {
-    Project.check(req.body.id, req.user.id, (err, result) => {
+    Project.updateStatus(req.body.status, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   deleteProject: function (req, res) {
-    Project.delete(req.body.id, (err, result) => {
+    Project.delete(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

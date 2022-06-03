@@ -18,11 +18,11 @@ const Members: FC<Props> = ({ projectId }) => {
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
 
   function roleHandle(id: string, value: any) {
-    dispatch(updateMemberRole({ id: id, project: projectId, role_id: value }));
+    dispatch(updateMemberRole({ id: id, project_id: projectId, role_id: value }));
   }
 
   const kickMemberHandle = (id: string) => {
-    dispatch(deleteMember({ id: id, project: projectId }));
+    dispatch(deleteMember({ id: id, project_id: projectId }));
   };
 
   const drawerCloseHandler = () => {

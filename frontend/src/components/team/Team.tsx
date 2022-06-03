@@ -19,7 +19,7 @@ const Team: FC<Props> = ({ match }) => {
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
   useEffect(() => {
-    dispatch(getMembers({ id: match.params.id }));
+    dispatch(getMembers({ project_id: match.params.id }));
     dispatch(getAllProjectInvitations({ project_id: match.params.id }));
   }, []);
 

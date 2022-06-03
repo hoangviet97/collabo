@@ -6,6 +6,7 @@ import axios from "axios";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { moveToFolder, deleteFile } from "../../../actions/file";
 import fileDownload from "js-file-download";
+import { useParams } from "react-router-dom";
 
 interface Props {
   files: any;
@@ -14,6 +15,7 @@ interface Props {
 
 const FileList: FC<Props> = ({ files, folders }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const { Text, Link } = Typography;
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -28,7 +30,7 @@ const FileList: FC<Props> = ({ files, folders }) => {
 
   const download = (record: any) => {
     axios({
-      url: `http://localhost:9000/api/files/download/${record.id}`, //your url
+      url: `http://localhost:9000/api/${params.id}/files/${record.id}/download`, //your url
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {
@@ -107,7 +109,7 @@ const FileList: FC<Props> = ({ files, folders }) => {
   };
 
   const submitHandle = () => {
-    dispatch(moveToFolder({ id: fileId, folder_id: folderId }));
+    dispatch(moveToFolder({ project_id: params.id, id: fileId, folder_id: folderId }));
     setFolderId("");
     setFileId("");
     setIsModalVisible(false);

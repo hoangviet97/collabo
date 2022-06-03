@@ -2,9 +2,9 @@ import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_F
 import axios from "axios";
 import { message } from "antd";
 
-export const getMembers = ({ id }) => async (dispatch) => {
+export const getMembers = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/members/all", { id });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/members`);
     dispatch({ type: GET_MEMBERS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_MEMBERS_FAIL });
@@ -13,17 +13,16 @@ export const getMembers = ({ id }) => async (dispatch) => {
 
 export const getMembers2 = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:9000/api/members/all2");
+    const res = await axios.get(`http://localhost:9000/api/members/2`);
     dispatch({ type: GET_MEMBERS, payload: res.data });
-    console.log(res.data);
   } catch (err) {
     dispatch({ type: GET_MEMBERS_FAIL });
   }
 };
 
-export const updateMemberRole = ({ id, project, role_id }) => async (dispatch) => {
+export const updateMemberRole = ({ id, project_id, role_id }) => async (dispatch) => {
   try {
-    const res = await axios.patch(`http://localhost:9000/api/members/role`, { id, project, role_id });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/members/${id}/role`, { role_id });
     dispatch({ type: UPDATE_MEMBER_ROLE, payload: { id, role_id } });
   } catch (err) {
     dispatch({ type: UPDATE_MEMBER_ROLE_FAILED });
@@ -31,9 +30,9 @@ export const updateMemberRole = ({ id, project, role_id }) => async (dispatch) =
   }
 };
 
-export const deleteMember = ({ id, project }) => async (dispatch) => {
+export const deleteMember = ({ id, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post(`http://localhost:9000/api/members/delete`, { id, project });
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/members/${id}`);
     dispatch({ type: DELETE_MEMBER, payload: { id } });
   } catch (err) {
     //
@@ -42,7 +41,7 @@ export const deleteMember = ({ id, project }) => async (dispatch) => {
 
 export const leaveProject = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/members/leave", { project_id });
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/members/leave`);
     //dispatch({ type: DELETE_MEMBER, payload: { id } });
   } catch (err) {
     //

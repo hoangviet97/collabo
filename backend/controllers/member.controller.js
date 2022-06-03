@@ -11,7 +11,7 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    Member.find(req.body.id, (err, result) => {
+    Member.find(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
@@ -25,21 +25,21 @@ module.exports = {
   },
 
   updateRole: function (req, res) {
-    Member.updateRole(req.body, (err, result) => {
+    Member.updateRole(req.body.role_id, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   deleteMember: function (req, res) {
-    Member.delete(req.body, (err, result) => {
+    Member.delete(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   leave: function (req, res) {
-    Member.leave(req.body, req.user.id, (err, result) => {
+    Member.leave(req.params.project, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

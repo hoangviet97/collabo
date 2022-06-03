@@ -82,7 +82,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   };
 
   const deleteHandler = () => {
-    dispatch(deleteProject({ id: currentProject.id, push: push }));
+    dispatch(deleteProject({ project_id: currentProject.id, push: push }));
   };
 
   const handleOk = () => {
@@ -95,11 +95,11 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
 
   const handleIconColor = (color: string) => {
     setIconColorSelection(color);
-    dispatch(updateColor({ id: currentProject.id, color: color, project: currentProject.id }));
+    dispatch(updateColor({ project_id: currentProject.id, color: color }));
   };
 
   const projectStatusHandle = (e: any) => {
-    dispatch(updateStatus({ id: currentProject.id, status: e.target.value, project: currentProject.id }));
+    dispatch(updateStatus({ project_id: currentProject.id, status: e.target.value }));
   };
 
   const budgetChangeHandle = (e: any) => {
@@ -107,11 +107,11 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   };
 
   const currencyHandle = (value: string) => {
-    dispatch(setCurrency({ projectId: currentProject.id, currency: value }));
+    dispatch(setCurrency({ project_id: currentProject.id, currency: value }));
   };
 
   const onBudgetBlur = () => {
-    dispatch(setBudget({ projectId: currentProject.id, budget: totalBudget }));
+    dispatch(setBudget({ project_id: currentProject.id, budget: totalBudget }));
   };
 
   const projectInfoMenu = (

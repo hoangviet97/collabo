@@ -14,8 +14,8 @@ class Member {
 module.exports = {
   Member,
   // create new member by user or by admin
-  create: async function (userId, projectId, result) {
-    const newMember = new Member(uuid4(), userId, 0, projectId);
+  create: async function (userId, project, result) {
+    const newMember = new Member(uuid4(), userId, 0, project);
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
     con.query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at], (err, res) => {
       if (err) {
@@ -23,19 +23,19 @@ module.exports = {
         return;
       }
 
-      result(null, projectId);
+      result(null, project);
       return;
     });
   },
 
-  find: async function (projectId, result) {
+  find: async function (project, result) {
     const sql = `SELECT members.id, users.id AS user_id, users.email, users.firstname, users.lastname, roles.id AS role_id, roles.name AS role, members.created_at 
                   FROM members 
                   INNER JOIN users ON members.users_id = users.id 
                   INNER JOIN roles ON members.roles_id = roles.id 
                   WHERE projects_id = ?`;
 
-    con.query(sql, [projectId], (err, res) => {
+    con.query(sql, [project], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -62,10 +62,10 @@ module.exports = {
     });
   },
 
-  updateRole: async function (body, result) {
+  updateRole: async function (role_id, id, result) {
     const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
 
-    con.query(sql, [body.role_id, body.id], (err, res) => {
+    con.query(sql, [role_id, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -76,10 +76,10 @@ module.exports = {
     });
   },
 
-  delete: async function (body, result) {
+  delete: async function (id, result) {
     const sql = `DELETE from members WHERE id = ?`;
 
-    con.query(sql, [body.id], (err, res) => {
+    con.query(sql, [id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -91,9 +91,9 @@ module.exports = {
   },
 
   // get current project
-  leave: function (body, user, result) {
+  leave: function (project, user, result) {
     const sql = `DELETE FROM members WHERE users_id = ? AND projects_id = ?`;
-    con.query(sql, [user, body.project_id], (err, res) => {
+    con.query(sql, [user, project], (err, res) => {
       if (err) {
         result(err, null);
         return;

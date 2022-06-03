@@ -17,11 +17,10 @@ export const uploadFile = ({ project_id, formData }) => async (dispatch) => {
   }
 };
 
-export const downloadFile = () => async (dispatch) => {
+export const downloadFile = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:9000/api/files/download");
+    //const res = await axios.get(`http://localhost:9000/api/${project_id}/files/${}/download`);
     //dispatch({ type: GET_FILES, payload: res.data });
-    console.log(res);
   } catch (err) {
     console.log(err);
   }
@@ -47,9 +46,9 @@ export const getAllFiles = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const moveToFolder = ({ id, folder_id }) => async (dispatch) => {
+export const moveToFolder = ({ project_id, id, folder_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/files/move-folder", { id, folder_id });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/files/${id}/move-folder`, { folder_id });
     dispatch({ type: MOVE_TO_FOLDER, payload: { id: id, folder_id: folder_id } });
     message.success("This is a success message");
   } catch (err) {

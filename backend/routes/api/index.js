@@ -16,9 +16,9 @@ const messageRoutes = require("./messages");
 const pollRoutes = require("./polls");
 const router = express.Router();
 
-router.use("/", authRoutes);
-router.use("/projects", projectRoutes);
-router.use("/members", memberRoutes);
+router.use(authRoutes);
+router.use(projectRoutes);
+router.use(memberRoutes);
 router.use(sectionRoutes);
 router.use("/tasks", taskRoutes);
 router.use(sessionRoutes);

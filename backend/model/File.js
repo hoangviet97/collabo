@@ -103,10 +103,10 @@ module.exports = {
     result(null, x.Body);
   },
 
-  addFolder: async function (body, result) {
+  addFolder: async function (folder_id, id, result) {
     const sql = `UPDATE files SET folders_id = ? WHERE id = ?`;
 
-    con.query(sql, [body.folder_id, body.id], (err, res) => {
+    con.query(sql, [folder_id, id], (err, res) => {
       if (err) {
         result(err, null);
         return;

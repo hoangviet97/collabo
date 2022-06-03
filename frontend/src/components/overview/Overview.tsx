@@ -24,7 +24,7 @@ const Overview: FC<Props> = ({ match }) => {
   useEffect(() => {
     dispatch(getProjectTasks({ project: match.params.id }));
     dispatch(getStatusGroup({ id: match.params.id }));
-    dispatch(getMembers({ id: match.params.id }));
+    dispatch(getMembers({ project_id: match.params.id }));
     dispatch(getTimeRecordsSum({ project_id: match.params.id }));
   }, []);
 

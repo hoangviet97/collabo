@@ -47,7 +47,7 @@ module.exports = {
   },
 
   moveToFolder: function (req, res) {
-    File.addFolder(req.body, (err, result) => {
+    File.addFolder(req.body.folder_id, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

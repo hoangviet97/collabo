@@ -2,10 +2,12 @@ import React, { FC } from "react";
 import { Button } from "antd";
 import { InfoCircleOutlined, StarFilled, DownloadOutlined } from "@ant-design/icons";
 import download from "downloadjs";
+import fileDownload from "js-file-download";
 import axios from "axios";
 import FileTypeIcon from "../../utils/FileTypeIcon";
 import { getFileDetail } from "../../../actions/file";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 interface Props {
   file: any;
@@ -13,21 +15,22 @@ interface Props {
 
 const FileCard: FC<Props> = ({ file }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const favoriteToggle = () => {};
 
   const showDetail = () => {
     dispatch(getFileDetail({ file: file }));
   };
 
-  const downloadFile = async (id: string, path: string, mimetype: any) => {
-    try {
-      const result = await axios.post(`http://localhost:9000/api/files/download/${id}`, {
-        responseType: "blob"
-      });
-      const split = path.split("/");
-      const filename = split[split.length - 1];
-      return download(result.data, filename, mimetype);
-    } catch (error) {}
+  const download = (record: any) => {
+    axios({
+      url: `http://localhost:9000/api/${params.id}/files/${record.id}/download`, //your url
+      method: "GET",
+      responseType: "blob" // important
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data, `${record.title}.${record.file_mimetype}`);
+    });
   };
 
   return (
@@ -38,7 +41,7 @@ const FileCard: FC<Props> = ({ file }) => {
           <InfoCircleOutlined style={{ fontSize: "20px" }} />
         </div>
       </div>
-      <div className="file-card__body" style={{ textAlign: "center" }}>
+      <div className="file-card__body" style={{ textAlign: "center", overflow: "hidden" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <FileTypeIcon type={file.file_mimetype} />
         </div>
@@ -50,7 +53,7 @@ const FileCard: FC<Props> = ({ file }) => {
           <span>{file.size} Kb</span>
         </div>
         <div className="file-card__download">
-          <Button type="primary" icon={<DownloadOutlined />} onClick={() => downloadFile(file.id, file.file_path, file.file_mimetype)} />
+          <Button type="primary" icon={<DownloadOutlined />} onClick={() => download(file)} />
         </div>
       </div>
     </div>
