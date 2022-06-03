@@ -15,20 +15,6 @@ const FolderList: FC<Props> = ({ files, folders, showModal, match }) => {
   const [maxVisibleFolders, setMaxVisibleFolders] = useState<number>(5);
   const [showFolders, setShowFolders] = useState<boolean>(false);
 
-  useEffect(() => {
-    const newArr = folders.map((item: any) => Object.assign(item, { sum: 0 }));
-    const newFiles = files.filter((item: any) => item.folders_id !== null);
-    console.log(newFiles);
-
-    if (newFiles.length > 0) {
-      for (let { folders_id } of newFiles) {
-        newArr.find((x: any) => x.id === folders_id)["sum"] += 1;
-      }
-    }
-
-    setfilteredFiles(newArr);
-  }, [files]);
-
   const viewAllFoldersHandle = () => {
     setMaxVisibleFolders(folders.length);
     setShowFolders(true);
@@ -56,8 +42,8 @@ const FolderList: FC<Props> = ({ files, folders, showModal, match }) => {
         )}
       </div>
       <div className="files__folders-list">
-        {filteredFiles.length > 0 ? (
-          filteredFiles.slice(0, maxVisibleFolders).map((item: any, index: number) => {
+        {folders.length > 0 ? (
+          folders.slice(0, maxVisibleFolders).map((item: any, index: number) => {
             return <FolderCard key={index} folder={item} match={match} />;
           })
         ) : (

@@ -39,8 +39,8 @@ const FileHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
 
   return (
     <div>
-      <div>
-        <div>
+      <div className="files__homepage">
+        <div style={{ gridArea: "content", maxHeight: "calc(100vh - 120px)", overflowY: "scroll" }}>
           <FolderList files={files} folders={folders} showModal={showModal} match={match} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">
@@ -67,6 +67,9 @@ const FileHomePage: FC<Props> = ({ files, folders, project_id, match }) => {
             </Form>
           </Modal>
           <FileList files={files} folders={folders} />
+        </div>
+        <div style={{ gridArea: "stats", backgroundColor: "white", borderRadius: "10px", maxHeight: "calc(100vh - 120px)", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "20px" }}>
+          <h1>Data</h1>
         </div>
       </div>
     </div>

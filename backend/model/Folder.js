@@ -43,9 +43,11 @@ module.exports = {
   },
 
   find: async function (project_id, result) {
-    const sql = `SELECT * FROM folders WHERE projects_id = ?`;
-
-    con.query(sql, [project_id], (err, res) => {
+    const sql2 = `SELECT folders.title, folders.id, COUNT(files.folders_id) AS total_files FROM folders
+                    LEFT JOIN files ON files.folders_id = folders.id
+                    WHERE folders.projects_id = ?
+                    GROUP BY folders.title, folders.id`;
+    con.query(sql2, [project_id], (err, res) => {
       if (err) {
         result(err, null);
         return;

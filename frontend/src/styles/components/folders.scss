@@ -1,16 +1,11 @@
 .folder-card {
-  background-color: "#ffff";
+  background-color: "white";
   height: 140px;
   border-radius: 12px;
   padding: 15px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   transition: all 0.4s;
   cursor: pointer;
-
-  &:hover {
-    background-color: #34495e;
-    color: white;
-  }
 
   &__header {
     display: flex;
