@@ -15,9 +15,16 @@ module.exports = {
   },
 
   getAll: function (req, res) {
-    console.log("ok");
     File.find(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  getFileTypes: function (req, res) {
+    File.findTypes(req.params.project, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      console.log(result);
       return res.json(result);
     });
   },

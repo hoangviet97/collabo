@@ -1,9 +1,11 @@
-import { GET_FILES, UPLOAD_FILE, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING } from "../../actions/types";
+import { GET_FILES, UPLOAD_FILE, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES } from "../../actions/types";
 
 const initialState = {
   files: [],
   fileDetail: {},
-  loading: false
+  loading: false,
+  statistics: [],
+  total: 0
 };
 
 function fileReducer(state = initialState, action: any) {
@@ -13,17 +15,29 @@ function fileReducer(state = initialState, action: any) {
     case UPLOAD_FILE:
       return {
         ...state,
-        loading: false
+        loading: false,
+        files: [...state.files, payload],
+        total: state.total + payload.size
       };
     case GET_FILES:
+      const filteredFiles = payload.filter((item: any) => item.folders_id === null);
+
       return {
         ...state,
-        files: payload
+        files: filteredFiles
+      };
+    case GET_FILE_TYPES:
+      const fileSum = payload.map((item: any) => parseInt(item.sum)).reduce((partialSum: any, a: any) => partialSum + a, 0);
+
+      return {
+        ...state,
+        statistics: payload,
+        total: fileSum
       };
     case MOVE_TO_FOLDER:
       return {
         ...state,
-        files: state.files.map((item: any) => (item.id === payload.id ? { ...item, folders_id: payload.folder_id } : item))
+        files: state.files.filter((item: any) => item.id !== payload.id)
       };
     case FILE_DETAIL:
       return {

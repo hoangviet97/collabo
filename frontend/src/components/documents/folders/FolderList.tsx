@@ -2,18 +2,19 @@ import React, { useEffect, useState, FC } from "react";
 import FolderCard from "./FolderCard";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useSelector, RootStateOrAny } from "react-redux";
 
 interface Props {
   files: any;
-  folders: any;
   showModal: any;
   match: any;
 }
 
-const FolderList: FC<Props> = ({ files, folders, showModal, match }) => {
+const FolderList: FC<Props> = ({ files, showModal, match }) => {
   const [filteredFiles, setfilteredFiles] = useState<any>([]);
-  const [maxVisibleFolders, setMaxVisibleFolders] = useState<number>(5);
+  const [maxVisibleFolders, setMaxVisibleFolders] = useState<number>(4);
   const [showFolders, setShowFolders] = useState<boolean>(false);
+  const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
 
   const viewAllFoldersHandle = () => {
     setMaxVisibleFolders(folders.length);

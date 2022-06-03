@@ -36,8 +36,6 @@ export const getProject = ({ project_id, push }) => async (dispatch) => {
     const res = await axios.get(`http://localhost:9000/api/projects/${project_id}`);
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
-    console.log(err.response.status);
-    dispatch({ type: GET_PROJECT_AUTH });
     push("/");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
   }

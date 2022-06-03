@@ -7,6 +7,10 @@
   transition: all 0.4s;
   cursor: pointer;
 
+  &:hover {
+    margin-top: -5px;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;

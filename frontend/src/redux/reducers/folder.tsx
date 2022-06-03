@@ -1,4 +1,4 @@
-import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER } from "../../actions/types";
+import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM } from "../../actions/types";
 
 const initialState = {
   folders: [],
@@ -18,6 +18,15 @@ function folderReducer(state = initialState, action: any) {
       return {
         ...state,
         folder: payload
+      };
+    case UPDATE_FOLDER_NUM:
+      let updatedFolders: any = state.folders;
+      const ind: any = updatedFolders.findIndex((i: any) => i.id === payload.id);
+      const num = updatedFolders[ind].total_files;
+
+      return {
+        ...state,
+        folders: state.folders.map((item: any) => (item.id === payload.id ? { ...item, total_files: num + 1 } : item))
       };
     case GET_FOLDERS:
       return {

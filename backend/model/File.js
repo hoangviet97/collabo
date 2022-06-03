@@ -25,8 +25,6 @@ module.exports = {
   File,
 
   upload2: async function (id, body, file, result) {
-    console.log(file);
-    console.log(body);
     const fileId = uuid4();
 
     const params = {
@@ -35,6 +33,8 @@ module.exports = {
       Body: file.buffer,
       ContentType: file.mimetype
     };
+
+    const sqlCheck = "SELECT ";
 
     s3.upload(params, (err, data) => {
       if (err) {
@@ -60,6 +60,22 @@ module.exports = {
 
   find: async function (id, result) {
     const sql = `SELECT * FROM files WHERE projects_id = ?`;
+
+    con.query(sql, [id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  findTypes: async function (id, result) {
+    const sql = `SELECT distinct file_mimetype AS type, COUNT(files.id) AS total, SUM(files.size) AS sum FROM files
+                  WHERE projects_id = ?
+                  GROUP BY file_mimetype;`;
 
     con.query(sql, [id], (err, res) => {
       if (err) {

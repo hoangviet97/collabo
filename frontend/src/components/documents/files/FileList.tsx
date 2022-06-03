@@ -7,13 +7,13 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import { moveToFolder, deleteFile } from "../../../actions/file";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
+import { useSelector, RootStateOrAny } from "react-redux";
 
 interface Props {
   files: any;
-  folders: any;
 }
 
-const FileList: FC<Props> = ({ files, folders }) => {
+const FileList: FC<Props> = ({ files }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const { Text, Link } = Typography;
@@ -21,12 +21,8 @@ const FileList: FC<Props> = ({ files, folders }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [fileId, setFileId] = useState<string>("");
   const [folderId, setFolderId] = useState<string>("");
-  const [clearedFiles, setClearedFiles] = useState([]);
-
-  useEffect(() => {
-    const arr = files.filter((item: any) => item.folders_id === null);
-    setClearedFiles(arr);
-  }, [files]);
+  const [folderNum, setFolderNum] = useState<number>(0);
+  const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
 
   const download = (record: any) => {
     axios({
@@ -118,7 +114,7 @@ const FileList: FC<Props> = ({ files, folders }) => {
   return (
     <>
       <div className="files-container">
-        <Table columns={columns} dataSource={clearedFiles} pagination={{ pageSize: 10 }} />
+        <Table columns={columns} dataSource={files} pagination={{ pageSize: 10 }} />
       </div>
       <Modal title="Select folder" width="500px" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Select style={{ width: 200 }} onChange={handleFolderName} placeholder="Select a person">
