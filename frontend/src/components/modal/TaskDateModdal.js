@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { updateTaskStartDate, updateTaskEndDate } from "../../actions/task";
+import { useDispatch } from "react-redux";
+import { updateTaskEndDate, updateTaskStartDate } from "../../actions/task";
 import { Calendar, Button } from "antd";
 import moment from "moment";
 
-const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos, updateTaskStartDate, updateTaskEndDate }) => {
+const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos }) => {
+  const dispatch = useDispatch();
   const [startView, setStartView] = useState(false);
   const [dueView, setDueView] = useState(true);
   const [startDate, setStartDate] = useState("");
@@ -21,13 +22,14 @@ const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos, update
   };
 
   const startDateChange = (value) => {
-    const date = moment(value).format("YYYY-MM-DD hh:mm:ss");
-    updateTaskStartDate({ id: taskId, date: date });
+    const date = moment(value._d).format("YYYY-MM-DD hh:mm:ss");
+    dispatch(updateTaskStartDate({ id: taskId, date: date }));
+    console.log(date);
   };
 
   const endDateChange = (value) => {
-    const date = moment(value).format("YYYY-MM-DD hh:mm:ss");
-    updateTaskEndDate({ id: taskId, date: date });
+    const date = moment(value._d).format("YYYY-MM-DD hh:mm:ss");
+    dispatch(updateTaskEndDate({ id: taskId, date: date }));
   };
 
   return show ? (
@@ -46,4 +48,4 @@ const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos, update
   ) : null;
 };
 
-export default connect(null, { updateTaskStartDate, updateTaskEndDate })(TaskDateModdal);
+export default TaskDateModdal;

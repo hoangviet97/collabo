@@ -5,10 +5,9 @@ const getMemberId = require("../../middleware/getMemberId");
 const permit = require("../../middleware/permission");
 const router = express.Router();
 
-router.post("/add", [auth, getMemberId], timerController.create);
-router.post("/all", auth, timerController.getAll);
-router.post("/sum", auth, timerController.getSum);
-router.post("/all-project", auth, timerController.getByProject);
-router.post("/all-personal", [auth, getMemberId], timerController.getAllPersonal);
+router.post("/:project/times/add", [auth, getMemberId], timerController.create);
+router.get("/:project/times", auth, timerController.getAll);
+router.get("/:project/times/sum", auth, timerController.getSum);
+router.get("/:project/times/personal", [auth, getMemberId], timerController.getAllPersonal);
 
 module.exports = router;

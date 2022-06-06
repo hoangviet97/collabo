@@ -28,6 +28,19 @@ module.exports = {
     });
   },
 
+  createTaskTag: async function (body, result) {
+    const sql = `INSERT INTO tasks_has_tags (tasks_id, tags_id) VALUES (?, ?)`;
+    con.query(sql, [body.task, body.tag], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "succeess");
+      return;
+    });
+  },
+
   find: async function (id, result) {
     const sql = `SELECT * FROM tags WHERE projects_id = ?`;
 
@@ -52,6 +65,20 @@ module.exports = {
                     WHERE projects.id = ?`;
 
     con.query(sql, [project], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
+    });
+  },
+
+  deleteTag: async function (id, result) {
+    const sql = `DELETE FROM tags WHERE id = ?`;
+
+    con.query(sql, [id], (err, res) => {
       if (err) {
         result(err, null);
         return;

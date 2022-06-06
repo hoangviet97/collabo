@@ -14,14 +14,14 @@ module.exports = {
   },
 
   accept: function (req, res) {
-    Invitation.accept(req.body.id, req.user.id, req.body.project, (err, result) => {
+    Invitation.accept(req.params.id, req.user.id, req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   getAll: function (req, res) {
-    Invitation.findAll(req.body.project, (err, result) => {
+    Invitation.findAll(req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
@@ -35,14 +35,14 @@ module.exports = {
   },
 
   updateSeenStatus: function (req, res) {
-    Invitation.updateSeenStatus(req.body.id, (err, result) => {
+    Invitation.updateSeenStatus(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
   delete: function (req, res) {
-    Invitation.deleteInvitation(req.body.id, (err, result) => {
+    Invitation.deleteInvitation(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

@@ -77,9 +77,9 @@ module.exports = {
   },
 
   // get current project
-  setFavoriteProject: function (body, result) {
+  setFavoriteProject: function (status, id, result) {
     const sql = `UPDATE projects SET favorite = ? WHERE id = ?`;
-    con.query(sql, [body.status, body.projectId], (err, res) => {
+    con.query(sql, [status, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -90,9 +90,9 @@ module.exports = {
   },
 
   // get current project
-  setBudget: function (body, result) {
+  setBudget: function (budget, id, result) {
     const sql = `UPDATE projects SET budget = ? WHERE id = ?`;
-    con.query(sql, [body.budget, body.project], (err, res) => {
+    con.query(sql, [budget, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -103,9 +103,9 @@ module.exports = {
   },
 
   // get current project
-  setCurrency: function (body, result) {
+  setCurrency: function (currency, id, result) {
     const sql = `UPDATE projects SET currency = ? WHERE id = ?`;
-    con.query(sql, [body.currency, body.project], (err, res) => {
+    con.query(sql, [currency, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -116,9 +116,9 @@ module.exports = {
   },
 
   // get current project
-  updateColor: function (body, result) {
+  updateColor: function (color, id, result) {
     const sql = `UPDATE projects SET color = ? WHERE id = ?`;
-    con.query(sql, [body.color, body.id], (err, res) => {
+    con.query(sql, [color, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -129,9 +129,21 @@ module.exports = {
   },
 
   // get current project
-  updateStatus: function (body, result) {
+  updateStatus: function (status, id, result) {
     const sql = `UPDATE projects SET project_status_id = ? WHERE id = ?`;
-    con.query(sql, [body.status, body.id], (err, res) => {
+    con.query(sql, [status, id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+    });
+  },
+
+  check: function (project, id, result) {
+    const sql = `SELECT * FROM members WHERE projects_id = ? AND users_id = ?`;
+    con.query(sql, [project, id], (err, res) => {
       if (err) {
         result(err, null);
         return;

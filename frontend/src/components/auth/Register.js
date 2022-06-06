@@ -3,9 +3,6 @@ import { Form, Input, Button, message } from "antd";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
-import Google from "../../img/icons/Google";
-import Facebook from "../../img/icons/Facebook";
-import Apple from "../../img/icons/Apple";
 
 const Register = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });

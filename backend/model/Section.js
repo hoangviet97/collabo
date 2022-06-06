@@ -13,8 +13,8 @@ class Section {
 module.exports = {
   Section,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newSection = new Section(uuid4(), body.id, body.name);
+  create: async function (id, name, result) {
+    const newSection = new Section(uuid4(), id, name);
 
     const sql = `INSERT INTO sections (id, projects_id, name, created_at) VALUES (?, ?, ?, ?)`;
     con.query(sql, [newSection.id, newSection.projectId, newSection.name, newSection.created_at], (err, res) => {

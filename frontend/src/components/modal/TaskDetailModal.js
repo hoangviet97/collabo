@@ -1,40 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button, Modal, Input, Avatar, Popover, Divider, Progress, Tag } from "antd";
-import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Modal, Input, Avatar, Select, Divider, Progress, Tag } from "antd";
+import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { TweenOneGroup } from "rc-tween-one";
-import { createTag } from "../../actions/tag";
-import { setBudget, setProgress } from "../../actions/task";
+import { createTaskTag } from "../../actions/tag";
+import { setBudget, setProgress, setDescription } from "../../actions/task";
+import AvatarPreview from "../avatar/AvatarPreview";
+import AssigneesModal from "./AssigneesModal";
 
-const TaskDetailModal = (props) => {
-  const [taskTitle, setTaskTitle] = useState(props.task.title);
-  const [tagGroup, setTagGroup] = useState([]);
-  const [budget, setmyBudget] = useState(props.task.budget);
+const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible, closeModal }) => {
+  const [taskTitle, setTaskTitle] = useState(task.title);
+  const [taskDescription, setTaskDescription] = useState(task.description);
+  const [tagGroup, setTagGroup] = useState(task.tags);
+  const [budget, setmyBudget] = useState(task.budget);
   const [showTitleInput, setShowTitleInput] = useState(false);
   const [showTextArea, setShowTextArea] = useState(false);
-  const [percent, setPercent] = useState(props.task.progress);
-  const [tagInputVisible, setTagInputVisible] = useState(false);
-  const [tagInputValue, setTagInputValue] = useState("");
+  const [percent, setPercent] = useState(task.progress);
+  const [tagSelected, setTagSelected] = useState("");
+  const [children, setChildren] = useState([]);
+  const [assigneeBase, setAssigneeBase] = useState([]);
+  const [AssignessModalVisible, setAssignessModalVisible] = useState(false);
+
   const { TextArea } = Input;
+  const { Option } = Select;
   const dispatch = useDispatch();
 
-  console.log(props.task.id);
-
   useEffect(() => {
-    setTaskTitle(props.task.title);
-    setmyBudget(props.task.budget);
-    setPercent(props.task.progress);
-    setTagGroup(props.task.tags);
-
+    const assigneesArr = assignees.map((i) => i.email);
+    setAssigneeBase(assigneesArr);
+    setTaskTitle(task.title);
+    setmyBudget(task.budget);
+    setPercent(task.progress);
+    setTagGroup(task.tags);
+    setTaskDescription(task.description);
+    console.log(assignees);
     return () => {
       setTaskTitle("");
     };
-  }, [props]);
+  }, [task]);
+
+  useEffect(() => {
+    const child = [];
+    for (let i = 0; i < tags.length; i++) {
+      child.push(
+        <Option key={`${tags[i].id}/${tags[i].name}`}>
+          <div>
+            <TagsOutlined />
+            &nbsp;
+            {tags[i].name}
+          </div>
+        </Option>
+      );
+    }
+
+    setChildren(child);
+  }, [tags]);
 
   const showTextAreaHandler = () => {
-    setShowTextArea((prev) => !prev);
+    setShowTextArea(true);
+  };
+
+  const confirmDescription = () => {
+    console.log(taskDescription);
+    dispatch(setDescription({ id: task.id, description: taskDescription, projects_id: projectId }));
+    setShowTextArea(false);
   };
 
   const showTitleInputHandler = () => {
@@ -57,33 +87,43 @@ const TaskDetailModal = (props) => {
     setPercent(per);
   };
 
-  const tagInputValueHandler = () => {};
-
-  const tagInputConfirmHandler = () => {
-    if (tagInputValue.length > 0) {
-      dispatch(createTag({ project: props.projectId, name: tagInputValue, color: "green" }));
-    }
-    setTagInputVisible(false);
-  };
-
   const setBudgetHandler = () => {
-    dispatch(setBudget({ id: props.task.id, budget: budget, project: props.projectId }));
+    dispatch(setBudget({ id: task.id, budget: budget, project_id: projectId }));
   };
 
   const setProgressHandler = () => {
-    dispatch(setProgress({ id: props.task.id, progress: percent }));
+    dispatch(setProgress({ id: task.id, progress: percent, project_id: projectId }));
+  };
+
+  const tagSelectorHandler = (value) => {
+    setTagSelected(value);
+  };
+
+  const submitNewTag = () => {
+    const str = tagSelected.split("/");
+    dispatch(createTaskTag({ project_id: projectId, task: task.id, tag: str[0] }));
+    setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
+    setTagSelected("");
+  };
+
+  const showAssigness = () => {
+    setAssignessModalVisible(true);
+  };
+
+  const closeAssigness = () => {
+    setAssignessModalVisible(false);
   };
 
   return (
-    <Modal visible={props.isVisible} width="50%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
+    <Modal visible={isVisible} width="50%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
       <div className="task__detail">
         <header className="task__detail__header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#f5f6fa", padding: "8px 12px" }}>
           <div className="task__detail-bread" style={{ backgroundColor: "white", padding: "5px 12px", border: "0.5px solid grey", borderRadius: "10px" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>{props.task.section_name}</Breadcrumb.Item>
+              <Breadcrumb.Item>{task.section_name}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
-          <Button style={{ borderRadius: "10px" }} onClick={() => props.closeModal()}>
+          <Button style={{ borderRadius: "10px" }} onClick={() => closeModal()}>
             X
           </Button>
         </header>
@@ -101,7 +141,7 @@ const TaskDetailModal = (props) => {
                       <span>Created</span>
                     </td>
                     <td>
-                      <span>{moment(props.task.created_at).format("MMM Do YYYY")}</span>
+                      <span>{moment(task.created_at).format("MMM Do YYYY")}</span>
                     </td>
                   </tr>
                   <tr>
@@ -109,7 +149,13 @@ const TaskDetailModal = (props) => {
                       <span>Status</span>
                     </td>
                     <td>
-                      <span>{props.task.statusName}</span>
+                      <Select className="task-select" defaultValue={task.statusId} showArrow={false} style={{ width: "100%" }} bordered={false}>
+                        <Option value="0">Open</Option>
+                        <Option value="1">In Progress</Option>
+                        <Option value="2">On Hold</Option>
+                        <Option value="3">Completed</Option>
+                        <Option value="4">Canceled</Option>
+                      </Select>
                     </td>
                   </tr>
                   <tr>
@@ -117,7 +163,25 @@ const TaskDetailModal = (props) => {
                       <span>Priority</span>
                     </td>
                     <td>
-                      <span>{props.task.priorityName}</span>
+                      <Select className="task-select" defaultValue={task.priorityId} showArrow={false} style={{ width: "50%" }} bordered={false}>
+                        <Option value="0">
+                          <Tag color="gold">Low</Tag>
+                        </Option>
+                        <Option value="1">
+                          <Tag color="orange">Medium</Tag>
+                        </Option>
+                        <Option value="2">
+                          <Tag color="red">High</Tag>
+                        </Option>
+                      </Select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: "40%" }}>
+                      <span>Start</span>
+                    </td>
+                    <td>
+                      <span>{task.start_date !== null ? moment(task.start_date).format("MMM Do YYYY") : "set date"}</span>
                     </td>
                   </tr>
                   <tr>
@@ -125,58 +189,32 @@ const TaskDetailModal = (props) => {
                       <span>Deadline</span>
                     </td>
                     <td>
-                      <span>{moment(props.task.due_date).format("MMM Do YYYY")}</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: "40%" }}>
-                      <span>Participants</span>
-                    </td>
-                    <td>
-                      {props.assignees ? (
-                        <>
-                          <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-                            {props.assignees.map((assignee, index) => (
-                              <Popover content={assignee.firstname}>
-                                <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
-                                  <AvatarIcon name={assignee.firstname} />
-                                </Avatar>
-                              </Popover>
-                            ))}
-                          </Avatar.Group>
-                          <div style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-40px", borderRadius: "50%", marginLeft: "32px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "9999" }}>
-                            <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
-                          </div>
-                        </>
-                      ) : (
-                        <div style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
-                        </div>
-                      )}
+                      <span>{task.due_date !== null ? moment(task.due_date).format("MMM Do YYYY") : "set date"}</span>
                     </td>
                   </tr>
                 </table>
               </div>
               <Divider />
               <div>
-                <div class="description__header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+                <div class="description__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
                   <h4>Description</h4>
-                  <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
+                  {showTextArea ? <Button onClick={confirmDescription} shape="round" type="dashed" icon={<CheckOutlined />}></Button> : <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>}
                 </div>
-                {showTextArea ? <TextArea rows="5" onBlur={showTextAreaHandler} /> : <p>{props.task.description}</p>}
+                <div>{showTextArea ? <TextArea rows="5" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{task.description}</p>}</div>
               </div>
               <Divider />
               <div class="task-budget">
-                <h4>Tags</h4>
-                <div>
-                  {tagGroup && tagGroup.map((item) => <Tag>{item.name}</Tag>)}
-                  {!tagInputVisible && (
-                    <Tag onClick={() => setTagInputVisible(true)} className="site-tag-plus">
-                      <PlusOutlined /> New Tag
-                    </Tag>
-                  )}
-                  {tagInputVisible && <Input type="text" size="small" style={{ width: 78 }} value={tagInputValue} onChange={(e) => setTagInputValue(e.target.value)} onBlur={tagInputConfirmHandler} onPressEnter={tagInputConfirmHandler} />}
+                <div className="tag__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                  <h4>Tags</h4>
+                  <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
+                <Select allowClear style={{ width: "50%" }} onChange={tagSelectorHandler} placeholder="Please select">
+                  {children}
+                </Select>
+                <Button type="primary" onClick={submitNewTag}>
+                  Add
+                </Button>
+                <div style={{ marginTop: "20px" }}>{tagGroup && tagGroup.map((item) => <Tag closable={true}>{item.name}</Tag>)}</div>
               </div>
               <Divider />
               <div class="task-budget">
@@ -195,10 +233,6 @@ const TaskDetailModal = (props) => {
                     Set
                   </Button>
                 </Button.Group>
-              </div>
-              <Divider />
-              <div class="task-budget">
-                <h4>Time Tracking</h4>
               </div>
             </div>
           </div>

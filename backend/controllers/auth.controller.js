@@ -22,7 +22,7 @@ module.exports = {
     if (error) return apiResponse.validationErrorWithData(res, error.message, error);
 
     User.loginUser(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err);
       console.log(req.body);
       return res.json(result);
     });
@@ -35,8 +35,22 @@ module.exports = {
     });
   },
 
-  changeName: function (req, res) {
-    User.changeName(req.body, (err, result) => {
+  verify: function (req, res) {
+    User.verify(req.params.id, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changeFirstname: function (req, res) {
+    User.changeFirstname(req.user.id, req.body.firstname, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changeLastname: function (req, res) {
+    User.changeLastname(req.user.id, req.body.lastname, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

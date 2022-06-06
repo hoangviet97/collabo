@@ -20,23 +20,24 @@ class Task {
 module.exports = {
   Task,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const priorityCheck = body.task.priorityId === null || body.task.priorityId === undefined ? "0" : body.task.priorityId;
-    const statusCheck = body.task.statusId === null || body.task.statusId === undefined ? "0" : body.task.statusId;
-    const newTask = new Task(uuid4(), body.task.sectionId, priorityCheck, statusCheck, body.task.title, body.task.description, body.task.start_date, body.task.due_date, 0, 0);
+  create: async function (task, result) {
+    const priorityCheck = task.priorityId === null || task.priorityId === undefined ? "0" : task.priorityId;
+    const statusCheck = task.statusId === null || task.statusId === undefined ? "0" : task.statusId;
+    const newTask = new Task(uuid4(), task.sectionId, priorityCheck, statusCheck, task.title, task.description, task.start_date, task.due_date, 0, 0);
 
     const sql = `INSERT INTO tasks (id, sections_id, priorities_id, task_status_id, title, description, start_date, due_date, created_at, budget, progress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newTask.id, newTask.sections_id, newTask.priorityId, newTask.statusId, newTask.title, newTask.description, newTask.start_date, newTask.due_date, newTask.created_at, newTask.budget, newTask.progress], (err, res) => {
       if (err) {
+        console.log(err);
         result(err, null);
         return;
       }
 
-      if (body.task.assignees === undefined) {
+      if (task.assignees === undefined) {
         result(null, newTask);
       } else {
         const arr = [];
-        body.task.assignees.map((item) => arr.push([item, newTask.id]));
+        task.assignees.map((item) => arr.push([item, newTask.id]));
         console.log(arr);
 
         const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ?`;
@@ -73,48 +74,6 @@ module.exports = {
     });
   },
 
-  // get all tasks
-  getAllTasks2: async function (id, result) {
-    const sql = `SELECT tasks.id, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at, tasks.budget, sections.name AS section, task_status.id AS statusId, task_status.name AS status, priorities.name AS priority
-                    FROM tasks
-                    INNER JOIN sections ON tasks.sections_id = sections.id
-                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
-                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
-                    WHERE sections.projects_id
-                    ORDER BY tasks.created_at`;
-
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  getAllTasksWithLimit: async function (id, limit, result) {
-    const sql = `SELECT tasks.id, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.created_at, tasks.budget, sections.name AS section, task_status.id AS statusId, task_status.name AS status, priorities.name AS priority
-                    FROM tasks
-                    INNER JOIN sections ON tasks.sections_id = sections.id
-                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
-                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
-                    WHERE sections.projects_id = ? AND tasks.due_date IS NOT null
-                    ORDER BY tasks.due_date LIMIT ${limit}
-                     `;
-
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
   getStatusGroup: async function (id, result) {
     const sql = `SELECT task_status.name, COUNT(tasks.id) AS total
                     FROM tasks
@@ -133,9 +92,9 @@ module.exports = {
     });
   },
 
-  updateStatus: async function (task, result) {
+  updateStatus: async function (statusId, id, result) {
     const sql = `UPDATE tasks SET task_status_id = ? WHERE id = ?`;
-    con.query(sql, [task.statusId, task.id], (err, res) => {
+    con.query(sql, [statusId, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -146,9 +105,9 @@ module.exports = {
     });
   },
 
-  updatePriority: async function (task, result) {
+  updatePriority: async function (priorityId, id, result) {
     const sql = `UPDATE tasks SET priorities_id = ? WHERE id = ?`;
-    con.query(sql, [task.priorityId, task.id], (err, res) => {
+    con.query(sql, [priorityId, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -159,9 +118,9 @@ module.exports = {
     });
   },
 
-  updateStartDate: async function (body, result) {
+  updateStartDate: async function (date, id, result) {
     const sql = `UPDATE tasks SET start_date = ? WHERE id = ?`;
-    con.query(sql, [body.date, body.id], (err, res) => {
+    con.query(sql, [date, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -172,9 +131,9 @@ module.exports = {
     });
   },
 
-  updateEndDate: async function (body, result) {
+  updateEndDate: async function (date, id, result) {
     const sql = `UPDATE tasks SET due_date = ? WHERE id = ?`;
-    con.query(sql, [body.date, body.id], (err, res) => {
+    con.query(sql, [date, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -185,11 +144,11 @@ module.exports = {
     });
   },
 
-  setBudget: async function (body, result) {
-    const checkedBudget = body.budget !== null || body.budget > 0 ? body.budget : 0;
+  setBudget: async function (budget, id, result) {
+    const checkedBudget = budget !== null || budget > 0 ? budget : 0;
 
     const sql = `UPDATE tasks SET budget = ? WHERE id = ?`;
-    con.query(sql, [body.budget, body.id], (err, res) => {
+    con.query(sql, [budget, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -200,9 +159,22 @@ module.exports = {
     });
   },
 
-  setProgress: async function (body, result) {
+  setProgress: async function (progress, id, result) {
     const sql = `UPDATE tasks SET progress = ? WHERE id = ?`;
-    con.query(sql, [body.progress, body.id], (err, res) => {
+    con.query(sql, [progress, id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, "success");
+      return;
+    });
+  },
+
+  setDescription: async function (description, id, result) {
+    const sql = `UPDATE tasks SET description = ? WHERE id = ?`;
+    con.query(sql, [description, id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -228,23 +200,23 @@ module.exports = {
     });
   },
 
-  addAssignee: async function (body, result) {
+  addAssignee: async function (user_id, task_id, result) {
     const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (?, ?)`;
-    con.query(sql, [body.user_id, body.task_id], (err, res) => {
+    con.query(sql, [user_id, task_id], (err, res) => {
       if (err) {
         result(err, null);
         return;
       }
 
-      const data = { user_id: body.user_id, task_id: body.task_id };
+      const data = { user_id: user_id, task_id: task_id };
 
       this.getAssingee(data, result);
     });
   },
 
-  deleteAssignee: async function (body, result) {
+  deleteAssignee: async function (user_id, task_id, result) {
     const sql = `DELETE FROM users_has_tasks WHERE users_id = ? AND tasks_id = ?`;
-    con.query(sql, [body.user_id, body.task_id], (err, res) => {
+    con.query(sql, [user_id, task_id], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -255,50 +227,14 @@ module.exports = {
     });
   },
 
-  getAllAssingees: async function (body, result) {
+  getAllAssingees: async function (id, result) {
     const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
                   FROM users_has_tasks 
                   INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
                   INNER JOIN users ON users_has_tasks.users_id = users.id
                   INNER JOIN members ON members.users_id = users.id 
                   WHERE members.projects_id = ?`;
-    con.query(sql, [body.id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  getAssingeesByStatus: async function (id, status, result) {
-    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
-                  FROM users_has_tasks 
-                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
-                  INNER JOIN task_status ON tasks.task_status_id = task_status.id
-                  INNER JOIN users ON users_has_tasks.users_id = users.id
-                  INNER JOIN members ON members.users_id = users.id 
-                  WHERE members.projects_id = ? AND task_status.name IN (${statusArr})`;
-    con.query(sql, [id, status], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  getAssingee: async function (body, result) {
-    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
-                  FROM users_has_tasks 
-                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
-                  INNER JOIN users ON users_has_tasks.users_id = users.id
-                  WHERE users.id = ? AND tasks_id = ?`;
-    con.query(sql, [body.user_id, body.task_id], (err, res) => {
+    con.query(sql, [id], (err, res) => {
       if (err) {
         result(err, null);
         return;
