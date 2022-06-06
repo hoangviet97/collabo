@@ -9,7 +9,7 @@ module.exports = {
   upload: function (req, res) {
     console.log(req.file);
     File.upload2(req.params.project, req.body, req.file, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
+      if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
   },
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   getAllByFolder: function (req, res) {
-    File.findByFolder(req.body.folder_id, (err, result) => {
+    File.findByFolder(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

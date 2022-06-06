@@ -1,4 +1,4 @@
-import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM } from "../../actions/types";
+import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER } from "../../actions/types";
 
 const initialState = {
   folders: [],
@@ -32,6 +32,11 @@ function folderReducer(state = initialState, action: any) {
       return {
         ...state,
         folders: payload
+      };
+    case DELETE_FOLDER:
+      return {
+        ...state,
+        folders: state.folders.filter((item: any) => item.id !== payload)
       };
     default:
       return state;

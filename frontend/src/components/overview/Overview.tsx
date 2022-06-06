@@ -22,8 +22,8 @@ const Overview: FC<Props> = ({ match }) => {
   const project = useSelector((state: RootStateOrAny) => state.project.currentProject);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ project: match.params.id }));
-    dispatch(getStatusGroup({ id: match.params.id }));
+    dispatch(getProjectTasks({ project_id: match.params.id }));
+    dispatch(getStatusGroup({ project_id: match.params.id }));
     dispatch(getMembers({ project_id: match.params.id }));
     dispatch(getTimeRecordsSum({ project_id: match.params.id }));
   }, []);

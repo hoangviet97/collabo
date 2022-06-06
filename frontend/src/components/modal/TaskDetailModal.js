@@ -63,7 +63,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
 
   const confirmDescription = () => {
     console.log(taskDescription);
-    dispatch(setDescription({ id: task.id, description: taskDescription }));
+    dispatch(setDescription({ id: task.id, description: taskDescription, projects_id: projectId }));
     setShowTextArea(false);
   };
 
@@ -88,11 +88,11 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   };
 
   const setBudgetHandler = () => {
-    dispatch(setBudget({ id: task.id, budget: budget, project: projectId }));
+    dispatch(setBudget({ id: task.id, budget: budget, project_id: projectId }));
   };
 
   const setProgressHandler = () => {
-    dispatch(setProgress({ id: task.id, progress: percent }));
+    dispatch(setProgress({ id: task.id, progress: percent, project_id: projectId }));
   };
 
   const tagSelectorHandler = (value) => {

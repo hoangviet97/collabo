@@ -1,4 +1,4 @@
-import { CREATE_FOLDER, CREATE_FOLDER_FAIL, GET_FOLDERS, GET_FOLDER, GET_FOLDERS_FAIL } from "./types";
+import { CREATE_FOLDER, CREATE_FOLDER_FAIL, GET_FOLDERS, GET_FOLDER, GET_FOLDERS_FAIL, DELETE_FOLDER } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -30,10 +30,11 @@ export const getAllFolders = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const deleteFolders = ({ project_id, folder_id }) => async (dispatch) => {
+export const deleteFolder = ({ project_id, folder_id }) => async (dispatch) => {
   try {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/folders/${folder_id}`);
-    dispatch({ type: GET_FOLDERS, payload: res.data });
+    dispatch({ type: DELETE_FOLDER, payload: folder_id });
+    message.success("Folder deleted");
   } catch (err) {
     dispatch({ type: GET_FOLDERS_FAIL });
   }

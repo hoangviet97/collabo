@@ -22,11 +22,11 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close, project
   };
 
   const addNewAssignee = (id: string) => {
-    dispatch(createAssignee({ user_id: id, task_id: task_id, project: project }));
+    dispatch(createAssignee({ user_id: id, task_id: task_id, project_id: project }));
   };
 
   const removeAssignee = (id: string, email: string) => {
-    dispatch(deleteAssignee({ user_id: id, task_id: task_id, email: email, project: project }));
+    dispatch(deleteAssignee({ user_id: id, task_id: task_id, project_id: project }));
   };
 
   const isAssigneed = (email: string, id: string) => {

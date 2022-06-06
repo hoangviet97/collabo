@@ -65,8 +65,8 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     }
     dispatch(getSections({ project_id: project_id }));
     dispatch(getMembers({ project_id: project_id }));
-    dispatch(getAllAssignees({ id: project_id }));
-    dispatch(getProjectTasks({ project: project_id }));
+    dispatch(getAllAssignees({ project_id: project_id }));
+    dispatch(getProjectTasks({ project_id: project_id }));
     dispatch(getTagsByTasks({ project_id: project_id }));
     dispatch(getTags({ project_id: project_id }));
   }, []);
@@ -106,7 +106,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     };
 
     if (newTask.length > 0) {
-      dispatch(createTask({ task: values }));
+      dispatch(createTask({ project_id: project_id, task: values }));
       setNewTask("");
       setSelectedVal([]);
     }

@@ -90,7 +90,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
   };
 
   const deleteTaskHandler = () => {
-    dispatch(deleteTask({ id: task.id, project: projectId }));
+    dispatch(deleteTask({ id: task.id, project_id: projectId }));
   };
 
   const openDateHandler = (id: any) => {
@@ -103,11 +103,11 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
 
   const switchTaskStatusHandler = (value: any) => {
     setDone(value);
-    dispatch(updateTaskStatus({ id: task.id, statusId: value, project: projectId }));
+    dispatch(updateTaskStatus({ id: task.id, statusId: value, project_id: projectId }));
   };
 
   const switchPriorityHandler = (value: any) => {
-    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project: projectId }));
+    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project_id: projectId }));
   };
 
   const showAssigness = () => {
@@ -129,7 +129,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
           <>
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
               {assignees.map((assignee: any, index: number) => (
-                <Popover content={assignee.firstname}>
+                <Popover key={index} content={assignee.firstname}>
                   <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
                     <AvatarIcon name={assignee.firstname} />
                   </Avatar>

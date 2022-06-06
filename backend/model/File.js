@@ -34,27 +34,33 @@ module.exports = {
       ContentType: file.mimetype
     };
 
-    const sqlCheck = "SELECT ";
+    const sqlCheck = "SELECT SUM(size) AS total FROM files WHERE projects_id = ?";
+    con.query(sqlCheck, [id], (err, checkRes) => {
+      console.log(parseInt(checkRes[0].total) + parseInt(file.size));
+      if (parseInt(checkRes[0].total) + parseInt(file.size) > 20971520) {
+        result("Out of space!", null);
+      } else {
+        s3.upload(params, (err, data) => {
+          if (err) {
+            result(err, null);
+            return;
+          }
 
-    s3.upload(params, (err, data) => {
-      if (err) {
-        result(err, null);
-        return;
+          const clearedType = file.originalname.split(".");
+          const newFile = new File(fileId, id, file.originalname, body.description, file.size, clearedType[clearedType.length - 1]);
+
+          const sql = `INSERT INTO files (id, projects_id, title, description, size, file_mimetype, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+          con.query(sql, [newFile.id, newFile.project_id, newFile.title, newFile.description, newFile.size, newFile.file_mimetype, newFile.created_at], (err, res) => {
+            if (err) {
+              result(err, null);
+              return;
+            }
+
+            result(null, newFile);
+            return;
+          });
+        });
       }
-
-      const clearedType = file.originalname.split(".");
-      const newFile = new File(fileId, id, file.originalname, body.description, file.size, clearedType[clearedType.length - 1]);
-
-      const sql = `INSERT INTO files (id, projects_id, title, description, size, file_mimetype, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-      con.query(sql, [newFile.id, newFile.project_id, newFile.title, newFile.description, newFile.size, newFile.file_mimetype, newFile.created_at], (err, res) => {
-        if (err) {
-          result(err, null);
-          return;
-        }
-
-        result(null, newFile);
-        return;
-      });
     });
   },
 

@@ -20,7 +20,7 @@ router.use(authRoutes);
 router.use(projectRoutes);
 router.use(memberRoutes);
 router.use(sectionRoutes);
-router.use("/tasks", taskRoutes);
+router.use(taskRoutes);
 router.use(sessionRoutes);
 router.use(talkingPointRoutes);
 router.use(invitationRoutes);

@@ -1,4 +1,4 @@
-import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM } from "./types";
+import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, GET_FOLDER_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -40,6 +40,16 @@ export const getAllFiles = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:9000/api/${project_id}/files`);
     dispatch({ type: GET_FILES, payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getFilesByFolder = ({ id, project_id }) => async (dispatch) => {
+  try {
+    dispatch(setFileLoading());
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/folders/${id}/files`);
+    dispatch({ type: GET_FOLDER_FILES, payload: res.data });
   } catch (err) {
     console.log(err);
   }
