@@ -17,8 +17,8 @@ module.exports = {
   Invitation,
 
   // Create new member by user or by admin
-  create: async function (body, sender, result) {
-    con.query("SELECT id FROM users WHERE email = ?", [body.receiver_email], (err, receiver_id_result) => {
+  create: async function (receiver_email, sender, project, result) {
+    con.query("SELECT id FROM users WHERE email = ?", [receiver_email], (err, receiver_id_result) => {
       if (err) {
         result(err, null);
         return;
@@ -30,10 +30,10 @@ module.exports = {
           return;
         }
 
-        const invitation = new Invitation(uuid4(), sender, receiver_id_result[0].id, body.project);
-        const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id) VALUES (?, ?, ?, ?, ?)`;
+        const invitation = new Invitation(uuid4(), sender, receiver_id_result[0].id, project);
+        const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id, seen) VALUES (?, ?, ?, ?, ?, ?)`;
 
-        con.query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project], (err, res) => {
+        con.query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project, invitation.seen], (err, res) => {
           if (err) {
             result(err, null);
             return;

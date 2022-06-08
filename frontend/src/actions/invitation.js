@@ -2,13 +2,13 @@ import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, UPDATE_SEEN_IN
 import axios from "axios";
 import { message } from "antd";
 
-export const createInvitation = ({ receiver_email, project_id }) => async (dispatch) => {
+export const createInvitation = ({ receiver_email, project_id, socket }) => async (dispatch) => {
   try {
     const res = await axios.post(`http://localhost:9000/api/${project_id}/invitations/new`, { receiver_email });
     dispatch({ type: CREATE_INVITATION, payload: res.data });
-    console.log(res.data);
+    socket.emit("send-invitation", receiver_email);
   } catch (err) {
-    message.error(err.response.data.message);
+    //message.error(err.response.data.message);
   }
 };
 
@@ -22,9 +22,9 @@ export const acceptInvitation = ({ id, project_id }) => async (dispatch) => {
   }
 };
 
-export const getAllInvitations = ({ project_id }) => async (dispatch) => {
+export const getAllInvitations = () => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/invitations/private`);
+    const res = await axios.get(`http://localhost:9000/api/invitations/private`);
     dispatch({ type: GET_INVITATIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_INVITATIONS_FAIL });

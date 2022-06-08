@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import InvitationItem from "./InvitationItem";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getAllInvitations } from "../../actions/invitation";
 import Container from "../utils/Container";
-import { Table, Space } from "antd";
+import { Table, Space, Input } from "antd";
 import { useParams } from "react-router-dom";
+import SocketContext from "../../context/SocketContext";
 
 const Invitations = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
+  const socket = useContext(SocketContext);
+  const [email, setEmail] = useState("");
+
   useEffect(() => {
-    dispatch(getAllInvitations({ project_id: params.id }));
+    dispatch(getAllInvitations());
   }, []);
 
   return (

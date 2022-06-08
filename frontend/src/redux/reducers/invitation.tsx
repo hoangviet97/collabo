@@ -2,7 +2,8 @@ import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, CREATE_INVITAT
 
 const initialState = {
   sended: [],
-  invitations: []
+  invitations: [],
+  unread: 0
 };
 
 function invitationReducer(state = initialState, action: any) {
@@ -20,9 +21,12 @@ function invitationReducer(state = initialState, action: any) {
         sended_invitations: []
       };
     case GET_INVITATIONS:
+      const unseenNum = payload.filter((item: any) => item.seen === 0).length;
+
       return {
         ...state,
-        invitations: payload
+        invitations: payload,
+        unread: unseenNum
       };
     case GET_PROJECT_INVITATIONS:
       return {

@@ -1,19 +1,22 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useContext } from "react";
 import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { createInvitation } from "../../actions/invitation";
+import SocketContext from "../../context/SocketContext";
 
 interface Props {
   project: string;
 }
 
 const InvitationPanel: FC<Props> = ({ project }) => {
+  const socket = useContext(SocketContext);
+
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>("");
 
   const submitHandle = (e: any) => {
     e.preventDefault();
-    dispatch(createInvitation({ receiver_email: email, project_id: project }));
+    dispatch(createInvitation({ receiver_email: email, project_id: project, socket: socket }));
     setEmail("");
   };
 

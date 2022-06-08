@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useContext, FC } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import StatusChart from "./StatusChart";
@@ -8,12 +8,16 @@ import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
 import { getTimeRecordsSum } from "../../actions/time_record";
 import MainSpinner from "../utils/spinners/MainSpinner";
+import SocketContext from "../../context/SocketContext";
+import { message } from "antd";
 
 interface Props {
   match: any;
 }
 
 const Overview: FC<Props> = ({ match }) => {
+  const socket = useContext(SocketContext);
+
   const dispatch = useDispatch();
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const statusGroup = useSelector((state: RootStateOrAny) => state.task.statusGroup);

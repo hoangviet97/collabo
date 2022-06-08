@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import { HalfPieChart } from "half-pie-chart";
 import prettyBytes from "pretty-bytes";
 import FileTypeIcon from "../../utils/FileTypeIcon";
 import SemiDonut from "../../utils/SemiDonut";

@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../actions/auth";
 import { ImportOutlined, BellOutlined, HomeOutlined } from "@ant-design/icons";
+import { Badge } from "antd";
 
-const Sidebar = () => {
+interface Props {
+  unread: number;
+}
+
+const Sidebar: FC<Props> = ({ unread }) => {
   const dispatch = useDispatch();
-  const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
-  const [invitationNum, setInvitationNum] = useState([]);
-
-  useEffect(() => {
-    setInvitationNum(invitations.filter((item: any) => item.seen === 0));
-  }, [invitations]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -26,7 +25,9 @@ const Sidebar = () => {
             <HomeOutlined className="side-nav__icon" />
           </Link>
           <Link className="side-nav__link" to="/notify">
-            <BellOutlined className="side-nav__icon" />
+            <Badge count={unread}>
+              <BellOutlined className="side-nav__icon" />
+            </Badge>
           </Link>
         </nav>
       </div>
