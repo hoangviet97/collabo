@@ -82,7 +82,6 @@ module.exports = {
   loginUser: function (data, result) {
     const sql = `SELECT id, password, verification_status FROM users WHERE email = '${data.email}'`;
     con.query(sql, async (err, res) => {
-      console.log(res[0].verification_status);
       if (res[0].verification_status === "pending") {
         result("This account is not activated!", null);
         return;
@@ -93,7 +92,7 @@ module.exports = {
         }
         const isMatch = await bcrypt.compare(data.password, res[0].password, (err, matched) => {
           if (err || !matched) {
-            console.log("invald");
+            console.log(err);
             result("Invalid credentionals", null);
             return;
           }

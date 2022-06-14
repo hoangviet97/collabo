@@ -204,6 +204,7 @@ module.exports = {
     const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (?, ?)`;
     con.query(sql, [user_id, task_id], (err, res) => {
       if (err) {
+        console.log(err);
         result(err, null);
         return;
       }
@@ -211,6 +212,23 @@ module.exports = {
       const data = { user_id: user_id, task_id: task_id };
 
       this.getAssingee(data, result);
+    });
+  },
+
+  getAssingee: async function (body, result) {
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
+                  FROM users_has_tasks 
+                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON users_has_tasks.users_id = users.id
+                  WHERE users.id = ? AND tasks_id = ?`;
+    con.query(sql, [body.user_id, body.task_id], (err, res) => {
+      if (err) {
+        result(err, null);
+        return;
+      }
+
+      result(null, res);
+      return;
     });
   },
 

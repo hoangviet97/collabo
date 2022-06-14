@@ -62,7 +62,7 @@ const TaskCard: FC<Props> = ({ task, projectId, sectionName, showModal, closeMod
               <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
             </div>
           )}
-          {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
+          {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
         </div>
         <Timer localstorage={task.id} project_id={projectId} />
       </div>

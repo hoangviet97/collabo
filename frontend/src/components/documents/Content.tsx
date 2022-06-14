@@ -5,16 +5,15 @@ import FolderDetail from "./folders/FolderDetail";
 import { Switch, Route } from "react-router-dom";
 
 interface Props {
-  files: any;
   match: any;
 }
 
-const Content: FC<Props> = ({ files, match }) => {
+const Content: FC<Props> = ({ match }) => {
   return (
     <div className="files__data">
       <Switch>
         <Route exact path={`${match.path}/`}>
-          <FileHomePage files={files} project_id={match.params.id} match={match} />
+          <FileHomePage match={match} />
         </Route>
         <Route exact path={`${match.path}/folders/:folderId`}>
           <FolderDetail {...match} />

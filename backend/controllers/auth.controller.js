@@ -19,11 +19,9 @@ module.exports = {
   login: function (req, res) {
     const { error } = loginValidation(req.body);
 
-    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
-
     User.loginUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
-      console.log(req.body);
+      console.log(err);
       return res.json(result);
     });
   },

@@ -46,6 +46,7 @@ module.exports = {
 
     con.query(sql, [id], (err, res) => {
       if (err) {
+        console.log(err);
         result(err, null);
         return;
       }

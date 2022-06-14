@@ -3,15 +3,11 @@ import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
 import { Avatar, Button, Divider } from "antd";
 import Poll from "../poll/Poll";
-import CommentReply from "./CommentReply";
-import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
-import { sendReply } from "../../actions/message";
 
 interface Props {
   data: any;
   match: any;
-  replies: any;
   project: any;
 }
 
@@ -21,17 +17,8 @@ const HeartSvg = () => (
   </svg>
 );
 
-const Comment: FC<Props> = ({ data, match, replies, project }) => {
+const Comment: FC<Props> = ({ data, match, project }) => {
   const dispatch = useDispatch();
-  const [showReply, setShowReply] = useState<boolean>(false);
-
-  const showReplyHandler = (val: boolean) => {
-    setShowReply(val);
-  };
-
-  const replyHandler = (text: string) => {
-    dispatch(sendReply({ project: project, message: data.id, text: text }));
-  };
 
   return (
     <div className="comment" style={{ width: "70%", padding: "25px 40px", borderRadius: "12px", marginBottom: "40px", backgroundColor: "white", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px" }}>
@@ -54,16 +41,7 @@ const Comment: FC<Props> = ({ data, match, replies, project }) => {
           <p>{data.text}</p>
         </div>
         <Divider />
-        {data.pollData.question && <Poll pollData={data.pollData} project={match.params.id} />}
-        <div className="comment__relies">{replies && replies.map((item: any) => <Reply data={item} />)}</div>
-      </div>
-      <div className="comment__footer">
-        {!showReply && (
-          <Button type="link" onClick={() => showReplyHandler(true)} style={{ padding: "0px", fontSize: "12px" }}>
-            Reply to
-          </Button>
-        )}
-        {showReply && <CommentReply show={showReplyHandler} reply={replyHandler} />}
+        {data.pollData.question && <Poll pollData={data.pollData} id={data.id} project={match.params.id} />}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USER_LOADED, AUTH_ERROR, CHANGE_FIRSTNAME, CHANGE_LASTNAME } from "./types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, USER_LOADED, AUTH_ERROR, AUTH_LOADING, CHANGE_FIRSTNAME, CHANGE_LASTNAME } from "./types";
 import axios from "axios";
 import setAuthToken from "../helpers/setAuthToken";
 import { message } from "antd";
@@ -39,12 +39,13 @@ export const verifyAccount = ({ id }) => async (dispatch) => {
 
 export const login = ({ email, password }) => async (dispatch) => {
   try {
+    dispatch(setLoading());
     const res = await axios.post("http://localhost:9000/api/login", { email, password });
 
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
-    message.error(err.response.data.message);
+    message.error(err.response.message);
     dispatch({ type: LOGIN_FAIL });
   }
 };
@@ -84,6 +85,12 @@ export const reset = ({ email }) => async (dispatch) => {
   } catch (err) {
     console.log(err.response);
   }
+};
+
+export const setLoading = () => {
+  return {
+    type: AUTH_LOADING
+  };
 };
 
 export const logout = () => (dispatch) => {

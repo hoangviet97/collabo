@@ -5,6 +5,7 @@ export const LOGIN_SUCCESS: string = "LOGIN_SUCCESS";
 export const LOGIN_FAIL: string = "LOGIN_FAIL";
 export const USER_LOADED: string = "USER_LOADED";
 export const AUTH_ERROR: string = "AUTH_ERROR";
+export const AUTH_LOADING: string = "AUTH_LOADING";
 export const CHANGE_FIRSTNAME: string = "CHANGE_FIRSTNAME";
 export const CHANGE_LASTNAME: string = "CHANGE_LASTNAME";
 export const LOGOUT: string = "LOGOUT";
@@ -149,3 +150,5 @@ export const FILTER_PRIORITY: string = "FILTER_PRIORITY";
 export const CREATE_POLL: string = "CREATE_POLL";
 export const UPDATE_VOTE: string = "UPDATE_VOTE";
 export const DELETE_VOTE: string = "DELETE_VOTE";
+
+export const FOLDER_LOADING: string = "FOLDER_LOADING";

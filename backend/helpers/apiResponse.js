@@ -1,10 +1,5 @@
 exports.ErrorResponse = function (res, msg) {
-  var data = {
-    status: 400,
-    message: msg
-  };
-  console.log(data);
-  return res.status(400).json(data);
+  return res.status(400).json({ message: msg });
 };
 
 exports.notFoundResponse = function (res, msg) {

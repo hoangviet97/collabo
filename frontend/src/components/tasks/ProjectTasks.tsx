@@ -6,7 +6,7 @@ import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
@@ -213,13 +213,13 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   return (
     <div className="project-tasks">
       {loading ? (
-        <Spin size="large" />
+        <Skeleton />
       ) : (
         <Container size="30">
-          <header>
+          <header style={{ marginRight: "20px" }}>
             <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
               <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Filter by: &nbsp;</span>
                 <Button onClick={showTagSelectorHandler}>
                   <TagsOutlined />

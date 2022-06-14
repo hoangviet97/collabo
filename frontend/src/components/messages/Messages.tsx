@@ -15,13 +15,11 @@ const Messages: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: RootStateOrAny) => state.auth.user.firstname);
   const messages = useSelector((state: RootStateOrAny) => state.message.messages);
-  const replies = useSelector((state: RootStateOrAny) => state.message.replies);
   const loading = useSelector((state: RootStateOrAny) => state.message.loading);
   const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getMessages({ id: match.params.id }));
-    dispatch(getAllReplies({ project: match.params.id }));
+    dispatch(getMessages({ project_id: match.params.id }));
   }, []);
 
   const handleCancel = () => {
@@ -49,8 +47,7 @@ const Messages: FC<Props> = ({ match }) => {
           {loading
             ? "loading..."
             : messages.map((item: any, index: number) => {
-                let repliesArr = replies.filter((x: any) => x.messages_id === item.id);
-                return <Comment key={index} data={item} match={match} replies={repliesArr} project={match.params.id} />;
+                return <Comment key={index} data={item} match={match} project={match.params.id} />;
               })}
         </div>
       </div>

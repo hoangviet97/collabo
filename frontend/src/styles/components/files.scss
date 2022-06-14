@@ -18,13 +18,7 @@
     margin-bottom: 10px;
   }
 
-  &__folders-options {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-
-  &__folders-list {
+  &__folder-list-component {
     display: grid;
 
     grid-template-columns: repeat(4, 1fr);
@@ -32,6 +26,12 @@
     grid-auto-rows: auto;
 
     grid-gap: 1rem;
+  }
+
+  &__folders-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
   }
 
   &__recent-files-header {

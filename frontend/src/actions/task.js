@@ -115,7 +115,8 @@ export const getAllAssignees = ({ project_id }) => async (dispatch) => {
 export const createAssignee = ({ user_id, task_id, project_id }) => async (dispatch) => {
   try {
     const res = await axios.post(`http://localhost:9000/api/${project_id}/tasks/${task_id}/assignees/${user_id}`);
-    dispatch({ type: CREATE_ASSIGNEE, payload: res.data[0] });
+    console.log(res);
+    dispatch({ type: CREATE_ASSIGNEE, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
   }

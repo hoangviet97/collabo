@@ -10,6 +10,7 @@ import { getTimeRecordsSum } from "../../actions/time_record";
 import MainSpinner from "../utils/spinners/MainSpinner";
 import SocketContext from "../../context/SocketContext";
 import { message } from "antd";
+import CardSkeleton from "../skeletons/CardSkeleton";
 
 interface Props {
   match: any;
@@ -72,7 +73,6 @@ const Overview: FC<Props> = ({ match }) => {
           </div>
           <div className="e">
             <h3>Upcoming tasks</h3>
-            <MainSpinner />
           </div>
         </div>
       </div>

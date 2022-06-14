@@ -9,11 +9,7 @@ import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 
-interface Props {
-  files: any;
-}
-
-const FileList: FC<Props> = ({ files }) => {
+const FileList = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const { Text, Link } = Typography;
@@ -23,6 +19,7 @@ const FileList: FC<Props> = ({ files }) => {
   const [folderId, setFolderId] = useState<string>("");
   const [folderNum, setFolderNum] = useState<number>(0);
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
+  const files = useSelector((state: RootStateOrAny) => state.file.files);
 
   const download = (record: any) => {
     axios({

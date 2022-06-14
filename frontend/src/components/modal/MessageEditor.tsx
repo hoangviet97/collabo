@@ -24,7 +24,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
     if (value.length < 1) {
       message.error("Text cannot be empty!");
     } else {
-      dispatch(createMessage({ project: project, text: value, question: question, options: options }));
+      dispatch(createMessage({ project_id: project, text: value, question: question, options: options }));
       setValue("");
       setQuestion("");
       setOptions([]);

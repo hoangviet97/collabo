@@ -7,6 +7,7 @@ import { login } from "../../actions/auth";
 const Login = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((state) => state.auth.loading);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const { email, password } = formData;
@@ -53,7 +54,7 @@ const Login = () => {
 
           <Form.Item className="auth__element">
             <Button type="primary" htmlType="submit" size="large" style={{ borderRadius: "10px" }}>
-              Login
+              {isLoading ? "loading..." : "Login"}
             </Button>
           </Form.Item>
 

@@ -145,7 +145,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
             <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
           </div>
         )}
-        {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
+        {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
         <Select className="task-select" defaultValue={task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>

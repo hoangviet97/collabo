@@ -3,20 +3,19 @@ import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { createInvitation } from "../../actions/invitation";
 import SocketContext from "../../context/SocketContext";
+import { useParams } from "react-router-dom";
 
-interface Props {
-  project: string;
-}
-
-const InvitationPanel: FC<Props> = ({ project }) => {
+const InvitationPanel = () => {
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
+  const params: any = useParams();
   const [email, setEmail] = useState<string>("");
 
   const submitHandle = (e: any) => {
     e.preventDefault();
-    dispatch(createInvitation({ receiver_email: email, project_id: project, socket: socket }));
+    // dispatch with passed socket
+    dispatch(createInvitation({ receiver_email: email, project_id: params.id, socket: socket }));
     setEmail("");
   };
 

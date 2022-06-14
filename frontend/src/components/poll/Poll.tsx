@@ -5,21 +5,22 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
 interface Props {
   pollData: any;
+  id: string;
   project: any;
 }
 
-const Poll: FC<Props> = ({ pollData, project }) => {
+const Poll: FC<Props> = ({ pollData, id, project }) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
   const votes = useSelector((state: RootStateOrAny) => state.message.votes);
   const voteCount = votes;
 
   const setVoteHandler = (option: any) => {
-    dispatch(setPoolVote({ project: project, firstname: profile.firstname, lastname: profile.lastname, email: profile.email, option_id: option }));
+    dispatch(setPoolVote({ project_id: project, message_id: id, firstname: profile.firstname, lastname: profile.lastname, email: profile.email, poll_id: pollData.id, option_id: option }));
   };
 
   const deleteVoteHandler = (option: any) => {
-    dispatch(deletePoolVote({ project: project, email: profile.email, option_id: option }));
+    dispatch(deletePoolVote({ project_id: project, message_id: id, email: profile.email, poll_id: pollData.id, option_id: option }));
   };
 
   return (

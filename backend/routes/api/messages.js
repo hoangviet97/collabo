@@ -4,11 +4,11 @@ const auth = require("../../middleware/auth");
 const getMemberId = require("../../middleware/getMemberId");
 const router = express.Router();
 
-router.post("/add", [auth, getMemberId], messageController.create);
-router.post("/all", [auth], messageController.getAll);
-router.post("/pool-vote", [auth, getMemberId], messageController.addVote);
-router.post("/delete-vote", [auth, getMemberId], messageController.deleteVote);
-router.post("/reply", [auth, getMemberId], messageController.sendReply);
-router.post("/all-replies", [auth], messageController.getAllReplies);
+router.post("/:project/messages/add", [auth, getMemberId], messageController.create);
+router.get("/:project/messages", [auth], messageController.getAll);
+router.post("/:project/messages/:messageId/polls/:pollId/options/:optionId/vote", [auth, getMemberId], messageController.addVote);
+router.delete("/:project/messages/:messageId/polls/:pollId/options/:optionId/vote", [auth, getMemberId], messageController.deleteVote);
+router.post("/:project/messages/:messageId/replies", [auth, getMemberId], messageController.sendReply);
+router.get("/:project/messages/replies", [auth], messageController.getAllReplies);
 
 module.exports = router;

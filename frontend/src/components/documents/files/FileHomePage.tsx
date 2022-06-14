@@ -7,15 +7,15 @@ import { UploadOutlined } from "@ant-design/icons";
 import { createFolder } from "../../../actions/folder";
 import { useDispatch } from "react-redux";
 import FilesStatistics from "./FilesStatistics";
+import { useParams } from "react-router-dom";
 
 interface Props {
-  files: any;
-  project_id: string;
   match: any;
 }
 
-const FileHomePage: FC<Props> = ({ files, project_id, match }) => {
+const FileHomePage: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);
   const [newFolder, setNewFolder] = useState<string>("");
@@ -33,7 +33,7 @@ const FileHomePage: FC<Props> = ({ files, project_id, match }) => {
   };
 
   const createFolderHandler = () => {
-    dispatch(createFolder({ title: newFolder, project_id: project_id }));
+    dispatch(createFolder({ title: newFolder, project_id: params.id }));
     setIsFolderModalVisible(false);
   };
 
@@ -41,7 +41,7 @@ const FileHomePage: FC<Props> = ({ files, project_id, match }) => {
     <div>
       <div className="files__homepage">
         <div style={{ gridArea: "content", maxHeight: "calc(100vh - 120px)", overflowY: "scroll" }}>
-          <FolderList files={files} showModal={showModal} match={match} />
+          <FolderList showModal={showModal} match={match} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">
               <span style={{ fontSize: "27px", fontWeight: "bold" }}>All files</span>
@@ -54,7 +54,7 @@ const FileHomePage: FC<Props> = ({ files, project_id, match }) => {
             </div>
           </div>
           <Modal title="Basic Modal" width="500px" visible={isModalVisible} onOk={() => handleOk("upload")} onCancel={() => handleCancel("upload")} footer={null}>
-            <NewFileForm project_id={project_id} />
+            <NewFileForm />
           </Modal>
           <Modal title="files" width="500px" visible={isFolderModalVisible} onOk={() => handleOk("folder")} onCancel={() => handleCancel("folder")} footer={null}>
             <Form>
@@ -66,7 +66,7 @@ const FileHomePage: FC<Props> = ({ files, project_id, match }) => {
               </Form.Item>
             </Form>
           </Modal>
-          <FileList files={files} />
+          <FileList />
         </div>
         <div style={{ gridArea: "stats", backgroundColor: "white", borderRadius: "10px", height: "calc(100vh - 120px)", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "20px" }}>
           <FilesStatistics />
