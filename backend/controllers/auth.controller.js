@@ -55,7 +55,7 @@ module.exports = {
   },
 
   changePassword: function (req, res) {
-    User.changePwd(req.body.id, (err, result) => {
+    User.changePwd(req.body, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

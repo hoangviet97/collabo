@@ -23,7 +23,6 @@ export const register = ({ firstname, lastname, email, password, push }) => asyn
     message.success("Registration Success!");
   } catch (err) {
     message.error(err.response.data.message);
-    console.log(err.response.data.message);
     dispatch({ type: REGISTER_FAIL });
   }
 };
@@ -45,7 +44,8 @@ export const login = ({ email, password }) => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
-    message.error(err.response.message);
+    console.log(err.response);
+    message.error(err.response.data.message);
     dispatch({ type: LOGIN_FAIL });
   }
 };
@@ -70,11 +70,12 @@ export const changeLastname = ({ lastname }) => async (dispatch) => {
   }
 };
 
-export const changePassword = ({ id, password }) => async (dispatch) => {
+export const changePassword = ({ currentPassword, newPassword }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/change-pwd", { id, password });
+    const res = await axios.patch("http://localhost:9000/api/change-pwd", { currentPassword, newPassword });
+    message.success("Password has benn changed!");
   } catch (err) {
-    console.log(err.response);
+    message.error(err.response.data.message);
   }
 };
 

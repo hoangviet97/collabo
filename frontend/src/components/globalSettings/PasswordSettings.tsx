@@ -1,12 +1,17 @@
 import React, { useState, FC } from "react";
 import { Divider, message, Input, Button } from "antd";
+import { useDispatch } from "react-redux";
+import { changePassword } from "../../actions/auth";
 
 const AccountDetails = () => {
+  const dispatch = useDispatch();
+  const [currentPwd, setCurrentPwd] = useState("");
   const [firstPwd, setFirstPwd] = useState("");
   const [rePwd, setRePwd] = useState("");
 
   const changePwdHandler = () => {
     if (firstPwd === rePwd) {
+      dispatch(changePassword({ currentPassword: currentPwd, newPassword: rePwd }));
     } else {
       return message.error("Passwords doesn't match!");
     }
@@ -23,7 +28,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Current password</div>
           <div style={{ flex: "1" }}>
-            <Input style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={currentPwd} onChange={(e) => setCurrentPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>
@@ -32,7 +37,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>New password</div>
           <div style={{ flex: "1" }}>
-            <Input style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={firstPwd} onChange={(e) => setFirstPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>
@@ -41,7 +46,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Confirm new password</div>
           <div style={{ flex: "1" }}>
-            <Input style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={rePwd} onChange={(e) => setRePwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>
@@ -50,7 +55,9 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2" }}></div>
           <div style={{ flex: "1", display: "flex", justifyContent: "flex-end" }}>
-            <Button type="primary">Change</Button>
+            <Button onClick={changePwdHandler} type="primary">
+              Change
+            </Button>
           </div>
         </div>
       </div>

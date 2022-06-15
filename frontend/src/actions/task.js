@@ -134,6 +134,7 @@ export const deleteAssignee = ({ user_id, task_id, project_id }) => async (dispa
 export const deleteTask = ({ id, project_id }) => async (dispatch) => {
   try {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/tasks/:id`);
+    console.log(res);
     dispatch({ type: DELETE_TASK, payload: id });
     message.success("Task deleted!");
   } catch (err) {

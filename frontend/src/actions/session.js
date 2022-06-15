@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -35,7 +35,8 @@ export const deleteSession = ({ id, project_id }) => async (dispatch) => {
   try {
     dispatch(setSessionLoading());
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/sessions/${id}`);
-    dispatch({ type: GET_SESSION, payload: res.data[0] });
+    dispatch({ type: DELETE_SESSION, payload: id });
+    message.success("Session deleted!");
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }

@@ -12,7 +12,6 @@ interface Props {
 
 const Session: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const [isModal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const Session: FC<Props> = ({ match }) => {
   return (
     <Container size="30">
       <div className="session">
-        <ControlPanel sessions={sessions} match={match} addNewSession={addNewSession} />
+        <ControlPanel match={match} addNewSession={addNewSession} />
         <SessionContent match={match} />
       </div>
       <SessionModal project_id={match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />

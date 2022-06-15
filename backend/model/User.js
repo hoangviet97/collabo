@@ -91,8 +91,8 @@ module.exports = {
           return;
         }
         const isMatch = await bcrypt.compare(data.password, res[0].password, (err, matched) => {
-          if (err || !matched) {
-            console.log(err);
+          if (err || matched === false) {
+            console.log(matched);
             result("Invalid credentionals", null);
             return;
           }
@@ -154,17 +154,26 @@ module.exports = {
     });
   },
 
-  changePwd: function (id, result) {
-    const sql = `UPDATE users SET password = ? WHERE id = ?`;
-    con.query(sql, async (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
+  changePwd: async function (body, id, result) {
+    const checkSql = `SELECT password FROM users WHERE id = ?`;
 
-      result(null, res);
-      return;
+    con.query(checkSql, [id], async (err, res) => {
+      const isMatch = await bcrypt.compare(body.currentPassword, res[0].password, (err, matched) => {
+        if (err || matched === false) {
+          result("Invalid credentionals", null);
+          return;
+        }
+      });
+
+      const salt = await bcrypt.genSalt(10);
+      const pwd = await bcrypt.hash(body.newPassword, salt);
+
+      const sql = "UPDATE users SET password = ? WHERE id = ?";
+
+      con.query(sql, [pwd, id], (err, res) => {
+        result(null, "success");
+        return;
+      });
     });
   },
 
@@ -172,7 +181,6 @@ module.exports = {
     const sql = `UPDATE users SET firstname = ? WHERE id = ?`;
     con.query(sql, [name, id], async (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }
@@ -186,7 +194,6 @@ module.exports = {
     const sql = `UPDATE users SET lastname = ? WHERE id = ?`;
     con.query(sql, [name, id], async (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }
@@ -204,21 +211,28 @@ module.exports = {
         return;
       }
 
+      const newToken = uuid4();
+
+      const sqlToken = `UPDATE users SET token = ? WHERE email = ?`;
+      con.query(sqlToken, [newToken, body.email]);
+
       const transport = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp-mail.outlook.com", // hostname
+        secureConnection: false, // TLS requires secureConnection to be false
+        port: 587,
         auth: {
-          user: "acerik97@gmail.com",
-          pass: "Dobroviz192"
+          user: "hoangviet97@outlook.com",
+          pass: "dobroviz192"
         }
       });
 
-      const newPwd = uuid4();
+      const url = `http://localhost:3000/pwd-reset/${newToken}`;
 
       let mailOpt = {
-        from: "acerik97@gmail.com",
+        from: "hoangviet97@outlook.com",
         to: body.email,
-        subject: "Password reset",
-        text: `Your temporary password: ${newPwd}`
+        subject: "Reset password",
+        text: `Click here to set your new password: ${url}`
       };
 
       transport.sendMail(mailOpt, (err, info) => {
@@ -227,18 +241,6 @@ module.exports = {
         } else {
           console.log(info.response);
         }
-      });
-
-      const sql2 = `UPDATE users password = '${newPwd}' WHERE email = '${body.email}'`;
-
-      con.query(sql2, async (err, res) => {
-        if (err) {
-          result(err, null);
-          return;
-        }
-
-        result(null, res);
-        return;
       });
     });
   }

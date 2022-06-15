@@ -18,6 +18,6 @@ router.patch("/:project/tasks/:id/end", auth, taskController.updateEndDate);
 router.get("/:project/tasks/assignees", auth, taskController.getAllAssignees);
 router.post("/:project/tasks/:id/assignees/:userId", [auth, permit("Owner", "Admin")], taskController.createAssignee);
 router.delete("/:project/tasks/:id/assignees/:assigneeId", [auth], taskController.deleteAssignee);
-router.delete("/:project/tasks/:id/delete", [auth], taskController.delete);
+router.delete("/:project/tasks/:id", [auth], taskController.delete);
 
 module.exports = router;
