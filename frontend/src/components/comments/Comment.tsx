@@ -17,7 +17,7 @@ const HeartSvg = () => (
   </svg>
 );
 
-const Comment: FC<Props> = ({ data, match, project }) => {
+const Comment: FC<Props> = ({ data }) => {
   const dispatch = useDispatch();
 
   return (
@@ -41,7 +41,7 @@ const Comment: FC<Props> = ({ data, match, project }) => {
           <p>{data.text}</p>
         </div>
         <Divider />
-        {data.pollData.question && <Poll pollData={data.pollData} id={data.id} project={match.params.id} />}
+        {data.pollData.question && <Poll pollData={data.pollData} id={data.id} />}
       </div>
     </div>
   );

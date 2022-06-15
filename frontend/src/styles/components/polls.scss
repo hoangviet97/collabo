@@ -1,0 +1,15 @@
+.poll {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  width: 70%;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 7px;
+}

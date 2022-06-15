@@ -11,11 +11,11 @@ import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
+import { useParams } from "react-router-dom";
 
 interface Props {
   showModal: any;
   closeModal: any;
-  projectId: string;
   sectionName: string;
   assignees: any;
   members: any;
@@ -23,8 +23,9 @@ interface Props {
   start_date: any;
 }
 
-const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, assignees, members, task, start_date }) => {
+const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, members, task, start_date }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const [datePicker, setDatePicker] = useState<any | null>(null);
   const [done, setDone] = useState(task.statusId);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
@@ -90,7 +91,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
   };
 
   const deleteTaskHandler = () => {
-    dispatch(deleteTask({ id: task.id, project_id: projectId }));
+    dispatch(deleteTask({ id: task.id, project_id: params.id }));
   };
 
   const openDateHandler = (id: any) => {
@@ -103,11 +104,11 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
 
   const switchTaskStatusHandler = (value: any) => {
     setDone(value);
-    dispatch(updateTaskStatus({ id: task.id, statusId: value, project_id: projectId }));
+    dispatch(updateTaskStatus({ id: task.id, statusId: value, project_id: params.id }));
   };
 
   const switchPriorityHandler = (value: any) => {
-    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project_id: projectId }));
+    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project_id: params.id }));
   };
 
   const showAssigness = () => {
@@ -174,7 +175,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, projectId, sectionName, as
         <TaskDateModal taskId={task.id} start_date={task.start_date} due_date={task.due_date} show={datePicker} close={closeDateHandler} pos={datePosition} />
       </div>
       <div className="task-column__item task-column__timer">
-        <Timer localstorage={task.id} project_id={projectId} />
+        <Timer localstorage={task.id} />
       </div>
       <div className="task-column__item task-column__more">
         <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">

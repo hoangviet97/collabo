@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING, UPDATE_NOTE } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -13,7 +13,7 @@ export const createSession = ({ session, project_id }) => async (dispatch) => {
 
 export const getSessions = ({ project_id }) => async (dispatch) => {
   try {
-    dispatch(setSessionLoading());
+    dispatch(setSessionsLoading());
     const res = await axios.get(`http://localhost:9000/api/${project_id}/sessions`);
     dispatch({ type: GET_SESSIONS, payload: res.data });
   } catch (err) {
@@ -54,6 +54,12 @@ export const getParticipants = ({ id, project_id }) => async (dispatch) => {
 
 export const setSessionLoading = () => {
   return {
-    type: DATA_LOADING
+    type: SESSION_LOADING
+  };
+};
+
+export const setSessionsLoading = () => {
+  return {
+    type: SESSIONS_LOADING
   };
 };

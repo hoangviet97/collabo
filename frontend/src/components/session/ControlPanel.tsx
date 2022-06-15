@@ -1,8 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
 import { PlusOutlined, CalendarOutlined } from "@ant-design/icons";
-import { Button, Calendar } from "antd";
+import { Button, Calendar, Skeleton } from "antd";
 import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
+import { useSelector, RootStateOrAny } from "react-redux";
 
 interface Props {
   sessions: any;
@@ -14,6 +15,7 @@ const ControlPanel: FC<Props> = ({ sessions, match, addNewSession }) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [calendarDay, setCalendarDay] = useState();
+  const sessionsLoading = useSelector((state: RootStateOrAny) => state.session.loading);
   const today = new Date();
   const byDateSessions = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
 
@@ -32,7 +34,9 @@ const ControlPanel: FC<Props> = ({ sessions, match, addNewSession }) => {
   };
 
   const showAllSessions = () => {
-    const upcoming = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") >= moment(calendarDay).format("MMM Do YY"));
+    const todayDate = new Date();
+    console.log(moment(todayDate).format("MMM Do YY"));
+    const upcoming = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") >= moment(todayDate).format("MMM Do YY"));
     setFilteredSessions(upcoming);
   };
 
@@ -79,9 +83,7 @@ const ControlPanel: FC<Props> = ({ sessions, match, addNewSession }) => {
           </div>
         </div>
       </div>
-      <div className="meeting__control-content">
-        <SessionPanelList sessions={filteredSessions} match={match} />
-      </div>
+      <div className="meeting__control-content">{sessionsLoading ? <Skeleton /> : <SessionPanelList sessions={filteredSessions} match={match} />}</div>
     </div>
   );
 };

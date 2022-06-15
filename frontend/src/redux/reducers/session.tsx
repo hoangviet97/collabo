@@ -1,9 +1,10 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING, CREATE_NOTE, UPDATE_NOTE } from "../../actions/types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSION_LOADING, CREATE_NOTE, UPDATE_NOTE } from "../../actions/types";
 
 const initialState = {
   sessions: [],
   single: {},
   loading: false,
+  singleLoading: false,
   participants: []
 };
 
@@ -35,7 +36,7 @@ function sessionReducer(state = initialState, action: any) {
       return {
         ...state,
         single: payload,
-        loading: false
+        singleLoading: false
       };
     case GET_PARTICIPANTS:
       return {
@@ -48,10 +49,10 @@ function sessionReducer(state = initialState, action: any) {
         ...state,
         loading: true
       };
-    case DATA_LOADING:
+    case SESSION_LOADING:
       return {
         ...state,
-        loading: true
+        singleLoading: true
       };
     default:
       return state;

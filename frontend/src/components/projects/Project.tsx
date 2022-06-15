@@ -18,8 +18,6 @@ interface Props {
 }
 
 const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members }) => {
-  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
-
   const favoriteToggle = () => {
     setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
   };

@@ -93,7 +93,6 @@ export const GET_SESSIONS = "GET_SESSIONS";
 export const GET_SESSIONS_FAIL = "GET_SESSIONS_FAIL";
 export const GET_SESSION = "GET_SESSION";
 export const GET_SESSION_FAIL = "GET_SESSION_FAIL";
-export const SESSIONS_LOADING = "SECTIONS_LOADING";
 export const GET_PARTICIPANTS = "GET_PARTICIPANTS";
 
 export const DATA_LOADING: string = "DATA_LOADING";
@@ -152,3 +151,5 @@ export const UPDATE_VOTE: string = "UPDATE_VOTE";
 export const DELETE_VOTE: string = "DELETE_VOTE";
 
 export const FOLDER_LOADING: string = "FOLDER_LOADING";
+export const SESSION_LOADING: string = "SESSION_LOADING";
+export const SESSIONS_LOADING: string = "SESSIONS_LOADING";

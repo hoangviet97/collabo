@@ -3,14 +3,15 @@ import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { createTimeRecord } from "../../actions/time_record";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 interface Props {
   localstorage: any;
-  project_id: string;
 }
 
-const Timer: FC<Props> = ({ localstorage, project_id }) => {
+const Timer: FC<Props> = ({ localstorage }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const [timer, setTimer] = useState<number>(0);
   let finalFormat = "";
   const [isActive, setIsActive] = useState<any>(false);
@@ -36,7 +37,7 @@ const Timer: FC<Props> = ({ localstorage, project_id }) => {
     setIsActive(false);
     const datem = moment(JSON.parse(localStorage.getItem(`timer${localstorage}`)!));
     const datem2 = moment(new Date());
-    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds"), project_id: project_id }));
+    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds"), project_id: params.id }));
     localStorage.removeItem(`timer${localstorage}`);
     setTimer(0);
   };

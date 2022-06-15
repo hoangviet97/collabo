@@ -13,7 +13,8 @@ function sectionReducer(state = initialState, action: any) {
     case CREATE_SECTION:
       return {
         ...state,
-        sections: [...state.sections, { id: payload.id, name: payload.name }]
+        sections: [...state.sections, { id: payload.id, name: payload.name }],
+        loading: false
       };
     case CREATE_SECTION_FAIL:
       return {

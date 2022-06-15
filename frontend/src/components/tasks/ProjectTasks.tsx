@@ -31,6 +31,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const loading = useSelector((state: RootStateOrAny) => state.task.loading);
+  const sectionLoading = useSelector((state: RootStateOrAny) => state.section.loading);
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
   const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
@@ -38,7 +39,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
 
   // States
   const [taskNameForSearch, setTaskNameForSearch] = useState<string>("");
-  const [children, setChildren] = useState([]);
   const [showTagSelector, setShowTagSelector] = useState<boolean>(false);
   const [showStatusSelector, setShowStatusSelector] = useState<boolean>(false);
   const [taskTags, setTaskTags] = useState([]);
@@ -48,7 +48,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [activeList, setActiveList] = useState<boolean>(true);
   const [taskVisual, setTaskVisual] = useState<string | null>("");
   const [filteredAssignees, setFilteredAssignees] = useState([]);
-
   const [newSectionVisibility, setNewSectionVisibility] = useState<boolean>(false);
   const [newTask, setNewTask] = useState<string>("");
   const [newSection, setNewSection] = useState<string>("");
@@ -270,9 +269,9 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
-                          return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
+                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                         } else if (taskVisual === "card") {
-                          return <TaskCard key={i} task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
+                          return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
                       }
                     })}
@@ -292,9 +291,9 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             ))}
           </Collapse>
           {newSectionVisibility === false ? (
-            <Button type="primary" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler}>
+            <Button type="primary" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler} disabled={sectionLoading}>
               <PlusOutlined />
-              Section
+              {sectionLoading ? "Please wait..." : "Section"}
             </Button>
           ) : (
             <div className="add-section-container">
