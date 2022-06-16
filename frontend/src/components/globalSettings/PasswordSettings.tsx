@@ -28,7 +28,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Current password</div>
           <div style={{ flex: "1" }}>
-            <Input value={currentPwd} onChange={(e) => setCurrentPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={currentPwd} type="password" onChange={(e) => setCurrentPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>New password</div>
           <div style={{ flex: "1" }}>
-            <Input value={firstPwd} onChange={(e) => setFirstPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={firstPwd} type="password" onChange={(e) => setFirstPwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ const AccountDetails = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Confirm new password</div>
           <div style={{ flex: "1" }}>
-            <Input value={rePwd} onChange={(e) => setRePwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
+            <Input value={rePwd} type="password" onChange={(e) => setRePwd(e.target.value)} style={{ width: "410px", marginBottom: "10px" }} />
           </div>
         </div>
       </div>

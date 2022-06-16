@@ -9,9 +9,10 @@ import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
 import colorList from "../utils/Colors";
 import { truncade } from "../utils/textManipulation";
+import { project } from "../../types/types";
 
 interface Props {
-  project: any;
+  project: project;
   projectCardHandler: any;
   setFavorite: any;
   members: any;
@@ -19,7 +20,8 @@ interface Props {
 
 const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members }) => {
   const favoriteToggle = () => {
-    setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
+    setFavorite({ project_id: project.id, status: project.favorite === "T" ? "F" : "T" });
+    console.log(typeof project.favorite);
   };
 
   return (
@@ -31,7 +33,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
-              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: project.favorite === 1 ? "#FFD700" : "black" }} />
+              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: project.favorite === "T" ? "#FFD700" : "black" }} />
               <EllipsisOutlined className="more-icon" />
             </div>
           </Col>
@@ -39,7 +41,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
       </div>
       <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
         <h2>{truncade(project.name, 40)}</h2>
-        <span style={{ marginTop: "-10px" }}>{project.description === null ? "No description" : truncade(project.description, 50)}</span>
+        <span style={{ marginTop: "-10px" }}>{project.description === null ? "No description" : project.description}</span>
       </div>
       <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>

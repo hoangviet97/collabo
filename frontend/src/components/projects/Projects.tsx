@@ -8,6 +8,7 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
+import { project } from "../../types/types";
 
 const Projects = () => {
   const dispatch = useDispatch();
@@ -61,13 +62,13 @@ const Projects = () => {
 
   const showFavorite = () => {
     setIsFavorite(true);
-    const data = projects.filter((item: any) => item.favorite === 1);
+    const data = projects.filter((item: any) => item.favorite === "T");
     setFilteredData(data);
   };
 
   const showAll = () => {
     setIsFavorite(false);
-    const data = projects.filter((item: any) => item.favorite === 0 || item.favorite === 1);
+    const data = projects.filter((item: any) => item.favorite === "T" || item.favorite === "F");
     setFilteredData(data);
   };
 
@@ -80,7 +81,7 @@ const Projects = () => {
   } else if (projects) {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
-        {filteredData.map((project: any, index: number) => {
+        {filteredData.map((project: project, index: number) => {
           let membersArr = members.filter((x: any) => x.project_id === project.id);
           return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} members={membersArr} />;
         })}
