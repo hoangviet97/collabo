@@ -11,6 +11,7 @@ import MainSpinner from "../utils/spinners/MainSpinner";
 import SocketContext from "../../context/SocketContext";
 import { message } from "antd";
 import CardSkeleton from "../skeletons/CardSkeleton";
+import "./x.scss";
 
 interface Props {
   match: any;
@@ -73,6 +74,7 @@ const Overview: FC<Props> = ({ match }) => {
           </div>
           <div className="e">
             <h3>Upcoming tasks</h3>
+            <div className="x">hhhhh</div>
           </div>
         </div>
       </div>

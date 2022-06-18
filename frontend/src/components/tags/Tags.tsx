@@ -4,6 +4,7 @@ import { Button, Modal, Form, Input, Spin } from "antd";
 import TagGroup from "./TagGroup";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createTag, getTags } from "../../actions/tag";
+import { tag } from "../../types/types";
 
 interface Props {
   match: any;
@@ -66,7 +67,7 @@ const Tags: FC<Props> = ({ match }) => {
           <div className="tag__groups">
             {groupList.map((i) => {
               const letter = i.title;
-              const tagslist = tags.filter((x: any) => x.name.charAt(0) === i.title.toLocaleLowerCase());
+              const tagslist = tags.filter((x: tag) => x.name.charAt(0) === i.title.toLocaleLowerCase());
               return <TagGroup title={i.title} tags={tagslist} />;
             })}
           </div>

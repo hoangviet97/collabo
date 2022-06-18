@@ -2,9 +2,11 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Spinner from "../utils/Spinner";
+import { Skeleton } from "antd";
+import FullPageSkeleton from "../skeletons/FullpageSkeleton";
 
 const ProtectedProjectRoute = ({ component: Component, authorized, ...rest }) => {
-  return <Route {...rest} render={(props) => (authorized === false ? "" : <Component {...props} />)} />;
+  return <Route {...rest} render={(props) => (authorized === false ? <FullPageSkeleton /> : <Component {...props} />)} />;
 };
 
 const mapStateToProps = (state) => ({

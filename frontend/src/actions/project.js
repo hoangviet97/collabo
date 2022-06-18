@@ -37,6 +37,7 @@ export const getProject = ({ project_id, push }) => async (dispatch) => {
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
   } catch (err) {
     push("/");
+    message.error("Project doesn't exists or unauthorized access!");
     //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
 };

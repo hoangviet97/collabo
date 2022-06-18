@@ -11,6 +11,7 @@ import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOut
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
+import { section, tag, task } from "../../types/types";
 
 interface Props {
   match: any;
@@ -200,7 +201,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   };
 
   const StatusSelectorHandler = (value: string) => {
-    const newTasks = value === "x" ? tasks : tasks.filter((x: any) => x.statusId === value);
+    const newTasks = value === "x" ? tasks : tasks.filter((x: task) => x.statusId === value);
     setTaskContainer(newTasks);
   };
 
@@ -241,7 +242,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             <div>
               {showTagSelector && (
                 <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
-                  {allTags && allTags.map((item: any) => <Option value={item.id}>{item.name}</Option>)}
+                  {allTags && allTags.map((item: tag) => <Option value={item.id}>{item.name}</Option>)}
                 </Select>
               )}
               {showStatusSelector && (
@@ -258,14 +259,14 @@ const ProjectTasks: FC<Props> = ({ match }) => {
           </header>
           <Divider />
           <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-            {sections.map((section: any, index: number) => (
+            {sections.map((section: section, index: number) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
                 <div className={`task__visual-${taskVisual}`}>
                   {taskContainer
-                    .filter((x: any) => {
+                    .filter((x: task) => {
                       return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
                     })
-                    .map((task: any, i: number) => {
+                    .map((task: task, i: number) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {

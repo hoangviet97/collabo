@@ -5,9 +5,10 @@ import { CalendarOutlined, ClockCircleOutlined, CloseCircleOutlined } from "@ant
 import { Button } from "antd";
 import { deleteSession } from "../../actions/session";
 import { useDispatch } from "react-redux";
+import { session } from "../../types/types";
 
 interface Props {
-  session: any;
+  session: session;
   match: any;
 }
 

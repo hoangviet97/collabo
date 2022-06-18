@@ -8,9 +8,11 @@ import FileTypeIcon from "../../utils/FileTypeIcon";
 import { getFileDetail } from "../../../actions/file";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { file } from "../../../types/types";
+import prettyBytes from "pretty-bytes";
 
 interface Props {
-  file: any;
+  file: file;
 }
 
 const FileCard: FC<Props> = ({ file }) => {
@@ -22,7 +24,7 @@ const FileCard: FC<Props> = ({ file }) => {
     dispatch(getFileDetail({ file: file }));
   };
 
-  const download = (record: any) => {
+  const download = (record: file) => {
     axios({
       url: `http://localhost:9000/api/${params.id}/files/${record.id}/download`, //your url
       method: "GET",
@@ -50,7 +52,7 @@ const FileCard: FC<Props> = ({ file }) => {
       <div className="file-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div className="file-card__filesize" style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
           <span>Filesize:</span>
-          <span>{file.size} Kb</span>
+          <span>{prettyBytes(file.size)}</span>
         </div>
         <div className="file-card__download">
           <Button type="primary" icon={<DownloadOutlined />} onClick={() => download(file)} />

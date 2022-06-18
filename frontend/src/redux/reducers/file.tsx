@@ -2,6 +2,7 @@ import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, 
 
 const initialState = {
   files: [],
+  folder_files: [],
   fileDetail: {},
   loading: false,
   statistics: [],
@@ -29,7 +30,7 @@ function fileReducer(state = initialState, action: any) {
     case GET_FOLDER_FILES:
       return {
         ...state,
-        files: payload,
+        folder_files: payload,
         loading: false
       };
     case GET_FILE_TYPES:

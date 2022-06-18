@@ -4,6 +4,7 @@ import { Button, Calendar, Skeleton } from "antd";
 import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
 import { useSelector, RootStateOrAny } from "react-redux";
+import { session } from "../../types/types";
 
 interface Props {
   match: any;
@@ -17,14 +18,14 @@ const ControlPanel: FC<Props> = ({ match, addNewSession }) => {
   const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const sessionsLoading = useSelector((state: RootStateOrAny) => state.session.loading);
   const today = new Date();
-  const byDateSessions = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
+  const byDateSessions = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
 
   useEffect(() => {
     showAllSessions();
   }, []);
 
   useEffect(() => {
-    const upcoming = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") >= moment(calendarDay).format("MMM Do YY"));
+    const upcoming = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") >= moment(calendarDay).format("MMM Do YY"));
     setFilteredSessions(upcoming);
   }, [sessions]);
 
@@ -35,26 +36,26 @@ const ControlPanel: FC<Props> = ({ match, addNewSession }) => {
 
   const showAllSessions = () => {
     const todayDate = new Date();
-    const upcoming = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") >= moment(todayDate).format("MMM Do YY"));
+    const upcoming = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") >= moment(todayDate).format("MMM Do YY"));
     setFilteredSessions(upcoming);
   };
 
   const showTodaySessions = () => {
     const now = new Date();
-    const todaySessions = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") === moment(now).format("MMM Do YY"));
+    const todaySessions = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") === moment(now).format("MMM Do YY"));
     setFilteredSessions(todaySessions);
   };
 
   const showPastSessions = () => {
     const now = new Date();
-    const pastSessions = sessions.filter((item: any) => moment(item.date).format("MMM Do YY") < moment(now).format("MMM Do YY"));
+    const pastSessions = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") < moment(now).format("MMM Do YY"));
 
     setFilteredSessions(pastSessions);
   };
 
   return (
     <div className="session__control-panel">
-      <div className="meeting__control-header" style={{}}>
+      <div className="meeting__control-header">
         <div className="meeting__control-filter">
           <div>
             <span style={{ fontSize: "20px", marginRight: "10px" }}>Sessions</span>

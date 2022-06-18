@@ -10,6 +10,22 @@ export type Invitation = {
   project_name: string;
 };
 
+export type task = {
+  id: string;
+  sections_id: string;
+  priorityId: string;
+  sectionsName: string;
+  statusId: string;
+  statusName: string;
+  title: string;
+  description: string;
+  start_date: Date;
+  due_date: Date;
+  budget: number;
+  progress: number;
+  created_at: Date;
+};
+
 export type project = {
   id: string;
   name: string;
@@ -18,4 +34,67 @@ export type project = {
   favorite: string;
   status_id: string;
   status: string;
+};
+
+export type member = {
+  id: string;
+  project_id: string;
+  user_id: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+};
+
+export type section = {
+  id: string;
+  name: string;
+};
+
+export type session = {
+  id: string;
+  projects_id: string;
+  name: string;
+  date: Date;
+  start: Date;
+  end: Date;
+  description: string | null | undefined;
+  created_at: Date;
+  place: string | null;
+};
+
+export type file = {
+  id: string;
+  projects_id: string;
+  title: string;
+  description: string;
+  size: number;
+  file_mimetype: string;
+  created_at: Date;
+  folders_id: string | null;
+};
+
+export type folder = {
+  title: string;
+  id: string;
+  total_files: number;
+};
+
+export type tag = {
+  id: string;
+  projects_id: string;
+  name: string;
+  color: string;
+};
+
+export type time_record = {
+  id: string;
+  tasks_id: string;
+  members_id: string;
+  start: Date;
+  end: Date;
+  created_at: Date;
+  total: number;
+  description: string | null;
+  task_title: string;
+  section_name: string;
 };

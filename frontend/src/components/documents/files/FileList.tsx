@@ -8,6 +8,7 @@ import { moveToFolder, deleteFile } from "../../../actions/file";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
+import { folder } from "../../../types/types";
 
 const FileList = () => {
   const dispatch = useDispatch();
@@ -115,7 +116,7 @@ const FileList = () => {
       </div>
       <Modal title="Select folder" width="500px" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Select style={{ width: 200 }} onChange={handleFolderName} placeholder="Select a person">
-          {folders.map((item: any, index: number) => (
+          {folders.map((item: folder, index: number) => (
             <Option key={index} value={item.id}>
               {item.title}
             </Option>

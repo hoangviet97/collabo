@@ -9,19 +9,18 @@ import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
 import colorList from "../utils/Colors";
 import { truncade } from "../utils/textManipulation";
-import { project } from "../../types/types";
+import { project, member } from "../../types/types";
 
 interface Props {
   project: project;
-  projectCardHandler: any;
+  projectCardHandler: (project_id: string) => void;
   setFavorite: any;
-  members: any;
+  members: member[];
 }
 
 const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members }) => {
   const favoriteToggle = () => {
     setFavorite({ project_id: project.id, status: project.favorite === "T" ? "F" : "T" });
-    console.log(typeof project.favorite);
   };
 
   return (
@@ -45,7 +44,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
       </div>
       <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-          {members.map((item: any, index: number) => {
+          {members.map((item: member, index: number) => {
             let randNum = Math.floor(Math.random() * 6);
             return (
               <Tooltip key={index} title={item.email} placement="top">

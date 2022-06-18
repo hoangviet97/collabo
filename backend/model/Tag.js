@@ -41,19 +41,13 @@ module.exports = {
     });
   },
 
-  find: async function (id, result) {
+  // find all tags
+  find: async function (id) {
     const sql = `SELECT * FROM tags WHERE projects_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        console.log(err);
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
   findByTasks: async function (project, result) {

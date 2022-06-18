@@ -17,11 +17,12 @@ module.exports = {
     });
   },
 
-  getAll: function (req, res) {
-    Tag.find(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Tag.find(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   getTagsByTasks: function (req, res) {

@@ -8,7 +8,7 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
-import { project } from "../../types/types";
+import { project, member } from "../../types/types";
 
 const Projects = () => {
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const Projects = () => {
     content = (
       <div className={`projects-dimension-${projectsDimension}`}>
         {filteredData.map((project: project, index: number) => {
-          let membersArr = members.filter((x: any) => x.project_id === project.id);
+          let membersArr = members.filter((x: member) => x.project_id === project.id);
           return <Project projectCardHandler={projectCardHandler} key={project.id} project={project} members={membersArr} />;
         })}
       </div>
