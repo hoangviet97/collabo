@@ -45,8 +45,9 @@ const SessionItem = () => {
     }
   };
 
-  const pointCheckHandle = (e: any, id: string) => {
-    dispatch(updateCheckTalkingPoint({ session_id: params.sessionId, id: id, project_id: params.id, val: e.target.checked }));
+  const pointCheckHandle = (e: boolean, id: string) => {
+    console.log(e);
+    dispatch(updateCheckTalkingPoint({ session_id: params.sessionId, id: id, project_id: params.id, val: e === true ? "T" : "F" }));
   };
 
   const submitNoteText = () => {
@@ -94,8 +95,8 @@ const SessionItem = () => {
             <ul style={{ marginLeft: "20px", listStyleType: "none" }}>
               {talking_points.map((item: any, index: number) => (
                 <li key={index}>
-                  <Checkbox onChange={(e) => pointCheckHandle(e, item.id)} checked={item.checked}>
-                    {item.checked ? <i>{item.text}</i> : item.text}
+                  <Checkbox onChange={(e) => pointCheckHandle(e.target.checked, item.id)} checked={item.checked === "T" ? true : false}>
+                    {item.checked === "T" ? <i style={{ textDecoration: "line-through" }}>{item.text}</i> : item.text}
                   </Checkbox>
                 </li>
               ))}
