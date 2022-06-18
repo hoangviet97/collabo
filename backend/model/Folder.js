@@ -13,62 +13,39 @@ class Folder {
 module.exports = {
   Folder,
   // create new member by user or by admin
-  create: async function (title, id, result) {
+  create: async function (title, id) {
     const newFolder = new Folder(uuid4(), title, id);
-
     const sql = `INSERT INTO folders (id, title, created_at, projects_id) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newFolder.id, newFolder.title, newFolder.created_at, newFolder.project_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, newFolder);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [newFolder.id, newFolder.title, newFolder.created_at, newFolder.project_id]);
+
+    return newFolder;
   },
 
-  findOne: async function (id, result) {
+  findOne: async function (id) {
     const sql = `SELECT * FROM folders WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  find: async function (project_id, result) {
-    const sql2 = `SELECT folders.title, folders.id, COUNT(files.folders_id) AS total_files FROM folders
+  find: async function (project_id) {
+    const sql = `SELECT folders.title, folders.id, COUNT(files.folders_id) AS total_files FROM folders
                     LEFT JOIN files ON files.folders_id = folders.id
                     WHERE folders.projects_id = ?
                     GROUP BY folders.title, folders.id`;
-    con.query(sql2, [project_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, res);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [project_id]);
+
+    return rows;
   },
 
-  delete: async function (id, result) {
+  delete: async function (id) {
     const sql = `DELETE FROM folders WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   }
 };
