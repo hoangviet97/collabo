@@ -13,46 +13,28 @@ class Note {
 module.exports = {
   Note,
   // create new member by user or by admin
-  create: async function (id, text, result) {
+  create: async function (id, text) {
     const newNote = new Note(uuid4(), id, text);
-
     const sql = `INSERT INTO notes (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, newNote);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at]);
+
+    return newNote;
   },
 
-  find: async function (session_id, result) {
+  find: async function (session_id) {
     const sql = `SELECT * FROM notes WHERE sessions_id = ?`;
 
-    con.query(sql, [session_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [session_id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  update: async function (id, text, result) {
+  update: async function (id, text) {
     const sql = `UPDATE notes SET text = ? WHERE id = ?`;
 
-    con.query(sql, [text, id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [text, id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   }
 };

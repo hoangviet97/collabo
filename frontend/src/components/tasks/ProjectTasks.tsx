@@ -135,6 +135,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             type="link"
             onClick={(event) => {
               setSelectedSection(id);
+              console.log(id);
               event.stopPropagation();
             }}
           >
