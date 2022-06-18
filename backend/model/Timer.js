@@ -20,7 +20,6 @@ module.exports = {
   create: async function (body, member, result) {
     const newTimer = new Timer(uuid4(), body.task_id, member, body.start, body.end, body.total, body.description);
 
-    console.log(member);
     const sql = `INSERT INTO time_records (id, tasks_id, members_id, start, end, created_at, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     con.query(sql, [newTimer.id, newTimer.task_id, newTimer.member_id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.total], (err, res) => {
       if (err) {
