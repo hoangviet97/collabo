@@ -18,94 +18,58 @@ class Session {
 module.exports = {
   Session,
   // create new member by user or by admin
-  create: async function (session, project, result) {
+  create: async function (session, project) {
     const newSession = new Session(uuid4(), project, session.name, session.date, session.start, session.end, session.description, session.place);
-
     const sql = `INSERT INTO sessions (id, projects_id, name, date, start, end, description, created_at, place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at, newSession.place], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      if (session.participants === undefined) {
-        result(null, newSession);
-      } else {
-        const arr = [];
-        session.participants.map((item) => arr.push([item, newSession.id]));
+    const [rows] = await con.promise().query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at, newSession.place]);
 
-        const sql = `INSERT INTO members_has_sessions (members_id, sessions_id) VALUES ?`;
-        con.query(sql, [arr], (err, res) => {
-          if (err) {
-            result(err, null);
-            return;
-          }
+    if (session.participants === undefined || session.participants.length < 1) {
+      return newSession;
+    } else {
+      const arr = [];
+      session.participants.map((item) => arr.push([item, newSession.id]));
 
-          result(null, newSession);
-          return;
-        });
-      }
-    });
+      const sql2 = "INSERT INTO members_has_sessions (members_id, sessions_id) VALUES ?";
+      const res = await con.promise().query(sql2, [arr]);
+
+      return newSession;
+    }
   },
 
-  find: async function (projectId, result) {
-    const currDate = new Date();
+  find: async function (projectId) {
     const sql = `SELECT * FROM sessions WHERE projects_id = ?`;
 
-    con.query(sql, [projectId], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, projectId);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  findOne: async function (id, result) {
+  findOne: async function (id) {
     const sql = `SELECT * FROM sessions WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  delete: async function (id, result) {
+  delete: async function (id) {
     const sql = `DELETE FROM sessions WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  findParticipants: async function (id, result) {
+  findParticipants: async function (id) {
     const sql = `SELECT users.firstname, users.lastname, users.email
                   FROM members_has_sessions 
                   INNER JOIN members ON members_has_sessions.members_id = members.id
                   INNER JOIN users ON members.users_id = users.id
                   WHERE members_has_sessions.sessions_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   }
 };

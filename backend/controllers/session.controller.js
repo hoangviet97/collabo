@@ -3,39 +3,44 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // Create new projects
-  create: function (req, res) {
-    Session.create(req.body.session, req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Session.create(req.body.session, req.params.project));
+    } catch (err) {
+      console.log(err);
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    console.log(req.params.project);
-    Session.find(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Session.find(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getOne: function (req, res) {
-    Session.findOne(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getOne: async function (req, res) {
+    try {
+      return res.json(await Session.findOne(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  delete: function (req, res) {
-    Session.delete(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  delete: async function (req, res) {
+    try {
+      return res.json(await Session.delete(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getParticipants: function (req, res) {
-    Session.findParticipants(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getParticipants: async function (req, res) {
+    try {
+      return res.json(await Session.findParticipants(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };
