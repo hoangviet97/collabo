@@ -3,104 +3,114 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // Create new projects
-  create: function (req, res) {
-    Task.create(req.body.task, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-
-      return res.json(result);
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Task.create(req.body.task));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Task.getAllTasks(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Task.getAllTasks(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getStatusGroup: function (req, res) {
-    Task.getStatusGroup(req.params.project, (err, result) => {
-      console.log(result);
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getStatusGroup: async function (req, res) {
+    try {
+      return res.json(await Task.getStatusGroup(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updatePriority: function (req, res) {
-    console.log(req.body);
-    Task.updatePriority(req.body.priorityId, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updatePriority: async function (req, res) {
+    try {
+      return res.json(await Task.updatePriority(req.body.priorityId, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateStatus: function (req, res) {
-    Task.updateStatus(req.body.statusId, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateStatus: async function (req, res) {
+    try {
+      return res.json(await Task.updateStatus(req.body.statusId, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateStartDate: function (req, res) {
-    Task.updateStartDate(req.body.date, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateStartDate: async function (req, res) {
+    try {
+      return res.json(await Task.updateStartDate(req.body.date, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateEndDate: function (req, res) {
-    Task.updateEndDate(req.body.date, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateEndDate: async function (req, res) {
+    try {
+      return res.json(await Task.updateEndDate(req.body.date, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAllAssignees: function (req, res) {
-    Task.getAllAssingees(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAllAssignees: async function (req, res) {
+    try {
+      return res.json(await Task.getAllAssingees(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  createAssignee: function (req, res) {
+  createAssignee: async function (req, res) {
     Task.addAssignee(req.params.userId, req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
-  deleteAssignee: function (req, res) {
-    Task.deleteAssignee(req.params.assigneeId, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  deleteAssignee: async function (req, res) {
+    try {
+      return res.json(await Task.deleteAssignee(req.params.assigneeId, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  delete: function (req, res) {
-    Task.deleteTask(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  delete: async function (req, res) {
+    try {
+      return res.json(await Task.deleteTask(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setBudget: function (req, res) {
-    Task.setBudget(req.body.budget, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setBudget: async function (req, res) {
+    try {
+      return res.json(await Task.setBudget(req.body.budget, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setDescription: function (req, res) {
-    Task.setDescription(req.body.description, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setDescription: async function (req, res) {
+    try {
+      return res.json(await Task.setDescription(req.body.description, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setProgress: function (req, res) {
-    Task.setProgress(req.body.progress, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setProgress: async function (req, res) {
+    try {
+      return res.json(await Task.setProgress(req.body.progress, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

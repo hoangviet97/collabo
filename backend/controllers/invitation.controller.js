@@ -7,7 +7,6 @@ module.exports = {
     Invitation.create(req.body.receiver_email, req.user.id, req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
 
-      //req.app.get("io").emit("test2", req.user.id);
       return res.json(result);
     });
   },

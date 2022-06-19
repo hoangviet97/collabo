@@ -2,7 +2,7 @@ const Timer = require("../model/Timer");
 const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
-  // Create new projects
+  // Create new time record
   create: async function (req, res) {
     try {
       return res.json(await Timer.create(req.body, req.member));
@@ -11,6 +11,7 @@ module.exports = {
     }
   },
 
+  // get time record by project id
   getAll: async function (req, res) {
     try {
       return res.json(await Timer.findByProject(req.params.project));
