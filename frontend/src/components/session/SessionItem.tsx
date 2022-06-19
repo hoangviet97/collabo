@@ -108,7 +108,7 @@ const SessionItem = () => {
             </ul>
           </div>
           <div className="session__note">
-            <span style={{ fontSize: "18px" }}>Notepad</span>
+            <span style={{ fontSize: "18px", fontWeight: "bold" }}>Notepad</span>
             <TextArea style={{ padding: "5px 0" }} value={noteText} onChange={(e) => setNoteText(e.target.value)} onBlur={submitNoteText} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
           </div>
         </>

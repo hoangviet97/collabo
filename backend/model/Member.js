@@ -76,18 +76,12 @@ module.exports = {
     });
   },
 
-  delete: async function (id, result) {
+  delete: async function (id) {
     const sql = `DELETE from members WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
   // get current project

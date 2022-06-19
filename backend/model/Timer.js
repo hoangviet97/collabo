@@ -19,72 +19,42 @@ module.exports = {
   // create new member by user or by admin
   create: async function (body, member, result) {
     const newTimer = new Timer(uuid4(), body.task_id, member, body.start, body.end, body.total, body.description);
-
     const sql = `INSERT INTO time_records (id, tasks_id, members_id, start, end, created_at, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    con.query(sql, [newTimer.id, newTimer.task_id, newTimer.member_id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.total], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, newTimer);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [newTimer.id, newTimer.task_id, newTimer.member_id, newTimer.start, newTimer.end, newTimer.created_at, newTimer.total]);
+
+    return newTimer;
   },
 
-  find: async function (id, column, result) {
-    let sql = "";
-
-    sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
+  find: async function (id) {
+    const sql = `SELECT time_records.*, tasks.title AS task_title, sections.name AS section_name FROM time_records 
               INNER JOIN tasks ON time_records.tasks_id = tasks.id 
               INNER JOIN sections ON tasks.sections_id = sections.id  
               WHERE time_records.members_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      console.log(res);
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  getSum: async function (id, result) {
-    let sql = "";
-
-    sql = `SELECT SUM(time_records.total) AS sum
+  getSum: async function (id) {
+    const sql = `SELECT SUM(time_records.total) AS sum
               FROM time_records
               INNER JOIN members ON time_records.members_id = members.id  
               WHERE members.projects_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-      console.log(res[0].sum);
-      result(null, res[0].sum);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, id);
+
+    return rows[0].sum;
   },
 
-  findByProject: async function (id, result) {
-    let sql = `SELECT * FROM time_records 
+  findByProject: async function (id) {
+    const sql = `SELECT * FROM time_records 
               INNER JOIN members ON time_records.members_id = members.id
               WHERE members.projects_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, id);
 
-      console.log(res);
-      result(null, res);
-      return;
-    });
+    return rows;
   }
 };
