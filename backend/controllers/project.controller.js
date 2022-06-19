@@ -5,75 +5,77 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // Create new projects
-  create: function (req, res) {
-    const { error } = projectValidation(req.body);
-
-    Project.create(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-
-      Member.create(req.user.id, result.projectId, (err, resu) => {
-        if (err) return apiResponse.ErrorResponse(res, err.message);
-        return res.json(result.projectData);
-      });
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Project.create(req.body, req.user.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   // Get all user's projects
-  getAll: function (req, res) {
-    Project.find(req.user.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Project.find(req.user.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   // Get specific project
-  getOne: function (req, res) {
-    Project.findOne(req.params.id, req.user.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err);
-      return res.json(result);
-    });
+  getOne: async function (req, res) {
+    try {
+      return res.json(await Project.findOne(req.params.id, req.user.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setFavorite: function (req, res) {
-    Project.setFavoriteProject(req.body.status, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setFavorite: async function (req, res) {
+    try {
+      return res.json(await Project.setFavoriteProject(req.body.status, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setBudget: function (req, res) {
-    Project.setBudget(req.body.budget, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setBudget: async function (req, res) {
+    try {
+      return res.json(await Project.setBudget(req.body.budget, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  setCurrency: function (req, res) {
-    Project.setCurrency(req.body.currency, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  setCurrency: async function (req, res) {
+    try {
+      return res.json(await Project.setCurrency(req.body.currency, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateColor: function (req, res) {
-    Project.updateColor(req.body.color, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateColor: async function (req, res) {
+    try {
+      return res.json(await Project.updateColor(req.body.color, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateStatus: function (req, res) {
-    Project.updateStatus(req.body.status, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateStatus: async function (req, res) {
+    try {
+      return res.json(await Project.updateStatus(req.body.status, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  deleteProject: function (req, res) {
-    Project.delete(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  deleteProject: async function (req, res) {
+    try {
+      return res.json(await Project.delete(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

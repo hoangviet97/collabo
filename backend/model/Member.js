@@ -14,18 +14,13 @@ class Member {
 module.exports = {
   Member,
   // create new member by user or by admin
-  create: async function (userId, project, result) {
-    const newMember = new Member(uuid4(), userId, 0, project);
+  create: async function (userId, project, role) {
+    const newMember = new Member(uuid4(), userId, role, project);
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
-    con.query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, project);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at]);
+
+    return project;
   },
 
   find: async function (project, result) {
