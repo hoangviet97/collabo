@@ -5,7 +5,6 @@ const apiResponse = require("../helpers/apiResponse");
 module.exports = function (req, res, next) {
   // return a middleware
   try {
-    console.log(`...${req.params.project_id}`);
     const sql = `SELECT id from members WHERE users_id = ? AND projects_id = ?`;
     con.query(sql, [req.user.id, req.params.project], (err, dbResponse) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);

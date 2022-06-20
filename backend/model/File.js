@@ -64,48 +64,30 @@ module.exports = {
     });
   },
 
-  find: async function (id, result) {
+  find: async function (id) {
     const sql = `SELECT * FROM files WHERE projects_id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  findTypes: async function (id, result) {
+  findTypes: async function (id) {
     const sql = `SELECT distinct file_mimetype AS type, COUNT(files.id) AS total, SUM(files.size) AS sum FROM files
                   WHERE projects_id = ?
                   GROUP BY file_mimetype;`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  findByFolder: async function (folder_id, result) {
+  findByFolder: async function (folder_id) {
     const sql = `SELECT * FROM files WHERE folders_id = ?`;
 
-    con.query(sql, [folder_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [folder_id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
   download2: async function (id, result) {
@@ -125,21 +107,15 @@ module.exports = {
     result(null, x.Body);
   },
 
-  addFolder: async function (folder_id, id, result) {
+  addFolder: async function (folder_id, id) {
     const sql = `UPDATE files SET folders_id = ? WHERE id = ?`;
 
-    con.query(sql, [folder_id, id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [folder_id, id]);
 
-      result(null, "success");
-      return;
-    });
+    return rows;
   },
 
-  delete: async function (id, result) {
+  delete: function (id, result) {
     const s3 = new aws.S3({
       region: "eu-central-1",
       accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -151,11 +127,23 @@ module.exports = {
       Key: id
     };
 
-    s3.deleteObject(params, function (err, data) {
+    s3.deleteObject(params, async function (err, data) {
       if (err) {
         result(err, null);
         return;
       }
+
+      const sql = `DELETE FROM files WHERE id = ?`;
+
+      con.query(sql, [id], (err, res) => {
+        if (err) {
+          result(err, null);
+          return;
+        }
+
+        result(null, "success");
+        return;
+      });
     });
   }
 };

@@ -1,5 +1,6 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const Member = require("./Member");
 
 class Invitation {
   constructor(id, sender, receiver, project) {
@@ -47,85 +48,49 @@ module.exports = {
     });
   },
 
-  // Get all invitations
-  find: async function (user, result) {
+  // Get all user's invitations
+  find: async function (user) {
     const sql = `SELECT invitations.*, users.firstname, users.lastname, projects.name AS project_name FROM invitations INNER JOIN users ON invitations.sender = users.id INNER JOIN projects ON invitations.projects_id = projects.id WHERE receiver = ?`;
 
-    con.query(sql, [user], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [user]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  accept: async function (id, user, project, result) {
+  accept: async function (id, user, project) {
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
 
-    con.query(sql, [uuid4(), user, 0, project, new Date()], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [project]);
 
-      const sql = `DELETE from invitations WHERE id = ?`;
+    const memberQuery = await Member.create(user, project, "0");
+    const invitationQuery = await this.Invitation.deleteInvitation(id);
 
-      con.query(sql, [id], (err, res) => {
-        if (err) {
-          result(err, null);
-          return;
-        }
-
-        result(null, res);
-        return;
-      });
-    });
+    return rows;
   },
 
-  // Get all invitations
-  findAll: async function (project, result) {
+  // Get all project invitations
+  findAll: async function (project) {
     const sql = `SELECT invitations.*, users.email FROM invitations INNER JOIN users ON invitations.receiver = users.id WHERE projects_id = ?`;
 
-    con.query(sql, [project], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [project]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
   // Get all invitations
-  updateSeenStatus: async function (id, result) {
+  updateSeenStatus: async function (id) {
     const sql = `UPDATE invitations SET seen = true WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, 1);
-      return;
-    });
+    return 1;
   },
 
-  deleteInvitation: async function (id, result) {
+  deleteInvitation: async function (id) {
     const sql = `DELETE from invitations WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, "sucess");
-      return;
-    });
+    return rows;
   }
 };

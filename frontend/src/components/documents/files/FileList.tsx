@@ -34,7 +34,8 @@ const FileList = () => {
   };
 
   const deleteHandler = (id: string) => {
-    dispatch(deleteFile({ id: id }));
+    console.log(id);
+    dispatch(deleteFile({ project_id: params.id, id: id }));
   };
 
   const columns = [

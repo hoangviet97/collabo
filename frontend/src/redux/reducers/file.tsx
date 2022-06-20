@@ -1,4 +1,4 @@
-import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES } from "../../actions/types";
+import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, DELETE_FILE } from "../../actions/types";
 
 const initialState = {
   files: [],
@@ -50,6 +50,11 @@ function fileReducer(state = initialState, action: any) {
       return {
         ...state,
         fileDetail: payload
+      };
+    case DELETE_FILE:
+      return {
+        ...state,
+        files: state.files.filter((item: any) => item.id !== payload)
       };
     case FILE_LOADING:
       return {

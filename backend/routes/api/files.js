@@ -12,6 +12,6 @@ router.get("/:project/files/types", auth, fileController.getFileTypes);
 router.get("/:project/folders/:id/files", auth, fileController.getAllByFolder);
 router.get("/:project/files/:id/download", auth, fileController.download);
 router.post("/:project/files/:id/move-folder", auth, fileController.moveToFolder);
-router.delete("/:id", auth, fileController.delete);
+router.delete("/:project/files/:id", auth, fileController.delete);
 
 module.exports = router;

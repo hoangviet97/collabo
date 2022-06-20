@@ -7,33 +7,34 @@ require("dotenv").config();
 module.exports = {
   // register new user
   upload: function (req, res) {
-    console.log(req.file);
     File.upload2(req.params.project, req.body, req.file, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
       return res.json(result);
     });
   },
 
-  getAll: function (req, res) {
-    File.find(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await File.find(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getFileTypes: function (req, res) {
-    File.findTypes(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      console.log(result);
-      return res.json(result);
-    });
+  getFileTypes: async function (req, res) {
+    try {
+      return res.json(await File.findTypes(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAllByFolder: function (req, res) {
-    File.findByFolder(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAllByFolder: async function (req, res) {
+    try {
+      return res.json(await File.findByFolder(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   download: function (req, res) {
@@ -53,14 +54,15 @@ module.exports = {
       .pipe(res);
   },
 
-  moveToFolder: function (req, res) {
-    File.addFolder(req.body.folder_id, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  moveToFolder: async function (req, res) {
+    try {
+      return res.json(await File.addFolder(req.body.folder_id, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  delete: function (req, res) {
+  delete: async function (req, res) {
     File.delete(req.params.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);

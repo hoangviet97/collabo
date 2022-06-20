@@ -1,4 +1,4 @@
-import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, GET_FOLDER_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM } from "./types";
+import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, DELETE_FILE, GET_FOLDER_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -26,13 +26,13 @@ export const downloadFile = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const deleteFile = ({ id }) => async (dispatch) => {
+export const deleteFile = ({ project_id, id }) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:9000/api/files/${id}`);
-    //dispatch({ type: GET_FILES, payload: res.data });
-    console.log(res);
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/files/${id}`);
+    dispatch({ type: DELETE_FILE, payload: id });
+    message.success("File deleted successfuly!");
   } catch (err) {
-    console.log(err);
+    console.log(err.response);
   }
 };
 

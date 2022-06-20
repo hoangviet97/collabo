@@ -11,38 +11,44 @@ module.exports = {
     });
   },
 
-  accept: function (req, res) {
-    Invitation.accept(req.params.id, req.user.id, req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  accept: async function (req, res) {
+    try {
+      return res.json(await Invitation.accept(req.params.id, req.user.id, req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Invitation.findAll(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  // get all project invitations
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Invitation.findAll(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAllPrivate: function (req, res) {
-    Invitation.find(req.user.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAllPrivate: async function (req, res) {
+    try {
+      return res.json(await Invitation.find(req.user.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  updateSeenStatus: function (req, res) {
-    Invitation.updateSeenStatus(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateSeenStatus: async function (req, res) {
+    try {
+      return res.json(await Invitation.updateSeenStatus(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  delete: function (req, res) {
-    Invitation.deleteInvitation(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  delete: async function (req, res) {
+    try {
+      return res.json(await Invitation.deleteInvitation(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

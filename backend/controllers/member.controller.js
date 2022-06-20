@@ -11,38 +11,42 @@ module.exports = {
     }
   },
 
-  getAll: function (req, res) {
-    Member.find(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Member.find(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   getAll2: function (req, res) {
-    Member.findAll((err, result) => {
+    Member.findAll(req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
-  updateRole: function (req, res) {
-    Member.updateRole(req.body.role_id, req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  updateRole: async function (req, res) {
+    try {
+      return res.json(await Member.updateRole(req.body.role_id, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  deleteMember: function (req, res) {
-    Member.delete(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  deleteMember: async function (req, res) {
+    try {
+      return res.json(await Member.delete(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  leave: function (req, res) {
-    Member.leave(req.params.project, req.user.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  leave: async function (req, res) {
+    try {
+      return res.json(await Member.leave(req.params.project, req.user.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

@@ -111,6 +111,7 @@ export const GET_FILES = "GET_FILES";
 export const MOVE_TO_FOLDER = "MOVE_TO_FOLDER";
 export const FILE_DETAIL = "FILE_DETAIL";
 export const FILE_LOADING = "FILE_LOADING";
+export const DELETE_FILE = "DELETE_FILE";
 
 export const CREATE_FOLDER = "CREATE_FOLDER";
 export const CREATE_FOLDER_FAIL = "CREATE_FOLDER_FAIL";
