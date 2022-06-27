@@ -5,11 +5,12 @@ import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
+import { member } from "../../types/types";
 
 interface Props {
   task_id: string;
   assignees: any;
-  members: any;
+  members: member[];
   close: any;
 }
 

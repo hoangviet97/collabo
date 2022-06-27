@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
-import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
@@ -58,7 +58,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
       </p>
       <p>
         <Link className="single-navigation__item" to={`/${path.split("/")[1]}/report`}>
-          <FileTextOutlined className="single-navigation__link-icon" />
+          <PieChartOutlined className="single-navigation__link-icon" />
           <span>Report</span>
         </Link>
       </p>
@@ -70,8 +70,14 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
       </p>
       <p>
         <Link className="single-navigation__item" to={`/${path.split("/")[1]}/budget`}>
-          <TagsOutlined className="single-navigation__link-icon" />
+          <DollarOutlined className="single-navigation__link-icon" />
           <span>Budget</span>
+        </Link>
+      </p>
+      <p>
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/activity`}>
+          <FundOutlined className="single-navigation__link-icon" />
+          <span>Activity</span>
         </Link>
       </p>
     </div>

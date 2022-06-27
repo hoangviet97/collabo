@@ -1,4 +1,5 @@
 import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER } from "../../actions/types";
+import { member } from "../../types/types";
 
 const initialState = {
   members: []
@@ -21,7 +22,7 @@ function memberReducer(state = initialState, action: any) {
     case UPDATE_MEMBER_ROLE:
       return {
         ...state,
-        members: state.members.map((item: any) => (item.id === payload.id ? { ...item, role_id: payload.role_id } : item))
+        members: state.members.map((item: member) => (item.id === payload.id ? { ...item, role_id: payload.role_id } : item))
       };
     case UPDATE_MEMBER_ROLE_FAILED:
       return {
@@ -30,7 +31,7 @@ function memberReducer(state = initialState, action: any) {
     case DELETE_MEMBER:
       return {
         ...state,
-        members: state.members.filter((item: any) => item.id !== payload.id)
+        members: state.members.filter((item: member) => item.id !== payload.id)
       };
     default:
       return state;

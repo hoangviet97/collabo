@@ -76,6 +76,15 @@ module.exports = {
   },
 
   // get current project
+  setBudgetIncome: async function (income, id) {
+    const sql = `UPDATE projects SET budget = ? WHERE id = ?`;
+
+    const [rows] = await con.promise().query(sql, [budget, id]);
+
+    return rows;
+  },
+
+  // get current project
   setCurrency: async function (currency, id) {
     const sql = `UPDATE projects SET currency = ? WHERE id = ?`;
 

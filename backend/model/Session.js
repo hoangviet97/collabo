@@ -38,7 +38,7 @@ module.exports = {
   },
 
   find: async function (projectId) {
-    const sql = `SELECT * FROM sessions WHERE projects_id = ?`;
+    const sql = `SELECT * FROM sessions WHERE projects_id = ? ORDER BY date asc`;
 
     const [rows] = await con.promise().query(sql, projectId);
 

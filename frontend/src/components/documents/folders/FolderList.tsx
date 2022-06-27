@@ -7,10 +7,9 @@ import CardSkeleton from "../../skeletons/CardSkeleton";
 
 interface Props {
   showModal: any;
-  match: any;
 }
 
-const FolderList: FC<Props> = ({ showModal, match }) => {
+const FolderList: FC<Props> = ({ showModal }) => {
   const [maxVisibleFolders, setMaxVisibleFolders] = useState<number>(4);
   const [showFolders, setShowFolders] = useState<boolean>(false);
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
@@ -49,7 +48,7 @@ const FolderList: FC<Props> = ({ showModal, match }) => {
           <div className="files__folder-list-component">
             {folders.length > 0 ? (
               folders.slice(0, maxVisibleFolders).map((item: any, index: number) => {
-                return <FolderCard key={index} folder={item} match={match} />;
+                return <FolderCard key={index} folder={item} />;
               })
             ) : (
               <div className="folder-card folder-card--empty" onClick={() => showModal("folder")}>

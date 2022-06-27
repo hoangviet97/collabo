@@ -28,11 +28,7 @@ const Topbar = () => {
         <Avatar size="large">
           <AvatarIcon name={user.firstname} />
         </Avatar>
-        {auth.isAuthenticated && (
-          <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-            <span className="topbar__profile-name">{user.firstname}</span>
-          </Dropdown>
-        )}
+        {auth.isAuthenticated && <span className="topbar__profile-name">{user.firstname}</span>}
       </div>
     </div>
   );

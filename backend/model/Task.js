@@ -197,7 +197,7 @@ module.exports = {
   deleteTask: async function (id) {
     const sql = `DELETE FROM tasks WHERE id = ?`;
 
-    const rows = await con.promise().query(sql, id);
+    const [rows] = await con.promise().query(sql, id);
 
     return rows;
   }

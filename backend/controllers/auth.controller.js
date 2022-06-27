@@ -40,11 +40,12 @@ module.exports = {
     });
   },
 
-  changeFirstname: function (req, res) {
-    User.changeFirstname(req.user.id, req.body.firstname, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  changeFirstname: async function (req, res) {
+    try {
+      return res.json(await User.changeFirstname(req.user.id, req.body.firstname));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   changeLastname: function (req, res) {

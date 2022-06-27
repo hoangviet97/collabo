@@ -1,4 +1,5 @@
 import { CREATE_PROJECT, RESET_AUTH, GET_PROJECT_AUTH, CREATE_PROJECT_FAIL, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "../../actions/types";
+import { project } from "../../types/types";
 
 const initialState = {
   loading: false,
@@ -76,22 +77,22 @@ function projectReducer(state = initialState, action: any) {
     case LEAVE_PROJECT:
       return {
         ...state,
-        projects: state.projects.filter((item: any) => item.id !== payload)
+        projects: state.projects.filter((item: project) => item.id !== payload)
       };
     case SET_FAVORITE_PROJECT:
       return {
         ...state,
-        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, favorite: payload.status } : item))
+        projects: state.projects.map((item: project) => (item.id === payload.id ? { ...item, favorite: payload.status } : item))
       };
     case SET_PROJECT_BUDGET:
       return {
         ...state,
-        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, budget: payload.budget } : item))
+        projects: state.projects.map((item: project) => (item.id === payload.id ? { ...item, budget: payload.budget } : item))
       };
     case SET_PROJECT_CURRENCY:
       return {
         ...state,
-        projects: state.projects.map((item: any) => (item.id === payload.id ? { ...item, currency: payload.currency } : item))
+        projects: state.projects.map((item: project) => (item.id === payload.id ? { ...item, currency: payload.currency } : item))
       };
     case SET_FAVORITE_PROJECT_FAIL:
       return {

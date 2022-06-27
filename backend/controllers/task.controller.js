@@ -86,6 +86,7 @@ module.exports = {
     try {
       return res.json(await Task.deleteTask(req.params.id));
     } catch (err) {
+      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

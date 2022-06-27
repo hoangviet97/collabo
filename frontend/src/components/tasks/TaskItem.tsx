@@ -12,14 +12,15 @@ import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
 import { useParams } from "react-router-dom";
+import { task, member } from "../../types/types";
 
 interface Props {
   showModal: any;
   closeModal: any;
   sectionName: string;
   assignees: any;
-  members: any;
-  task: any;
+  members: member[];
+  task: task;
   start_date: any;
 }
 
@@ -30,6 +31,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   const [done, setDone] = useState(task.statusId);
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
+  const today = new Date();
 
   const due_date =
     task.due_date === null ? (
@@ -42,6 +44,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
       />
     ) : (
       <span
+        style={{ color: task.due_date > today ? "black" : "red" }}
         onClick={(e) => {
           openDateHandler(task.id);
           getE(e);

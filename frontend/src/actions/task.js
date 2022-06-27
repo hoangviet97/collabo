@@ -96,7 +96,7 @@ export const updateTaskStartDate = ({ id, date, project_id }) => async (dispatch
 
 export const updateTaskEndDate = ({ id, date, project_id }) => async (dispatch) => {
   try {
-    const res = await axios.patch(`http://localhost:9000/api/${project_id}/tasks/${id}/update-end`, { date });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/tasks/${id}/end`, { date });
     dispatch({ type: UPDATE_TASK_END, payload: { id, date } });
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });

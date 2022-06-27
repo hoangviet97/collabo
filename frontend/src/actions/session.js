@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING, ACTIVE_SESSIONS, TODAY_SESSIONS, PAST_SESSIONS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -51,6 +51,24 @@ export const getParticipants = ({ id, project_id }) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }
+};
+
+export const filterActiveSessions = () => {
+  return {
+    type: ACTIVE_SESSIONS
+  };
+};
+
+export const filterTodaySessions = () => {
+  return {
+    type: TODAY_SESSIONS
+  };
+};
+
+export const filterPastSessions = () => {
+  return {
+    type: PAST_SESSIONS
+  };
 };
 
 export const setSessionLoading = () => {

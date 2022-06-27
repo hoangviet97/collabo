@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import NewFileForm from "./NewFileForm";
 import FolderList from "../folders/FolderList";
 import FileList from "./FileList";
@@ -9,13 +9,10 @@ import { useDispatch } from "react-redux";
 import FilesStatistics from "./FilesStatistics";
 import { useParams } from "react-router-dom";
 
-interface Props {
-  match: any;
-}
-
-const FileHomePage: FC<Props> = ({ match }) => {
+const FileHomePage = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);
   const [newFolder, setNewFolder] = useState<string>("");
@@ -41,7 +38,7 @@ const FileHomePage: FC<Props> = ({ match }) => {
     <div>
       <div className="files__homepage">
         <div style={{ gridArea: "content", maxHeight: "calc(100vh - 120px)", overflowY: "scroll" }}>
-          <FolderList showModal={showModal} match={match} />
+          <FolderList showModal={showModal} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">
               <span style={{ fontSize: "27px", fontWeight: "bold" }}>All files</span>

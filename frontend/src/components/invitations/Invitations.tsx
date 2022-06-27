@@ -11,7 +11,7 @@ import { Invitation } from "../../types/types";
 const Invitations = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
-  const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
+  const invitations: Invitation[] = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
   const socket = useContext(SocketContext);
   const [email, setEmail] = useState("");

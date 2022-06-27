@@ -1,8 +1,9 @@
 import React, { useEffect, useState, FC } from "react";
 import moment from "moment";
+import { time_record } from "../../types/types";
 
 interface Props {
-  records: any;
+  records: time_record[];
 }
 
 const TimerHeader: FC<Props> = ({ records }) => {
@@ -11,7 +12,7 @@ const TimerHeader: FC<Props> = ({ records }) => {
 
   useEffect(() => {
     const today = new Date();
-    records.map((item: any) => {
+    records.map((item: time_record) => {
       setTotal((prev) => prev + item.total);
     });
 

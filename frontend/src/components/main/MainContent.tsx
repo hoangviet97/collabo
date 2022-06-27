@@ -21,6 +21,7 @@ import { getAllInvitations } from "../../actions/invitation";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import Unauthorized from "../layout/Unauthorized";
 import ProtectedProjectRoute from "../routing/ProtectedProjectRoute";
+import Activity from "../activity/Activity";
 
 interface Props {
   match: any;
@@ -51,6 +52,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
         <ProtectedProjectRoute exact path="/:id/board" component={KanbanBoard} />
         <ProtectedProjectRoute exact path="/:id/tags" component={Tags} />
         <ProtectedProjectRoute exact path="/:id/budget" component={BudgetPage} />
+        <ProtectedProjectRoute exact path="/:id/activity" component={Activity} />
         <ProtectedProjectRoute path="/:id/documents" component={Documents} />
         <ProtectedProjectRoute exact path="/:id/tracker" component={TimeTracker} />
         <ProtectedProjectRoute exact path="/:id/messages" component={Messages} />

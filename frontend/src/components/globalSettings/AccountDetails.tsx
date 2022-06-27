@@ -1,7 +1,8 @@
 import React, { useState, FC } from "react";
-import { Divider, message, Input, Button } from "antd";
+import { Divider, message, Input, Avatar } from "antd";
 import { useDispatch } from "react-redux";
 import { changeFirstname, changeLastname } from "../../actions/auth";
+import AvatarIcon from "../utils/AvatarIcon";
 
 interface Props {
   profile: any;
@@ -35,6 +36,17 @@ const AccountDetails: FC<Props> = ({ profile }) => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <span style={{ fontWeight: "bolder" }}>Personal info</span>
         <span>Update your personal information here</span>
+      </div>
+      <Divider />
+      <div style={{ width: "60%" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ flex: "2", fontWeight: "bolder" }}>Avatar</div>
+          <div style={{ display: "flex", flexDirection: "row", flex: "1" }}>
+            <Avatar style={{ width: "100px", height: "100px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <AvatarIcon name={firstname} size={50} />
+            </Avatar>
+          </div>
+        </div>
       </div>
       <Divider />
       <div style={{ width: "60%" }}>

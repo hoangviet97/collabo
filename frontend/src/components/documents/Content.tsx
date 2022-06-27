@@ -13,7 +13,7 @@ const Content: FC<Props> = ({ match }) => {
     <div className="files__data">
       <Switch>
         <Route exact path={`${match.path}/`}>
-          <FileHomePage match={match} />
+          <FileHomePage />
         </Route>
         <Route exact path={`${match.path}/folders/:folderId`}>
           <FolderDetail {...match} />

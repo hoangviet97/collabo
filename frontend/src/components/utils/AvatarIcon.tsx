@@ -2,12 +2,13 @@ import React, { FC } from "react";
 
 interface Props {
   name: string;
+  size?: number;
 }
 
-const AvatarIcon: FC<Props> = ({ name }) => {
+const AvatarIcon: FC<Props> = ({ name, size }) => {
   return (
     <>
-      <span style={{ fontSize: "20px" }}>{name && name[0]}</span>
+      <span style={{ fontSize: size ? `${size}px` : "20px" }}>{name && name[0]}</span>
     </>
   );
 };

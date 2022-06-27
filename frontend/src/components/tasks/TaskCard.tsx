@@ -4,14 +4,15 @@ import { EllipsisOutlined, EditOutlined, UserAddOutlined } from "@ant-design/ico
 import Timer from "../timeTracker/Timer";
 import AvatarIcon from "../utils/AvatarIcon";
 import AssigneesModal from "../modal/AssigneesModal";
+import { task, member } from "../../types/types";
 
 interface Props {
-  task: any;
+  task: task;
   sectionName: string;
   showModal: any;
   closeModal: any;
   assignees: any;
-  members: any;
+  members: member[];
 }
 
 const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assignees, members }) => {

@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { Table } from "antd";
 import moment from "moment";
+import { time_record } from "../../types/types";
 
 interface Props {
-  records: any;
+  records: time_record[];
 }
 
 const TimerLogger: FC<Props> = ({ records }) => {

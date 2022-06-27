@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 import { updateTaskEndDate, updateTaskStartDate } from "../../actions/task";
 import { Calendar, Button } from "antd";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
 const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos }) => {
   const dispatch = useDispatch();
+  const params = useParams();
   const [startView, setStartView] = useState(false);
   const [dueView, setDueView] = useState(true);
   const [startDate, setStartDate] = useState("");
@@ -23,13 +25,13 @@ const TaskDateModdal = ({ taskId, start_date, due_date, show, close, pos }) => {
 
   const startDateChange = (value) => {
     const date = moment(value._d).format("YYYY-MM-DD hh:mm:ss");
-    dispatch(updateTaskStartDate({ id: taskId, date: date }));
+    dispatch(updateTaskStartDate({ id: taskId, date: date, project_id: params.id }));
     console.log(date);
   };
 
   const endDateChange = (value) => {
     const date = moment(value._d).format("YYYY-MM-DD hh:mm:ss");
-    dispatch(updateTaskEndDate({ id: taskId, date: date }));
+    dispatch(updateTaskEndDate({ id: taskId, date: date, project_id: params.id }));
   };
 
   return show ? (

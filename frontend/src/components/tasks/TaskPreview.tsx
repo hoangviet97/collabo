@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 import moment from "moment";
+import { task } from "../../types/types";
 
 interface Props {
-  task: any;
+  task: task;
 }
 
 const TaskPreview: FC<Props> = ({ task }) => {

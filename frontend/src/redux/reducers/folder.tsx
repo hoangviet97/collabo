@@ -1,4 +1,5 @@
 import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER, FOLDER_LOADING } from "../../actions/types";
+import { folder } from "../../types/types";
 
 const initialState = {
   folders: [],
@@ -21,13 +22,13 @@ function folderReducer(state = initialState, action: any) {
         folder: payload
       };
     case UPDATE_FOLDER_NUM:
-      let updatedFolders: any = state.folders;
+      let updatedFolders: folder[] = state.folders;
       const ind: any = updatedFolders.findIndex((i: any) => i.id === payload.id);
       const num = updatedFolders[ind].total_files;
 
       return {
         ...state,
-        folders: state.folders.map((item: any) => (item.id === payload.id ? { ...item, total_files: num + 1 } : item))
+        folders: state.folders.map((item: folder) => (item.id === payload.id ? { ...item, total_files: num + 1 } : item))
       };
     case GET_FOLDERS:
       return {
@@ -43,7 +44,7 @@ function folderReducer(state = initialState, action: any) {
     case DELETE_FOLDER:
       return {
         ...state,
-        folders: state.folders.filter((item: any) => item.id !== payload)
+        folders: state.folders.filter((item: folder) => item.id !== payload)
       };
     default:
       return state;

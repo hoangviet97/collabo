@@ -171,30 +171,20 @@ module.exports = {
     });
   },
 
-  changeFirstname: function (id, name, result) {
+  changeFirstname: async function (id, name) {
     const sql = `UPDATE users SET firstname = ? WHERE id = ?`;
-    con.query(sql, [name, id], async (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, res);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [name, id]);
+
+    return rows;
   },
 
-  changeLastname: function (id, name, result) {
+  changeLastname: async function (id, name) {
     const sql = `UPDATE users SET lastname = ? WHERE id = ?`;
-    con.query(sql, [name, id], async (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, res);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [name, id]);
+
+    return rows;
   },
 
   resetPwd: function (body, result) {

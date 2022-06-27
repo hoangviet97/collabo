@@ -6,12 +6,16 @@ import { TeamOutlined, ClockCircleOutlined, FormOutlined } from "@ant-design/ico
 import { getProjectTasks, getStatusGroup } from "../../actions/task";
 import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
+import { getSessions } from "../../actions/session";
 import { getTimeRecordsSum } from "../../actions/time_record";
 import MainSpinner from "../utils/spinners/MainSpinner";
 import SocketContext from "../../context/SocketContext";
-import { message } from "antd";
+import { message, Carousel } from "antd";
 import CardSkeleton from "../skeletons/CardSkeleton";
-import "./x.scss";
+import TaskPreview from "../tasks/TaskPreview";
+import SessionPreview from "../session/SessionPreview";
+import { session, task, member } from "../../types/types";
+import { useParams, useLocation, match } from "react-router-dom";
 
 interface Props {
   match: any;
@@ -21,17 +25,20 @@ const Overview: FC<Props> = ({ match }) => {
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
-  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
+  const params: any = useParams();
+  const tasks: task[] = useSelector((state: RootStateOrAny) => state.task.tasks);
   const statusGroup = useSelector((state: RootStateOrAny) => state.task.statusGroup);
-  const members = useSelector((state: RootStateOrAny) => state.member.members);
+  const members: member[] = useSelector((state: RootStateOrAny) => state.member.members);
   const time = useSelector((state: RootStateOrAny) => state.time_record.sum);
+  const sessions: session[] = useSelector((state: RootStateOrAny) => state.session.filteredSessions);
   const project = useSelector((state: RootStateOrAny) => state.project.currentProject);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ project_id: match.params.id }));
-    dispatch(getStatusGroup({ project_id: match.params.id }));
-    dispatch(getMembers({ project_id: match.params.id }));
-    dispatch(getTimeRecordsSum({ project_id: match.params.id }));
+    dispatch(getProjectTasks({ project_id: params.id }));
+    dispatch(getStatusGroup({ project_id: params.id }));
+    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getSessions({ project_id: params.id }));
+    dispatch(getTimeRecordsSum({ project_id: params.id }));
   }, []);
 
   return (
@@ -66,15 +73,25 @@ const Overview: FC<Props> = ({ match }) => {
           </div>
         </div>
         <div className="overview__right">
-          <div className="d" style={{ display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-            <div>
-              <h3>Budget spent</h3>
-              <span>{project.budget === null ? "Data is not available. Please set your budget first." : project.budget}</span>
+          <div className="d" style={{ padding: "12px 20px", overflow: "hidden" }}>
+            <h3>Upcoming Sessions</h3>
+            <div style={{ width: "100%" }}>
+              <Carousel>
+                <div style={{ height: "100px", width: "100%", backgroundColor: "red" }}></div>
+              </Carousel>
             </div>
           </div>
-          <div className="e">
-            <h3>Upcoming tasks</h3>
-            <div className="x">hhhhh</div>
+          <div className="e" style={{ padding: "12px 20px" }}>
+            <div>
+              <h3>Upcoming Tasks</h3>
+              <div></div>
+            </div>
+
+            <div style={{ marginTop: "18px" }}>
+              {tasks.slice(0, 4).map((item: task) => (
+                <TaskPreview task={item} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
