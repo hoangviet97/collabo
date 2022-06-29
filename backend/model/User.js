@@ -187,6 +187,19 @@ module.exports = {
     return rows;
   },
 
+  getIdByEmail: async function (email) {
+    const sql = `SELECT id FROM users WHERE email = ?`;
+    const clearedEmail = email.trim();
+
+    const [rows] = await con.promise().query(sql, [clearedEmail]);
+
+    if (rows.length > 0) {
+      return rows[0].id;
+    } else {
+      return rows;
+    }
+  },
+
   resetPwd: function (body, result) {
     const sql = `SELECT id FROM users WHERE email = '${body.email}'`;
     con.query(sql, async (err, res) => {

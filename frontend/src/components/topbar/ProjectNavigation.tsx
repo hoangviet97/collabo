@@ -75,9 +75,9 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/activity`}>
+        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/reviews`}>
           <FundOutlined className="single-navigation__link-icon" />
-          <span>Activity</span>
+          <span>Reviews</span>
         </Link>
       </p>
     </div>
@@ -179,7 +179,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
               </Link>
             </li>
             <li className="single-navigation__item">
-              <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/team`}>
                 <TeamOutlined className="single-navigation__link-icon" />
                 <span>Team</span>
               </Link>

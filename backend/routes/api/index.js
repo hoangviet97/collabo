@@ -14,6 +14,7 @@ const noteRoutes = require("./notes");
 const tagRoutes = require("./tags");
 const messageRoutes = require("./messages");
 const incomeRoutes = require("./incomes");
+const reviewRoutes = require("./reviews");
 const router = express.Router();
 
 router.use(authRoutes);
@@ -31,5 +32,6 @@ router.use(noteRoutes);
 router.use(tagRoutes);
 router.use(messageRoutes);
 router.use(incomeRoutes);
+router.use(reviewRoutes);
 
 module.exports = router;

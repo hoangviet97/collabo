@@ -62,6 +62,7 @@ export const GET_CALENDAR_TASKS: string = "GET_CALENDAR_TASKS";
 export const GET_PERSONAL_TASKS: string = "GET_PERSONAL_TASKS";
 export const GET_PERSONAL_TASKS_FAIL: string = "GET_PERSONAL_TASK_FAIL";
 export const SET_BUDGET: string = "SET_BUDGET";
+export const GET_EXPENSES: string = "GET_EXPENSES";
 // INVITATION
 export const CREATE_INVITATION: string = "CREATE_INVITATION";
 export const CREATE_INVITATION_FAIL: string = "CREATE_INVITATION_FAIL";
@@ -155,6 +156,11 @@ export const GET_INCOMES: string = "GET_INCOMES";
 export const DELETE_INCOME: string = "DELETE_INCOME";
 export const INCOME_FAIL: string = "INCOME_FAIL";
 
+export const CREATE_REVIEW: string = "CREATE_REVIEW";
+export const GET_REVIEWS: string = "GET_REVIEWS";
+export const DELETE_REVIEW: string = "DELETE_REVIEW";
+export const REVIEW_FAIL: string = "REVIEW_FAIL";
+
 export const FOLDER_LOADING: string = "FOLDER_LOADING";
 export const SESSION_LOADING: string = "SESSION_LOADING";
 export const SESSIONS_LOADING: string = "SESSIONS_LOADING";
@@ -164,3 +170,5 @@ export const FILE_LOADING: string = "FILE_LOADING";
 export const TASKS_LOADING: string = "TASKS_LOADING";
 export const SECTIONS_LOADING: string = "SECTIONS_LOADING";
 export const PROJECT_LOADING: string = "PROJECT_LOADING";
+export const REVIEW_LOADING: string = "REVIEW_LOADING";
+export const REVIEWS_LOADING: string = "REVIEWS_LOADING";

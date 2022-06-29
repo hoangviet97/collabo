@@ -1,6 +1,7 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 const Member = require("./Member");
+const User = require("./User");
 
 class Invitation {
   constructor(id, sender, receiver, project) {
@@ -19,6 +20,9 @@ module.exports = {
 
   // Create new member by user or by admin
   create: async function (receiver_email, sender, project, result) {
+    const user = await User.getIdByEmail(receiver_email);
+    console.log(user);
+
     con.query("SELECT id FROM users WHERE email = ?", [receiver_email], (err, receiver_id_result) => {
       if (err) {
         result(err, null);
@@ -48,6 +52,30 @@ module.exports = {
     });
   },
 
+  create2: async function (receiver_email, sender, project) {
+    const user = await User.getIdByEmail(receiver_email);
+
+    if (user === sender) {
+      throw new Error("You cannot invite yourself");
+    }
+
+    if (user.length < 1) {
+      throw new Error("User doesn't exist");
+    }
+
+    const member = await Member.findMember(user, project);
+
+    if (member.length > 0) {
+      throw new Error("User is already in project");
+    }
+
+    const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id, seen) VALUES (?, ?, ?, ?, ?, ?)`;
+    const invitation = new Invitation(uuid4(), sender, user, project);
+    const [rows] = await con.promise().query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project, invitation.seen]);
+
+    return invitation;
+  },
+
   // Get all user's invitations
   find: async function (user) {
     const sql = `SELECT invitations.*, users.firstname, users.lastname, projects.name AS project_name FROM invitations INNER JOIN users ON invitations.sender = users.id INNER JOIN projects ON invitations.projects_id = projects.id WHERE receiver = ?`;
@@ -60,12 +88,10 @@ module.exports = {
   accept: async function (id, user, project) {
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
 
-    const [rows] = await con.promise().query(sql, [project]);
+    const memberQuery = await Member.create(user, project, "2");
+    const invitationQuery = await this.deleteInvitation(id);
 
-    const memberQuery = await Member.create(user, project, "0");
-    const invitationQuery = await this.Invitation.deleteInvitation(id);
-
-    return rows;
+    return invitationQuery;
   },
 
   // Get all project invitations

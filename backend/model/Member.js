@@ -17,7 +17,6 @@ module.exports = {
   create: async function (userId, project, role) {
     const newMember = new Member(uuid4(), userId, role, project);
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
-
     const [rows] = await con.promise().query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at]);
 
     return project;
@@ -50,6 +49,14 @@ module.exports = {
       result(null, res);
       return;
     });
+  },
+
+  findMember: async function (id, project) {
+    const sql = `SELECT * FROM members WHERE users_id = '${id}' AND projects_id = ${project}`;
+
+    const [rows] = await con.promise().query(sql);
+
+    return rows;
   },
 
   updateRole: async function (role_id, id) {

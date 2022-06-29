@@ -1,5 +1,6 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const Project = require("./Project");
 
 class Income {
   constructor(id, project_id, member_id, title, amount) {
@@ -16,17 +17,18 @@ module.exports = {
   Income,
   // create new member by user or by admin
   create: async function (project, member, title, amount) {
-    console.log(`${project}/${member}/${title}/${amount}`);
     const newIncome = new Income(uuid4(), project, member, title, amount);
     const sql = `INSERT INTO incomes (id, projects_id, members_id, title, amount, created_at) VALUES (?, ?, ?, ?, ?, ?)`;
 
     const [rows] = await con.promise().query(sql, [newIncome.id, newIncome.project_id, newIncome.member_id, newIncome.title, newIncome.amount, newIncome.created_at]);
 
+    //const [projectRes] = await Project.setBudgetIncome(project, amount);
+
     return newIncome;
   },
 
   find: async function (project) {
-    const sql = `SELECT * FROM incomes WHERE folders.projects_id = ? ORDER BY created_at`;
+    const sql = `SELECT * FROM incomes WHERE projects_id = ? ORDER BY created_at`;
 
     const [rows] = await con.promise().query(sql, [project]);
 

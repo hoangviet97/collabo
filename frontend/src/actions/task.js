@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH } from "./types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -135,6 +135,16 @@ export const deleteTask = ({ id, project_id }) => async (dispatch) => {
   try {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/tasks/${id}`);
     dispatch({ type: DELETE_TASK, payload: id });
+    message.success("Task deleted!");
+  } catch (err) {
+    dispatch({ type: DELETE_TASK_FAIL });
+  }
+};
+
+export const getExpenses = ({ project_id }) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks`);
+    dispatch({ type: GET_EXPENSES, payload: res.data });
     message.success("Task deleted!");
   } catch (err) {
     dispatch({ type: DELETE_TASK_FAIL });

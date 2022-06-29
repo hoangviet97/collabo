@@ -40,7 +40,9 @@ io.on("connection", (socket) => {
     const client1 = clients.find((x) => x.email === data);
     console.log(clients);
     console.log(data);
-    io.to(client1.socketId).emit("increment-unread");
+    if (client1) {
+      io.to(client1.socketId).emit("increment-unread");
+    }
   });
 
   socket.on("disconnect", (reason) => {

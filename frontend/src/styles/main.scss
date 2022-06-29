@@ -25,6 +25,14 @@
 @import "./components/spinners.scss";
 @import "./components/charts.scss";
 @import "./components/polls.scss";
+@import "./components/reviews.scss";
+
+@font-face {
+  font-family: "main-font";
+  src: local("main-font"), url(./fonts/font.woff) format("woff");
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
 
 .name-box {
   display: flex;

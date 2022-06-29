@@ -11,20 +11,24 @@ const IncomeForm = () => {
   const [amount, setAmount] = useState<number>(0);
 
   const submitHandler = () => {
+    console.log(typeof amount);
     if (amount > 0) {
-      console.log(amount);
       dispatch(createIncome({ title: title, amount: amount, project_id: params.id }));
+      setTitle("");
+      setAmount(0);
     } else {
       message.error("Amount must be greater than 0!");
     }
   };
 
   return (
-    <div style={{ width: "35%", height: "35vh", backgroundColor: "white", marginLeft: "15px" }}>
-      <h3>Add new income</h3>
-      <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <Input type="text" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} />
-      <Button onClick={submitHandler}>Add</Button>
+    <div style={{ width: "35%", height: "35vh", backgroundColor: "white", borderRadius: "12px", marginLeft: "15px", padding: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div>
+        <h2 style={{ marginBottom: "25px" }}>Add new income</h2>
+        <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Input type="number" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} />
+        <Button onClick={submitHandler}>Add</Button>
+      </div>
     </div>
   );
 };

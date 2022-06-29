@@ -46,7 +46,7 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
       <div className="board-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h3 className="board-card-title">{title}</h3>
         <Popconfirm title="Are you sure to delete this task?" onConfirm={confirm} onCancel={cancel} okText="Yes" cancelText="No">
-          <button>
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
             <CloseOutlined />
           </button>
         </Popconfirm>

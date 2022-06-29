@@ -40,7 +40,7 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
       </div>
       <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
         <h2>{truncade(project.name, 40)}</h2>
-        <span style={{ marginTop: "-10px" }}>{project.description === null ? "No description" : project.description}</span>
+        <span style={{ marginTop: "-10px", color: "#747d8c" }}>{project.description === null ? "No description" : project.description}</span>
       </div>
       <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>

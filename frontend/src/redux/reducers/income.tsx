@@ -13,7 +13,7 @@ function incomeReducer(state = initialState, action: any) {
     case CREATE_INCOME:
       return {
         ...state,
-        folders: [...state.incomes, payload]
+        incomes: [...state.incomes, payload]
       };
     case GET_INCOMES:
       return {
@@ -29,7 +29,7 @@ function incomeReducer(state = initialState, action: any) {
     case DELETE_INCOME:
       return {
         ...state,
-        folders: state.incomes.filter((item: folder) => item.id !== payload)
+        folders: state.incomes.filter((item: any) => item.id !== payload)
       };
     default:
       return state;

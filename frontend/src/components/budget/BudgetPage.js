@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getProjectTasks } from "../../actions/task";
+import { getExpenses } from "../../actions/task";
+import { getAllIncomes } from "../../actions/income";
 import { task } from "../../types/types";
 import IncomeForm from "./IncomeForm";
+import { Tabs } from "antd";
+import { FallOutlined, RiseOutlined } from "@ant-design/icons";
+import ExpenseList from "./ExpenseList";
+import IncomeList from "./IncomeList";
 
 const BudgetPage = ({ match }) => {
   const dispatch = useDispatch();
@@ -14,8 +19,11 @@ const BudgetPage = ({ match }) => {
   const budget = useSelector((state) => state.project.currentProject.budget);
   const tasks = useSelector((state) => state.task.tasks);
 
+  const { TabPane } = Tabs;
+
   useEffect(() => {
-    dispatch(getProjectTasks({ project_id: match.params.id }));
+    dispatch(getExpenses({ project_id: match.params.id }));
+    dispatch(getAllIncomes({ project_id: match.params.id }));
   }, []);
 
   useEffect(() => {
@@ -59,7 +67,32 @@ const BudgetPage = ({ match }) => {
           </header>
           {role === "Owner" && <IncomeForm />}
         </div>
-        <div></div>
+        <div style={{ marginTop: "30px" }}>
+          <Tabs defaultActiveKey="1">
+            <TabPane
+              tab={
+                <span>
+                  <FallOutlined />
+                  Expenses
+                </span>
+              }
+              key="1"
+            >
+              <ExpenseList />
+            </TabPane>
+            <TabPane
+              tab={
+                <span>
+                  <RiseOutlined />
+                  Incomes
+                </span>
+              }
+              key="2"
+            >
+              <IncomeList />
+            </TabPane>
+          </Tabs>
+        </div>
       </Container>
     </div>
   );

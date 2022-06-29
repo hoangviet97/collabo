@@ -216,7 +216,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
       {loading ? (
         <Skeleton />
       ) : (
-        <Container size="30">
+        <Container size="50">
           <header style={{ marginRight: "20px" }}>
             <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
               <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />

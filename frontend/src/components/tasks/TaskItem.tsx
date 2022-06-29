@@ -2,11 +2,11 @@ import React, { useState, useEffect, FC } from "react";
 import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
 import Moment from "react-moment";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
+import { createReview } from "../../actions/review";
 import { Select } from "antd";
 import TaskDateModal from "../modal/TaskDateModdal";
-import StatusIcon from "../utils/StatusIcon";
 import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
@@ -64,10 +64,10 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
           Rename
         </span>
       </Menu.Item>
-      <Menu.Item key="1">
+      <Menu.Item key="1" onClick={submitTaskHandler}>
         <span>
           <CopyOutlined />
-          Duplicate
+          Submit for review
         </span>
       </Menu.Item>
       <Menu.Item key="2">
@@ -95,6 +95,10 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
 
   const deleteTaskHandler = () => {
     dispatch(deleteTask({ id: task.id, project_id: params.id }));
+  };
+
+  const submitTaskHandler = () => {
+    dispatch(createReview({ task_id: task.id, project_id: params.id }));
   };
 
   const openDateHandler = (id: any) => {
@@ -152,16 +156,22 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
         {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
       </div>
       <div className="task-column__item task-column__status task-column__status--active">
-        <Select className="task-select" defaultValue={task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
-          <Option value="0">Open</Option>
-          <Option value="1">In Progress</Option>
-          <Option value="2">On Hold</Option>
-          <Option value="3">Completed</Option>
-          <Option value="4">Canceled</Option>
-        </Select>
+        {task.statusId === "5" ? (
+          <div style={{ color: "orange", backgroundColor: "red", width: "60px", marginLeft: "calc(50% - 30px)", display: "flex", justifyContent: "center" }}>
+            <span>Under Review</span>
+          </div>
+        ) : (
+          <Select className="task-select" defaultValue={task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+            <Option value="0">Open</Option>
+            <Option value="1">In Progress</Option>
+            <Option value="2">On Hold</Option>
+            <Option value="3">Completed</Option>
+            <Option value="4">Canceled</Option>
+          </Select>
+        )}
       </div>
       <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Select className="task-select" defaultValue={task.priorityId} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={task.priorityId} disabled={task.statusId === "5" ? true : false} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
             <Tag color="gold">Low</Tag>
           </Option>
@@ -181,9 +191,13 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
         <Timer localstorage={task.id} />
       </div>
       <div className="task-column__item task-column__more">
-        <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
+        {task.statusId === "5" ? (
           <EllipsisOutlined style={{ fontSize: "22px" }} />
-        </Dropdown>
+        ) : (
+          <Dropdown trigger={["click"]} overlay={sectionMenu} placement="bottomRight">
+            <EllipsisOutlined style={{ fontSize: "22px" }} />
+          </Dropdown>
+        )}
       </div>
     </div>
   );
