@@ -7,7 +7,7 @@ const auth = require("../../middleware/auth");
 router.post("/register", authController.create);
 router.post("/login", authController.login);
 router.get("/profile", auth, userController.getCurrentUser);
-router.get("/verify/:id", authController.verify);
+router.get("/verify/:id", authController.verify2);
 router.post("/reset", authController.resetPassword);
 router.patch("/change-pwd", auth, authController.changePassword);
 router.patch("/firstname", auth, authController.changeFirstname);

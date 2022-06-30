@@ -25,6 +25,16 @@ export const getReviews = ({ project_id, member_id }) => async (dispatch) => {
   }
 };
 
+export const acceptReview = ({ project_id, id, task_id }) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}/reviews/${id}`, { task_id });
+    message.success("Review accepted!");
+    dispatch({ type: DELETE_REVIEW, payload: id });
+  } catch (err) {
+    dispatch({ type: REVIEW_FAIL });
+  }
+};
+
 export const deleteReview = ({ project_id, id }) => async (dispatch) => {
   try {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/reviews/${id}`);

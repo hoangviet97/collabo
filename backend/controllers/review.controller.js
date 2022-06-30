@@ -31,7 +31,7 @@ module.exports = {
 
   accept: async function (req, res) {
     try {
-      return res.json(await Review.accept(req.params.id));
+      return res.json(await Review.accept(req.params.id, req.body.task_id));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

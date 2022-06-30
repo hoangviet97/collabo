@@ -40,6 +40,14 @@ module.exports = {
     });
   },
 
+  verify2: async function (req, res) {
+    try {
+      return res.json(await User.verify2(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   changeFirstname: async function (req, res) {
     try {
       return res.json(await User.changeFirstname(req.user.id, req.body.firstname));

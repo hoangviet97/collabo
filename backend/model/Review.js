@@ -27,7 +27,7 @@ module.exports = {
   },
 
   find: async function (member) {
-    const sql = `SELECT members.id AS member_id, tasks.*, priorities.name AS priorityName, sections.name AS section_name, reviews.id AS review_id, reviews.created_at AS review_created_at, reviews.accepted FROM reviews
+    const sql = `SELECT members.id AS member_id, tasks.id AS task_id, tasks.*, priorities.name AS priorityName, sections.name AS section_name, reviews.id AS review_id, reviews.created_at AS review_created_at, reviews.accepted FROM reviews
                     INNER JOIN tasks ON reviews.tasks_id = tasks.id
                     INNER JOIN priorities ON tasks.priorities_id = priorities.id
                     INNER JOIN sections ON tasks.sections_id = sections.id
@@ -48,11 +48,13 @@ module.exports = {
     return rows;
   },
 
-  accept: async function (id) {
+  accept: async function (id, task_id) {
     const sql = `DELETE FROM reviews WHERE id = ?`;
     const [rows] = await con.promise().query(sql, [id]);
 
-    const taskRow = await Task.updateStatus();
+    console.log(task_id);
+
+    const taskRow = await Task.updateStatus("1", task_id);
 
     return rows;
   }

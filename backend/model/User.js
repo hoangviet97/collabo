@@ -148,6 +148,25 @@ module.exports = {
     });
   },
 
+  verify2: async function (token) {
+    const sql = `SELECT users.id, users.email, users.token, users.verification_status FROM users WHERE users.token = '${token}'`;
+
+    const [rows] = await con.promise().query(sql, token);
+
+    if (rows.length < 1) {
+      throw new Error("Invalid token");
+    }
+
+    if (rows[0].verification_status === "pending") {
+      const sqlVer = "UPDATE users SET verification_status = ? WHERE token = ?";
+      const ver = await con.promise().query(sqlVer, ["active", token]);
+
+      return "activated";
+    } else if (rows[0].verification_status === "active") {
+      throw new Error("This account is already active");
+    }
+  },
+
   changePwd: async function (body, id, result) {
     const checkSql = `SELECT password FROM users WHERE id = ?`;
 

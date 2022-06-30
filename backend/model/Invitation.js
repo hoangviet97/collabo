@@ -18,41 +18,7 @@ module.exports = {
   // Invitation class
   Invitation,
 
-  // Create new member by user or by admin
-  create: async function (receiver_email, sender, project, result) {
-    const user = await User.getIdByEmail(receiver_email);
-    console.log(user);
-
-    con.query("SELECT id FROM users WHERE email = ?", [receiver_email], (err, receiver_id_result) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      if (receiver_id_result.length > 0) {
-        if (receiver_id_result[0].id === sender) {
-          result("You cannot invite yourself", null);
-          return;
-        }
-
-        const invitation = new Invitation(uuid4(), sender, receiver_id_result[0].id, project);
-        const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id, seen) VALUES (?, ?, ?, ?, ?, ?)`;
-
-        con.query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project, invitation.seen], (err, res) => {
-          if (err) {
-            result(err, null);
-            return;
-          }
-
-          result(null, invitation);
-        });
-      } else {
-        result("E-mail doesn't exist", null);
-      }
-    });
-  },
-
-  create2: async function (receiver_email, sender, project) {
+  create: async function (receiver_email, sender, project) {
     const user = await User.getIdByEmail(receiver_email);
 
     if (user === sender) {

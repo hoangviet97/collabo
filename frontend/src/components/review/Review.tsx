@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Divider, Button, Tag } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteReview } from "../../actions/review";
+import { deleteReview, acceptReview } from "../../actions/review";
 import { useParams } from "react-router-dom";
 
 interface Props {
@@ -14,6 +14,10 @@ const Review: FC<Props> = ({ review }) => {
 
   const deleteHandler = () => {
     dispatch(deleteReview({ project_id: params.id, id: review.review_id }));
+  };
+
+  const acceptHandler = () => {
+    dispatch(acceptReview({ project_id: params.id, id: review.review_id, task_id: review.task_id }));
   };
 
   return (
@@ -32,7 +36,7 @@ const Review: FC<Props> = ({ review }) => {
           <Button type="link" danger style={{ borderRadius: "8px" }} onClick={deleteHandler}>
             Return
           </Button>
-          <Button type="primary" style={{ borderRadius: "8px" }}>
+          <Button type="primary" style={{ borderRadius: "8px" }} onClick={acceptHandler}>
             Accept
           </Button>
         </div>
