@@ -80,9 +80,11 @@ export const deleteProject = ({ project_id, push }) => async (dispatch) => {
 };
 
 export const updateColor = ({ project_id, color }) => async (dispatch) => {
+  console.log(color.code);
   try {
-    const res = await axios.patch(`http://localhost:9000/api/projects/${project_id}/color`, { color: color });
-    dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color } });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/color`, { color: color.code });
+    dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color.code } });
+    console.log(res);
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }

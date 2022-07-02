@@ -54,7 +54,7 @@ module.exports = {
             }
           });
 
-          const url = `http://localhost:3001/verify/${newUser.token}`;
+          const url = `http://localhost:3000/verify/${newUser.token}`;
 
           let mailOpt = {
             from: "hoangviet97@outlook.com",
@@ -122,33 +122,7 @@ module.exports = {
     return rows;
   },
 
-  verify: function (token, result) {
-    const sql = `SELECT users.id, users.email, users.token, users.verification_status FROM users WHERE users.token = '${token}'`;
-    con.query(sql, async (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-
-      if (res.length === 0) {
-        result("not exist", null);
-        return;
-      }
-
-      if (res[0].verification_status === "pending") {
-        const sql = "UPDATE users SET verification_status = ? WHERE token = ?";
-        con.query(sql, ["active", token], async (err, res) => {
-          result(null, res);
-          return;
-        });
-      }
-
-      result(null, res);
-      return;
-    });
-  },
-
-  verify2: async function (token) {
+  verify: async function (token) {
     const sql = `SELECT users.id, users.email, users.token, users.verification_status FROM users WHERE users.token = '${token}'`;
 
     const [rows] = await con.promise().query(sql, token);

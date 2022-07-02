@@ -1,4 +1,4 @@
-import { CREATE_REVIEW, GET_REVIEWS, REVIEW_LOADING, REVIEWS_LOADING, REVIEW_FAIL, DELETE_REVIEW, UPDATE_TASK_STATUS } from "./types";
+import { CREATE_REVIEW, GET_REVIEWS, REVIEW_LOADING, REVIEWS_LOADING, REVIEW_FAIL, DELETE_REVIEW, UPDATE_TASK_STATUS, ACCEPT_REVIEW } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -27,17 +27,18 @@ export const getReviews = ({ project_id, member_id }) => async (dispatch) => {
 
 export const acceptReview = ({ project_id, id, task_id }) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:9000/api/${project_id}/reviews/${id}`, { task_id });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/accept`, { task_id });
     message.success("Review accepted!");
     dispatch({ type: DELETE_REVIEW, payload: id });
+    //dispatch({ type: UPDATE_TASK_STATUS, payload: id });
   } catch (err) {
     dispatch({ type: REVIEW_FAIL });
   }
 };
 
-export const deleteReview = ({ project_id, id }) => async (dispatch) => {
+export const deleteReview = ({ project_id, id, task_id }) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:9000/api/${project_id}/reviews/${id}`);
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/return`, { task_id });
     message.success("Review returned!");
     dispatch({ type: DELETE_REVIEW, payload: id });
   } catch (err) {

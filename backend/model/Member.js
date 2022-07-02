@@ -68,6 +68,9 @@ module.exports = {
   },
 
   delete: async function (id) {
+    const sqlCheck = `SELECT roles.name FROM members INNER JOIN roles ON members.roles_id = roles.id WHERE members.id = ?`;
+    const [roleCheck] = await con.promise().query(sqlCheck, [id]);
+
     const sql = `DELETE from members WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, [id]);

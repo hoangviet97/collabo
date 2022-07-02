@@ -40,10 +40,12 @@ module.exports = {
     return rows;
   },
 
-  delete: async function (id) {
+  delete: async function (id, task_id) {
     const sql = `DELETE FROM reviews WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, [id]);
+
+    const taskRow = await Task.updateStatus("1", task_id);
 
     return rows;
   },
@@ -52,9 +54,7 @@ module.exports = {
     const sql = `DELETE FROM reviews WHERE id = ?`;
     const [rows] = await con.promise().query(sql, [id]);
 
-    console.log(task_id);
-
-    const taskRow = await Task.updateStatus("1", task_id);
+    const taskRow = await Task.updateStatus("3", task_id);
 
     return rows;
   }

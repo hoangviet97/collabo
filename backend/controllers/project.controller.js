@@ -56,9 +56,11 @@ module.exports = {
   },
 
   updateColor: async function (req, res) {
+    console.log(req.body.color);
     try {
-      return res.json(await Project.updateColor(req.body.color, req.params.id));
+      return res.json(await Project.updateColor(req.body.color, req.params.project));
     } catch (err) {
+      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/:project/reviews/add", [auth, getMemberId], reviewController.create);
 router.get("/:project/reviews/:member", [auth], reviewController.getAll);
-router.delete("/:project/reviews/:id", auth, reviewController.delete);
-router.delete("/:project/reviews/:id/accept", auth, reviewController.accept);
+router.post("/:project/reviews/:id/return", auth, reviewController.delete);
+router.post("/:project/reviews/:id/accept", auth, reviewController.accept);
 
 module.exports = router;

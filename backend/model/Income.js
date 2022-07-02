@@ -22,8 +22,6 @@ module.exports = {
 
     const [rows] = await con.promise().query(sql, [newIncome.id, newIncome.project_id, newIncome.member_id, newIncome.title, newIncome.amount, newIncome.created_at]);
 
-    //const [projectRes] = await Project.setBudgetIncome(project, amount);
-
     return newIncome;
   },
 

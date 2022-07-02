@@ -2,6 +2,7 @@
 @import "./abstract/variables.scss";
 @import "./base/base";
 @import "./base/typography";
+@import "./utils/utils.scss";
 @import "./layout/navigation.scss";
 @import "./layout/topbar.scss";
 @import "./layout/sidebar.scss";
@@ -11,7 +12,7 @@
 @import "./components/icons.scss";
 @import "./components/modals.scss";
 @import "./vendors/custom_antd.scss";
-@import "./components//folders.scss";
+@import "./components/folders.scss";
 @import "./pages/auth.scss";
 @import "./components/timer.scss";
 @import "./components/files.scss";

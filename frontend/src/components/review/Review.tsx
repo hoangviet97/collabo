@@ -13,7 +13,7 @@ const Review: FC<Props> = ({ review }) => {
   const params: any = useParams();
 
   const deleteHandler = () => {
-    dispatch(deleteReview({ project_id: params.id, id: review.review_id }));
+    dispatch(deleteReview({ project_id: params.id, id: review.review_id, task_id: review.task_id }));
   };
 
   const acceptHandler = () => {

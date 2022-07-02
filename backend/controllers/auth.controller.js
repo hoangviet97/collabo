@@ -33,16 +33,9 @@ module.exports = {
     });
   },
 
-  verify: function (req, res) {
-    User.verify(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
-  },
-
-  verify2: async function (req, res) {
+  verify: async function (req, res) {
     try {
-      return res.json(await User.verify2(req.params.id));
+      return res.json(await User.verify(req.params.id));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

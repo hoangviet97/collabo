@@ -160,6 +160,7 @@ export const CREATE_REVIEW: string = "CREATE_REVIEW";
 export const GET_REVIEWS: string = "GET_REVIEWS";
 export const DELETE_REVIEW: string = "DELETE_REVIEW";
 export const REVIEW_FAIL: string = "REVIEW_FAIL";
+export const ACCEPT_REVIEW: string = "ACCEPT_REVIEW";
 
 export const FOLDER_LOADING: string = "FOLDER_LOADING";
 export const SESSION_LOADING: string = "SESSION_LOADING";

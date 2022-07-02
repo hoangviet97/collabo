@@ -69,6 +69,14 @@ module.exports = {
     return rows;
   },
 
+  findOne: async function (id, project) {
+    const sql = `SELECT * FROM invitations WHERE receiver = ? AND projects_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [id, project]);
+
+    return rows;
+  },
+
   // Get all invitations
   updateSeenStatus: async function (id) {
     const sql = `UPDATE invitations SET seen = true WHERE id = ?`;
