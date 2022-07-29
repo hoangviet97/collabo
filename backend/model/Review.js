@@ -26,6 +26,20 @@ module.exports = {
     return newReview;
   },
 
+  findAll: async function (project) {
+    const sql = `SELECT members.id AS member_id, tasks.id AS task_id, tasks.*, priorities.name AS priorityName, sections.name AS section_name, reviews.id AS review_id, reviews.created_at AS review_created_at, reviews.accepted FROM reviews
+                    INNER JOIN tasks ON reviews.tasks_id = tasks.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    INNER JOIN sections ON tasks.sections_id = sections.id
+                    INNER JOIN members ON reviews.members_id = members.id
+                    INNER JOIN users ON members.users_id = users.id
+                    WHERE members.projects_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [project]);
+
+    return rows;
+  },
+
   find: async function (member) {
     const sql = `SELECT members.id AS member_id, tasks.id AS task_id, tasks.*, priorities.name AS priorityName, sections.name AS section_name, reviews.id AS review_id, reviews.created_at AS review_created_at, reviews.accepted FROM reviews
                     INNER JOIN tasks ON reviews.tasks_id = tasks.id
@@ -36,6 +50,20 @@ module.exports = {
                     WHERE reviews.members_id = ?`;
 
     const [rows] = await con.promise().query(sql, [member]);
+
+    return rows;
+  },
+
+  findPanel: async function (project) {
+    const sql = `SELECT members.id AS member_id, users.firstname, users.lastname, COUNT(reviews.id) AS total FROM reviews
+                  RIGHT JOIN members ON reviews.members_id = members.id
+                  INNER JOIN users ON members.users_id = users.id
+                  WHERE members.projects_id = ?
+                  GROUP BY members.id`;
+
+    const [rows] = await con.promise().query(sql, project);
+
+    console.log(rows);
 
     return rows;
   },

@@ -12,9 +12,29 @@ module.exports = {
     }
   },
 
+  getByProject: async function (req, res) {
+    console.log("..s");
+    try {
+      return res.json(await Review.findAll(req.params.project));
+    } catch (err) {
+      console.log(err);
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   getAll: async function (req, res) {
     try {
       return res.json(await Review.find(req.params.member));
+    } catch (err) {
+      console.log(err);
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  getPanel: async function (req, res) {
+    console.log("oooooooo");
+    try {
+      return res.json(await Review.findPanel(req.params.project));
     } catch (err) {
       console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
@@ -25,6 +45,7 @@ module.exports = {
     try {
       return res.json(await Review.delete(req.params.id, req.body.task_id));
     } catch (err) {
+      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

@@ -34,20 +34,22 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
 
   return (
     <div className="option">
-      <div className="option__content" style={{ border: "1px solid #dfe4ea", padding: "15px", borderRadius: "8px", width: "80%", marginRight: "12px", backgroundColor: isChecked ? "#74b9ff" : "white" }}>
+      <div className="option__wrap" style={{ backgroundColor: isChecked ? "#74b9ff" : "white" }}>
         <div style={{ marginBottom: "5px" }}>
-          <div style={{ color: "#57606f", fontWeight: "bold", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
+          <div className="option__content">
+            <div style={{ flex: 2 }}>
               <Checkbox checked={isChecked} onChange={(e) => checkboxHandler(e)} />
               <span style={{ marginLeft: "10px", color: isChecked ? "white" : "black" }}>{data.text}</span>
             </div>
-            <Avatar.Group>
-              {votes.map((item: any, index: number) => (
-                <Avatar key={index}>
-                  <AvatarIcon name={item.firstname} />
-                </Avatar>
-              ))}
-            </Avatar.Group>
+            <div style={{ flex: 1, textAlign: "right" }}>
+              <Avatar.Group>
+                {votes.map((item: any, index: number) => (
+                  <Avatar size="large" key={index}>
+                    <AvatarIcon name={item.firstname} />
+                  </Avatar>
+                ))}
+              </Avatar.Group>
+            </div>
           </div>
         </div>
       </div>

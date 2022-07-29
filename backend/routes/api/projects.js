@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/projects/add", [auth], projectController.create);
 router.get("/projects", auth, projectController.getAll);
-router.get("/projects/:id", [auth], projectController.getOne);
+router.get("/:project", [auth, check], projectController.getOne);
 router.patch("/projects/:id/favorite", auth, projectController.setFavorite);
 router.patch("/projects/:id/budget", [auth, permi("Owner", "Admin")], projectController.setBudget);
 router.patch("/projects/:id/currency", [auth, permi("Owner", "Admin")], projectController.setCurrency);

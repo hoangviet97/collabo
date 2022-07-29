@@ -13,9 +13,10 @@ import Team from "../team/Team";
 import BudgetPage from "../budget/BudgetPage";
 import Tags from "../tags/Tags";
 import Messages from "../messages/Messages";
-import Report from "../report/Report";
+import ReportPage from "../report/ReportPage";
 import NotFound from "../layout/NotFound";
 import Session from "../session/Session";
+import PersonalTasks from "../tasks/PersonalTasks";
 import ReviewPage from "../review/ReviewPage";
 import { getProject } from "../../actions/project";
 import { getAllInvitations } from "../../actions/invitation";
@@ -48,6 +49,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
         <ProtectedProjectRoute exact path="/:id/tasks" component={ProjectTasks} />
         <ProtectedProjectRoute exact path="/:id/overview" component={Overview} />
         <Route exact path="/notify" component={Invitations} />
+        <Route exact path="/my-tasks" component={PersonalTasks} />
         <ProtectedProjectRoute exact path="/:id/calendar" component={ProjectCalendar} />
         <ProtectedProjectRoute exact path="/:id/board" component={KanbanBoard} />
         <ProtectedProjectRoute exact path="/:id/tags" component={Tags} />
@@ -57,7 +59,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
         <ProtectedProjectRoute exact path="/:id/tracker" component={TimeTracker} />
         <ProtectedProjectRoute exact path="/:id/messages" component={Messages} />
         <ProtectedProjectRoute exact path="/:id/team" component={Team} />
-        <ProtectedProjectRoute path="/:id/report" component={Report} />
+        <ProtectedProjectRoute path="/:id/report" component={ReportPage} />
         <ProtectedProjectRoute path="/:id/sessions" component={Session} />
         <ProtectedProjectRoute exact path="/:id" component={ProjectTasks} />
         <Route component={NotFound} />

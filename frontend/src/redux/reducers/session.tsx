@@ -46,7 +46,7 @@ function sessionReducer(state = initialState, action: any) {
     case DELETE_SESSION:
       return {
         ...state,
-        sessions: state.sessions.filter((item: session) => item.id !== payload)
+        filteredSessions: state.filteredSessions.filter((item: session) => item.id !== payload)
       };
     case GET_PARTICIPANTS:
       return {

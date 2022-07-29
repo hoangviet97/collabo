@@ -39,6 +39,7 @@ module.exports = {
     try {
       return res.json(await Task.updateStatus(req.body.statusId, req.params.id));
     } catch (err) {
+      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },
@@ -62,6 +63,14 @@ module.exports = {
   getAllAssignees: async function (req, res) {
     try {
       return res.json(await Task.getAllAssingees(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  getAssigneeTasks: async function (req, res) {
+    try {
+      return res.json(await Task.getAssingeeTasks(req.params.project, req.params.id));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

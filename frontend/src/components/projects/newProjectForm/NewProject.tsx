@@ -65,7 +65,9 @@ const NewProject: FC<Props> = ({ history }) => {
           <Link to="/">Cancel</Link>
         </div>
       </div>
-      <div className="new-project__bg"></div>
+      <div className="new-project__bg">
+        <div style={{ width: "100%", height: "100%", opacity: 0.5, backgroundColor: color.length === 0 ? "#a4b0be" : color }}></div>
+      </div>
     </div>
   );
 };

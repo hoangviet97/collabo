@@ -9,5 +9,6 @@ router.post("/:project/times/add", [auth, getMemberId], timerController.create);
 router.get("/:project/times", auth, timerController.getAll);
 router.get("/:project/times/sum", auth, timerController.getSum);
 router.get("/:project/times/personal", [auth, getMemberId], timerController.getAllPersonal);
+router.get("/:project/times/:id", [auth], timerController.getById);
 
 module.exports = router;

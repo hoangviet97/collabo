@@ -28,6 +28,14 @@ module.exports = {
     }
   },
 
+  getById: async function (req, res) {
+    try {
+      return res.json(await Timer.findById(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   getAllPersonal: async function (req, res) {
     try {
       return res.json(await Timer.find(req.member));

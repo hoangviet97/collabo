@@ -30,7 +30,7 @@ const Overview: FC<Props> = ({ match }) => {
   const statusGroup = useSelector((state: RootStateOrAny) => state.task.statusGroup);
   const members: member[] = useSelector((state: RootStateOrAny) => state.member.members);
   const time = useSelector((state: RootStateOrAny) => state.time_record.sum);
-  const sessions: session[] = useSelector((state: RootStateOrAny) => state.session.filteredSessions);
+  const sessions: session[] = useSelector((state: RootStateOrAny) => state.session.sessions);
   const project = useSelector((state: RootStateOrAny) => state.project.currentProject);
 
   useEffect(() => {
@@ -39,6 +39,8 @@ const Overview: FC<Props> = ({ match }) => {
     dispatch(getMembers({ project_id: params.id }));
     dispatch(getSessions({ project_id: params.id }));
     dispatch(getTimeRecordsSum({ project_id: params.id }));
+
+    console.log(tasks);
   }, []);
 
   return (
@@ -46,12 +48,13 @@ const Overview: FC<Props> = ({ match }) => {
       <div className="overview">
         <div className="overview__left">
           <div className="a">
-            <div className="overview__highlight-item">
+            <div className="overview__highlight-item" style={{ backgroundColor: "#2f3542", color: "white", overflow: "hidden", position: "relative" }}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <FormOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
-                <span>Total tasks</span>
+                <FormOutlined style={{ fontSize: "25px", marginRight: "10px", zIndex: 500 }} />
+                <span style={{ fontSize: "18px", zIndex: 500 }}>Total tasks</span>
               </div>
-              <div style={{ fontSize: "40px" }}>{tasks.length}</div>
+              <div style={{ fontSize: "40px", zIndex: 500 }}>{tasks.length}</div>
+              <div style={{ position: "absolute", right: "-50%", width: "250px", height: "250px", backgroundColor: "grey", transform: "rotate(120deg)", opacity: "0.2" }}></div>
             </div>
             <div className="overview__highlight-item">
               <div style={{ display: "flex", alignItems: "center" }}>
@@ -73,24 +76,20 @@ const Overview: FC<Props> = ({ match }) => {
           </div>
         </div>
         <div className="overview__right">
-          <div className="d" style={{ padding: "12px 20px", overflow: "hidden" }}>
+          <div className="d" style={{ padding: "12px 20px" }}>
             <h3>Upcoming Sessions</h3>
-            <div style={{ width: "100%" }}>
-              <Carousel>
-                <div style={{ height: "100px", width: "100%", backgroundColor: "red" }}></div>
-              </Carousel>
+            <div>
+              {sessions.map((item: any) => {
+                <div>{item.name}</div>;
+              })}
             </div>
           </div>
-          <div className="e" style={{ padding: "12px 20px" }}>
+          <div className="e" style={{ padding: "12px 20px", backgroundColor: "yellow" }}>
+            <h3>Upcoming Task</h3>
             <div>
-              <h3>Upcoming Tasks</h3>
-              <div></div>
-            </div>
-
-            <div style={{ marginTop: "18px" }}>
-              {tasks.slice(0, 4).map((item: task) => (
-                <TaskPreview task={item} />
-              ))}
+              {tasks.map((i) => {
+                <p style={{ color: "black", zIndex: 999999 }}>{i.id}</p>;
+              })}
             </div>
           </div>
         </div>

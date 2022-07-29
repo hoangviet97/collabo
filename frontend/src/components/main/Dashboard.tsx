@@ -17,12 +17,15 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const socket = io("http://localhost:9000");
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
-  const unread = useSelector((state: RootStateOrAny) => state.invitation.unread);
+  const unread = useSelector((state: RootStateOrAny) => state.invitation.unread); // get all unread invitations
   const [unreadNum, setUnreadNum] = useState(0);
 
   useEffect(() => {
+    // fetch invitations for sidebar
     dispatch(getAllInvitations());
+    // store client to arr in backend when user connect
     socket.emit("client-connect", profile.email);
+    // listen to show notification and increase num sidebar
     socket.on("increment-unread", () => {
       notification.open({
         message: "Project invitation",

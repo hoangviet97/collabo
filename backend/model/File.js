@@ -24,7 +24,7 @@ class File {
 module.exports = {
   File,
 
-  upload2: async function (id, body, file, result) {
+  upload2: async function (id, file) {
     const fileId = uuid4();
 
     const params = {
@@ -41,27 +41,53 @@ module.exports = {
         result("Out of space!", null);
       } else {
         s3.upload(params, (err, data) => {
-          if (err) {
-            result(err, null);
-            return;
-          }
-
           const clearedType = file.originalname.split(".");
-          const newFile = new File(fileId, id, file.originalname, body.description, file.size, clearedType[clearedType.length - 1]);
-
-          const sql = `INSERT INTO files (id, projects_id, title, description, size, file_mimetype, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-          con.query(sql, [newFile.id, newFile.project_id, newFile.title, newFile.description, newFile.size, newFile.file_mimetype, newFile.created_at], (err, res) => {
-            if (err) {
-              result(err, null);
-              return;
-            }
-
-            result(null, newFile);
-            return;
-          });
+          const newFile = new File(fileId, id, file.originalname, "", file.size, clearedType[clearedType.length - 1]);
         });
       }
     });
+  },
+
+  upload3: async function (id, file) {
+    const fileId = uuid4();
+    let newFile = null;
+
+    const params = {
+      Bucket: "collabo-files",
+      Key: `${fileId}`,
+      Body: file.buffer,
+      ContentType: file.mimetype
+    };
+
+    const sqlCheck = "SELECT SUM(size) AS total FROM files WHERE projects_id = ?";
+    const [rows] = await con.promise().query(sqlCheck, [id]);
+
+    if (parseInt(rows[0].total) + parseInt(file.size) > 20971520) {
+      throw new Error("Out of space!");
+    } else {
+      s3.upload(params, async (err, data) => {});
+      const clearedType = file.originalname.split(".");
+      newFile = new File(fileId, id, file.originalname, "", file.size, clearedType[clearedType.length - 1]);
+
+      const sql = `INSERT INTO files (id, projects_id, title, description, size, file_mimetype, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const [fileRes] = await con.promise().query(sql, [newFile.id, newFile.project_id, newFile.title, newFile.description, newFile.size, newFile.file_mimetype, newFile.created_at]);
+    }
+
+    return newFile;
+  },
+
+  uploadAttachment: async function (id, file, task) {
+    try {
+      const fileRes = await this.upload3(id, file);
+      console.log(fileRes.id);
+
+      const sql = `INSERT INTO tasks_has_files (tasks_id, files_id) VALUES (?, ?)`;
+      const [rows] = await con.promise().query(sql, [task, fileRes.id]);
+
+      return fileRes;
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   find: async function (id) {
@@ -78,6 +104,16 @@ module.exports = {
                   GROUP BY file_mimetype;`;
 
     const [rows] = await con.promise().query(sql, [id]);
+
+    return rows;
+  },
+
+  findByTasks: async function (task_id) {
+    const sql = `SELECT files.id AS id, files.title, files.size, files.file_mimetype, files.created_at FROM tasks_has_files
+                  INNER JOIN tasks on tasks_has_files.tasks_id = tasks.id
+                  INNER JOIN files ON tasks_has_files.files_id = files.id
+                   WHERE tasks_has_files.tasks_id = ?`;
+    const [rows] = await con.promise().query(sql, [task_id]);
 
     return rows;
   },
@@ -111,6 +147,14 @@ module.exports = {
     const sql = `UPDATE files SET folders_id = ? WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, [folder_id, id]);
+
+    return rows;
+  },
+
+  ejectFile: async function (file_id, task_id) {
+    const sql = `DELETE FROM tasks_has_files WHERE files_id = ? AND tasks_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [file_id, task_id]);
 
     return rows;
   },

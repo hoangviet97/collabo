@@ -1,9 +1,10 @@
-import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, DELETE_FILE } from "../../actions/types";
+import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, DELETE_FILE, GET_TASK_FILES, UPLOAD_ATTACH_FILE, EJECT_FILE } from "../../actions/types";
 import { file } from "../../types/types";
 
 const initialState = {
   files: [],
   folder_files: [],
+  task_files: [],
   fileDetail: {},
   loading: false,
   statistics: [],
@@ -19,7 +20,13 @@ function fileReducer(state = initialState, action: any) {
         ...state,
         loading: false,
         files: [...state.files, payload],
-        total: state.total + payload.size
+        total: state.total + parseInt(payload.size)
+      };
+    case UPLOAD_ATTACH_FILE:
+      return {
+        ...state,
+        loading: false,
+        task_files: [...state.task_files, payload]
       };
     case GET_FILES:
       const filteredFiles = payload.filter((item: file) => item.folders_id === null);
@@ -27,6 +34,12 @@ function fileReducer(state = initialState, action: any) {
       return {
         ...state,
         files: filteredFiles
+      };
+    case GET_TASK_FILES:
+      return {
+        ...state,
+        task_files: payload,
+        loading: false
       };
     case GET_FOLDER_FILES:
       return {
@@ -40,7 +53,7 @@ function fileReducer(state = initialState, action: any) {
       return {
         ...state,
         statistics: payload,
-        total: fileSum
+        total: parseInt(fileSum)
       };
     case MOVE_TO_FOLDER:
       return {
@@ -55,7 +68,13 @@ function fileReducer(state = initialState, action: any) {
     case DELETE_FILE:
       return {
         ...state,
-        files: state.files.filter((item: file) => item.id !== payload)
+        task_files: state.task_files.filter((item: any) => item.id !== payload),
+        files: state.files.filter((item: any) => item.id !== payload)
+      };
+    case EJECT_FILE:
+      return {
+        ...state,
+        task_files: state.task_files.filter((item: any) => item.id !== payload)
       };
     case FILE_LOADING:
       return {

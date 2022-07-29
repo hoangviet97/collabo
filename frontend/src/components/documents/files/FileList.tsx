@@ -53,7 +53,7 @@ const FileList = () => {
       title: "Created",
       dataIndex: "created_at",
       key: "created",
-      render: (text: any, record: any) => moment(record.created_at).startOf("hour").fromNow()
+      render: (text: any, record: any) => moment(record.created_at).format("MMM Do YY, h:mm")
     },
     {
       title: "",

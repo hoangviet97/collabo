@@ -1,7 +1,7 @@
 import React, { useState, FC } from "react";
 import { Modal, Button, Input, Form, message } from "antd";
 import { createMessage } from "../../actions/message";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { PlusCircleOutlined, UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import PollEditor from "../poll/PollEditor";
 
@@ -15,6 +15,7 @@ interface Props {
 const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) => {
   const { TextArea } = Input;
   const dispatch = useDispatch();
+  const user = useSelector((state: RootStateOrAny) => state.auth.user);
   const [value, setValue] = useState<string>("");
   const [pollWindow, setPollWindow] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
@@ -24,7 +25,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
     if (value.length < 1) {
       message.error("Text cannot be empty!");
     } else {
-      dispatch(createMessage({ project_id: project, text: value, question: question, options: options }));
+      dispatch(createMessage({ project_id: project, text: value, question: question, options: options, user: user }));
       setValue("");
       setQuestion("");
       setOptions([]);
@@ -38,9 +39,9 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
   };
 
   return (
-    <Modal visible={visible} onCancel={handleCancel} onOk={handleOk} footer={null} width="60%">
+    <Modal visible={visible} onCancel={handleCancel} onOk={handleOk} footer={null} width="50%">
       <div style={{ padding: "30px 15px" }}>
-        <TextArea style={{ fontSize: "20px" }} value={value} onChange={(e) => setValue(e.target.value)} placeholder="Controlled autosize" autoSize={{ minRows: 5, maxRows: 8 }} />
+        <TextArea style={{ fontSize: "20px" }} value={value} onChange={(e) => setValue(e.target.value)} placeholder="Enter your main text" autoSize={{ minRows: 5, maxRows: 8 }} />
         <footer style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
           <div>
             <Button onClick={() => setPollWindow(true)}>

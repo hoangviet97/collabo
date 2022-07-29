@@ -37,11 +37,8 @@ const Messages: FC<Props> = ({ match }) => {
   return (
     <Container size="30">
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "40px" }}>
-        <div className="messages__editor" style={{ display: "flex", width: "50%" }}>
-          <Avatar size={50}>
-            <AvatarIcon name={profile} />
-          </Avatar>
-          <Input onClick={openModal} style={{ borderRadius: "20px", padding: "0 15px", marginLeft: "10px" }} />
+        <div className="messages__editor" style={{ width: "100%", textAlign: "center" }}>
+          <Input onClick={openModal} placeholder="Add new message..." style={{ textAlign: "center", borderRadius: "12px", width: "400px", padding: "10px 25px" }} />
         </div>
         <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           {loading

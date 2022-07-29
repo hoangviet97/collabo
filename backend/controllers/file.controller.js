@@ -6,11 +6,20 @@ require("dotenv").config();
 
 module.exports = {
   // register new user
-  upload: function (req, res) {
-    File.upload2(req.params.project, req.body, req.file, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err);
-      return res.json(result);
-    });
+  upload: async function (req, res) {
+    try {
+      return res.json(await File.upload3(req.params.project, req.file));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  uploadAttachment: async function (req, res) {
+    try {
+      return res.json(await File.uploadAttachment(req.params.project, req.file, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   getAll: async function (req, res) {
@@ -32,6 +41,15 @@ module.exports = {
   getAllByFolder: async function (req, res) {
     try {
       return res.json(await File.findByFolder(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  getAllByTask: async function (req, res) {
+    console.log(".....mmm");
+    try {
+      return res.json(await File.findByTasks(req.params.id));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -67,5 +85,13 @@ module.exports = {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
+  },
+
+  ejectFile: async function (req, res) {
+    try {
+      return res.json(await File.ejectFile(req.params.id, req.params.task));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

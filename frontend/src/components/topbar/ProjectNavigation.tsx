@@ -28,7 +28,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const [showIconTab, setIconTab] = useState<boolean>(false);
   const [projectDescription, setProjectDescription] = useState<string>("");
   const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
-  const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
+  const [iconColorSelection, setIconColorSelection] = useState("");
 
   useEffect(() => {
     setProjectName(currentProject.name);
@@ -101,6 +101,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
 
   const handleIconColor = (color: string) => {
     setIconColorSelection(color);
+    console.log(color);
     dispatch(updateColor({ project_id: currentProject.id, color: color }));
   };
 
@@ -108,16 +109,8 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
     dispatch(updateStatus({ project_id: currentProject.id, status: e.target.value }));
   };
 
-  const budgetChangeHandle = (e: any) => {
-    setTotalBudget(e);
-  };
-
   const currencyHandle = (value: string) => {
     dispatch(setCurrency({ project_id: currentProject.id, currency: value }));
-  };
-
-  const onBudgetBlur = () => {
-    dispatch(setBudget({ project_id: currentProject.id, budget: totalBudget }));
   };
 
   const projectInfoMenu = (
@@ -136,13 +129,13 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
         <div className="single-navigation">
           <div className="single-navigation__identity">
             <div className="single-navigation__icon">
-              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null ? currentProject.color : "grey" }}>
+              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null || currentProject.color !== undefined ? currentProject.color : "grey" }}>
                 <AvatarIcon name={currentProject.name} />
               </div>
             </div>
             <div className="single-navigation__title">
               <div>
-                <span style={{ marginRight: "4px" }}>{currentProject && currentProject.name}</span>
+                <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
                 <InfoCircleOutlined onClick={() => setIsModalVisible(true)} />
               </div>
             </div>
@@ -201,7 +194,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                   <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: 99999, backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
                     <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                       {colorList.map((item: any, index: number) => (
-                        <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                        <div onClick={() => handleIconColor(item.code)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
                       ))}
                     </div>
                   </div>
@@ -218,8 +211,6 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                 <TextArea rows={4} value={projectDescription} placeholder="Set new description..." />
               </Form.Item>
               <Form.Item>
-                <label style={{ display: "block" }}>Project budget</label>
-                <Input style={{ width: "40%", marginRight: "10px" }} type="number" value={totalBudget} onBlur={onBudgetBlur} onChange={(e) => setTotalBudget(e.target.value)} />
                 <Select defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
                   <Option value="czk">CZK</Option>
                   <Option value="usd">USD</Option>

@@ -16,6 +16,7 @@ router.patch("/:project/tasks/:id/priority", [auth], taskController.updatePriori
 router.patch("/:project/tasks/:id/start", auth, taskController.updateStartDate);
 router.patch("/:project/tasks/:id/end", auth, taskController.updateEndDate);
 router.get("/:project/tasks/assignees", auth, taskController.getAllAssignees);
+router.get("/:project/tasks/assignees/:id", auth, taskController.getAssigneeTasks);
 router.post("/:project/tasks/:id/assignees/:userId", [auth, permit("Owner", "Admin")], taskController.createAssignee);
 router.delete("/:project/tasks/:id/assignees/:assigneeId", [auth], taskController.deleteAssignee);
 router.delete("/:project/tasks/:id", [auth], taskController.delete);

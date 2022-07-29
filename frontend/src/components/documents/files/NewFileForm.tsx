@@ -2,10 +2,14 @@ import React, { useState, useRef, FC } from "react";
 import { Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { uploadFile } from "../../../actions/file";
+import { uploadFile, uploadAttachFile } from "../../../actions/file";
 import { useParams } from "react-router-dom";
 
-const NewFileForm = () => {
+interface Props {
+  task?: string;
+}
+
+const NewFileForm: FC<Props> = ({ task }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [file, setFile] = useState<any | null>(null); // state for storing actual image
@@ -47,7 +51,11 @@ const NewFileForm = () => {
         formData.append("description", description);
         setErrorMsg("");
 
-        dispatch(uploadFile({ project_id: params.id, formData: formData }));
+        if (task === undefined || task === null || task.length === 0) {
+          dispatch(uploadFile({ project_id: params.id, formData: formData }));
+        } else {
+          dispatch(uploadAttachFile({ project_id: params.id, formData: formData, task: task }));
+        }
 
         if (!loading) {
           setFile(null);

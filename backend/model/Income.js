@@ -30,7 +30,19 @@ module.exports = {
 
     const [rows] = await con.promise().query(sql, [project]);
 
+    const check = await this.getSum(project);
+
+    console.log(check);
+
     return rows;
+  },
+
+  getSum: async function (project) {
+    const sql = `SELECT SUM(incomes.amount) AS sum FROM incomes WHERE projects_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [project]);
+
+    return rows[0].sum;
   },
 
   delete: async function (id) {

@@ -56,5 +56,13 @@ module.exports = {
     const [rows] = await con.promise().query(sql, id);
 
     return rows;
+  },
+
+  findById: async function (id) {
+    const sql = `SELECT * FROM time_records WHERE members_id = ?`;
+
+    const [rows] = await con.promise().query(sql, id);
+
+    return rows;
   }
 };

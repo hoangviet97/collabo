@@ -65,28 +65,36 @@ const SessionItem = () => {
       ) : (
         <>
           <header>
-            <span style={{ fontSize: "20px" }}>{single.name}</span>
-            <div>
-              <span>Date: {moment(single.created_at).format("MMM Do YYYY")}</span>
+            <div style={{ fontSize: "32px", marginBottom: "30px" }}>{single.name}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridAutoRows: "auto", marginBottom: "25px" }}>
+              <div>
+                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Date</div>
+                <div>{moment(single.created_at).format("MMM Do YYYY")}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Time</div>
+                <div>
+                  {moment(single.start).format("LT")} - {moment(single.end).format("LT")}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Place</div>
+                <div>{single.place === undefined || single.place === null || single.place.length < 1 ? "No place specified" : single.place}</div>
+              </div>
             </div>
             <div>
-              <span>Time: {single.created_at}</span>
-            </div>
-            <div>
-              <span>Place: {single.place === undefined || single.place === null || single.place.length < 1 ? "No place specified" : single.place}</span>
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
-              <div>Participants:&nbsp;&nbsp;</div>
-              <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-                {participants.map((item: any, index: number) => (
-                  <Tooltip title={item.email} placement="top">
-                    <Avatar key={index} style={{ backgroundColor: "#87d068" }}>
-                      <AvatarIcon name={item.firstname} />
-                    </Avatar>
-                  </Tooltip>
-                ))}
-              </Avatar.Group>
+              <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Participants</div>
+              <div>
+                <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
+                  {participants.map((item: any, index: number) => (
+                    <Tooltip title={item.email} placement="top">
+                      <Avatar key={index} style={{ backgroundColor: "#87d068" }}>
+                        <AvatarIcon name={item.firstname} />
+                      </Avatar>
+                    </Tooltip>
+                  ))}
+                </Avatar.Group>
+              </div>
             </div>
           </header>
           <Divider />

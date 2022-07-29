@@ -10,6 +10,14 @@ module.exports = {
     });
   },
 
+  create2: async function (req, res) {
+    try {
+      return res.json(await Message.create(req.body, req.params.project, req.member));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   // register new user
   getAll: function (req, res) {
     Message.find(req.params.project, (err, result) => {

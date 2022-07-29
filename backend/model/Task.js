@@ -59,8 +59,8 @@ module.exports = {
   getStatusGroup: async function (id) {
     const sql = `SELECT task_status.name, COUNT(tasks.id) AS total
                     FROM tasks
-                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
-                    INNER JOIN sections ON tasks.sections_id = sections.id
+                    RIGHT JOIN task_status ON tasks.task_status_id = task_status.id
+                    RIGHT JOIN sections ON tasks.sections_id = sections.id
                     WHERE sections.projects_id = ?
                     GROUP BY task_status.name`;
 
@@ -71,7 +71,6 @@ module.exports = {
 
   updateStatus: async function (statusId, id) {
     const sql = `UPDATE tasks SET task_status_id = ? WHERE id = ?`;
-
     const [rows] = await con.promise().query(sql, [statusId, id]);
 
     return rows;
@@ -190,6 +189,19 @@ module.exports = {
                   WHERE members.projects_id = ?`;
 
     const [rows] = await con.promise().query(sql, id);
+
+    return rows;
+  },
+
+  getAssingeeTasks: async function (project, id) {
+    const sql = `SELECT tasks.id AS task_id, tasks.task_status_id AS status_id, users.id AS user_id
+                  FROM users_has_tasks 
+                  INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                  INNER JOIN users ON users_has_tasks.users_id = users.id
+                  INNER JOIN members ON members.users_id = users.id 
+                  WHERE members.id = ? AND members.projects_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [id, project]);
 
     return rows;
   },

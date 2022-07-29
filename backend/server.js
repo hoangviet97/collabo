@@ -11,6 +11,7 @@ require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT | 9000;
+const client_url = "http://localhost:3001";
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +25,7 @@ connection.connect(function (err) {
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000"
+    origin: client_url
   }
 });
 
@@ -33,20 +34,17 @@ let clients = [];
 io.on("connection", (socket) => {
   socket.on("client-connect", (data) => {
     clients.push({ socketId: socket.id, email: data });
-    console.log(clients);
   });
 
   socket.on("send-invitation", (data) => {
     const client1 = clients.find((x) => x.email === data);
-    console.log(clients);
-    console.log(data);
+
     if (client1) {
       io.to(client1.socketId).emit("increment-unread");
     }
   });
 
   socket.on("disconnect", (reason) => {
-    console.log(reason);
     const arr = clients.filter((item) => item.socketId !== socket.id);
     clients = arr;
   });

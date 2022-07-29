@@ -13,7 +13,8 @@ module.exports = function (req, res, next) {
         console.log(dbResponse);
         next();
       } else {
-        return apiResponse.unauthorizedResponse(res, "Access denied");
+        console.log(dbResponse.length);
+        return apiResponse.ErrorResponse(res, "Access denied");
       }
     });
   } catch (err) {

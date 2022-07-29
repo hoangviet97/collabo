@@ -2,7 +2,8 @@ import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_F
 import { member } from "../../types/types";
 
 const initialState = {
-  members: []
+  members: [],
+  review_members: []
 };
 
 function memberReducer(state = initialState, action: any) {

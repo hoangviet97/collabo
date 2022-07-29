@@ -85,6 +85,11 @@ module.exports = {
     });
   },
 
+  create2: async function (body, project, member) {
+    const newMessage = new Message(uuid4(), project, member, body.text);
+    const sql = `INSERT INTO messages (id, projects_id, members_id, text, created_at) VALUES (?, ?, ?, ?, ?)`;
+  },
+
   find: async function (id, result) {
     const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname
                     FROM messages 

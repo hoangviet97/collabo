@@ -77,14 +77,14 @@ module.exports = {
 
   // get current project
   setBudgetIncome: async function (id, income) {
-    const sql = `SELECT budget AS budget FROM projects WHERE id = ?`;
+    const sql = `SELECT budget AS FROM projects WHERE id = ?`;
     const [curr] = await con.promise().query(sql, [id]);
 
     const res = curr[0].budget;
-    const newBudget = res;
+    const newBudget = res + income;
 
     const sql2 = `UPDATE projects SET budget = ? WHERE id = ?`;
-    const [updated] = await con.promise().query(sql2, [30, id]);
+    const [updated] = await con.promise().query(sql2, [newBudget, id]);
 
     return updated;
   },

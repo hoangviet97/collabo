@@ -59,6 +59,7 @@ export const CREATE_TASK_FAIL: string = "CREATE_TASK_FAIL";
 export const GET_PROJECT_TASKS: string = "GET_PROJECT_TASKS";
 export const GET_PROJECT_TASKS_FAIL: string = "GET_PROJECT_TASKS_FAIL";
 export const GET_CALENDAR_TASKS: string = "GET_CALENDAR_TASKS";
+export const GET_ASSIGNEE_TASKS: string = "GET_ASSIGNEE_TASKS";
 export const GET_PERSONAL_TASKS: string = "GET_PERSONAL_TASKS";
 export const GET_PERSONAL_TASKS_FAIL: string = "GET_PERSONAL_TASK_FAIL";
 export const SET_BUDGET: string = "SET_BUDGET";
@@ -106,12 +107,15 @@ export const GET_TALKING_POINTS_FAIL: string = "GET_TALKING_POINTS_FAIL";
 export const UPDATE_CHECK_STATUS: string = "UPDATE_CHECK_STATUS";
 
 export const UPLOAD_FILE: string = "UPLOAD_FILE";
+export const UPLOAD_ATTACH_FILE: string = "UPLOAD_ATTACH_FILE";
 export const GET_FILE_TYPES: string = "GET_FILE_TYPES";
 export const GET_FOLDER_FILES: string = "GET_FOLDER_FILES";
+export const GET_TASK_FILES: string = "GET_TASK_FILES";
 export const GET_FILES: string = "GET_FILES";
 export const MOVE_TO_FOLDER: string = "MOVE_TO_FOLDER";
 export const FILE_DETAIL: string = "FILE_DETAIL";
 export const DELETE_FILE: string = "DELETE_FILE";
+export const EJECT_FILE: string = "EJECT_FILE";
 
 export const CREATE_FOLDER: string = "CREATE_FOLDER";
 export const CREATE_FOLDER_FAIL: string = "CREATE_FOLDER_FAIL";
@@ -124,6 +128,7 @@ export const DELETE_FOLDER: string = "DELETE_FOLDER";
 export const CREATE_TIME_RECORD: string = "CREATE_TIME_RECORD";
 export const CREATE_TIME_RECORD_FAIL: string = "CREATE_TIME_RECORD_FAIL";
 export const GET_TIME_RECORDS: string = "GET_TIME_RECORDS";
+export const GET_TIME_RECORDS_BY_USER: string = "GET_TIME_RECORDS_BY_USERS";
 export const GET_TIME_RECORDS_FAIL: string = "GET_TIME_RECORDS_FAIL";
 export const TIME_RECORD_SUM: string = "TIME_RECORD_SUM";
 
@@ -155,12 +160,16 @@ export const CREATE_INCOME: string = "CREATE_INCOME";
 export const GET_INCOMES: string = "GET_INCOMES";
 export const DELETE_INCOME: string = "DELETE_INCOME";
 export const INCOME_FAIL: string = "INCOME_FAIL";
+export const INCOME_SUM: string = "INCOME_SUM";
 
 export const CREATE_REVIEW: string = "CREATE_REVIEW";
 export const GET_REVIEWS: string = "GET_REVIEWS";
+export const GET_PROJECT_REVIEWS: string = "GET_PROJECT_REVIEWS";
+export const GET_REVIEW_PANEL: string = "GET_REVIEW_PANEL";
 export const DELETE_REVIEW: string = "DELETE_REVIEW";
 export const REVIEW_FAIL: string = "REVIEW_FAIL";
 export const ACCEPT_REVIEW: string = "ACCEPT_REVIEW";
+export const DECREASE_REVIEW: string = "DECREASE_REVIEW";
 
 export const FOLDER_LOADING: string = "FOLDER_LOADING";
 export const SESSION_LOADING: string = "SESSION_LOADING";

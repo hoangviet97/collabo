@@ -7,3 +7,21 @@
   align-items: center;
   padding: 0 30px;
 }
+
+.expense {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 15px 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.income {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 15px 28px;
+  display: flex;
+  justify-content: space-between;
+}

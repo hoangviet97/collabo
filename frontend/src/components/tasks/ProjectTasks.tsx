@@ -1,7 +1,6 @@
 import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
-import { createSection } from "../../actions/section";
-import { getSections, deleteSection } from "../../actions/section";
+import { createSection, getSections, deleteSection } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
@@ -25,8 +24,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const { Panel } = Collapse;
   const { Text } = Typography;
   const { Option } = Select;
-
-  const [selectedStatus, setSelectedStatus] = useState("0");
 
   // Selectors
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);

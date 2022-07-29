@@ -1,0 +1,18 @@
+.dashboard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar main";
+}
+
+.content-side {
+  grid-area: main;
+}
+
+.mainContent {
+  background-color: $secondaty-blue-color;
+  width: 100%;
+  padding-top: 60px;
+  min-height: 100vh;
+}

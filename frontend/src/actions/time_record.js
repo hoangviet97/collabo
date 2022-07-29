@@ -1,4 +1,4 @@
-import { CREATE_TIME_RECORD, TIME_RECORD_SUM, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_FAIL } from "./types";
+import { CREATE_TIME_RECORD, TIME_RECORD_SUM, CREATE_TIME_RECORD_FAIL, GET_TIME_RECORDS, GET_TIME_RECORDS_BY_USER, GET_TIME_RECORDS_FAIL } from "./types";
 import axios from "axios";
 
 export const createTimeRecord = ({ start, end, task_id, total, project_id }) => async (dispatch) => {
@@ -14,6 +14,15 @@ export const getTimeRecords = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:9000/api/${project_id}/times/personal`);
     dispatch({ type: GET_TIME_RECORDS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_TIME_RECORDS_FAIL });
+  }
+};
+
+export const getMemberRecords = ({ project_id, id }) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/times/${id}`);
+    dispatch({ type: GET_TIME_RECORDS_BY_USER, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_TIME_RECORDS_FAIL });
   }

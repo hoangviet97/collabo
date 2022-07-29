@@ -1,4 +1,4 @@
-import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING, INCOME_FAIL } from "./types";
+import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING, INCOME_FAIL, INCOME_SUM } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -18,6 +18,16 @@ export const getAllIncomes = ({ project_id }) => async (dispatch) => {
     dispatch(setLoading());
     const res = await axios.get(`http://localhost:9000/api/${project_id}/incomes`);
     dispatch({ type: GET_INCOMES, payload: res.data });
+  } catch (err) {
+    dispatch({ type: INCOME_FAIL });
+  }
+};
+
+export const getIncomeSum = ({ project_id }) => async (dispatch) => {
+  try {
+    dispatch(setLoading());
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/incomes/sum`);
+    dispatch({ type: INCOME_SUM, payload: res.data });
   } catch (err) {
     dispatch({ type: INCOME_FAIL });
   }

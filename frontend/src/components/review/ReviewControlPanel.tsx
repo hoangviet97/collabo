@@ -1,10 +1,12 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect, FC, useState } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { getMembers } from "../../actions/member";
+import { getReviewPanel } from "../../actions/review";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar, Input, Badge } from "antd";
+import ReviewLink from "./ReviewLink";
 
 interface Props {
   match: any;
@@ -14,31 +16,16 @@ const ReviewControlPanel: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const location = useLocation();
-  const members = useSelector((state: RootStateOrAny) => state.member.members);
-
-  useEffect(() => {
-    dispatch(getMembers({ project_id: params.id }));
-    console.log(location);
-  }, []);
+  const [memberList, setMemberList] = useState([]);
+  const reviewMembers = useSelector((state: RootStateOrAny) => state.review.review_panel);
 
   return (
     <div className="review__panel">
+      <h2>Reviews</h2>
       <Input placeholder="Search members by name or e-mail" />
       <div style={{ marginTop: "30px" }}>
-        {members.map((member: member) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
-              <Avatar>
-                <AvatarIcon name={member.firstname} />
-              </Avatar>
-              <div style={{ marginLeft: "10px" }}>
-                <Link to={`${match.url}/${member.id}`}>
-                  {member.firstname} {member.lastname}
-                </Link>
-              </div>
-            </div>
-            <Badge count={2} />
-          </div>
+        {reviewMembers.map((member: any) => (
+          <ReviewLink member={member} match={match} />
         ))}
       </div>
     </div>

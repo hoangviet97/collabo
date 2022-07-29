@@ -8,7 +8,6 @@ import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
 import colorList from "../utils/Colors";
-import { truncade } from "../utils/textManipulation";
 import { project, member } from "../../types/types";
 
 interface Props {
@@ -38,9 +37,10 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
           </Col>
         </Row>
       </div>
-      <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
-        <h2>{truncade(project.name, 40)}</h2>
-        <span style={{ marginTop: "-10px", color: "#747d8c" }}>{project.description === null ? "No description" : project.description}</span>
+      <div className="project-card__body" style={{ width: "80%", overflowX: "hidden" }} onClick={() => projectCardHandler(project.id)}>
+        <div className="text-ellipsis" style={{ fontSize: "20px" }}>
+          {project.name}
+        </div>
       </div>
       <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>

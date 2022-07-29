@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../actions/auth";
-import { ImportOutlined, BellOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
+import { ImportOutlined, BellOutlined, HomeOutlined, SettingOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 
 interface Props {
@@ -23,6 +23,9 @@ const Sidebar: FC<Props> = ({ unread }) => {
         <nav className="side-nav">
           <Link className="side-nav__link" to="/">
             <HomeOutlined className="side-nav__icon" />
+          </Link>
+          <Link className="side-nav__link" to="/my-tasks">
+            <ProfileOutlined className="side-nav__icon" />
           </Link>
           <Link className="side-nav__link" to="/notify">
             <Badge count={unread}>

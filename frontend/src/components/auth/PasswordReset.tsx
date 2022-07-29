@@ -25,7 +25,7 @@ const Verification: FC<Props> = ({ match }) => {
       <div style={{ marginTop: "30px" }}>
         <Link to="/login">
           <Button size="large" type="primary">
-            Login to your account
+            Change
           </Button>
         </Link>
       </div>

@@ -2,6 +2,19 @@
   position: relative;
   min-height: calc(100vh - 120px);
 
+  &__stats-content {
+    display: flex;
+    justify-content: justify-content;
+    position: relative;
+    width: 100%;
+    margin-left: 10px;
+  }
+
+  &__stats-item {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
   &__storage-tab {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding: 30px;

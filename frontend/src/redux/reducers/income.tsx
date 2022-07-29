@@ -1,9 +1,10 @@
-import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING } from "../../actions/types";
+import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING, INCOME_SUM } from "../../actions/types";
 import { folder } from "../../types/types";
 
 const initialState = {
   incomes: [],
-  loading: false
+  loading: false,
+  sum: 0
 };
 
 function incomeReducer(state = initialState, action: any) {
@@ -11,15 +12,22 @@ function incomeReducer(state = initialState, action: any) {
 
   switch (type) {
     case CREATE_INCOME:
+      const newSum = state.sum + parseInt(payload.amount);
       return {
         ...state,
-        incomes: [...state.incomes, payload]
+        incomes: [...state.incomes, payload],
+        sum: newSum
       };
     case GET_INCOMES:
       return {
         ...state,
         incomes: payload,
         loading: false
+      };
+    case INCOME_SUM:
+      return {
+        ...state,
+        sum: parseInt(payload)
       };
     case INCOME_LOADING:
       return {

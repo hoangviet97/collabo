@@ -60,6 +60,9 @@ module.exports = {
   },
 
   updateRole: async function (role_id, id) {
+    const ownerRole = "0";
+    const sqlCheck = `SELECT * FROM members WHERE roles_id = ${ownerRole} AND projects_id = ${project}`;
+
     const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, [role_id, id]);

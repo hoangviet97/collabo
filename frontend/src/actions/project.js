@@ -33,12 +33,12 @@ export const getProject = ({ project_id, push }) => async (dispatch) => {
       setAuthToken(localStorage.getItem("token"));
     }
     dispatch(setProjectLoading());
-    const res = await axios.get(`http://localhost:9000/api/projects/${project_id}`);
+    const res = await axios.get(`http://localhost:9000/api/${project_id}`);
     dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
+    console.log(res);
   } catch (err) {
     push("/");
     message.error("Project doesn't exists or unauthorized access!");
-    //dispatch({ type: ERROR_SINGLE_PROJECT });
   }
 };
 
@@ -80,11 +80,9 @@ export const deleteProject = ({ project_id, push }) => async (dispatch) => {
 };
 
 export const updateColor = ({ project_id, color }) => async (dispatch) => {
-  console.log(color.code);
   try {
-    const res = await axios.patch(`http://localhost:9000/api/${project_id}/color`, { color: color.code });
-    dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color.code } });
-    console.log(res);
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/color`, { color: color });
+    dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color } });
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }

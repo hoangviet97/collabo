@@ -14,6 +14,7 @@ export type task = {
   id: string;
   sections_id: string;
   priorityId: string;
+  priorityName: string;
   sectionsName: string;
   statusId: string;
   statusName: string;

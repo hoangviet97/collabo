@@ -6,13 +6,16 @@
   gap: 15px 20px;
   grid-template-areas: "panel cont";
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 160px);
+
+  &__link {
+  }
 
   &__panel {
     grid-area: panel;
     background-color: white;
     padding: 20px 20px;
-    height: calc(100% - 120px);
+    height: calc(100vh - 120px);
     width: 350px;
     position: fixed;
     border-radius: 12px;
@@ -23,8 +26,18 @@
     grid-area: cont;
     min-height: calc(100vh - 120px);
     padding: "0 15px";
+    overflow: scroll;
   }
 
   &__item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
   }
 }

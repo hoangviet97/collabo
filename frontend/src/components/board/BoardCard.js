@@ -9,6 +9,7 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
   const dispatch = useDispatch();
   const [priorityColor, setPriorityColor] = useState("");
   const [dayColor, setDayColor] = useState("black");
+  const today = new Date();
 
   useEffect(() => {
     switch (priority) {
@@ -52,9 +53,9 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
         </Popconfirm>
       </div>
       <div className="board-card-description">{description !== null ? description : <span style={{ color: "#bdc3c7" }}>No description</span>}</div>
-      <div className="board-card-footer" style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className="board-card-footer" style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
         <Tag color={priorityColor}>{priority}</Tag>
-        <div className="board-card-">{due_date === null ? "" : <span style={{ fontSize: "12px", color: dayColor }}>{moment(due_date).diff(moment(), "days") > 0 ? "days left" : `${moment(due_date).diff(moment(), "days") * -1} days behind`}</span>}</div>
+        <div className="board-card-">{due_date === null ? "" : moment(due_date).diff(moment(), "days") > 0 ? <span style={{ color: "green" }}>{`${moment(due_date).diff(moment(), "days")} days left`}</span> : <span style={{ color: "red" }}>{`${moment(due_date).diff(moment(), "days") * -1} days behind`}</span>}</div>
       </div>
     </div>
   );

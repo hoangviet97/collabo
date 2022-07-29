@@ -20,6 +20,14 @@ module.exports = {
     }
   },
 
+  getSum: async function (req, res) {
+    try {
+      return res.json(await Income.getSum(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   delete: async function (req, res) {
     try {
       return res.json(await Income.delete(req.params.id));

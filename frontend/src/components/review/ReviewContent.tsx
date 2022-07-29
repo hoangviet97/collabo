@@ -14,7 +14,7 @@ const ReviewContent: FC<Props> = ({ match }) => {
   }, []);
 
   return (
-    <div className="review__content" style={{ minHeight: "calc(100vh -120px)", overflow: "scroll" }}>
+    <div className="review__content">
       <Switch>
         <Route exact path={`${match.path}/`} component={ReviewDefault} />
         <Route exact path={`${match.path}/:memberId`} component={ReviewList} />
