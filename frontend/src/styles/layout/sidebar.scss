@@ -1,6 +1,6 @@
 .sidebar {
   grid-area: sidebar;
-  background-color: white;
+  background-color: #222f3e;
   border-right: 0.5px solid rgb(228, 228, 228);
   height: 100%;
   width: 70px;
@@ -13,6 +13,7 @@
   z-index: 999;
 
   &__logo {
+    color: rgb(199, 199, 199);
     font-size: 40px;
   }
 }
@@ -25,6 +26,6 @@
 
   &__icon {
     font-size: 23px;
-    color: #b4babe;
+    color: rgb(199, 199, 199);
   }
 }

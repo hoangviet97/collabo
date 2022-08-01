@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Breadcrumb, Button, Modal, Input, Avatar, Select, Divider, Typography, Tag } from "antd";
 import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
-import AvatarIcon from "../utils/AvatarIcon";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createTaskTag } from "../../actions/tag";
-import { getFilesByTask, deleteFile } from "../../actions/file";
+import { getFilesByTask, getAllFiles } from "../../actions/file";
 import { setBudget, setProgress, setDescription, updateTaskPriority, updateTaskStatus } from "../../actions/task";
 import AvatarPreview from "../avatar/AvatarPreview";
-import AssigneesModal from "./AssigneesModal";
 import NewFileForm from "../documents/files/NewFileForm";
 import FileTypeIcon from "../utils/FileTypeIcon";
 import FileMiniCard from "../documents/files/FileMiniCard";
 import TaskDate from "../tasks/TaskDate";
 import { getPriorityName } from "../../helpers/converter";
+import ExistingFilesModal from "./ExistingFilesModal";
 
 const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible, closeModal }) => {
   const [taskTitle, setTaskTitle] = useState("");
@@ -25,8 +24,8 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   const [tagSelected, setTagSelected] = useState("");
   const [children, setChildren] = useState([]);
   const [assigneeBase, setAssigneeBase] = useState([]);
-  const [AssignessModalVisible, setAssignessModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [existingFiles, setExistingFiles] = useState(false);
   const files = useSelector((state) => state.file.task_files);
 
   const { TextArea } = Input;
@@ -42,6 +41,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
     setTagGroup(task.tags);
     setTaskDescription(task.description);
     dispatch(getFilesByTask({ id: task.id, project_id: projectId }));
+    dispatch(getAllFiles({ project_id: projectId }));
 
     return () => {
       setTaskTitle("");
@@ -91,6 +91,10 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
     dispatch(createTaskTag({ project_id: projectId, task: task.id, tag: str[0] }));
     setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
     setTagSelected("");
+  };
+
+  const existingFilesModalHandler = () => {
+    setExistingFiles(false);
   };
 
   return (
@@ -183,7 +187,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                 <Button shape="round" type="dashed" onClick={() => setIsModalVisible(true)}>
                   + New File
                 </Button>
-                <Button shape="round" type="dashed">
+                <Button shape="round" type="dashed" onClick={() => setExistingFiles(true)}>
                   + Existing File
                 </Button>
               </div>
@@ -200,6 +204,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
       <Modal title="Basic Modal" width="500px" visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
         <NewFileForm task={task.id} />
       </Modal>
+      <ExistingFilesModal isVisible={existingFiles} close={existingFilesModalHandler} />
     </Modal>
   );
 };

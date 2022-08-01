@@ -45,7 +45,7 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
               <Avatar.Group>
                 {votes.map((item: any, index: number) => (
                   <Avatar size="large" key={index}>
-                    <AvatarIcon name={item.firstname} />
+                    <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                   </Avatar>
                 ))}
               </Avatar.Group>

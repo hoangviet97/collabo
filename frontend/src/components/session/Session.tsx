@@ -33,7 +33,7 @@ const Session: FC<Props> = ({ match }) => {
   };
 
   return (
-    <Container size="30">
+    <Container size="50">
       <div className="session">
         <ControlPanel addNewSession={addNewSession} match={match} />
         <SessionContent match={match} />

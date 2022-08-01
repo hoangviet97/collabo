@@ -5,7 +5,7 @@ module.exports = {
   // Create new projects
   create: async function (req, res) {
     try {
-      return res.json(await Session.create(req.body.session, req.params.project));
+      return res.json(await Session.create(req.body.session, req.params.project, req.member));
     } catch (err) {
       console.log(err);
       return apiResponse.ErrorResponse(res, err.message);

@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, AUTH_LOADING, LOGOUT, CHANGE_FIRSTNAME, CHANGE_LASTNAME } from "../../actions/types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, AUTH_LOADING, LOGOUT, CHANGE_FIRSTNAME, CHANGE_LASTNAME, CHANGE_COLOR } from "../../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -36,6 +36,11 @@ function authReducer(state = initialState, action: any) {
       return {
         ...state,
         user: { ...state.user, firstname: payload }
+      };
+    case CHANGE_COLOR:
+      return {
+        ...state,
+        user: { ...state.user, color: payload }
       };
     case CHANGE_LASTNAME:
       return {

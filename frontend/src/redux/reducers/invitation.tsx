@@ -1,4 +1,4 @@
-import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, CREATE_INVITATION_FAIL, GET_PROJECT_INVITATIONS, UPDATE_SEEN_INVITATION, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../../actions/types";
+import { CREATE_INVITATION, ACCEPT_INVITATION, ADD_INVITATION, DELETE_INVITATION, CREATE_INVITATION_FAIL, GET_PROJECT_INVITATIONS, UPDATE_SEEN_INVITATION, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../../actions/types";
 import { Invitation } from "../../types/types";
 
 const initialState = {
@@ -15,6 +15,11 @@ function invitationReducer(state = initialState, action: any) {
       return {
         ...state,
         sended: [...state.sended, payload]
+      };
+    case ADD_INVITATION:
+      return {
+        ...state,
+        invitations: [...state.invitations, payload]
       };
     case CREATE_INVITATION_FAIL:
       return {

@@ -1,8 +1,10 @@
 import React, { useState, FC } from "react";
 import { Divider, message, Input, Avatar } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { changeFirstname, changeLastname } from "../../actions/auth";
 import AvatarIcon from "../utils/AvatarIcon";
+import ColorModal from "../modal/ColorModal";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   profile: any;
@@ -13,6 +15,9 @@ const AccountDetails: FC<Props> = ({ profile }) => {
   const [firstname, setFirstname] = useState(profile.firstname);
   const [lastname, setLastname] = useState(profile.lastname);
   const [email, setEmail] = useState(profile.email);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const user = useSelector((state: RootStateOrAny) => state.auth.user);
 
   const firstnameHandler = () => {
     if (firstname !== profile.firstname) {
@@ -31,6 +36,10 @@ const AccountDetails: FC<Props> = ({ profile }) => {
     }
   };
 
+  const modalHandler = (val: boolean) => {
+    setIsModalVisible(val);
+  };
+
   return (
     <div style={{ marginTop: "10px" }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -41,9 +50,9 @@ const AccountDetails: FC<Props> = ({ profile }) => {
       <div style={{ width: "60%" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Avatar</div>
-          <div style={{ display: "flex", flexDirection: "row", flex: "1" }}>
-            <Avatar style={{ width: "100px", height: "100px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <AvatarIcon name={firstname} size={50} />
+          <div onClick={() => setIsModalVisible(true)} style={{ display: "flex", flexDirection: "row", flex: "1" }}>
+            <Avatar style={{ backgroundColor: user.color === null || user.color.length < 1 ? color.normal_orange : user.color, width: "100px", height: "100px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+              <AvatarIcon firstname={firstname} lastname={lastname} size={50} />
             </Avatar>
           </div>
         </div>
@@ -76,6 +85,7 @@ const AccountDetails: FC<Props> = ({ profile }) => {
           </div>
         </div>
       </div>
+      <ColorModal isVisible={isModalVisible} close={modalHandler} />
     </div>
   );
 };

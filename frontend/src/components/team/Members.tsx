@@ -43,7 +43,7 @@ const Members = () => {
       render: (text: string, record: any) => (
         <Space size="middle">
           <Avatar size="large">
-            <AvatarIcon name={record.firstname} />
+            <AvatarIcon firstname={record.firstname} lastname={record.lastname} />
           </Avatar>
           <a onClick={() => setDrawerVisible(true)}>
             {record.firstname} {record.lastname}

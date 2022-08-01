@@ -37,7 +37,7 @@ const FileHomePage = () => {
   return (
     <div>
       <div className="files__homepage">
-        <div style={{ gridArea: "content", maxHeight: "calc(100vh - 120px)", overflowY: "scroll" }}>
+        <div style={{ gridArea: "content", maxHeight: "calc(100vh - 180px)", overflowY: "scroll" }}>
           <FolderList showModal={showModal} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">
@@ -65,7 +65,7 @@ const FileHomePage = () => {
           </Modal>
           <FileList />
         </div>
-        <div style={{ gridArea: "stats", backgroundColor: "white", borderRadius: "10px", height: "calc(100vh - 120px)", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "20px" }}>
+        <div style={{ gridArea: "stats", backgroundColor: "white", borderRadius: "10px", height: "calc(100vh - 180px)", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "20px" }}>
           <FilesStatistics />
         </div>
       </div>

@@ -19,7 +19,7 @@ const Comment: FC<Props> = ({ data }) => {
       <div className="comment__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <div className="comment__author" style={{ display: "flex", alignItems: "center" }}>
           <Avatar size={50} style={{ marginRight: "10px" }}>
-            <AvatarIcon name={data.firstname} />
+            <AvatarIcon firstname={data.firstname} lastname={data.lastname} />
           </Avatar>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <span style={{ color: "#636e72", fontSize: "16px" }}>{`${data.firstname} ${data.lastname}`}</span>

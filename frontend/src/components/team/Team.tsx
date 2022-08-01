@@ -28,8 +28,8 @@ const Team = () => {
   );
 
   return (
-    <Container size="30">
-      <div className="project-team">
+    <Container size="50">
+      <div className="team">
         {user_role === "Member" ? (
           ""
         ) : (

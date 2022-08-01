@@ -1,5 +1,7 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const Log = require("./Log");
+const Member = require("./Member");
 
 class Task {
   constructor(id, sections_id, priorityId, statusId, title, description, start_date, due_date, budget, progress) {
@@ -50,6 +52,34 @@ module.exports = {
                     INNER JOIN task_status ON tasks.task_status_id = task_status.id
                     INNER JOIN priorities ON tasks.priorities_id = priorities.id
                     WHERE sections.projects_id = ? ORDER BY tasks.created_at`;
+
+    const [rows] = await con.promise().query(sql, [id]);
+
+    return rows;
+  },
+
+  getPersonalTasks: async function (project, id) {
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.budget, tasks.progress, tasks.created_at 
+                    FROM users_has_tasks 
+                    INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                    INNER JOIN sections ON tasks.sections_id = sections.id 
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    WHERE users_has_tasks.users_id = ? AND sections.projects_id = ? ORDER BY tasks.created_at`;
+
+    const [rows] = await con.promise().query(sql, [id, project]);
+
+    return rows;
+  },
+
+  // get task
+  getOne: async function (id) {
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.budget, tasks.progress, tasks.created_at 
+                    FROM sections 
+                    INNER JOIN tasks ON sections.id = tasks.sections_id 
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    WHERE tasks.id = ?`;
 
     const [rows] = await con.promise().query(sql, [id]);
 
@@ -139,14 +169,23 @@ module.exports = {
     });
   },
 
-  addAssignee: async function (user_id, task_id, result) {
+  addAssignee: async function (user_id, sender, task_id, project_id, result) {
     const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (?, ?)`;
-    con.query(sql, [user_id, task_id], (err, res) => {
+    con.query(sql, [user_id, task_id], async (err, res) => {
       if (err) {
         console.log(err);
         result(err, null);
         return;
       }
+
+      const member = await Member.findMember(user_id, project_id);
+      console.log(member[0].id);
+
+      const singleTaskRow = await this.getOne(task_id);
+
+      const text = `assigned you a task`;
+
+      const logRow = await Log.create(project_id, member[0].id, sender, "task", singleTaskRow[0].title, text);
 
       const data = { user_id: user_id, task_id: task_id };
 
@@ -155,7 +194,7 @@ module.exports = {
   },
 
   getAssingee: async function (body, result) {
-    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email, users.color
                   FROM users_has_tasks 
                   INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
                   INNER JOIN users ON users_has_tasks.users_id = users.id
@@ -181,7 +220,7 @@ module.exports = {
   },
 
   getAllAssingees: async function (id) {
-    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email 
+    const sql = `SELECT tasks_id, users.id AS user_id, users.firstname, users.lastname, users.email, users.color
                   FROM users_has_tasks 
                   INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
                   INNER JOIN users ON users_has_tasks.users_id = users.id

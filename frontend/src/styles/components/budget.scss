@@ -24,4 +24,17 @@
   padding: 15px 28px;
   display: flex;
   justify-content: space-between;
+
+  &__form {
+    width: 35%;
+    height: 35vh;
+    background-color: white;
+    border-radius: 12px;
+    margin-left: 15px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
 }

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Select, Divider, Skeleton } from "antd";
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { section, tag, task } from "../../types/types";
 import TaskItem from "./TaskItem";
 import TaskCard from "./TaskCard";
 import { createSection, getSections, deleteSection } from "../../actions/section";
-import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
+import { getPersonalTasks, createTask, getAllAssignees } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
@@ -23,6 +23,7 @@ const PersonalTasks = () => {
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
   const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
+  const auth = useSelector((state: RootStateOrAny) => state.auth.user);
 
   const [taskVisual, setTaskVisual] = useState<string | null>("");
   const [taskContainer, setTaskContainer] = useState([]);
@@ -46,7 +47,7 @@ const PersonalTasks = () => {
     dispatch(getSections({ project_id: id }));
     dispatch(getMembers({ project_id: id }));
     dispatch(getAllAssignees({ project_id: id }));
-    dispatch(getProjectTasks({ project_id: id }));
+    dispatch(getPersonalTasks({ project_id: id, id: auth.id }));
     dispatch(getTagsByTasks({ project_id: id }));
     dispatch(getTags({ project_id: id }));
   };
@@ -211,7 +212,7 @@ const PersonalTasks = () => {
                 </div>
               </div>
               <Divider />
-              <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
+              <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
                 {sections.map((section: section, index: number) => (
                   <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
                     <div className={`task__visual-${taskVisual}`}>

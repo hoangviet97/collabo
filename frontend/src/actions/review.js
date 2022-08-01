@@ -40,15 +40,14 @@ export const getReviewPanel = ({ project_id }) => async (dispatch) => {
     dispatch(setReviewsLoading());
     const res = await axios.get(`http://localhost:9000/api/${project_id}/reviews/members`);
     dispatch({ type: GET_REVIEW_PANEL, payload: res.data });
-    console.log(res);
   } catch (err) {
     dispatch({ type: REVIEW_FAIL });
   }
 };
 
-export const acceptReview = ({ project_id, id, task_id, member_id }) => async (dispatch) => {
+export const acceptReview = ({ project_id, id, task_id, member_id, comment }) => async (dispatch) => {
   try {
-    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/accept`, { task_id });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/accept`, { task_id, member_id, comment });
     message.success("Review accepted!");
     dispatch({ type: DELETE_REVIEW, payload: { id, member_id } });
     dispatch({ type: DECREASE_REVIEW, payload: { id, member_id } });
@@ -57,9 +56,9 @@ export const acceptReview = ({ project_id, id, task_id, member_id }) => async (d
   }
 };
 
-export const deleteReview = ({ project_id, id, task_id, member_id }) => async (dispatch) => {
+export const deleteReview = ({ project_id, id, task_id, member_id, comment }) => async (dispatch) => {
   try {
-    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/return`, { task_id });
+    const res = await axios.post(`http://localhost:9000/api/${project_id}/reviews/${id}/return`, { task_id, member_id, comment });
     message.success("Review returned!");
     dispatch({ type: DELETE_REVIEW, payload: { id, member_id } });
     dispatch({ type: DECREASE_REVIEW, payload: { id, member_id } });

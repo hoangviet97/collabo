@@ -16,6 +16,7 @@ import { task, member } from "../../types/types";
 import moment from "moment";
 import TaskDate from "./TaskDate";
 import { getPriorityName } from "../../helpers/converter";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   showModal: any;
@@ -112,8 +113,8 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
               {assignees.map((assignee: any, index: number) => (
                 <Popover key={index} content={assignee.firstname}>
-                  <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
-                    <AvatarIcon name={assignee.firstname} />
+                  <Avatar key={index} style={{ backgroundColor: assignee.color === null || assignee.color.length < 1 ? color.normal_orange : assignee.color }}>
+                    <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
                   </Avatar>
                 </Popover>
               ))}

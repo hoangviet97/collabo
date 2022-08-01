@@ -3,7 +3,7 @@ import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { TeamOutlined, ClockCircleOutlined, FormOutlined, BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
 import { getMemberRecords } from "../../actions/time_record";
-import { getAssigneeTasks } from "../../actions/task";
+import { getPersonalTasks, getProjectTasks } from "../../actions/task";
 import moment from "moment";
 import { Column } from "@ant-design/plots";
 import { Divider } from "antd";
@@ -18,11 +18,11 @@ const Report = () => {
   const [underReview, setUnderReview] = useState<number>(0);
   const time_records = useSelector((state: RootStateOrAny) => state.time_record.records);
   const week_records = useSelector((state: RootStateOrAny) => state.time_record.week_records);
-  const tasks = useSelector((state: RootStateOrAny) => state.task.member_tasks);
+  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
 
   useEffect(() => {
     dispatch(getMemberRecords({ project_id: params.id, id: params.memberId }));
-    dispatch(getAssigneeTasks({ project_id: params.id, id: params.memberId }));
+    dispatch(getPersonalTasks({ project_id: params.id, id: params.memberId }));
   }, [params.memberId]);
 
   useEffect(() => {

@@ -12,7 +12,6 @@ export const uploadFile = ({ project_id, formData }) => async (dispatch) => {
     });
     dispatch({ type: UPLOAD_FILE, payload: res.data });
     message.success("File successfuly uploaded");
-    console.log(res);
   } catch (err) {
     console.log(err);
   }
@@ -28,7 +27,6 @@ export const uploadAttachFile = ({ project_id, formData, task }) => async (dispa
     });
     dispatch({ type: UPLOAD_ATTACH_FILE, payload: res.data });
     message.success("File successfuly uploaded");
-    console.log(res);
   } catch (err) {
     console.log(err);
   }
@@ -39,7 +37,6 @@ export const deleteFile = ({ project_id, id }) => async (dispatch) => {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/files/${id}`);
     dispatch({ type: DELETE_FILE, payload: id });
     message.success("File deleted successfuly!");
-    console.log(res);
   } catch (err) {
     console.log(err.response);
   }
@@ -50,7 +47,6 @@ export const ejectFile = ({ project_id, id, task_id }) => async (dispatch) => {
     const res = await axios.delete(`http://localhost:9000/api/${project_id}/tasks/${task_id}/files/${id}/eject`);
     dispatch({ type: EJECT_FILE, payload: id });
     message.success("File ejected successfuly!");
-    console.log(res);
   } catch (err) {
     console.log(err.response);
   }
@@ -80,7 +76,6 @@ export const getFilesByTask = ({ id, project_id }) => async (dispatch) => {
     dispatch(setFileLoading());
     const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks/${id}/files`);
     dispatch({ type: GET_TASK_FILES, payload: res.data });
-    console.log(res);
   } catch (err) {
     console.log(err);
   }

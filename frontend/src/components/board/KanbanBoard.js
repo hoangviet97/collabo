@@ -78,7 +78,7 @@ const KanbanBoard = ({ match }) => {
 
   return (
     <div className="board" style={{ overflowX: "scroll" }}>
-      <Container size="30">
+      <Container size="50">
         <Board
           onCardDragEnd={handleCardMove}
           renderCard={({ id, title, description, priority, due_date }, { dragging }) => <BoardCard id={id} title={title} description={description} priority={priority} due_date={due_date} dragging={dragging} showModalHandler={showModalHandler} />}

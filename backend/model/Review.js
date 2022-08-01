@@ -1,6 +1,7 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
 const Task = require("./Task");
+const Log = require("./Log");
 
 class Review {
   constructor(id, member_id, task_id, message, accepted) {
@@ -68,21 +69,35 @@ module.exports = {
     return rows;
   },
 
-  delete: async function (id, task_id) {
+  delete: async function (project_id, id, task_id, member_id, comment, sender) {
     const sql = `DELETE FROM reviews WHERE id = ?`;
-
+    // Delete review
     const [rows] = await con.promise().query(sql, [id]);
-
+    // Update task status to In Progress
     const taskRow = await Task.updateStatus("1", task_id);
+
+    const singleTaskRow = await Task.getOne(task_id);
+    console.log(singleTaskRow[0].title);
+
+    const text = `rejected your submitted task`;
+
+    const logRow = await Log.create(project_id, member_id, sender, "task", singleTaskRow[0].title, text, comment);
 
     return rows;
   },
 
-  accept: async function (id, task_id) {
+  accept: async function (project_id, id, task_id, member_id, comment, sender) {
     const sql = `DELETE FROM reviews WHERE id = ?`;
+    // Delete Review
     const [rows] = await con.promise().query(sql, [id]);
-
+    // Update task status to Completed
     const taskRow = await Task.updateStatus("3", task_id);
+
+    const singleTaskRow = await Task.getOne(task_id);
+
+    const text = `accepted your submitted task`;
+
+    const logRow = await Log.create(project_id, member_id, sender, "task", singleTaskRow[0].title, text, comment);
 
     return rows;
   }

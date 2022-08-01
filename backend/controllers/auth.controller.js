@@ -41,6 +41,14 @@ module.exports = {
     }
   },
 
+  changeColor: async function (req, res) {
+    try {
+      return res.json(await User.changeColor(req.user.id, req.body.color));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   changeFirstname: async function (req, res) {
     try {
       return res.json(await User.changeFirstname(req.user.id, req.body.firstname));

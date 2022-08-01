@@ -28,8 +28,8 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
             <span style={{ fontSize: "22px", color: "black" }}>{session.name}</span>
           </Link>
         </div>
-        <div className="session-item__info">
-          <div className="session-item__date" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+        <div className="session__item__info">
+          <div className="session__item__date">
             <CalendarOutlined style={{ color: "#2f3542" }} />
             <span style={{ fontSize: "13px", color: "#2f3542" }}>{moment(session.date).format("LL")}</span>
           </div>

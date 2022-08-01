@@ -19,6 +19,14 @@ module.exports = {
     }
   },
 
+  getPersonal: async function (req, res) {
+    try {
+      return res.json(await Task.getPersonalTasks(req.params.project, req.params.member));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   getStatusGroup: async function (req, res) {
     try {
       return res.json(await Task.getStatusGroup(req.params.project));
@@ -77,7 +85,7 @@ module.exports = {
   },
 
   createAssignee: async function (req, res) {
-    Task.addAssignee(req.params.userId, req.params.id, (err, result) => {
+    Task.addAssignee(req.params.userId, req.member, req.params.id, req.params.project, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

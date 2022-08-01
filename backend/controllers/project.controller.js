@@ -35,7 +35,7 @@ module.exports = {
 
   setFavorite: async function (req, res) {
     try {
-      return res.json(await Project.setFavoriteProject(req.body.status, req.params.id));
+      return res.json(await Project.setFavoriteProject(req.body.status, req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -43,7 +43,7 @@ module.exports = {
 
   setBudget: async function (req, res) {
     try {
-      return res.json(await Project.setBudget(req.body.budget, req.params.id));
+      return res.json(await Project.setBudget(req.body.budget, req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -51,7 +51,7 @@ module.exports = {
 
   setCurrency: async function (req, res) {
     try {
-      return res.json(await Project.setCurrency(req.body.currency, req.params.id));
+      return res.json(await Project.setCurrency(req.body.currency, req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -69,7 +69,7 @@ module.exports = {
 
   updateStatus: async function (req, res) {
     try {
-      return res.json(await Project.updateStatus(req.body.status, req.params.id));
+      return res.json(await Project.updateStatus(req.body.status, req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -77,7 +77,7 @@ module.exports = {
 
   deleteProject: async function (req, res) {
     try {
-      return res.json(await Project.delete(req.params.id));
+      return res.json(await Project.delete(req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

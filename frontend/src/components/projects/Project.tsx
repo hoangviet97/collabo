@@ -1,27 +1,21 @@
 import React, { useState, useEffect, FC } from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../actions/project";
-import { getProjectTasks, getAllAssignees } from "../../actions/task";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Row, Col, Button, Avatar, Tooltip } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
-import colorList from "../utils/Colors";
 import { project, member } from "../../types/types";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   project: project;
   projectCardHandler: (project_id: string) => void;
-  setFavorite: any;
   members: member[];
 }
 
-const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members }) => {
-  const favoriteToggle = () => {
-    setFavorite({ project_id: project.id, status: project.favorite === "T" ? "F" : "T" });
-  };
-
+const Project: FC<Props> = ({ project, projectCardHandler, members }) => {
   return (
     <div className="project-card">
       <div className="project-card__header">
@@ -31,7 +25,6 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
-              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: project.favorite === "T" ? "#FFD700" : "black" }} />
               <EllipsisOutlined className="more-icon" />
             </div>
           </Col>
@@ -42,14 +35,13 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
           {project.name}
         </div>
       </div>
-      <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="project-card__footer">
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
           {members.map((item: member, index: number) => {
-            let randNum = Math.floor(Math.random() * 6);
             return (
               <Tooltip key={index} title={item.email} placement="top">
-                <Avatar style={{ backgroundColor: `${colorList.colorList[randNum].code}` }}>
-                  <AvatarIcon name={item.firstname} />
+                <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                  <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                 </Avatar>
               </Tooltip>
             );

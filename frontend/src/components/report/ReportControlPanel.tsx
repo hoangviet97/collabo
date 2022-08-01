@@ -27,7 +27,7 @@ const ReportControlPanel: FC<Props> = ({ match }) => {
         {members.map((member: member) => (
           <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
             <Avatar>
-              <AvatarIcon name={member.firstname} />
+              <AvatarIcon firstname={member.firstname} lastname={member.firstname} />
             </Avatar>
             <div style={{ marginLeft: "10px" }}>
               <Link to={`${match.url}/${member.id}`}>

@@ -8,6 +8,12 @@
     border-radius: 10px;
   }
 
+  &__collapse {
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+  }
+
   &__attachment {
     &-list {
       display: grid;

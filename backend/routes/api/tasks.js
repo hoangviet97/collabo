@@ -3,10 +3,12 @@ const taskController = require("../../controllers/task.controller");
 const auth = require("../../middleware/auth");
 const permit = require("../../middleware/permission");
 const check = require("../../middleware/checkMembership");
+const getMemberId = require("../../middleware/getMemberId");
 const router = express.Router();
 
 router.post("/:project/tasks/add", auth, taskController.create);
 router.get("/:project/tasks", [auth], taskController.getAll);
+router.get("/:project/members/:member/tasks", [auth], taskController.getPersonal);
 router.get("/:project/tasks/status-group", auth, taskController.getStatusGroup);
 router.patch("/:project/tasks/:id/budget", [auth, permit("Owner")], taskController.setBudget);
 router.patch("/:project/tasks/:id/progress", [auth], taskController.setProgress);
@@ -17,7 +19,7 @@ router.patch("/:project/tasks/:id/start", auth, taskController.updateStartDate);
 router.patch("/:project/tasks/:id/end", auth, taskController.updateEndDate);
 router.get("/:project/tasks/assignees", auth, taskController.getAllAssignees);
 router.get("/:project/tasks/assignees/:id", auth, taskController.getAssigneeTasks);
-router.post("/:project/tasks/:id/assignees/:userId", [auth, permit("Owner", "Admin")], taskController.createAssignee);
+router.post("/:project/tasks/:id/assignees/:userId", [auth, getMemberId, permit("Owner", "Admin")], taskController.createAssignee);
 router.delete("/:project/tasks/:id/assignees/:assigneeId", [auth], taskController.deleteAssignee);
 router.delete("/:project/tasks/:id", [auth], taskController.delete);
 

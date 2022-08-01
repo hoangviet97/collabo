@@ -3,6 +3,12 @@
   padding: 25px;
   border-radius: 10px;
   background-color: white;
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .projects-dimension {

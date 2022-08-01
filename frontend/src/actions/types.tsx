@@ -6,6 +6,7 @@ export const LOGIN_FAIL: string = "LOGIN_FAIL";
 export const USER_LOADED: string = "USER_LOADED";
 export const AUTH_ERROR: string = "AUTH_ERROR";
 export const AUTH_LOADING: string = "AUTH_LOADING";
+export const CHANGE_COLOR: string = "CHANGE_COLOR";
 export const CHANGE_FIRSTNAME: string = "CHANGE_FIRSTNAME";
 export const CHANGE_LASTNAME: string = "CHANGE_LASTNAME";
 export const LOGOUT: string = "LOGOUT";
@@ -13,6 +14,7 @@ export const LOGOUT: string = "LOGOUT";
 export const CREATE_PROJECT: string = "CREATE_PROJECT";
 export const CREATE_PROJECT_FAIL: string = "CREATE_PROJECT_FAIL";
 export const GET_PROJECTS: string = "GET_PROJECTS";
+export const GET_MODAL_PROJECTS: string = "GET_MODAL_PROJECTS";
 export const LOAD_PROJECTS_FAIL: string = "LOAD_PROJECTS_FAIL";
 export const GET_SINGLE_PROJECT: string = "GET_SINGLE_PROJECT";
 export const ERROR_SINGLE_PROJECT: string = "ERROR_SINGLE_PROJECT";
@@ -26,6 +28,7 @@ export const SHOW_TASK_MODAL: string = "SHOW_TASK_MODAL";
 export const CLOSE_TASK_MODAL: string = "CLOSE_TASK_MODAL";
 // MEMBERS
 export const GET_MEMBERS: string = "GET_MEMBERS";
+export const GET_MODAL_MEMBERS: string = "GET_MODAL_MEMBERS";
 export const GET_MEMBERS_FAIL: string = "GET_MEMBERS_FAIL";
 export const UPDATE_MEMBER_ROLE: string = "UPDATE_MEMBER_ROLE";
 export const UPDATE_MEMBER_ROLE_FAILED: string = "UPDATE_MEMBER_ROLE_FAILED";
@@ -73,6 +76,8 @@ export const GET_INVITATIONS_FAIL: string = "GET_INVITATIONS_FAIL";
 export const UPDATE_SEEN_INVITATION: string = "UPDATE_SEEN_INVITATION";
 export const DELETE_INVITATION: string = "DELETE_INVITATION";
 export const ACCEPT_INVITATION: string = "ACCEPT_INVITATION";
+export const ADD_INVITATION: string = "ADD_INVITATION";
+
 // FAVORITE PROJECTS
 export const SET_FAVORITE_PROJECT: string = "SET_FAVORITE_PROJECT";
 export const SET_FAVORITE_PROJECT_FAIL: string = "SET_FAVORITE_PROJECT_FAIL";
@@ -182,3 +187,5 @@ export const SECTIONS_LOADING: string = "SECTIONS_LOADING";
 export const PROJECT_LOADING: string = "PROJECT_LOADING";
 export const REVIEW_LOADING: string = "REVIEW_LOADING";
 export const REVIEWS_LOADING: string = "REVIEWS_LOADING";
+
+export const GET_LOGS: string = "GET_LOGS";

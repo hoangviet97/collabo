@@ -1,5 +1,5 @@
 @import "~antd/dist/antd.css";
-@import "./abstract/variables.scss";
+@import "./abstract/variables.module.scss";
 @import "./layout/layout.scss";
 @import "./base/_base";
 @import "./base//typography.scss";
@@ -28,6 +28,7 @@
 @import "./components/charts.scss";
 @import "./components/polls.scss";
 @import "./components/reviews.scss";
+@import "./components/logs.scss";
 
 @font-face {
   font-family: "main-font";
@@ -38,6 +39,7 @@
 
 html {
   color: #2f3542;
+  background-color: $secondaty-blue-color;
 }
 
 .name-box {

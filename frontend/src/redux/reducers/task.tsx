@@ -36,9 +36,22 @@ function taskReducer(state = initialState, action: any) {
         member_tasks: payload
       };
     case GET_STATUS_GROUP:
+      let group: any = [
+        { name: "Open", total: 0 },
+        { name: "On Hold", total: 0 },
+        { name: "Completed", total: 0 },
+        { name: "In Progress", total: 0 },
+        { name: "Canceled", total: 0 },
+        { name: "Under Review", total: 0 }
+      ];
+
+      for (let i = 0; i < payload.length; i++) {
+        group.find((x: any) => x.name === payload[i].statusName).total += 1;
+      }
+
       return {
         ...state,
-        statusGroup: payload
+        statusGroup: group
       };
     case GET_ASSIGNEES_FAIL:
       return {

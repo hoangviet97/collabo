@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Tabs } from "antd";
 import Container from "../utils/Container";
-import AccountSettings from "./AccountSettings";
 import { useSelector, RootStateOrAny } from "react-redux";
 import AccountDetails from "./AccountDetails";
 import PasswordSettings from "./PasswordSettings";

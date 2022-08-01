@@ -7,6 +7,7 @@ import { getNote, updateNote, createNote } from "../../actions/note";
 import { Divider, Input, Checkbox, Skeleton, Avatar, Tooltip } from "antd";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
+import color from "../../styles/abstract/variables.module.scss";
 
 const SessionItem = () => {
   const dispatch = useDispatch();
@@ -65,31 +66,31 @@ const SessionItem = () => {
       ) : (
         <>
           <header>
-            <div style={{ fontSize: "32px", marginBottom: "30px" }}>{single.name}</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridAutoRows: "auto", marginBottom: "25px" }}>
+            <div className="session__item-name">{single.name}</div>
+            <div className="session__item-grid">
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Date</div>
+                <div className="session__item-col">Date</div>
                 <div>{moment(single.created_at).format("MMM Do YYYY")}</div>
               </div>
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Time</div>
+                <div className="session__item-col">Time</div>
                 <div>
                   {moment(single.start).format("LT")} - {moment(single.end).format("LT")}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Place</div>
+                <div className="session__item-col">Place</div>
                 <div>{single.place === undefined || single.place === null || single.place.length < 1 ? "No place specified" : single.place}</div>
               </div>
             </div>
             <div>
-              <div style={{ fontSize: "12px", fontWeight: 500, color: "#a4b0be", textTransform: "uppercase" }}>Participants</div>
+              <div className="session__item-col">Participants</div>
               <div>
                 <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
                   {participants.map((item: any, index: number) => (
                     <Tooltip title={item.email} placement="top">
-                      <Avatar key={index} style={{ backgroundColor: "#87d068" }}>
-                        <AvatarIcon name={item.firstname} />
+                      <Avatar key={index} style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                        <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                       </Avatar>
                     </Tooltip>
                   ))}

@@ -34,7 +34,7 @@ const BudgetPage = ({ match }) => {
 
   return (
     <div>
-      <Container size="30">
+      <Container size="50">
         <div style={{ display: "flex", width: "100%" }}>
           <header className="budget__header" style={{ width: "65%" }}>
             <div style={{ display: "flex" }}>

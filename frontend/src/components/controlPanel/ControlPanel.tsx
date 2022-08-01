@@ -27,7 +27,7 @@ const ControlPanel: FC<Props> = ({ match }) => {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
               <Avatar>
-                <AvatarIcon name={member.firstname} />
+                <AvatarIcon firstname={member.firstname} lastname={member.lastname} />
               </Avatar>
               <div style={{ marginLeft: "10px" }}>
                 <Link to={`${match.url}/${member.id}`}>

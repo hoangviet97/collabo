@@ -5,7 +5,6 @@ import { message } from "antd";
 export const createFolder = ({ title, project_id }) => async (dispatch) => {
   try {
     const res = await axios.post(`http://localhost:9000/api/${project_id}/folders/add`, { title });
-    console.log(res);
     dispatch({ type: CREATE_FOLDER, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_FOLDERS_FAIL });

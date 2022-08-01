@@ -38,13 +38,16 @@ module.exports = {
     const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id, seen) VALUES (?, ?, ?, ?, ?, ?)`;
     const invitation = new Invitation(uuid4(), sender, user, project);
     const [rows] = await con.promise().query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project, invitation.seen]);
+    const invRow = await this.findOne(invitation.id);
 
-    return invitation;
+    return invRow;
   },
 
   // Get all user's invitations
   find: async function (user) {
-    const sql = `SELECT invitations.*, users.firstname, users.lastname, projects.name AS project_name FROM invitations INNER JOIN users ON invitations.sender = users.id INNER JOIN projects ON invitations.projects_id = projects.id WHERE receiver = ?`;
+    const sql = `SELECT invitations.*, users.firstname, users.lastname, projects.name AS project_name FROM invitations 
+                  INNER JOIN users ON invitations.sender = users.id 
+                  INNER JOIN projects ON invitations.projects_id = projects.id WHERE receiver = ?`;
 
     const [rows] = await con.promise().query(sql, [user]);
 
@@ -69,12 +72,15 @@ module.exports = {
     return rows;
   },
 
-  findOne: async function (id, project) {
-    const sql = `SELECT * FROM invitations WHERE receiver = ? AND projects_id = ?`;
+  findOne: async function (id) {
+    const sql = `SELECT invitations.*, users.firstname, users.lastname, projects.name AS project_name FROM invitations 
+                  INNER JOIN users ON invitations.sender = users.id 
+                  INNER JOIN projects ON invitations.projects_id = projects.id
+                  WHERE invitations.id = ?`;
 
-    const [rows] = await con.promise().query(sql, [id, project]);
+    const [rows] = await con.promise().query(sql, [id]);
 
-    return rows;
+    return rows[0];
   },
 
   // Get all invitations

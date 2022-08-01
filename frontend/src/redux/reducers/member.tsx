@@ -1,8 +1,9 @@
-import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER } from "../../actions/types";
+import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, GET_MODAL_MEMBERS } from "../../actions/types";
 import { member } from "../../types/types";
 
 const initialState = {
   members: [],
+  modalMembers: [],
   review_members: []
 };
 
@@ -14,6 +15,11 @@ function memberReducer(state = initialState, action: any) {
       return {
         ...state,
         members: payload
+      };
+    case GET_MODAL_MEMBERS:
+      return {
+        ...state,
+        modalMembers: payload
       };
     case GET_MEMBERS_FAIL:
       return {

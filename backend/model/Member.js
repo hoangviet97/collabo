@@ -23,7 +23,7 @@ module.exports = {
   },
 
   find: async function (project) {
-    const sql = `SELECT members.id, users.id AS user_id, users.email, users.firstname, users.lastname, roles.id AS role_id, roles.name AS role, members.created_at 
+    const sql = `SELECT members.id, users.id AS user_id, users.email, users.firstname, users.lastname, users.color, roles.id AS role_id, roles.name AS role, members.created_at 
                   FROM members 
                   INNER JOIN users ON members.users_id = users.id 
                   INNER JOIN roles ON members.roles_id = roles.id 
@@ -35,7 +35,7 @@ module.exports = {
   },
 
   findAll: async function (userId, result) {
-    const sql = `SELECT members.id, members.projects_id AS project_id, users.id AS user_id, users.email, users.firstname, users.lastname
+    const sql = `SELECT members.id, members.projects_id AS project_id, users.id AS user_id, users.email, users.firstname, users.lastname, users.color
                   FROM members 
                   INNER JOIN users ON members.users_id = users.id 
                   `;

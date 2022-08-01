@@ -8,9 +8,10 @@ import Overview from "../overview/Overview";
 import KanbanBoard from "../board/KanbanBoard";
 import ProjectCalendar from "../calendar/ProjectCalendar";
 import Documents from "../documents/Documents";
-import Invitations from "../invitations/Invitations";
+import Notifications from "../notifications/Notifications";
 import Team from "../team/Team";
 import BudgetPage from "../budget/BudgetPage";
+import Activities from "../activities/Activities";
 import Tags from "../tags/Tags";
 import Messages from "../messages/Messages";
 import ReportPage from "../report/ReportPage";
@@ -48,11 +49,12 @@ const MainContent: FC<Props> = ({ match, history }) => {
         <Route exact path="/settings" component={UserSettings} />
         <ProtectedProjectRoute exact path="/:id/tasks" component={ProjectTasks} />
         <ProtectedProjectRoute exact path="/:id/overview" component={Overview} />
-        <Route exact path="/notify" component={Invitations} />
+        <Route exact path="/notify" component={Notifications} />
         <Route exact path="/my-tasks" component={PersonalTasks} />
         <ProtectedProjectRoute exact path="/:id/calendar" component={ProjectCalendar} />
         <ProtectedProjectRoute exact path="/:id/board" component={KanbanBoard} />
         <ProtectedProjectRoute exact path="/:id/tags" component={Tags} />
+        <ProtectedProjectRoute exact path="/:id/activities" component={Activities} />
         <ProtectedProjectRoute exact path="/:id/budget" component={BudgetPage} />
         <ProtectedProjectRoute path="/:id/reviews" component={ReviewPage} />
         <ProtectedProjectRoute path="/:id/documents" component={Documents} />

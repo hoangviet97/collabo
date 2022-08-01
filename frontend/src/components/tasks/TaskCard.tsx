@@ -48,7 +48,7 @@ const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assigne
                 {assignees.map((assignee: any, index: any) => (
                   <Popover content={assignee.firstname}>
                     <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
-                      <AvatarIcon name={assignee.firstname} />
+                      <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
                     </Avatar>
                   </Popover>
                 ))}

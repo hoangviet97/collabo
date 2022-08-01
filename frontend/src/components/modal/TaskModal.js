@@ -3,8 +3,8 @@ import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar } from "antd";
 import { closeTaskModal } from "../../actions/modal";
-import { getMembers } from "../../actions/member";
-import { getProjects } from "../../actions/project";
+import { getModalMembers } from "../../actions/member";
+import { getModalProjects } from "../../actions/project";
 import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
@@ -13,16 +13,16 @@ import { withRouter } from "react-router-dom";
 const TaskModal = () => {
   const dispatch = useDispatch();
   const isVisible = useSelector((state) => state.modal.taskModal);
-  const projects = useSelector((state) => state.project.projects);
+  const projects = useSelector((state) => state.project.modalProjects);
   const sections = useSelector((state) => state.section.modalSections);
-  const members = useSelector((state) => state.member.members);
+  const members = useSelector((state) => state.member.modalMembers);
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;
   const { Text } = Typography;
 
   useEffect(() => {
-    projects && dispatch(getProjects());
+    projects && dispatch(getModalProjects());
   }, []);
 
   let path = window.location.pathname;
@@ -33,8 +33,9 @@ const TaskModal = () => {
   };
 
   const projectSelected = (value) => {
-    dispatch(getModalSections({ id: value }));
-    dispatch(getMembers({ id: value }));
+    console.log(value);
+    dispatch(getModalSections({ project_id: value }));
+    dispatch(getModalMembers({ project_id: value }));
   };
 
   const onFinish = (fieldsValue) => {
@@ -165,12 +166,6 @@ const TaskModal = () => {
               </Col>
             </Row>
           </div>
-          <Form.Item>
-            <Button style={{ border: "none", padding: 0 }}>
-              <PlusOutlined />
-              Add checklist
-            </Button>
-          </Form.Item>
           <Button htmlType="submit">Create</Button>
         </Form>
       </Modal>

@@ -10,10 +10,10 @@ interface Props {
 
 const ReviewLink: FC<Props> = ({ member, match }) => {
   return (
-    <div className="review__link" style={{ display: "flex", justifyContent: "space-between" }}>
+    <div className="review__link">
       <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
         <Avatar>
-          <AvatarIcon name={member.firstname} />
+          <AvatarIcon firstname={member.firstname} lastname={member.lastname} />
         </Avatar>
         <div style={{ marginLeft: "10px" }}>
           <Link to={`${match.url}/${member.member_id}`}>

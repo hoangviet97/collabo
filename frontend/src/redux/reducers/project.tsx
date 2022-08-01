@@ -1,10 +1,11 @@
-import { CREATE_PROJECT, RESET_AUTH, GET_PROJECT_AUTH, CREATE_PROJECT_FAIL, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "../../actions/types";
+import { CREATE_PROJECT, RESET_AUTH, GET_PROJECT_AUTH, CREATE_PROJECT_FAIL, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL, GET_MODAL_PROJECTS } from "../../actions/types";
 import { project } from "../../types/types";
 
 const initialState = {
   loading: false,
   authorized: false,
   projects: [],
+  modalProjects: [],
   currentProject: {}
 };
 
@@ -36,6 +37,12 @@ function projectReducer(state = initialState, action: any) {
       return {
         ...state,
         projects: payload,
+        loading: false
+      };
+    case GET_MODAL_PROJECTS:
+      return {
+        ...state,
+        modalProjects: payload,
         loading: false
       };
     case UPDATE_PROJECT_COLOR:

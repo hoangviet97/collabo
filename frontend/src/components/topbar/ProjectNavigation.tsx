@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
-import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
@@ -39,45 +39,51 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const moreContent = (
     <div>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/sessions`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/sessions`}>
           <FundProjectionScreenOutlined className="single-navigation__link-icon" />
           <span>Sessions</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/tracker`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tracker`}>
           <DashboardOutlined className="single-navigation__link-icon" />
           <span>Time Tracker</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/documents`}>
           <FileTextOutlined className="single-navigation__link-icon" />
           <span>Files</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/report`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/report`}>
           <PieChartOutlined className="single-navigation__link-icon" />
           <span>Report</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/tags`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tags`}>
           <TagsOutlined className="single-navigation__link-icon" />
           <span>Tags</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/budget`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/budget`}>
           <DollarOutlined className="single-navigation__link-icon" />
           <span>Budget</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/reviews`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/reviews`}>
           <FundOutlined className="single-navigation__link-icon" />
           <span>Reviews</span>
+        </Link>
+      </p>
+      <p>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/activities`}>
+          <EyeOutlined className="single-navigation__link-icon" />
+          <span>Activities</span>
         </Link>
       </p>
     </div>
@@ -130,7 +136,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
           <div className="single-navigation__identity">
             <div className="single-navigation__icon">
               <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null || currentProject.color !== undefined ? currentProject.color : "grey" }}>
-                <AvatarIcon name={currentProject.name} />
+                <AvatarIcon firstname={currentProject.name} />
               </div>
             </div>
             <div className="single-navigation__title">

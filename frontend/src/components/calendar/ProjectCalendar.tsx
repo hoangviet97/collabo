@@ -22,8 +22,8 @@ const ProjectCalendar: FC<Props> = ({ match }) => {
 
   return (
     <div className="calendar">
-      <Container size="30">
-        <Calendar style={{ height: "calc(100vh - 120px)" }} localizer={localizer} events={tasks} startAccessor="start_date" endAccessor="due_date" />
+      <Container size="50">
+        <Calendar style={{ height: "calc(100vh - 180px)" }} localizer={localizer} events={tasks} startAccessor="start_date" endAccessor="due_date" />
       </Container>
     </div>
   );

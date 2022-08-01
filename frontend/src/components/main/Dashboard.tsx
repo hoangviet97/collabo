@@ -10,7 +10,7 @@ import { io } from "socket.io-client";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import SocketContext from "../../context/SocketContext";
 import { useParams } from "react-router-dom";
-import { getAllInvitations } from "../../actions/invitation";
+import { getAllInvitations, addInvitation } from "../../actions/invitation";
 import { notification } from "antd";
 
 const Dashboard = () => {
@@ -26,11 +26,13 @@ const Dashboard = () => {
     // store client to arr in backend when user connect
     socket.emit("client-connect", profile.email);
     // listen to show notification and increase num sidebar
-    socket.on("increment-unread", () => {
+    socket.on("increment-unread", (data) => {
       notification.open({
         message: "Project invitation",
         description: "You have been invited to project."
       });
+      console.log(data);
+      dispatch(addInvitation(data));
       setUnreadNum((prev) => prev + 1);
     });
   }, []);
@@ -42,7 +44,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <SocketContext.Provider value={socket}>
-        <Sidebar unread={unreadNum} />
+        <Sidebar />
         <div className="content-side">
           <Topbar />
           <MainContent />

@@ -1,14 +1,18 @@
 import React, { FC } from "react";
 
 interface Props {
-  name: string;
+  firstname: string;
+  lastname?: string;
   size?: number;
 }
 
-const AvatarIcon: FC<Props> = ({ name, size }) => {
+const AvatarIcon: FC<Props> = ({ firstname, lastname, size }) => {
   return (
     <>
-      <span style={{ fontSize: size ? `${size}px` : "20px" }}>{name && name[0]}</span>
+      <div style={{ fontSize: size ? `${size}px` : "18px" }}>
+        <span>{firstname[0]}</span>
+        <span style={{ textTransform: "uppercase" }}>{lastname && lastname[0]}</span>
+      </div>
     </>
   );
 };

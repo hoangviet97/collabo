@@ -22,7 +22,7 @@ const IncomeForm = () => {
   };
 
   return (
-    <div style={{ width: "35%", height: "35vh", backgroundColor: "white", borderRadius: "12px", marginLeft: "15px", padding: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div className="income__form">
       <div>
         <h2 style={{ marginBottom: "25px" }}>Add new income</h2>
         <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />

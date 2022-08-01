@@ -1,5 +1,6 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const Log = require("./Log");
 
 class Session {
   constructor(id, projectId, name, date, start, end, description, place) {
@@ -18,8 +19,8 @@ class Session {
 module.exports = {
   Session,
   // create new member by user or by admin
-  create: async function (session, project) {
-    const newSession = new Session(uuid4(), project, session.name, session.date, session.start, session.end, session.description, session.place);
+  create: async function (session, project_id, sender) {
+    const newSession = new Session(uuid4(), project_id, session.name, session.date, session.start, session.end, session.description, session.place);
     const sql = `INSERT INTO sessions (id, projects_id, name, date, start, end, description, created_at, place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const [rows] = await con.promise().query(sql, [newSession.id, newSession.projectId, newSession.name, newSession.date, newSession.start, newSession.end, newSession.description, newSession.created_at, newSession.place]);
@@ -32,6 +33,10 @@ module.exports = {
 
       const sql2 = "INSERT INTO members_has_sessions (members_id, sessions_id) VALUES ?";
       const res = await con.promise().query(sql2, [arr]);
+
+      const text = `invites you to a session`;
+
+      const logRow = await Log.create(project_id, session.participants, sender, "session", session.name, text, "");
 
       return newSession;
     }
@@ -62,7 +67,7 @@ module.exports = {
   },
 
   findParticipants: async function (id) {
-    const sql = `SELECT users.firstname, users.lastname, users.email
+    const sql = `SELECT users.firstname, users.lastname, users.email, users.color
                   FROM members_has_sessions 
                   INNER JOIN members ON members_has_sessions.members_id = members.id
                   INNER JOIN users ON members.users_id = users.id

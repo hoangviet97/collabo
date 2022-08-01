@@ -19,8 +19,8 @@ const ReviewPage: FC<Props> = ({ match }) => {
   }, []);
 
   return (
-    <Container size="30">
-      <div className="review" style={{ minHeight: "calc(100vh - 120px)" }}>
+    <Container size="50">
+      <div className="review" style={{ minHeight: "calc(100vh - 180px)" }}>
         <ReviewControlPanel match={match} />
         <ReviewContent match={match} />
       </div>

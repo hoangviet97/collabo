@@ -54,7 +54,7 @@ const Tags: FC<Props> = ({ match }) => {
   }, []);
 
   return (
-    <Container size="30">
+    <Container size="50">
       <div>
         <header>
           <Button type="primary" onClick={() => setModalVisible((prev) => !prev)}>

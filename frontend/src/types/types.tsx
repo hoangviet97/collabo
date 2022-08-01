@@ -44,6 +44,7 @@ export type member = {
   email: string;
   firstname: string;
   lastname: string;
+  color: string;
 };
 
 export type section = {

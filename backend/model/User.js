@@ -16,6 +16,7 @@ class User {
     this.created_at = new Date();
     this.verification_status = "pending";
     this.token = uuid4();
+    this.color = "";
   }
 }
 
@@ -36,10 +37,9 @@ module.exports = {
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(data.password, salt);
 
-        const sql = `INSERT INTO users (id, email, password, firstname, lastname, created_at, verification_status, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-        con.query(sql, [newUser.id, newUser.email, newUser.password, newUser.firstname, newUser.lastname, newUser.created_at, newUser.verification_status, newUser.token], (err, res) => {
+        const sql = `INSERT INTO users (id, email, password, firstname, lastname, created_at, verification_status, token, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        con.query(sql, [newUser.id, newUser.email, newUser.password, newUser.firstname, newUser.lastname, newUser.created_at, newUser.verification_status, newUser.token, newUser.color], (err, res) => {
           if (err) {
-            console.log("error: ", err);
             result(err, null);
             return;
           }
@@ -115,7 +115,7 @@ module.exports = {
 
   // get current logged in user --> client loaduser()
   getUser: async function (id) {
-    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.created_at FROM users WHERE id = ?`;
+    const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.color, users.created_at FROM users WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, id);
 
@@ -162,6 +162,14 @@ module.exports = {
         return;
       });
     });
+  },
+
+  changeColor: async function (id, color) {
+    const sql = `UPDATE users SET color = ? WHERE id = ?`;
+
+    const [rows] = await con.promise().query(sql, [color, id]);
+
+    return rows;
   },
 
   changeFirstname: async function (id, name) {

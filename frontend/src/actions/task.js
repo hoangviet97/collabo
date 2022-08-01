@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "./types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, DELETE_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES, GET_ASSIGNEE_TASKS, GET_PERSONAL_TASKS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -25,10 +25,23 @@ export const getProjectTasks = ({ project_id }) => async (dispatch) => {
   }
 };
 
+export const getPersonalTasks = ({ project_id, id }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/members/${id}/tasks`);
+    dispatch({ type: GET_PROJECT_AUTH });
+    dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
+  } catch (err) {
+    console.log(err.response);
+    dispatch({ type: RESET_AUTH });
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
 export const getStatusGroup = ({ project_id }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks/status-group`);
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks`);
     dispatch({ type: GET_STATUS_GROUP, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
@@ -155,7 +168,6 @@ export const getExpenses = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks`);
     dispatch({ type: GET_EXPENSES, payload: res.data });
-    message.success("Task deleted!");
   } catch (err) {
     dispatch({ type: DELETE_TASK_FAIL });
   }

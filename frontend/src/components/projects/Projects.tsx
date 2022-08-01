@@ -9,6 +9,7 @@ import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
 import { project, member } from "../../types/types";
+import color from "../../styles/abstract/variables.module.scss";
 
 const Projects = () => {
   const dispatch = useDispatch();
@@ -101,7 +102,7 @@ const Projects = () => {
 
   return (
     <div>
-      <Container size="30">
+      <Container size="50">
         <div className="projects-toolbar" style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
           <div className="new-project-container">
             <Link to="/projects/new">

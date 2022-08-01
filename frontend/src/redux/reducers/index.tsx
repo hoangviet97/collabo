@@ -17,6 +17,7 @@ import tag from "./tag";
 import poll from "./poll";
 import income from "./income";
 import review from "./review";
+import log from "./log";
 
 const appReducer = combineReducers({
   auth,
@@ -36,7 +37,8 @@ const appReducer = combineReducers({
   tag,
   poll,
   income,
-  review
+  review,
+  log
 });
 
 const rootReducer = (state: any, action: any) => {

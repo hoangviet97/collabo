@@ -256,7 +256,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             </div>
           </header>
           <Divider />
-          <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
+          <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section: section, index: number) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
                 <div className={`task__visual-${taskVisual}`}>

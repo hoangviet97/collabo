@@ -37,10 +37,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-invitation", (data) => {
-    const client1 = clients.find((x) => x.email === data);
+    const client1 = clients.find((x) => x.email === data.receiver);
 
     if (client1) {
-      io.to(client1.socketId).emit("increment-unread");
+      io.to(client1.socketId).emit("increment-unread", data.data);
     }
   });
 

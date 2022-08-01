@@ -22,9 +22,9 @@ export const getSections = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getModalSections = ({ id }) => async (dispatch) => {
+export const getModalSections = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/sections/all", { id });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/sections`);
     dispatch({ type: GET_MODAL_SECTIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_MODAL_SECTIONS_FAIL });

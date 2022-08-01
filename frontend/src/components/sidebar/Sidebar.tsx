@@ -5,12 +5,9 @@ import { logout } from "../../actions/auth";
 import { ImportOutlined, BellOutlined, HomeOutlined, SettingOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 
-interface Props {
-  unread: number;
-}
-
-const Sidebar: FC<Props> = ({ unread }) => {
+const Sidebar = () => {
   const dispatch = useDispatch();
+  const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -28,7 +25,7 @@ const Sidebar: FC<Props> = ({ unread }) => {
             <ProfileOutlined className="side-nav__icon" />
           </Link>
           <Link className="side-nav__link" to="/notify">
-            <Badge count={unread}>
+            <Badge count={invitations.length}>
               <BellOutlined className="side-nav__icon" />
             </Badge>
           </Link>

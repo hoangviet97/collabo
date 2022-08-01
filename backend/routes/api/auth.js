@@ -9,6 +9,7 @@ router.post("/login", authController.login);
 router.get("/profile", auth, userController.getCurrentUser);
 router.get("/verify/:id", authController.verify);
 router.post("/reset", authController.resetPassword);
+router.patch("/color", auth, authController.changeColor);
 router.patch("/change-pwd", auth, authController.changePassword);
 router.patch("/firstname", auth, authController.changeFirstname);
 router.patch("/lastname", auth, authController.changeLastname);

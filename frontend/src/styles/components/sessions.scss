@@ -1,24 +1,54 @@
 .session {
-  height: calc(100vh-60px);
+  height: calc(100vh - 180px);
   display: flex;
-  gap: 15px;
+  gap: 30px;
+
+  &__item {
+    &-name {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    &-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: auto;
+      margin-bottom: 25px;
+    }
+
+    &-col {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a4b0be;
+      text-transform: uppercase;
+    }
+
+    &-date {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+  }
 
   &__content {
     background-color: white;
     padding: 25px 35px;
     position: relative;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 180px);
     flex: 1;
     border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow: scroll;
   }
 
   &__control-panel {
     background-color: white;
     padding: 25px 35px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 180px);
     width: 450px;
     border-radius: 12px;
     overflow-y: scroll;
     overflow-x: hidden;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 }
