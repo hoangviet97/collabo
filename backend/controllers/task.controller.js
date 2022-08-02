@@ -27,6 +27,14 @@ module.exports = {
     }
   },
 
+  getPersonalUser: async function (req, res) {
+    try {
+      return res.json(await Task.getPersonalUserTasks(req.params.project, req.params.user));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
   getStatusGroup: async function (req, res) {
     try {
       return res.json(await Task.getStatusGroup(req.params.project));

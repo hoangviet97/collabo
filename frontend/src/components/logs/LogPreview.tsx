@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar } from "antd";
+import moment from "moment";
 import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
@@ -20,7 +21,7 @@ const LogPreview: FC<Props> = ({ data }) => {
           </span>
           {data.text}
         </div>
-        <div style={{ color: color.normal_silver_2 }}>{data.created_at}</div>
+        <div style={{ color: color.normal_silver_2 }}>{moment(data.created_at).calendar()}</div>
       </div>
     </div>
   );

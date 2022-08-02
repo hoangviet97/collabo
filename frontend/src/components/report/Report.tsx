@@ -3,10 +3,9 @@ import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { TeamOutlined, ClockCircleOutlined, FormOutlined, BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
 import { getMemberRecords } from "../../actions/time_record";
-import { getPersonalTasks, getProjectTasks } from "../../actions/task";
+import { getPersonalTasks, getUserTasks } from "../../actions/task";
 import moment from "moment";
 import { Column } from "@ant-design/plots";
-import { Divider } from "antd";
 
 const Report = () => {
   const dispatch = useDispatch();
@@ -22,13 +21,13 @@ const Report = () => {
 
   useEffect(() => {
     dispatch(getMemberRecords({ project_id: params.id, id: params.memberId }));
-    dispatch(getPersonalTasks({ project_id: params.id, id: params.memberId }));
+    dispatch(getUserTasks({ project_id: params.id, id: params.memberId }));
   }, [params.memberId]);
 
   useEffect(() => {
-    setCompleted(tasks.filter((i: any) => i.status_id === "3").length);
-    setInProgress(tasks.filter((i: any) => i.status_id === "1").length);
-    setUnderReview(tasks.filter((i: any) => i.status_id === "5").length);
+    setCompleted(tasks.filter((i: any) => i.statusId === "3").length);
+    setInProgress(tasks.filter((i: any) => i.statusId === "1").length);
+    setUnderReview(tasks.filter((i: any) => i.statusId === "5").length);
   }, [tasks]);
 
   useEffect(() => {
@@ -92,19 +91,19 @@ const Report = () => {
         <Column {...config} />
       </div>
       <div style={{ paddingTop: "120px", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>
-        <div style={{ backgroundColor: "black", color: "white", padding: "20px", borderRadius: "10px", fontSize: "20px" }}>
+        <div className="report__status-card" style={{ backgroundColor: "black" }}>
           <div>Total Tasks</div>
           <div>{tasks.length}</div>
         </div>
-        <div style={{ backgroundColor: "#3f8ff7", color: "white", padding: "20px", borderRadius: "10px", fontSize: "20px" }}>
+        <div className="report__status-card" style={{ backgroundColor: "#3f8ff7" }}>
           <div>In Progress</div>
           <div>{inProgress}</div>
         </div>
-        <div style={{ backgroundColor: "#f7cb6b", color: "white", padding: "20px", borderRadius: "10px", fontSize: "20px" }}>
+        <div className="report__status-card" style={{ backgroundColor: "#f7cb6b" }}>
           <div>Under Review</div>
           <div>{underReview}</div>
         </div>
-        <div style={{ backgroundColor: "#badc58", color: "white", padding: "20px", borderRadius: "10px", fontSize: "20px" }}>
+        <div className="report__status-card" style={{ backgroundColor: "#badc58" }}>
           <div>Completed</div>
           <div>{completed}</div>
         </div>

@@ -8,6 +8,29 @@
   padding: 0 30px;
 }
 
+.budget {
+  &__title {
+    color: #a4b0be;
+    font-weight: bolder;
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  &__bar {
+    width: 400px;
+    height: 15px;
+    background-color: #ecf0f1;
+    border-radius: 12px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    overflow: hidden;
+  }
+}
+
 .expense {
   background-color: white;
   border-radius: 10px;

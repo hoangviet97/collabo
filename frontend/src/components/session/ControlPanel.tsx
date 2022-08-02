@@ -14,24 +14,18 @@ interface Props {
 
 const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
   const dispatch = useDispatch();
-  const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [filteredSessions, setFilteredSessions] = useState([]);
-  const [calendarDay, setCalendarDay] = useState();
-  const sessions = useSelector((state: RootStateOrAny) => state.session.filteredSessions);
+  const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const sessionsLoading = useSelector((state: RootStateOrAny) => state.session.loading);
-  const byDateSessions = sessions.filter((item: session) => moment(item.date).format("MMM Do YY") === moment(calendarDay).format("MMM Do YY"));
 
   useEffect(() => {
     showAllSessions();
   }, []);
 
-  const dateSelectHandle = () => {
-    setFilteredSessions(byDateSessions);
-    setCalendarVisible(false);
-  };
-
   const showAllSessions = () => {
-    dispatch(filterActiveSessions());
+    const today = moment().format();
+    const x = sessions.filter((item: session) => moment(item.date).isAfter(today) === true);
+    setFilteredSessions(x);
   };
 
   const showTodaySessions = () => {
@@ -39,7 +33,9 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
   };
 
   const showPastSessions = () => {
-    dispatch(filterPastSessions());
+    const today = moment().format();
+    const x = sessions.filter((item: session) => moment(item.date).isAfter(today) === false);
+    setFilteredSessions(x);
   };
 
   return (
@@ -54,18 +50,6 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
               <Button onClick={showAllSessions}>Active</Button>
               <Button onClick={showTodaySessions}>Today</Button>
               <Button onClick={showPastSessions}>Past</Button>
-
-              <Button type="text" onClick={() => setCalendarVisible((prev) => !prev)}>
-                <CalendarOutlined />
-              </Button>
-              {isCalendarVisible && (
-                <div className="site-calendar-demo-card" style={{ zIndex: 99999, position: "absolute", left: "-150px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
-                  <Calendar fullscreen={false} onSelect={(value: any) => setCalendarDay(value.toDate())} />
-                  <Button type="primary" onClick={dateSelectHandle}>
-                    Select date
-                  </Button>
-                </div>
-              )}
             </div>
             <Button onClick={addNewSession}>
               <PlusOutlined />
@@ -73,7 +57,7 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
           </div>
         </div>
       </div>
-      <div className="meeting__control-content">{sessionsLoading ? <Skeleton /> : <SessionPanelList sessions={sessions} match={match} />}</div>
+      <div className="meeting__control-content">{sessionsLoading ? <Skeleton /> : <SessionPanelList sessions={filteredSessions} match={match} />}</div>
     </div>
   );
 };

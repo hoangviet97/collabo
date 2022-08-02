@@ -40,13 +40,13 @@ const BudgetPage = ({ match }) => {
             <div style={{ display: "flex" }}>
               <div class="budget__header-left">
                 <div className="budget__header-item">
-                  <div style={{ color: "#a4b0be", fontWeight: "bolder" }}>Total Balance</div>
+                  <div className="budget__title">Total Balance</div>
                   <div style={{ fontSize: "48px", marginBottom: "25px" }}>${parseInt(incomes) - parseInt(spending)}</div>
                 </div>
                 <div style={{ width: "100%" }}>
-                  <div style={{ color: "#a4b0be", fontWeight: "bolder" }}>Budget Spending</div>
-                  <div className="budget__progress" style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
-                    <div className="budget__bar" style={{ width: "400px", height: "15px", backgroundColor: "#ecf0f1", borderRadius: "12px", marginRight: "5px", marginBottom: "3px", overflow: "hidden" }}>
+                  <div className="budget__title">Budget Spending</div>
+                  <div className="budget__progress">
+                    <div className="budget__bar">
                       <div style={{ backgroundColor: "#5cb85c", width: `${Math.floor((spending / incomes) * 100).toFixed(2)}%`, height: "15px", borderRadius: "12px" }}></div>
                     </div>
                   </div>
@@ -55,11 +55,11 @@ const BudgetPage = ({ match }) => {
               <div class="budget__header-right" style={{ display: "flex", alignItems: "flex-end", marginLeft: "10px" }}>
                 <div style={{ display: "flex" }}>
                   <div className="budget__header-item" style={{ marginRight: "20px" }}>
-                    <div style={{ color: "#a4b0be", fontWeight: "bolder" }}>Spent</div>
+                    <div className="budget__title">Spent</div>
                     <div>{isNaN(spending / incomes) ? "0" : Math.floor((spending / incomes) * 100).toFixed(2)}%</div>
                   </div>
                   <div className="budget__header-item" style={{ marginRight: "20px" }}>
-                    <div style={{ color: "#a4b0be", fontWeight: "bolder" }}>Total budget</div>
+                    <div className="budget__title">Total budget</div>
                     <div>${incomes}</div>
                   </div>
                 </div>

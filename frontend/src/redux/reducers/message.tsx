@@ -14,7 +14,7 @@ function messageReducer(state = initialState, action: any) {
     case CREATE_MESSAGE:
       const pollMerger = Object.assign(payload.data.poll, { optionArray: payload.data.options });
       const mergedMsg = Object.assign(payload.data.msg, { pollData: pollMerger });
-      Object.assign(mergedMsg, { firstname: payload.user.firstname }, { lastname: payload.user.lastname });
+      Object.assign(mergedMsg, { firstname: payload.user.firstname }, { lastname: payload.user.lastname }, { color: payload.user.color });
 
       console.log(mergedMsg);
       return {

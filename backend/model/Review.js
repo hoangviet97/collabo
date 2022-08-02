@@ -56,7 +56,7 @@ module.exports = {
   },
 
   findPanel: async function (project) {
-    const sql = `SELECT members.id AS member_id, users.firstname, users.lastname, COUNT(reviews.id) AS total FROM reviews
+    const sql = `SELECT members.id AS member_id, users.firstname, users.lastname, users.color, COUNT(reviews.id) AS total FROM reviews
                   RIGHT JOIN members ON reviews.members_id = members.id
                   INNER JOIN users ON members.users_id = users.id
                   WHERE members.projects_id = ?
@@ -96,6 +96,8 @@ module.exports = {
     const singleTaskRow = await Task.getOne(task_id);
 
     const text = `accepted your submitted task`;
+
+    console.log(comment);
 
     const logRow = await Log.create(project_id, member_id, sender, "task", singleTaskRow[0].title, text, comment);
 

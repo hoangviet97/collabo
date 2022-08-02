@@ -2,7 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 
 class Log {
-  constructor(id, project_id, member_id, sender, type, title, text) {
+  constructor(id, project_id, member_id, sender, type, title, text, comment) {
     this.id = id;
     this.project_id = project_id;
     this.member_id = member_id;
@@ -12,6 +12,7 @@ class Log {
     this.text = text;
     this.created_at = new Date();
     this.seen = "F";
+    this.comment = comment;
   }
 }
 

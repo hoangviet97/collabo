@@ -31,7 +31,7 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
         <div className="session__item__info">
           <div className="session__item__date">
             <CalendarOutlined style={{ color: "#2f3542" }} />
-            <span style={{ fontSize: "13px", color: "#2f3542" }}>{moment(session.date).format("LL")}</span>
+            <span style={{ fontSize: "13px", color: "#2f3542" }}>{moment(session.date).format("MMM Do YY")}</span>
           </div>
           <div className="session-item__time" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <ClockCircleOutlined style={{ color: "#2f3542" }} />

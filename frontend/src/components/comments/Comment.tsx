@@ -4,6 +4,7 @@ import moment from "moment";
 import { Avatar, Button, Divider } from "antd";
 import Poll from "../poll/Poll";
 import { useDispatch, useSelector } from "react-redux";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   data: any;
@@ -15,10 +16,10 @@ const Comment: FC<Props> = ({ data }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="comment" style={{ width: "70%", padding: "25px 40px", borderRadius: "12px", marginBottom: "40px", backgroundColor: "white", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px" }}>
-      <div className="comment__header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+    <div className="comment">
+      <div className="comment__header">
         <div className="comment__author" style={{ display: "flex", alignItems: "center" }}>
-          <Avatar size={50} style={{ marginRight: "10px" }}>
+          <Avatar size={50} style={{ marginRight: "10px", backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }}>
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} />
           </Avatar>
           <div style={{ display: "flex", flexDirection: "column" }}>

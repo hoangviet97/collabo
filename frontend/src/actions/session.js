@@ -65,9 +65,10 @@ export const filterTodaySessions = () => {
   };
 };
 
-export const filterPastSessions = () => {
+export const filterPastSessions = (today) => {
   return {
-    type: PAST_SESSIONS
+    type: PAST_SESSIONS,
+    payload: today
   };
 };
 

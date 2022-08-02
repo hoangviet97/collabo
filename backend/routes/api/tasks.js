@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/:project/tasks/add", auth, taskController.create);
 router.get("/:project/tasks", [auth], taskController.getAll);
 router.get("/:project/members/:member/tasks", [auth], taskController.getPersonal);
+router.get("/:project/users/:user/tasks", [auth], taskController.getPersonalUser);
 router.get("/:project/tasks/status-group", auth, taskController.getStatusGroup);
 router.patch("/:project/tasks/:id/budget", [auth, permit("Owner")], taskController.setBudget);
 router.patch("/:project/tasks/:id/progress", [auth], taskController.setProgress);

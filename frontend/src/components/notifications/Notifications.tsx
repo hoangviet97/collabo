@@ -13,16 +13,8 @@ const Notifications = () => {
   const params: any = useParams();
   const invitations: Invitation[] = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
-  const { TabPane } = Tabs;
-
   const socket = useContext(SocketContext);
   const [email, setEmail] = useState("");
-
-  const invitationHeader = (
-    <Badge style={{ position: "relative", left: "5px" }} count={invitations.length}>
-      Invitations
-    </Badge>
-  );
 
   useEffect(() => {
     dispatch(getAllInvitations());

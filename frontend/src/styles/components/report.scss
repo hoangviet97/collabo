@@ -8,6 +8,15 @@
   width: 100%;
   min-height: calc(100vh - 160px);
 
+  &__status {
+    &-card {
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+  }
+
   &__panel {
     grid-area: panel;
     background-color: white;
@@ -17,6 +26,12 @@
     position: fixed;
     width: 270px;
     height: calc(100vh - 160px);
+
+    &-list {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
   }
 
   &__content {

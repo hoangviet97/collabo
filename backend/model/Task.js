@@ -2,6 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 const Log = require("./Log");
 const Member = require("./Member");
+const User = require("./User");
 
 class Task {
   constructor(id, sections_id, priorityId, statusId, title, description, start_date, due_date, budget, progress) {
@@ -68,6 +69,22 @@ module.exports = {
                     WHERE users_has_tasks.users_id = ? AND sections.projects_id = ? ORDER BY tasks.created_at`;
 
     const [rows] = await con.promise().query(sql, [id, project]);
+
+    return rows;
+  },
+
+  getPersonalUserTasks: async function (project, id) {
+    const sql = `SELECT tasks.id, tasks.sections_id, priorities.id AS priorityId, priorities.name AS priorityName, task_status.id AS statusId, task_status.name AS statusName, tasks.title, tasks.description, tasks.start_date, tasks.due_date, tasks.budget, tasks.progress, tasks.created_at 
+                    FROM users_has_tasks 
+                    INNER JOIN tasks ON users_has_tasks.tasks_id = tasks.id 
+                    INNER JOIN sections ON tasks.sections_id = sections.id 
+                    INNER JOIN task_status ON tasks.task_status_id = task_status.id
+                    INNER JOIN priorities ON tasks.priorities_id = priorities.id
+                    WHERE users_has_tasks.users_id = ? AND sections.projects_id = ? ORDER BY tasks.created_at`;
+
+    const userRows = await User.getUserByProject(id, project);
+
+    const [rows] = await con.promise().query(sql, [userRows.id, project]);
 
     return rows;
   },

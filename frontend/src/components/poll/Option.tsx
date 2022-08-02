@@ -2,6 +2,7 @@ import React, { useState, useEffect, FC } from "react";
 import { Checkbox, Avatar, Tooltip } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useSelector, RootStateOrAny } from "react-redux";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   data: any;
@@ -44,7 +45,7 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
             <div style={{ flex: 1, textAlign: "right" }}>
               <Avatar.Group>
                 {votes.map((item: any, index: number) => (
-                  <Avatar size="large" key={index}>
+                  <Avatar size="large" key={index} style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
                     <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                   </Avatar>
                 ))}

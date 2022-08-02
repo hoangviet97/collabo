@@ -38,6 +38,19 @@ export const getPersonalTasks = ({ project_id, id }) => async (dispatch) => {
   }
 };
 
+export const getUserTasks = ({ project_id, id }) => async (dispatch) => {
+  try {
+    dispatch(setTasksLoading());
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/users/${id}/tasks`);
+    dispatch({ type: GET_PROJECT_AUTH });
+    dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
+  } catch (err) {
+    console.log(err.response);
+    dispatch({ type: RESET_AUTH });
+    dispatch({ type: GET_PROJECT_TASKS_FAIL });
+  }
+};
+
 export const getStatusGroup = ({ project_id }) => async (dispatch) => {
   try {
     dispatch(setTasksLoading());

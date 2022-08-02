@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import OptionPreview from "./OptionPreview";
 
 interface Props {
@@ -15,8 +15,12 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
 
   const submitOptionHandler = (e: any) => {
     e.preventDefault();
-    setOptionArr([...optionArr, option]);
-    setOption("");
+    if (option.length < 1) {
+      message.error("Option cannot be empty!");
+    } else {
+      setOptionArr([...optionArr, option]);
+      setOption("");
+    }
   };
 
   const removeOption = (value: any) => {
@@ -28,15 +32,30 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
     getPollData(question, optionArr, false);
   };
 
+  const cancelHandler = () => {
+    setOption("");
+    setOptionArr([]);
+    setQuestion("");
+    setPollWindow(false);
+  };
+
+  const setQuestionHandler = () => {
+    if (question.length < 1) {
+      message.error("Question cannot be empty");
+    } else {
+      setViewData(true);
+    }
+  };
+
   return (
     <div style={{ padding: "20px 15px" }}>
-      <Button style={{ marginTop: "-5px" }} onClick={() => setPollWindow(false)}>
+      <Button style={{ marginTop: "-5px" }} onClick={cancelHandler}>
         Cancel
       </Button>
       {!viewData && (
         <div style={{ display: "flex", marginTop: "20px", gap: "10px" }}>
           <Input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." />
-          <Button type="primary" onClick={() => setViewData(true)}>
+          <Button type="primary" onClick={setQuestionHandler}>
             Set question
           </Button>
         </div>

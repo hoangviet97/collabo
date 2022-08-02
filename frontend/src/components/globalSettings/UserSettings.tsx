@@ -21,9 +21,6 @@ const UserSettings = () => {
             <TabPane tab="Password" key="2">
               <PasswordSettings />
             </TabPane>
-            <TabPane tab="Security" key="3">
-              Content of Tab Pane 3
-            </TabPane>
           </Tabs>
         </div>
       </Container>

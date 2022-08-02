@@ -5,6 +5,7 @@ import { getMembers } from "../../actions/member";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar, Input } from "antd";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   match: any;
@@ -25,8 +26,8 @@ const ReportControlPanel: FC<Props> = ({ match }) => {
       <Input placeholder="Search members by name or e-mail" />
       <div style={{ marginTop: "30px" }}>
         {members.map((member: member) => (
-          <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
-            <Avatar>
+          <div className="report__panel-list">
+            <Avatar style={{ backgroundColor: member.color === null || member.color.length < 1 ? color.normal_orange : member.color }}>
               <AvatarIcon firstname={member.firstname} lastname={member.firstname} />
             </Avatar>
             <div style={{ marginLeft: "10px" }}>

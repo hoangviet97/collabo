@@ -201,6 +201,16 @@ module.exports = {
     }
   },
 
+  getUserByProject: async function (id, project) {
+    const sql = `SELECT users.* FROM members 
+                  INNER JOIN users ON members.users_id = users.id
+                  WHERE members.id = ? AND members.projects_id = ?`;
+
+    const [rows] = await con.promise().query(sql, [id, project]);
+
+    return rows[0];
+  },
+
   resetPwd: function (body, result) {
     const sql = `SELECT id FROM users WHERE email = '${body.email}'`;
     con.query(sql, async (err, res) => {

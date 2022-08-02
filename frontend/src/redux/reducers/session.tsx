@@ -4,7 +4,6 @@ import { session } from "../../types/types";
 
 const initialState = {
   sessions: [],
-  filteredSessions: [],
   single: {},
   loading: false,
   singleLoading: false,
@@ -46,7 +45,7 @@ function sessionReducer(state = initialState, action: any) {
     case DELETE_SESSION:
       return {
         ...state,
-        filteredSessions: state.filteredSessions.filter((item: session) => item.id !== payload)
+        sessions: state.sessions.filter((item: session) => item.id !== payload)
       };
     case GET_PARTICIPANTS:
       return {
@@ -67,10 +66,11 @@ function sessionReducer(state = initialState, action: any) {
         filteredSessions: filteredToday
       };
     case PAST_SESSIONS:
-      const filteredPast = state.sessions.filter((item: session) => moment(item.date).format("MMMM Do YYYY, h:mm:ss a") < moment(today).format("MMMM Do YYYY, h:mm:ss a"));
+      const a = state.sessions.filter((item: session) => moment(today).format("MMMM Do YYYY, h:mm:ss a") > moment(item.date).format("MMMM Do YYYY, h:mm:ss a"));
+      console.log(a);
       return {
         ...state,
-        filteredSessions: filteredPast
+        filteredSessions: state.sessions.filter((item: session) => moment(today).format("MMMM Do YYYY, h:mm:ss a") > moment(item.date).format("MMMM Do YYYY, h:mm:ss a"))
       };
     case SESSIONS_LOADING:
       return {

@@ -23,15 +23,19 @@ const ActivityItem: FC<Props> = ({ data }) => {
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} size={20} />
           </Avatar>
         </div>
-        <div>
-          <div>
+        <div className="activity__content">
+          <div style={{ marginBottom: "30px" }}>
             <span style={{ fontWeight: "bolder" }}>
               {data.firstname} {data.lastname}{" "}
             </span>
-            {data.text} {data.title}
+            <span>{data.text}</span> <span style={{ color: getTypeColor(data.type) }}>{data.title}</span>
+            <div>{moment(data.created_at).calendar()}</div>
           </div>
-          <div>{data.comment}</div>
-          <div>{moment(data.created_at).calendar()}</div>
+          {data.comment && (
+            <div className="activity__comment">
+              <div style={{ width: "100%", overflowWrap: "break-word", backgroundColor: color.normal_silver_2, borderRadius: "8px", color: "white", padding: "10px 15px" }}>{data.comment}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

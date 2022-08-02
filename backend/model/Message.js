@@ -91,7 +91,7 @@ module.exports = {
   },
 
   find: async function (id, result) {
-    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname
+    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname, users.color
                     FROM messages 
                     INNER JOIN members ON messages.members_id = members.id
                     INNER JOIN users ON members.users_id = users.id
@@ -125,7 +125,7 @@ module.exports = {
             return;
           }
 
-          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, polls.id AS poll_id, users.firstname, users.lastname, users.email FROM members_has_poll_options
+          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, polls.id AS poll_id, users.firstname, users.lastname, users.email, users.color FROM members_has_poll_options
                             INNER JOIN members ON members_has_poll_options.members_id = members.id
                             INNER JOIN poll_options ON members_has_poll_options.poll_options_id = poll_options.id
                             INNER JOIN polls ON poll_options.polls_id = polls.id
@@ -176,7 +176,7 @@ module.exports = {
   },
 
   getAll: async function (project, result) {
-    const sql = `SELECT message_replies.*, users.firstname, users.lastname
+    const sql = `SELECT message_replies.*, users.firstname, users.lastname, users.color
                     FROM message_replies 
                     INNER JOIN members ON message_replies.members_id = members.id 
                     INNER JOIN users ON members.users_id = users.id
