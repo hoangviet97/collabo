@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
-import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, NumberOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
@@ -28,7 +28,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const [showIconTab, setIconTab] = useState<boolean>(false);
   const [projectDescription, setProjectDescription] = useState<string>("");
   const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
-  const [iconColorSelection, setIconColorSelection] = useState(colorSet[0]);
+  const [iconColorSelection, setIconColorSelection] = useState("");
 
   useEffect(() => {
     setProjectName(currentProject.name);
@@ -39,39 +39,51 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const moreContent = (
     <div>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/sessions`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/sessions`}>
           <FundProjectionScreenOutlined className="single-navigation__link-icon" />
           <span>Sessions</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/tracker`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tracker`}>
           <DashboardOutlined className="single-navigation__link-icon" />
           <span>Time Tracker</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/documents`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/documents`}>
           <FileTextOutlined className="single-navigation__link-icon" />
           <span>Files</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/report`}>
-          <FileTextOutlined className="single-navigation__link-icon" />
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/report`}>
+          <PieChartOutlined className="single-navigation__link-icon" />
           <span>Report</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/tags`}>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/tags`}>
           <TagsOutlined className="single-navigation__link-icon" />
           <span>Tags</span>
         </Link>
       </p>
       <p>
-        <Link className="single-navigation__item" to={`/${path.split("/")[1]}/budget`}>
-          <TagsOutlined className="single-navigation__link-icon" />
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/budget`}>
+          <DollarOutlined className="single-navigation__link-icon" />
           <span>Budget</span>
+        </Link>
+      </p>
+      <p>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/reviews`}>
+          <FundOutlined className="single-navigation__link-icon" />
+          <span>Reviews</span>
+        </Link>
+      </p>
+      <p>
+        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/activities`}>
+          <EyeOutlined className="single-navigation__link-icon" />
+          <span>Activities</span>
         </Link>
       </p>
     </div>
@@ -95,6 +107,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
 
   const handleIconColor = (color: string) => {
     setIconColorSelection(color);
+    console.log(color);
     dispatch(updateColor({ project_id: currentProject.id, color: color }));
   };
 
@@ -102,16 +115,8 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
     dispatch(updateStatus({ project_id: currentProject.id, status: e.target.value }));
   };
 
-  const budgetChangeHandle = (e: any) => {
-    setTotalBudget(e);
-  };
-
   const currencyHandle = (value: string) => {
     dispatch(setCurrency({ project_id: currentProject.id, currency: value }));
-  };
-
-  const onBudgetBlur = () => {
-    dispatch(setBudget({ project_id: currentProject.id, budget: totalBudget }));
   };
 
   const projectInfoMenu = (
@@ -130,13 +135,13 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
         <div className="single-navigation">
           <div className="single-navigation__identity">
             <div className="single-navigation__icon">
-              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null ? currentProject.color : "grey" }}>
-                <AvatarIcon name={currentProject.name} />
+              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null || currentProject.color !== undefined ? currentProject.color : "grey" }}>
+                <AvatarIcon firstname={currentProject.name} />
               </div>
             </div>
             <div className="single-navigation__title">
               <div>
-                <span style={{ marginRight: "4px" }}>{currentProject && currentProject.name}</span>
+                <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
                 <InfoCircleOutlined onClick={() => setIsModalVisible(true)} />
               </div>
             </div>
@@ -173,7 +178,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
               </Link>
             </li>
             <li className="single-navigation__item">
-              <Link className="single-navigation__item" to={`/${path.split("/")[1]}/team`}>
+              <Link className="single-navigation__link" to={`/${path.split("/")[1]}/team`}>
                 <TeamOutlined className="single-navigation__link-icon" />
                 <span>Team</span>
               </Link>
@@ -195,7 +200,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                   <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: 99999, backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
                     <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                       {colorList.map((item: any, index: number) => (
-                        <div onClick={() => handleIconColor(item)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
+                        <div onClick={() => handleIconColor(item.code)} key={index} style={{ backgroundColor: item.code, width: "50px", height: "50px", borderRadius: "12px" }}></div>
                       ))}
                     </div>
                   </div>
@@ -212,8 +217,6 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                 <TextArea rows={4} value={projectDescription} placeholder="Set new description..." />
               </Form.Item>
               <Form.Item>
-                <label style={{ display: "block" }}>Project budget</label>
-                <Input style={{ width: "40%", marginRight: "10px" }} type="number" value={totalBudget} onBlur={onBudgetBlur} onChange={(e) => setTotalBudget(e.target.value)} />
                 <Select defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
                   <Option value="czk">CZK</Option>
                   <Option value="usd">USD</Option>

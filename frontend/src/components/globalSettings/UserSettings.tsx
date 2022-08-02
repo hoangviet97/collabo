@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Tabs } from "antd";
 import Container from "../utils/Container";
-import AccountSettings from "./AccountSettings";
 import { useSelector, RootStateOrAny } from "react-redux";
 import AccountDetails from "./AccountDetails";
 import PasswordSettings from "./PasswordSettings";
@@ -21,9 +20,6 @@ const UserSettings = () => {
             </TabPane>
             <TabPane tab="Password" key="2">
               <PasswordSettings />
-            </TabPane>
-            <TabPane tab="Security" key="3">
-              Content of Tab Pane 3
             </TabPane>
           </Tabs>
         </div>

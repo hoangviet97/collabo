@@ -15,13 +15,11 @@ const Messages: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: RootStateOrAny) => state.auth.user.firstname);
   const messages = useSelector((state: RootStateOrAny) => state.message.messages);
-  const replies = useSelector((state: RootStateOrAny) => state.message.replies);
   const loading = useSelector((state: RootStateOrAny) => state.message.loading);
   const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getMessages({ id: match.params.id }));
-    dispatch(getAllReplies({ project: match.params.id }));
+    dispatch(getMessages({ project_id: match.params.id }));
   }, []);
 
   const handleCancel = () => {
@@ -39,18 +37,14 @@ const Messages: FC<Props> = ({ match }) => {
   return (
     <Container size="30">
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "40px" }}>
-        <div className="messages__editor" style={{ display: "flex", width: "50%" }}>
-          <Avatar size={50}>
-            <AvatarIcon name={profile} />
-          </Avatar>
-          <Input onClick={openModal} style={{ borderRadius: "20px", padding: "0 15px", marginLeft: "10px" }} />
+        <div className="messages__editor" style={{ width: "100%", textAlign: "center" }}>
+          <Input onClick={openModal} placeholder="Add new message..." style={{ textAlign: "center", borderRadius: "12px", width: "400px", padding: "10px 25px" }} />
         </div>
         <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           {loading
             ? "loading..."
             : messages.map((item: any, index: number) => {
-                let repliesArr = replies.filter((x: any) => x.messages_id === item.id);
-                return <Comment key={index} data={item} match={match} replies={repliesArr} project={match.params.id} />;
+                return <Comment key={index} data={item} match={match} project={match.params.id} />;
               })}
         </div>
       </div>

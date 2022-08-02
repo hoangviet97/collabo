@@ -1,5 +1,7 @@
 const con = require("../config/db");
 const uuid4 = require("uuid4");
+const Member = require("./Member");
+const User = require("./User");
 
 class Poll {
   constructor(id, message_id, question) {
@@ -11,20 +13,22 @@ class Poll {
 }
 
 module.exports = {
+  // Invitation class
   Poll,
-  // create new member by user or by admin
-  create: async function (body, result) {
-    const newPoll = new Poll(uuid4(), body.message_id, body.question);
 
-    const sql = `INSERT INTO polls (id, messages_id, question, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newPoll.id, newPoll.message_id, newPoll.question, newPoll.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+  create: async function (message_id) {
+    const sql = `INSERT INTO invitations (id, sender, receiver, created_at, projects_id, seen) VALUES (?, ?, ?, ?, ?, ?)`;
+    const invitation = new Invitation(uuid4(), sender, user, project);
+    const [rows] = await con.promise().query(sql, [invitation.id, invitation.sender, invitation.receiver, invitation.created_at, invitation.project, invitation.seen]);
 
-      result(null, newPoll);
-      return;
-    });
+    return invitation;
+  },
+
+  delete: async function (id) {
+    const sql = `DELETE from invitations WHERE id = ?`;
+
+    const [rows] = await con.promise().query(sql, [id]);
+
+    return rows;
   }
 };

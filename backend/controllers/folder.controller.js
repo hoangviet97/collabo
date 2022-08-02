@@ -3,31 +3,35 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // register new user
-  create: function (req, res) {
-    Folder.create(req.body.title, req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Folder.create(req.body.title, req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getOne: function (req, res) {
-    Folder.findOne(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getOne: async function (req, res) {
+    try {
+      return res.json(await Folder.findOne(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Folder.find(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Folder.find(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  delete: function (req, res) {
-    Folder.delete(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  delete: async function (req, res) {
+    try {
+      return res.json(await Folder.delete(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

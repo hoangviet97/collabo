@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import OptionPreview from "./OptionPreview";
 
 interface Props {
@@ -15,8 +15,12 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
 
   const submitOptionHandler = (e: any) => {
     e.preventDefault();
-    setOptionArr([...optionArr, option]);
-    setOption("");
+    if (option.length < 1) {
+      message.error("Option cannot be empty!");
+    } else {
+      setOptionArr([...optionArr, option]);
+      setOption("");
+    }
   };
 
   const removeOption = (value: any) => {
@@ -28,22 +32,39 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
     getPollData(question, optionArr, false);
   };
 
+  const cancelHandler = () => {
+    setOption("");
+    setOptionArr([]);
+    setQuestion("");
+    setPollWindow(false);
+  };
+
+  const setQuestionHandler = () => {
+    if (question.length < 1) {
+      message.error("Question cannot be empty");
+    } else {
+      setViewData(true);
+    }
+  };
+
   return (
-    <div>
-      <Button style={{ marginTop: "-5px" }} onClick={() => setPollWindow(false)}>
+    <div style={{ padding: "20px 15px" }}>
+      <Button style={{ marginTop: "-5px" }} onClick={cancelHandler}>
         Cancel
       </Button>
       {!viewData && (
-        <div style={{ display: "flex", marginTop: "10px" }}>
+        <div style={{ display: "flex", marginTop: "20px", gap: "10px" }}>
           <Input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." />
-          <Button onClick={() => setViewData(true)}>Set</Button>
+          <Button type="primary" onClick={setQuestionHandler}>
+            Set question
+          </Button>
         </div>
       )}
 
       {viewData && (
         <div className="" style={{ marginTop: "20px" }}>
           <h2>{question}</h2>
-          <div className="option__preview" style={{ marginBottom: "10px" }}>
+          <div className="option__preview-list" style={{ marginBottom: "10px" }}>
             {optionArr.map((item: any, index: number) => (
               <OptionPreview key={index} text={item} removeOption={removeOption} />
             ))}
@@ -53,7 +74,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
           </form>
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
             <Button type="primary" onClick={submitPollHandler}>
-              Create
+              Create poll
             </Button>
           </div>
         </div>

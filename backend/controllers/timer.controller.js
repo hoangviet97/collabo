@@ -2,34 +2,45 @@ const Timer = require("../model/Timer");
 const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
-  // Create new projects
-  create: function (req, res) {
-    Timer.create(req.body, req.member, (err, result) => {
-      console.log(req.member);
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  // Create new time record
+  create: async function (req, res) {
+    try {
+      return res.json(await Timer.create(req.body, req.member));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Timer.findByProject(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  // get time record by project id
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Timer.findByProject(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getSum: function (req, res) {
-    Timer.getSum(req.params.project, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getSum: async function (req, res) {
+    try {
+      return res.json(await Timer.getSum(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAllPersonal: function (req, res) {
-    console.log(req.member);
-    Timer.find(req.member, "user", (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getById: async function (req, res) {
+    try {
+      return res.json(await Timer.findById(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  getAllPersonal: async function (req, res) {
+    try {
+      return res.json(await Timer.find(req.member));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

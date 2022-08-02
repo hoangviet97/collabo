@@ -1,4 +1,5 @@
 import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, TAGS_LOADING } from "../../actions/types";
+import { tag } from "../../types/types";
 
 const initialState = {
   tags: [],
@@ -34,7 +35,7 @@ function tagReducer(state = initialState, action: any) {
     case DELETE_TAGS:
       return {
         ...state,
-        tags: state.tags.filter((x: any) => x.id !== payload)
+        tags: state.tags.filter((x: tag) => x.id !== payload)
       };
     case TAGS_LOADING:
       return {

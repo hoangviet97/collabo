@@ -4,18 +4,18 @@ import { EllipsisOutlined, EditOutlined, UserAddOutlined } from "@ant-design/ico
 import Timer from "../timeTracker/Timer";
 import AvatarIcon from "../utils/AvatarIcon";
 import AssigneesModal from "../modal/AssigneesModal";
+import { task, member } from "../../types/types";
 
 interface Props {
-  task: any;
-  projectId: string;
+  task: task;
   sectionName: string;
   showModal: any;
   closeModal: any;
   assignees: any;
-  members: any;
+  members: member[];
 }
 
-const TaskCard: FC<Props> = ({ task, projectId, sectionName, showModal, closeModal, assignees, members }) => {
+const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assignees, members }) => {
   const [assignessModalVisible, setAssignessModalVisible] = useState(false);
 
   const showAssigness = () => {
@@ -27,7 +27,7 @@ const TaskCard: FC<Props> = ({ task, projectId, sectionName, showModal, closeMod
   };
 
   return (
-    <div style={{ padding: "15px", height: "190px", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+    <div className="task__card">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>{task.statusName}</div>
         <EllipsisOutlined />
@@ -48,7 +48,7 @@ const TaskCard: FC<Props> = ({ task, projectId, sectionName, showModal, closeMod
                 {assignees.map((assignee: any, index: any) => (
                   <Popover content={assignee.firstname}>
                     <Avatar key={index} style={{ backgroundColor: "#1890ff" }}>
-                      <AvatarIcon name={assignee.firstname} />
+                      <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
                     </Avatar>
                   </Popover>
                 ))}
@@ -62,9 +62,9 @@ const TaskCard: FC<Props> = ({ task, projectId, sectionName, showModal, closeMod
               <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
             </div>
           )}
-          {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} project={projectId} />}
+          {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
         </div>
-        <Timer localstorage={task.id} project_id={projectId} />
+        <Timer localstorage={task.id} />
       </div>
     </div>
   );

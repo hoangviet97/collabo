@@ -4,7 +4,8 @@ import ControlPanel from "./ControlPanel";
 import SessionContent from "./SessionContent";
 import SessionModal from "../modal/SessionModal";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import { getSessions } from "../../actions/session";
+import { useParams } from "react-router-dom";
+import { getSessions, filterActiveSessions } from "../../actions/session";
 
 interface Props {
   match: any;
@@ -12,11 +13,11 @@ interface Props {
 
 const Session: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
+  const params: any = useParams();
   const [isModal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getSessions({ project_id: match.params.id }));
+    dispatch(getSessions({ project_id: params.id }));
   }, []);
 
   const addNewSession = () => {
@@ -32,12 +33,12 @@ const Session: FC<Props> = ({ match }) => {
   };
 
   return (
-    <Container size="30">
+    <Container size="50">
       <div className="session">
-        <ControlPanel sessions={sessions} match={match} addNewSession={addNewSession} />
+        <ControlPanel addNewSession={addNewSession} match={match} />
         <SessionContent match={match} />
       </div>
-      <SessionModal project_id={match.params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
+      <SessionModal project_id={params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
     </Container>
   );
 };

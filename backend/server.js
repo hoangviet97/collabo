@@ -3,25 +3,56 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const connection = require("./config/db");
 const cors = require("cors");
+const socketIo = require("socket.io");
+const routes = require("./routes/api/index");
 
 require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-
 const PORT = process.env.PORT | 9000;
+const client_url = "http://localhost:3001";
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+// Database connection
 connection.connect(function (err) {
   if (err) throw err;
   console.log("DB connected!");
 });
 
-const routes = require("./routes/api/index");
+const io = socketIo(server, {
+  cors: {
+    origin: client_url
+  }
+});
 
+let clients = [];
+
+io.on("connection", (socket) => {
+  socket.on("client-connect", (data) => {
+    clients.push({ socketId: socket.id, email: data });
+  });
+
+  socket.on("send-invitation", (data) => {
+    const client1 = clients.find((x) => x.email === data.receiver);
+
+    if (client1) {
+      io.to(client1.socketId).emit("increment-unread", data.data);
+    }
+  });
+
+  socket.on("disconnect", (reason) => {
+    const arr = clients.filter((item) => item.socketId !== socket.id);
+    clients = arr;
+  });
+});
+
+app.set("clients", clients);
+
+// Routes import
 app.use("/api", routes);
 
 server.listen(PORT, () => {

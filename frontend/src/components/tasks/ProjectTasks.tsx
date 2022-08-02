@@ -1,16 +1,16 @@
 import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
-import { createSection } from "../../actions/section";
-import { getSections, deleteSection } from "../../actions/section";
+import { createSection, getSections, deleteSection } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider } from "antd";
+import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
 import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
+import { section, tag, task } from "../../types/types";
 
 interface Props {
   match: any;
@@ -25,12 +25,11 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const { Text } = Typography;
   const { Option } = Select;
 
-  const [selectedStatus, setSelectedStatus] = useState("0");
-
   // Selectors
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const loading = useSelector((state: RootStateOrAny) => state.task.loading);
+  const sectionLoading = useSelector((state: RootStateOrAny) => state.section.loading);
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
   const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
@@ -38,7 +37,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
 
   // States
   const [taskNameForSearch, setTaskNameForSearch] = useState<string>("");
-  const [children, setChildren] = useState([]);
   const [showTagSelector, setShowTagSelector] = useState<boolean>(false);
   const [showStatusSelector, setShowStatusSelector] = useState<boolean>(false);
   const [taskTags, setTaskTags] = useState([]);
@@ -48,7 +46,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [activeList, setActiveList] = useState<boolean>(true);
   const [taskVisual, setTaskVisual] = useState<string | null>("");
   const [filteredAssignees, setFilteredAssignees] = useState([]);
-
   const [newSectionVisibility, setNewSectionVisibility] = useState<boolean>(false);
   const [newTask, setNewTask] = useState<string>("");
   const [newSection, setNewSection] = useState<string>("");
@@ -135,6 +132,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             type="link"
             onClick={(event) => {
               setSelectedSection(id);
+              console.log(id);
               event.stopPropagation();
             }}
           >
@@ -201,7 +199,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   };
 
   const StatusSelectorHandler = (value: string) => {
-    const newTasks = value === "x" ? tasks : tasks.filter((x: any) => x.statusId === value);
+    const newTasks = value === "x" ? tasks : tasks.filter((x: task) => x.statusId === value);
     setTaskContainer(newTasks);
   };
 
@@ -213,13 +211,13 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   return (
     <div className="project-tasks">
       {loading ? (
-        <Spin size="large" />
+        <Skeleton />
       ) : (
-        <Container size="30">
-          <header>
+        <Container size="50">
+          <header style={{ marginRight: "20px" }}>
             <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
               <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Filter by: &nbsp;</span>
                 <Button onClick={showTagSelectorHandler}>
                   <TagsOutlined />
@@ -242,7 +240,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             <div>
               {showTagSelector && (
                 <Select mode="multiple" value={selectedVal} allowClear style={{ width: "40%", display: "block", marginTop: "5px" }} placeholder="Select tags" onChange={tagSelectorHandler}>
-                  {allTags && allTags.map((item: any) => <Option value={item.id}>{item.name}</Option>)}
+                  {allTags && allTags.map((item: tag) => <Option value={item.id}>{item.name}</Option>)}
                 </Select>
               )}
               {showStatusSelector && (
@@ -258,21 +256,21 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             </div>
           </header>
           <Divider />
-          <Collapse className="task-collapse" style={{ padding: 0, marginTop: "20px", width: "100%" }} collapsible="header" defaultActiveKey={["1"]} ghost>
-            {sections.map((section: any, index: number) => (
+          <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
+            {sections.map((section: section, index: number) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
                 <div className={`task__visual-${taskVisual}`}>
                   {taskContainer
-                    .filter((x: any) => {
+                    .filter((x: task) => {
                       return x.title.toLowerCase().includes(taskNameForSearch.toLocaleLowerCase());
                     })
-                    .map((task: any, i: number) => {
+                    .map((task: task, i: number) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
-                          return <TaskItem showModal={showModal} closeModal={closeModal} projectId={project_id} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
+                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
                         } else if (taskVisual === "card") {
-                          return <TaskCard key={i} task={task} projectId={project_id} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
+                          return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
                       }
                     })}
@@ -292,9 +290,9 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             ))}
           </Collapse>
           {newSectionVisibility === false ? (
-            <Button type="primary" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler}>
+            <Button type="primary" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler} disabled={sectionLoading}>
               <PlusOutlined />
-              Section
+              {sectionLoading ? "Please wait..." : "Section"}
             </Button>
           ) : (
             <div className="add-section-container">

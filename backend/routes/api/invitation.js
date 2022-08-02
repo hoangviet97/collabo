@@ -5,7 +5,7 @@ const permi = require("../../middleware/permission");
 const router = express.Router();
 
 router.post("/:project/invitations/new", [auth], invitationController.create);
-router.get("/:project/invitations/private", auth, invitationController.getAllPrivate);
+router.get("/invitations/private", auth, invitationController.getAllPrivate);
 router.post("/:project/invitations/:id/accept", auth, invitationController.accept);
 router.get("/:project/invitations", auth, invitationController.getAll);
 router.patch("/:project/invitations/:id/seen", auth, invitationController.updateSeenStatus);

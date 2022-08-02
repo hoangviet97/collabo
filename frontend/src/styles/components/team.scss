@@ -1,4 +1,6 @@
 .team {
+  height: calc(100vh - 180px);
+
   &__invite {
     background-image: linear-gradient(#0274d8d7, rgba(75, 169, 224, 0.74)), url(../../img/invite_bg.jpg);
     background-size: cover;

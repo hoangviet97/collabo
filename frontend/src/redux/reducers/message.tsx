@@ -12,12 +12,14 @@ function messageReducer(state = initialState, action: any) {
 
   switch (type) {
     case CREATE_MESSAGE:
-      const pollMerger = Object.assign(payload.poll, { optionArray: payload.options });
-      const mergedMsg = Object.assign(payload.msg, { pollData: pollMerger });
+      const pollMerger = Object.assign(payload.data.poll, { optionArray: payload.data.options });
+      const mergedMsg = Object.assign(payload.data.msg, { pollData: pollMerger });
+      Object.assign(mergedMsg, { firstname: payload.user.firstname }, { lastname: payload.user.lastname }, { color: payload.user.color });
+
       console.log(mergedMsg);
       return {
         ...state,
-        messages: [...state.messages, mergedMsg]
+        messages: [mergedMsg, ...state.messages]
       };
     case CREATE_MESSAGE_FAIL:
       return {

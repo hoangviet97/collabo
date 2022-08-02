@@ -5,24 +5,22 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../utils/AvatarIcon";
 import { updateMemberRole, deleteMember } from "../../actions/member";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
-interface Props {
-  projectId: string;
-}
-
-const Members: FC<Props> = ({ projectId }) => {
+const Members = () => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const { Option } = Select;
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
 
   function roleHandle(id: string, value: any) {
-    dispatch(updateMemberRole({ id: id, project_id: projectId, role_id: value }));
+    dispatch(updateMemberRole({ id: id, project_id: params.id, role_id: value }));
   }
 
   const kickMemberHandle = (id: string) => {
-    dispatch(deleteMember({ id: id, project_id: projectId }));
+    dispatch(deleteMember({ id: id, project_id: params.id }));
   };
 
   const drawerCloseHandler = () => {
@@ -45,7 +43,7 @@ const Members: FC<Props> = ({ projectId }) => {
       render: (text: string, record: any) => (
         <Space size="middle">
           <Avatar size="large">
-            <AvatarIcon name={record.firstname} />
+            <AvatarIcon firstname={record.firstname} lastname={record.lastname} />
           </Avatar>
           <a onClick={() => setDrawerVisible(true)}>
             {record.firstname} {record.lastname}

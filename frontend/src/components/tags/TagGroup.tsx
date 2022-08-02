@@ -3,10 +3,11 @@ import { Tag, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import { deleteTag } from "../../actions/tag";
 import { useDispatch } from "react-redux";
+import { tag } from "../../types/types";
 
 interface Props {
   title: String;
-  tags: any;
+  tags: tag[];
 }
 
 const TagGroup: FC<Props> = ({ title, tags }) => {
@@ -14,7 +15,6 @@ const TagGroup: FC<Props> = ({ title, tags }) => {
   let params: any = useParams();
 
   const deleteHandler = (id: String) => {
-    console.log(id);
     dispatch(deleteTag({ project_id: params.id, id: id }));
   };
 
@@ -22,7 +22,7 @@ const TagGroup: FC<Props> = ({ title, tags }) => {
     <div style={{ margin: "18px 0" }}>
       <Divider />
       <h2 style={{ fontSize: "35px", color: "grey" }}>{title}</h2>
-      {tags.map((i: any) => (
+      {tags.map((i: tag) => (
         <Tag color="cyan" style={{ fontSize: "18px", padding: "6px" }} onClose={() => deleteHandler(i.id)} closable>
           #{i.name}
         </Tag>

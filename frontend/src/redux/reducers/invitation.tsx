@@ -1,8 +1,10 @@
-import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, CREATE_INVITATION_FAIL, GET_PROJECT_INVITATIONS, UPDATE_SEEN_INVITATION, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../../actions/types";
+import { CREATE_INVITATION, ACCEPT_INVITATION, ADD_INVITATION, DELETE_INVITATION, CREATE_INVITATION_FAIL, GET_PROJECT_INVITATIONS, UPDATE_SEEN_INVITATION, GET_INVITATIONS, GET_INVITATIONS_FAIL } from "../../actions/types";
+import { Invitation } from "../../types/types";
 
 const initialState = {
   sended: [],
-  invitations: []
+  invitations: [],
+  unread: 0
 };
 
 function invitationReducer(state = initialState, action: any) {
@@ -14,15 +16,23 @@ function invitationReducer(state = initialState, action: any) {
         ...state,
         sended: [...state.sended, payload]
       };
+    case ADD_INVITATION:
+      return {
+        ...state,
+        invitations: [...state.invitations, payload]
+      };
     case CREATE_INVITATION_FAIL:
       return {
         ...state,
         sended_invitations: []
       };
     case GET_INVITATIONS:
+      const unseenNum = payload.filter((item: any) => item.seen === 0).length;
+
       return {
         ...state,
-        invitations: payload
+        invitations: payload,
+        unread: unseenNum
       };
     case GET_PROJECT_INVITATIONS:
       return {

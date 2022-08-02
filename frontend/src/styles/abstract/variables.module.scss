@@ -1,0 +1,63 @@
+$primary-text-color: #2f3542;
+$primary-blue-color: #3f8ff7;
+$secondaty-blue-color: #f5f6f9;
+$orange-color-1: #f7cb6b;
+
+//Project color icon
+$light-orange-color-2: #eeb94f;
+$normal-orange-color-2: #e49744;
+$light-red-color: #d55c44;
+$normal-red-color: #a82b44;
+
+$light-green: #badc58;
+$normal-green: #6ab04c;
+
+$light-reef: #38ada9;
+$normal-reef: #079992;
+
+$light-orange: #f1c40f;
+$normal-orange: #f39c12;
+
+$light-red: #e74c3c;
+$normal-red: #c0392b;
+
+$light-blue: #74b9ff;
+$normal-blue: #0275d8;
+
+$light-purple: #d6a2e8;
+$normal-purple: #8e44ad;
+
+$light-purple-2: #686de0;
+$normal-purple-2: #4834d4;
+
+$normal-silver-2: #a4b0be;
+$normal-silver: #bdc3c7;
+
+$light-koamaru: #30336b;
+$normal-koamaru: #130f40;
+
+$light-grey-1: #34495e;
+$normal-grey-1: #2c3e50;
+
+:export {
+  light_green: $light-green;
+  normal_green: $normal-green;
+  light_reef: $light-reef;
+  normal_reef: $normal-reef;
+  light_orange: $light-orange;
+  normal_orange: $normal-orange;
+  light_red: $light-red;
+  normal_red: $normal-red;
+  light_blue: $light-blue;
+  normal_blue: $normal-blue;
+  light_purple: $light-purple;
+  normal_purple: $normal-purple;
+  light_purple_2: $light-purple-2;
+  normal_purple_2: $normal-purple-2;
+  normal_silver_2: $normal-silver-2;
+  normal_silver: $normal-silver;
+  light_koamaru: $light-koamaru;
+  normal_koamaru: $normal-koamaru;
+  light_grey: $light-grey-1;
+  normal_grey: $normal-grey-1;
+}

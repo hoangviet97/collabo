@@ -10,14 +10,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 25px;
+    gap: 27px;
   }
 
   &__link {
-    color: black;
+    color: #747d8c;
+    font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+
+    &:hover {
+      color: #3f8ff7;
+    }
   }
 
   &__icon {

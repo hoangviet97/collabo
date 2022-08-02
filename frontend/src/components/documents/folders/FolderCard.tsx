@@ -1,19 +1,19 @@
 import React, { FC } from "react";
 import { Button, Menu, Dropdown } from "antd";
 import { EllipsisOutlined, FolderFilled } from "@ant-design/icons";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { deleteFolder } from "../../../actions/folder";
 import { useDispatch } from "react-redux";
 
 interface Props {
   folder: any;
-  match: any;
 }
 
-const FolderCard: FC<Props> = ({ folder, match }) => {
+const FolderCard: FC<Props> = ({ folder }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const params: any = useParams();
+  const location: any = useLocation();
 
   const deleteFolderHandler = () => {
     dispatch(deleteFolder({ project_id: params.id, folder_id: folder.id }));
@@ -31,7 +31,7 @@ const FolderCard: FC<Props> = ({ folder, match }) => {
   );
 
   const redirectHandle = () => {
-    history.push(match.url + "/folders/" + folder.id);
+    history.push(location.pathname + "/folders/" + folder.id);
   };
 
   return (

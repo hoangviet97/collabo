@@ -45,11 +45,10 @@ module.exports = {
   PollOption,
   Reply,
   // create new member by user or by admin
-  create: async function (body, member, result) {
-    console.log(body);
-    const newMessage = new Message(uuid4(), body.project, member, body.text);
+  create: async function (body, project, member, result) {
+    const newMessage = new Message(uuid4(), project, member, body.text);
     const sql = `INSERT INTO messages (id, projects_id, members_id, text, created_at) VALUES (?, ?, ?, ?, ?)`;
-    con.query(sql, [newMessage.id, body.project, newMessage.member_id, newMessage.text, newMessage.created_at], (err, MesRes) => {
+    con.query(sql, [newMessage.id, project, newMessage.member_id, newMessage.text, newMessage.created_at], (err, MesRes) => {
       if (err) {
         result(err, null);
         return;
@@ -86,8 +85,13 @@ module.exports = {
     });
   },
 
+  create2: async function (body, project, member) {
+    const newMessage = new Message(uuid4(), project, member, body.text);
+    const sql = `INSERT INTO messages (id, projects_id, members_id, text, created_at) VALUES (?, ?, ?, ?, ?)`;
+  },
+
   find: async function (id, result) {
-    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname
+    const sql = `SELECT messages.id, messages.text, messages.created_at, users.firstname, users.lastname, users.color
                     FROM messages 
                     INNER JOIN members ON messages.members_id = members.id
                     INNER JOIN users ON members.users_id = users.id
@@ -121,7 +125,7 @@ module.exports = {
             return;
           }
 
-          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, polls.id AS poll_id, users.firstname, users.lastname, users.email FROM members_has_poll_options
+          const voteSql = `SELECT poll_options.id AS option_id, members.id AS member_id, polls.id AS poll_id, users.firstname, users.lastname, users.email, users.color FROM members_has_poll_options
                             INNER JOIN members ON members_has_poll_options.members_id = members.id
                             INNER JOIN poll_options ON members_has_poll_options.poll_options_id = poll_options.id
                             INNER JOIN polls ON poll_options.polls_id = polls.id
@@ -147,18 +151,18 @@ module.exports = {
     });
   },
 
-  addVote: async function (body, member, result) {
+  addVote: async function (option_id, member, result) {
     const sql = `INSERT INTO members_has_poll_options (members_id, poll_options_id) VALUES (?, ?)`;
-    con.query(sql, [member, body.option_id], (err, res) => {
-      const resData = { member_id: member, option_id: body.option_id };
+    con.query(sql, [member, option_id], (err, res) => {
+      const resData = { member_id: member, option_id: option_id };
       result(null, resData);
     });
   },
 
-  deleteVote: async function (body, member, result) {
+  deleteVote: async function (option_id, member, result) {
     const sql = `DELETE FROM members_has_poll_options WHERE members_id = ? AND poll_options_id = ?`;
-    con.query(sql, [member, body.option_id], (err, res) => {
-      const deletedItem = { member_id: member, option_id: body.option_id };
+    con.query(sql, [member, option_id], (err, res) => {
+      const deletedItem = { member_id: member, option_id: option_id };
       result(null, deletedItem);
     });
   },
@@ -171,13 +175,13 @@ module.exports = {
     });
   },
 
-  getAll: async function (body, result) {
-    const sql = `SELECT message_replies.*, users.firstname, users.lastname
+  getAll: async function (project, result) {
+    const sql = `SELECT message_replies.*, users.firstname, users.lastname, users.color
                     FROM message_replies 
                     INNER JOIN members ON message_replies.members_id = members.id 
                     INNER JOIN users ON members.users_id = users.id
                     WHERE members.projects_id = ?`;
-    con.query(sql, [body.project], (err, res) => {
+    con.query(sql, [project], (err, res) => {
       result(null, res);
     });
   }

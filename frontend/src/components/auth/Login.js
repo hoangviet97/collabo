@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Carousel } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/auth";
+import Img from "../../img/hero.png";
 
 const Login = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((state) => state.auth.loading);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const { email, password } = formData;
@@ -53,7 +55,7 @@ const Login = () => {
 
           <Form.Item className="auth__element">
             <Button type="primary" htmlType="submit" size="large" style={{ borderRadius: "10px" }}>
-              Login
+              {isLoading ? "loading..." : "Login"}
             </Button>
           </Form.Item>
 
@@ -67,7 +69,11 @@ const Login = () => {
           </div>
         </Form>
       </div>
-      <div class="auth__container auth__project-info-container"></div>
+      <div class="auth__container auth__project-info-container" style={{ position: "relative" }}>
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "60%" }}>
+          <img src={Img} style={{ width: "100%" }} alt="" />
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,7 +11,8 @@ interface Props {
 
 const NewProject: FC<Props> = ({ history }) => {
   const dispatch = useDispatch();
-  const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
+  const [selected, setSelected] = useState<string>("");
+  const colorSet: string[] = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
 
   const [projectName, setProjectName] = useState({ name: "" });
   const [color, setColor] = useState<string>("");
@@ -28,6 +29,7 @@ const NewProject: FC<Props> = ({ history }) => {
   };
 
   const colorCubicStateHandler = (item: any, index: number) => {
+    console.log(item);
     handleIconColor(item);
     setChosen(index);
   };
@@ -48,7 +50,7 @@ const NewProject: FC<Props> = ({ history }) => {
             <Form.Item label="Choose your color">
               <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 {colorSet.map((item, index) => (
-                  <ColorCubic onClick={() => colorCubicStateHandler(item, index)} active={index === chosen} key={index} color={item} />
+                  <div className={chosen === index ? "active-color-box" : "color-box"} onClick={() => colorCubicStateHandler(item, index)} style={{ backgroundColor: item, width: "50px", height: "50px" }}></div>
                 ))}
               </div>
             </Form.Item>
@@ -63,7 +65,9 @@ const NewProject: FC<Props> = ({ history }) => {
           <Link to="/">Cancel</Link>
         </div>
       </div>
-      <div className="new-project__bg"></div>
+      <div className="new-project__bg">
+        <div style={{ width: "100%", height: "100%", opacity: 0.5, backgroundColor: color.length === 0 ? "#a4b0be" : color }}></div>
+      </div>
     </div>
   );
 };

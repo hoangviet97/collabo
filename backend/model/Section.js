@@ -13,45 +13,28 @@ class Section {
 module.exports = {
   Section,
   // create new member by user or by admin
-  create: async function (id, name, result) {
+  create: async function (id, name) {
     const newSection = new Section(uuid4(), id, name);
-
     const sql = `INSERT INTO sections (id, projects_id, name, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newSection.id, newSection.projectId, newSection.name, newSection.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, newSection);
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [newSection.id, newSection.projectId, newSection.name, newSection.created_at]);
+
+    return newSection;
   },
 
-  delete: async function (id, result) {
+  delete: async function (id) {
     const sql = `DELETE FROM sections WHERE id = ?`;
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, "success");
-      return;
-    });
+    const [rows] = await con.promise().query(sql, [id]);
+
+    return rows;
   },
 
-  find: async function (projectId, result) {
+  find: async function (projectId) {
     const sql = `SELECT id, name FROM sections WHERE projects_id = ?`;
 
-    con.query(sql, [projectId], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, projectId);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   }
 };

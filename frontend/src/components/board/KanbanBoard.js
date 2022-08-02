@@ -36,6 +36,11 @@ const KanbanBoard = ({ match }) => {
         id: 4,
         title: "Canceled",
         cards: []
+      },
+      {
+        id: 5,
+        title: "Under Review",
+        cards: []
       }
     ]
   };
@@ -43,7 +48,6 @@ const KanbanBoard = ({ match }) => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.task.tasks);
   const loading = useSelector((state) => state.task.loading);
-  const [isVisible, setIsVisible] = useState(false);
   const [controlledBoard, setBoard] = useState(board);
 
   useEffect(() => {
@@ -54,7 +58,7 @@ const KanbanBoard = ({ match }) => {
     const mapa = { ...board };
 
     for (let { id, title, description, statusId, priorityName, due_date } of tasks) {
-      mapa.columns.find((x) => x.id === parseInt(statusId, 10))["cards"].push({ id: id, title: title, description: description, priority: priorityName, due_date });
+      mapa.columns.find((x) => x.id === parseInt(statusId, 10))["cards"].push({ id: id, title: title, description: description, priority: priorityName, due_date: due_date });
     }
     setBoard(mapa);
   }, [tasks]);
@@ -74,7 +78,7 @@ const KanbanBoard = ({ match }) => {
 
   return (
     <div className="board" style={{ overflowX: "scroll" }}>
-      <Container size="30">
+      <Container size="50">
         <Board
           onCardDragEnd={handleCardMove}
           renderCard={({ id, title, description, priority, due_date }, { dragging }) => <BoardCard id={id} title={title} description={description} priority={priority} due_date={due_date} dragging={dragging} showModalHandler={showModalHandler} />}

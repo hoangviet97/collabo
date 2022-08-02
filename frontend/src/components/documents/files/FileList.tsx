@@ -8,12 +8,9 @@ import { moveToFolder, deleteFile } from "../../../actions/file";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
+import { folder } from "../../../types/types";
 
-interface Props {
-  files: any;
-}
-
-const FileList: FC<Props> = ({ files }) => {
+const FileList = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const { Text, Link } = Typography;
@@ -23,6 +20,7 @@ const FileList: FC<Props> = ({ files }) => {
   const [folderId, setFolderId] = useState<string>("");
   const [folderNum, setFolderNum] = useState<number>(0);
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
+  const files = useSelector((state: RootStateOrAny) => state.file.files);
 
   const download = (record: any) => {
     axios({
@@ -36,7 +34,7 @@ const FileList: FC<Props> = ({ files }) => {
   };
 
   const deleteHandler = (id: string) => {
-    dispatch(deleteFile({ id: id }));
+    dispatch(deleteFile({ project_id: params.id, id: id }));
   };
 
   const columns = [
@@ -55,7 +53,7 @@ const FileList: FC<Props> = ({ files }) => {
       title: "Created",
       dataIndex: "created_at",
       key: "created",
-      render: (text: any, record: any) => moment(record.created_at).startOf("hour").fromNow()
+      render: (text: any, record: any) => moment(record.created_at).format("MMM Do YY, h:mm")
     },
     {
       title: "",
@@ -118,7 +116,7 @@ const FileList: FC<Props> = ({ files }) => {
       </div>
       <Modal title="Select folder" width="500px" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Select style={{ width: 200 }} onChange={handleFolderName} placeholder="Select a person">
-          {folders.map((item: any, index: number) => (
+          {folders.map((item: folder, index: number) => (
             <Option key={index} value={item.id}>
               {item.title}
             </Option>

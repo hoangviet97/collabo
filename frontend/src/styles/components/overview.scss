@@ -7,7 +7,7 @@
   grid-auto-flow: row;
   grid-template-areas: "left right";
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 180px);
 
   &__left {
     grid-area: left;
@@ -36,6 +36,10 @@
     grid-area: b;
     border-radius: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    justify-content: center;
+    padding: 35px 20px;
+    width: 100%;
   }
   .c {
     grid-area: c;
@@ -48,7 +52,7 @@
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-columns: 1fr;
-    grid-template-rows: 60% 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 15px 0px;
     grid-template-areas:
       "d"
@@ -58,22 +62,37 @@
   }
 
   .d {
+    padding: 15px 30px;
     grid-area: d;
     border-radius: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow-x: hidden;
   }
   .e {
+    padding: 15px 30px;
     grid-area: e;
     border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow-x: hidden;
   }
 
   &__highlight-item {
-    background-color: white;
     border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    padding: 10px 15px;
+    padding: 15px 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &__session {
+    position: absolute;
+    margin-top: 8px;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
   }
 }

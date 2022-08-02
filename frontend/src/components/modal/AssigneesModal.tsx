@@ -4,17 +4,20 @@ import { createAssignee, deleteAssignee } from "../../actions/task";
 import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import { member } from "../../types/types";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   task_id: string;
   assignees: any;
-  members: any;
+  members: member[];
   close: any;
-  project: any;
 }
 
-const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close, project }) => {
+const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
   const [searchText, setSearchText] = useState<string>("");
 
   const searchTextHandle = (e: any) => {
@@ -22,11 +25,11 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close, project
   };
 
   const addNewAssignee = (id: string) => {
-    dispatch(createAssignee({ user_id: id, task_id: task_id, project_id: project }));
+    dispatch(createAssignee({ user_id: id, task_id: task_id, project_id: params.id }));
   };
 
   const removeAssignee = (id: string, email: string) => {
-    dispatch(deleteAssignee({ user_id: id, task_id: task_id, project_id: project }));
+    dispatch(deleteAssignee({ user_id: id, task_id: task_id, project_id: params.id }));
   };
 
   const isAssigneed = (email: string, id: string) => {
@@ -68,8 +71,8 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close, project
             .map((item: any, index: number) => (
               <div className="assignee-modal__item" key={index}>
                 <div className="assignee-modal__identity">
-                  <Avatar>
-                    <AvatarIcon name={item.firstname} />
+                  <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                    <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                   </Avatar>{" "}
                   <span>{item.lastname}</span>
                 </div>

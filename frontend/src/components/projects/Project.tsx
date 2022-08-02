@@ -1,29 +1,21 @@
 import React, { useState, useEffect, FC } from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../actions/project";
-import { getProjectTasks, getAllAssignees } from "../../actions/task";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Row, Col, Button, Avatar, Tooltip } from "antd";
 import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
-import colorList from "../utils/Colors";
-import { truncade } from "../utils/textManipulation";
+import { project, member } from "../../types/types";
+import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
-  project: any;
-  projectCardHandler: any;
-  setFavorite: any;
-  members: any;
+  project: project;
+  projectCardHandler: (project_id: string) => void;
+  members: member[];
 }
 
-const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members }) => {
-  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
-
-  const favoriteToggle = () => {
-    setFavorite({ id: project.id, status: project.favorite === 1 ? 0 : 1 });
-  };
-
+const Project: FC<Props> = ({ project, projectCardHandler, members }) => {
   return (
     <div className="project-card">
       <div className="project-card__header">
@@ -33,24 +25,23 @@ const Project: FC<Props> = ({ project, projectCardHandler, setFavorite, members 
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
             <div className="project-card__right-header">
-              <StarFilled onClick={favoriteToggle} className="project-card__favorite" style={{ color: project.favorite === 1 ? "#FFD700" : "black" }} />
               <EllipsisOutlined className="more-icon" />
             </div>
           </Col>
         </Row>
       </div>
-      <div className="project-card__body" onClick={() => projectCardHandler(project.id)}>
-        <h2>{truncade(project.name, 40)}</h2>
-        <span style={{ marginTop: "-10px" }}>{project.description === null ? "No description" : truncade(project.description, 50)}</span>
+      <div className="project-card__body" style={{ width: "80%", overflowX: "hidden" }} onClick={() => projectCardHandler(project.id)}>
+        <div className="text-ellipsis" style={{ fontSize: "20px" }}>
+          {project.name}
+        </div>
       </div>
-      <div className="project-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="project-card__footer">
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-          {members.map((item: any, index: number) => {
-            let randNum = Math.floor(Math.random() * 6);
+          {members.map((item: member, index: number) => {
             return (
               <Tooltip key={index} title={item.email} placement="top">
-                <Avatar style={{ backgroundColor: `${colorList.colorList[randNum].code}` }}>
-                  <AvatarIcon name={item.firstname} />
+                <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                  <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                 </Avatar>
               </Tooltip>
             );

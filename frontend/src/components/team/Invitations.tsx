@@ -10,10 +10,6 @@ const Invitations: FC = () => {
   const params: any = useParams();
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
-  useEffect(() => {
-    console.log(params);
-  }, []);
-
   const deleteRecordHandler = (id: string) => {
     dispatch(deleteInvitation({ project_id: params.id, id: id }));
   };

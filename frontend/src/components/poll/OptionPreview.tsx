@@ -9,7 +9,7 @@ interface Props {
 
 const OptionPreview: FC<Props> = ({ text, removeOption }) => {
   return (
-    <div style={{ backgroundColor: "wheat", padding: "6px 10px", borderRadius: "10px", marginBottom: "5px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="option__preview">
       <span>{text}</span>
       <Button style={{ color: "white" }} type="link" icon={<CloseOutlined />} onClick={() => removeOption(text)}></Button>
     </div>

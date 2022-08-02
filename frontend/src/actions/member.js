@@ -1,4 +1,4 @@
-import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, LEAVE_PROJECT } from "./types";
+import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, LEAVE_PROJECT, GET_MODAL_MEMBERS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 
@@ -6,6 +6,15 @@ export const getMembers = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:9000/api/${project_id}/members`);
     dispatch({ type: GET_MEMBERS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_MEMBERS_FAIL });
+  }
+};
+
+export const getModalMembers = ({ project_id }) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/members`);
+    dispatch({ type: GET_MODAL_MEMBERS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_MEMBERS_FAIL });
   }

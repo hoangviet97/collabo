@@ -19,12 +19,12 @@ const TimeTracker: FC<Props> = ({ match }) => {
   }, []);
 
   return (
-    <div>
-      <Container size="30">
+    <Container size="50">
+      <div className="time__page">
         <TimerHeader records={records} />
         <TimerLogger records={records} />
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 };
 

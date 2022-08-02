@@ -1,14 +1,18 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, DATA_LOADING, CREATE_NOTE, UPDATE_NOTE } from "../../actions/types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSION_LOADING, DELETE_SESSION, UPDATE_NOTE, ACTIVE_SESSIONS, TODAY_SESSIONS, PAST_SESSIONS } from "../../actions/types";
+import moment from "moment";
+import { session } from "../../types/types";
 
 const initialState = {
   sessions: [],
   single: {},
   loading: false,
+  singleLoading: false,
   participants: []
 };
 
 function sessionReducer(state = initialState, action: any) {
   const { type, payload } = action;
+  const today: Date = new Date();
 
   switch (type) {
     case CREATE_SESSION:
@@ -24,6 +28,7 @@ function sessionReducer(state = initialState, action: any) {
       return {
         ...state,
         sessions: payload,
+        filteredSessions: payload,
         loading: false
       };
     case GET_SESSIONS_FAIL:
@@ -35,7 +40,12 @@ function sessionReducer(state = initialState, action: any) {
       return {
         ...state,
         single: payload,
-        loading: false
+        singleLoading: false
+      };
+    case DELETE_SESSION:
+      return {
+        ...state,
+        sessions: state.sessions.filter((item: session) => item.id !== payload)
       };
     case GET_PARTICIPANTS:
       return {
@@ -43,15 +53,34 @@ function sessionReducer(state = initialState, action: any) {
         participants: payload,
         loading: false
       };
+    case ACTIVE_SESSIONS:
+      const filteredActive = state.sessions.filter((item: session) => moment(item.date).format("MMMM Do YYYY, h:mm:ss a") >= moment(today).format("MMMM Do YYYY, h:mm:ss a"));
+      return {
+        ...state,
+        filteredSessions: filteredActive
+      };
+    case TODAY_SESSIONS:
+      const filteredToday = state.sessions.filter((item: session) => moment(item.date).format("MMMM Do YYYY, h:mm:ss a") === moment(today).format("MMMM Do YYYY, h:mm:ss a"));
+      return {
+        ...state,
+        filteredSessions: filteredToday
+      };
+    case PAST_SESSIONS:
+      const a = state.sessions.filter((item: session) => moment(today).format("MMMM Do YYYY, h:mm:ss a") > moment(item.date).format("MMMM Do YYYY, h:mm:ss a"));
+      console.log(a);
+      return {
+        ...state,
+        filteredSessions: state.sessions.filter((item: session) => moment(today).format("MMMM Do YYYY, h:mm:ss a") > moment(item.date).format("MMMM Do YYYY, h:mm:ss a"))
+      };
     case SESSIONS_LOADING:
       return {
         ...state,
         loading: true
       };
-    case DATA_LOADING:
+    case SESSION_LOADING:
       return {
         ...state,
-        loading: true
+        singleLoading: true
       };
     default:
       return state;

@@ -15,6 +15,9 @@ import time_record from "./time_record";
 import note from "./note";
 import tag from "./tag";
 import poll from "./poll";
+import income from "./income";
+import review from "./review";
+import log from "./log";
 
 const appReducer = combineReducers({
   auth,
@@ -32,7 +35,10 @@ const appReducer = combineReducers({
   time_record,
   note,
   tag,
-  poll
+  poll,
+  income,
+  review,
+  log
 });
 
 const rootReducer = (state: any, action: any) => {

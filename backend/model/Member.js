@@ -14,44 +14,33 @@ class Member {
 module.exports = {
   Member,
   // create new member by user or by admin
-  create: async function (userId, project, result) {
-    const newMember = new Member(uuid4(), userId, 0, project);
+  create: async function (userId, project, role) {
+    const newMember = new Member(uuid4(), userId, role, project);
     const sql = `INSERT INTO members (id, users_id, roles_id, projects_id, created_at) VALUES (?, ?, ?, ?, ?)`;
-    con.query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [newMember.id, newMember.userId, newMember.roleId, newMember.projectId, newMember.created_at]);
 
-      result(null, project);
-      return;
-    });
+    return project;
   },
 
-  find: async function (project, result) {
-    const sql = `SELECT members.id, users.id AS user_id, users.email, users.firstname, users.lastname, roles.id AS role_id, roles.name AS role, members.created_at 
+  find: async function (project) {
+    const sql = `SELECT members.id, users.id AS user_id, users.email, users.firstname, users.lastname, users.color, roles.id AS role_id, roles.name AS role, members.created_at 
                   FROM members 
                   INNER JOIN users ON members.users_id = users.id 
                   INNER JOIN roles ON members.roles_id = roles.id 
                   WHERE projects_id = ?`;
 
-    con.query(sql, [project], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [project]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  findAll: async function (result) {
-    const sql = `SELECT members.id, members.projects_id AS project_id, users.id AS user_id, users.email, users.firstname, users.lastname
+  findAll: async function (userId, result) {
+    const sql = `SELECT members.id, members.projects_id AS project_id, users.id AS user_id, users.email, users.firstname, users.lastname, users.color
                   FROM members 
-                  INNER JOIN users ON members.users_id = users.id `;
+                  INNER JOIN users ON members.users_id = users.id 
+                  `;
 
-    con.query(sql, (err, res) => {
+    con.query(sql, [userId], (err, res) => {
       if (err) {
         result(err, null);
         return;
@@ -62,44 +51,42 @@ module.exports = {
     });
   },
 
-  updateRole: async function (role_id, id, result) {
+  findMember: async function (id, project) {
+    const sql = `SELECT * FROM members WHERE users_id = '${id}' AND projects_id = ${project}`;
+
+    const [rows] = await con.promise().query(sql);
+
+    return rows;
+  },
+
+  updateRole: async function (role_id, id) {
+    const ownerRole = "0";
+    const sqlCheck = `SELECT * FROM members WHERE roles_id = ${ownerRole} AND projects_id = ${project}`;
+
     const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
 
-    con.query(sql, [role_id, id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [role_id, id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
-  delete: async function (id, result) {
+  delete: async function (id) {
+    const sqlCheck = `SELECT roles.name FROM members INNER JOIN roles ON members.roles_id = roles.id WHERE members.id = ?`;
+    const [roleCheck] = await con.promise().query(sqlCheck, [id]);
+
     const sql = `DELETE from members WHERE id = ?`;
 
-    con.query(sql, [id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
   },
 
   // get current project
-  leave: function (project, user, result) {
+  leave: async function (project, user) {
     const sql = `DELETE FROM members WHERE users_id = ? AND projects_id = ?`;
-    con.query(sql, [user, project], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
 
-      result(null, res);
-    });
+    const [rows] = await con.promise().query(sql, [user, project]);
+
+    return rows;
   }
 };

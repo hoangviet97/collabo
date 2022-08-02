@@ -4,8 +4,8 @@ import { message } from "antd";
 
 export const createSection = ({ project_id, name }) => async (dispatch) => {
   try {
+    dispatch(setSectionLoading());
     const res = await axios.post(`http://localhost:9000/api/${project_id}/sections/add`, { name });
-    console.log(res.data);
     dispatch({ type: CREATE_SECTION, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_SECTION_FAIL });
@@ -22,9 +22,9 @@ export const getSections = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getModalSections = ({ id }) => async (dispatch) => {
+export const getModalSections = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/sections/all", { id });
+    const res = await axios.get(`http://localhost:9000/api/${project_id}/sections`);
     dispatch({ type: GET_MODAL_SECTIONS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_MODAL_SECTIONS_FAIL });

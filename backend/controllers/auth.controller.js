@@ -19,11 +19,9 @@ module.exports = {
   login: function (req, res) {
     const { error } = loginValidation(req.body);
 
-    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
-
     User.loginUser(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err);
-      console.log(req.body);
+      console.log(err);
       return res.json(result);
     });
   },
@@ -35,18 +33,28 @@ module.exports = {
     });
   },
 
-  verify: function (req, res) {
-    User.verify(req.params.id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  verify: async function (req, res) {
+    try {
+      return res.json(await User.verify(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  changeFirstname: function (req, res) {
-    User.changeFirstname(req.user.id, req.body.firstname, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  changeColor: async function (req, res) {
+    try {
+      return res.json(await User.changeColor(req.user.id, req.body.color));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  changeFirstname: async function (req, res) {
+    try {
+      return res.json(await User.changeFirstname(req.user.id, req.body.firstname));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
   changeLastname: function (req, res) {
@@ -57,7 +65,7 @@ module.exports = {
   },
 
   changePassword: function (req, res) {
-    User.changePwd(req.body.id, (err, result) => {
+    User.changePwd(req.body, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

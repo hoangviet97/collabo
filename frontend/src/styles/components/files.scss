@@ -1,6 +1,19 @@
 .files {
   position: relative;
-  min-height: calc(100vh - 120px);
+  height: calc(100vh - 180px);
+
+  &__stats-content {
+    display: flex;
+    justify-content: justify-content;
+    position: relative;
+    width: 100%;
+    margin-left: 10px;
+  }
+
+  &__stats-item {
+    display: flex;
+    margin-bottom: 15px;
+  }
 
   &__storage-tab {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -18,13 +31,7 @@
     margin-bottom: 10px;
   }
 
-  &__folders-options {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-
-  &__folders-list {
+  &__folder-list-component {
     display: grid;
 
     grid-template-columns: repeat(4, 1fr);
@@ -32,6 +39,12 @@
     grid-auto-rows: auto;
 
     grid-gap: 1rem;
+  }
+
+  &__folders-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
   }
 
   &__recent-files-header {
@@ -72,10 +85,8 @@
 .files__storage-tab {
   background-color: white;
   position: fixed;
-  top: 90px;
-  right: 30px;
   width: 390px;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 180px);
   border-radius: 12px;
 }
 .files__data {
@@ -86,6 +97,6 @@
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 70% 1fr;
-  gap: 20px;
+  gap: 30px;
   grid-template-areas: "content stats";
 }

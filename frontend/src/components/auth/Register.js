@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Carousel } from "antd";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
+import Im from "../../img/caro1.png";
 
 const Register = (props) => {
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
@@ -74,7 +75,9 @@ const Register = (props) => {
           </div>
         </Form>
       </div>
-      <div class="auth__container auth__project-info-container"></div>
+      <div class="auth__container auth__project-info-container">
+        <div className="p1"></div>
+      </div>
     </div>
   );
 };

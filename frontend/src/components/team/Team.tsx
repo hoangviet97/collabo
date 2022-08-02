@@ -7,20 +7,18 @@ import InvitationPanel from "./InvitationPanel";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getMembers } from "../../actions/member";
 import { getAllProjectInvitations } from "../../actions/invitation";
+import { useParams } from "react-router-dom";
 
-interface Props {
-  match: any;
-}
-
-const Team: FC<Props> = ({ match }) => {
+const Team = () => {
   const { TabPane } = Tabs;
   const dispatch = useDispatch();
+  const params: any = useParams();
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
   useEffect(() => {
-    dispatch(getMembers({ project_id: match.params.id }));
-    dispatch(getAllProjectInvitations({ project_id: match.params.id }));
+    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getAllProjectInvitations({ project_id: params.id }));
   }, []);
 
   const inviteHeader = (
@@ -30,19 +28,19 @@ const Team: FC<Props> = ({ match }) => {
   );
 
   return (
-    <Container size="30">
-      <div className="project-team">
+    <Container size="50">
+      <div className="team">
         {user_role === "Member" ? (
           ""
         ) : (
           <div className="project-team__restricted-area">
-            <InvitationPanel project={match.params.id} />
+            <InvitationPanel />
           </div>
         )}
 
         <Tabs defaultActiveKey="1">
           <TabPane tab="Active Members" key="1">
-            <Members projectId={match.params.id} />
+            <Members />
           </TabPane>
           <TabPane tab={inviteHeader} key="3">
             <Invitations />
