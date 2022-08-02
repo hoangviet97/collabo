@@ -1,57 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar } from "antd";
-import { showTaskModal, closeTaskModal } from "../../actions/modal";
-import { getMembers } from "../../actions/member";
-import { getProjects } from "../../actions/project";
+import { closeTaskModal } from "../../actions/modal";
+import { getModalMembers } from "../../actions/member";
+import { getModalProjects } from "../../actions/project";
 import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
 import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
-import AssigneeModal from "./AssingeeModal";
 import { withRouter } from "react-router-dom";
-import TaskStatusModal from "./TaskStatusModal";
 
-const TaskModal = (props) => {
-  useEffect(() => {
-    props.projects.length === 0 && props.getProjects();
-  }, []);
-
+const TaskModal = () => {
+  const dispatch = useDispatch();
+  const isVisible = useSelector((state) => state.modal.taskModal);
+  const projects = useSelector((state) => state.project.modalProjects);
+  const sections = useSelector((state) => state.section.modalSections);
+  const members = useSelector((state) => state.member.modalMembers);
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;
   const { Text } = Typography;
 
+  useEffect(() => {
+    projects && dispatch(getModalProjects());
+  }, []);
+
   let path = window.location.pathname;
   let pathValue = path.split("/")[1];
 
-  const [assigneeModal, setAssigneeModal] = useState(false);
-  const [assigneesArray, setAssigneesArray] = useState([]);
-
   const closeModal = () => {
-    props.closeTaskModal();
-  };
-
-  const openAssigneeModal = () => {
-    setAssigneeModal(true);
-  };
-
-  const closeAsigneeModal = () => {
-    setAssigneeModal(false);
+    dispatch(closeTaskModal());
   };
 
   const projectSelected = (value) => {
-    props.getModalSections({ id: value });
-    props.getMembers({ id: value });
-  };
-
-  const assigneeSelected = (id) => {
-    setAssigneesArray((assigneesArray) => [...assigneesArray, id]);
-  };
-
-  const assigneeDelete = (id) => {
-    const newAssigneeArray = assigneesArray.filter((assignee) => assignee !== id);
-    setAssigneesArray(newAssigneeArray);
+    console.log(value);
+    dispatch(getModalSections({ project_id: value }));
+    dispatch(getModalMembers({ project_id: value }));
   };
 
   const onFinish = (fieldsValue) => {
@@ -62,30 +46,26 @@ const TaskModal = (props) => {
       values = {
         ...fieldsValue,
         start_date: null,
-        due_date: null,
-        assigneesArray
+        due_date: null
       };
     } else {
       values = {
         ...fieldsValue,
         start_date: rangeValue[0].format("YYYY-MM-DD"),
-        due_date: rangeValue[1].format("YYYY-MM-DD"),
-        assigneesArray
+        due_date: rangeValue[1].format("YYYY-MM-DD")
       };
     }
 
-    props.createTask({ task: values, projectId: pathValue });
+    dispatch(createTask({ task: values, projectId: pathValue }));
 
-    console.log("Received values of form: ", values);
-
-    setAssigneesArray([]);
+    console.log("Received values of form: ", fieldsValue);
   };
 
   return (
     <div className="modal">
-      <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={props.isVisible} closable={false} footer={null}>
+      <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={isVisible} closable={false} footer={null}>
         <Form style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
-          <Form.Item name="name">
+          <Form.Item name="title">
             <Row>
               <Col span={22}>
                 <Input className="task-name-input" placeholder="Enter task name" />
@@ -99,7 +79,7 @@ const TaskModal = (props) => {
           </Form.Item>
           <Form.Item name="project">
             <Select onSelect={(value) => projectSelected(value)} placeholder="Select project" style={{ width: "100%" }}>
-              {props.projects.map((project, index) => (
+              {projects.map((project, index) => (
                 <Option key={index} value={project.id}>
                   {project.name}
                 </Option>
@@ -108,7 +88,7 @@ const TaskModal = (props) => {
           </Form.Item>
           <Form.Item name="sectionId">
             <Select placeholder="Select section" style={{ width: "100%" }}>
-              {props.sections.map((section, index) => (
+              {sections.map((section, index) => (
                 <Option key={index} value={section.id}>
                   {section.name}
                 </Option>
@@ -122,30 +102,16 @@ const TaskModal = (props) => {
                 <RangePicker allowClear="true" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
-            <Col span={11} style={{ display: "flex", justifyContent: "center" }}>
-              {/* Avatar icons for adding assignees */}
-              <Form.Item>
-                <Avatar.Group maxCount={2} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-                  {assigneesArray.map((assignee) => (
-                    <Avatar key={assignee.id} />
-                  ))}
-                </Avatar.Group>
-              </Form.Item>
-              {/* Button for adding new assignee */}
-              {assigneesArray.length > 0 ? (
-                <a onClick={openAssigneeModal}>
-                  <Avatar style={{ marginLeft: "-8px", marginTop: "-15px" }} size={20} icon={<PlusOutlined />}></Avatar>
-                </a>
-              ) : (
-                <Button type="dashed" onClick={openAssigneeModal}>
-                  <PlusOutlined />
-                  <span>Add assignee</span>
-                </Button>
-              )}
-              {/* Conditional Assignee modal */}
-              {assigneeModal && <AssigneeModal close={closeAsigneeModal} assigneeSelected={assigneeSelected} assigneeDelete={assigneeDelete} members={props.members} />}
-            </Col>
           </Row>
+          <Form.Item name="assignees">
+            <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select members">
+              {members.map((item) => (
+                <Option key={item.user_id} value={item.user_id}>
+                  {item.firstname} {item.lastname} &nbsp; | &nbsp; {item.email}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item name="description">
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
@@ -200,12 +166,6 @@ const TaskModal = (props) => {
               </Col>
             </Row>
           </div>
-          <Form.Item>
-            <Button style={{ border: "none", padding: 0 }}>
-              <PlusOutlined />
-              Add checklist
-            </Button>
-          </Form.Item>
           <Button htmlType="submit">Create</Button>
         </Form>
       </Modal>
@@ -213,11 +173,4 @@ const TaskModal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isVisible: state.modal.taskModal,
-  projects: state.project.projects,
-  sections: state.section.modalSections,
-  members: state.member.members
-});
-
-export default connect(mapStateToProps, { showTaskModal, closeTaskModal, getMembers, getProjects, getModalSections, createTask })(withRouter(TaskModal));
+export default withRouter(TaskModal);

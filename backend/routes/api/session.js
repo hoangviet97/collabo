@@ -1,11 +1,14 @@
 const express = require("express");
 const sessionController = require("../../controllers/session.controller");
 const auth = require("../../middleware/auth");
+const getMemberId = require("../../middleware/getMemberId");
 const permit = require("../../middleware/permission");
 const router = express.Router();
 
-router.post("/add", [auth, permit("Owner", "Admin")], sessionController.create);
-router.post("/single", auth, sessionController.getOne);
-router.post("/all", auth, sessionController.getAll);
+router.post("/:project/sessions/add", [auth, getMemberId], sessionController.create);
+router.get("/:project/sessions/:id", auth, sessionController.getOne);
+router.get("/:project/sessions", auth, sessionController.getAll);
+router.delete("/:project/sessions/:id", auth, sessionController.delete);
+router.get("/:project/sessions/:id/participants", auth, sessionController.getParticipants);
 
 module.exports = router;

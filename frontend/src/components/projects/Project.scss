@@ -1,0 +1,73 @@
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  border: transparent;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+  &__right-header {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  &__body {
+    cursor: pointer;
+  }
+
+  &__members {
+    text-align: end;
+  }
+
+  &__footer {
+    &-row {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+    }
+  }
+}
+
+.ant-progress {
+  display: flex;
+  flex-direction: column;
+
+  &-outer {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  &-text {
+    margin-right: 0 !important;
+    margin-top: 5px;
+    align-self: flex-end;
+    font-weight: 400;
+  }
+}
+
+.project-status {
+  font-size: 12px;
+  color: white;
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 12px;
+
+  &__0 {
+    background-color: #bdc3c7;
+  }
+
+  &__1 {
+    background-color: #2ecc71;
+  }
+
+  &__2 {
+    background-color: #e74c3c;
+  }
+}
+
+.favorite-active {
+  background-color: gold;
+  color: white;
+  border: transparent;
+}

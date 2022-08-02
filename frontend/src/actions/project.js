@@ -1,12 +1,11 @@
-import { CREATE_PROJECT, CREATE_PROJECT_FAIL, GET_PROJECTS, LOAD_PROJECTS_FAIL, UPDATE_PROJECT_COLOR, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL } from "./types";
+import { CREATE_PROJECT, CREATE_PROJECT_FAIL, RESET_AUTH, GET_PROJECT_AUTH, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, GET_PROJECTS, LOAD_PROJECTS_FAIL, UPDATE_PROJECT_COLOR, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL, GET_MODAL_PROJECTS } from "./types";
 import axios from "axios";
 import { message } from "antd";
 import setAuthToken from "../helpers/setAuthToken";
 
-export const createProject = ({ name, push }) => async (dispatch) => {
+export const createProject = ({ name, color, push }) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:9000/api/projects/add", { name });
-    console.log(res.data);
+    const res = await axios.post("http://localhost:9000/api/projects/add", { name, color });
     dispatch({ type: CREATE_PROJECT, payload: res.data });
     push(`/${res.data.id}/tasks`);
     message.success("Project " + name + " was successfully created");
@@ -28,40 +27,82 @@ export const getProjects = () => async (dispatch) => {
   }
 };
 
-export const getProject = (id) => async (dispatch) => {
+export const getModalProjects = () => async (dispatch) => {
   try {
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
     }
     dispatch(setProjectLoading());
-    const res = await axios.post("http://localhost:9000/api/projects/single", { id: id });
-    dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
+    const res = await axios.get("http://localhost:9000/api/projects");
+    dispatch({ type: GET_MODAL_PROJECTS, payload: res.data });
   } catch (err) {
-    dispatch({ type: ERROR_SINGLE_PROJECT });
+    dispatch({ type: LOAD_PROJECTS_FAIL });
   }
 };
 
-export const setFavorite = ({ id, status }) => async (dispatch) => {
+export const getProject = ({ project_id, push }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/projects/favorite", { status: status, projectId: id });
-    dispatch({ type: SET_FAVORITE_PROJECT, payload: { id: id, status: status } });
+    if (localStorage.getItem("token")) {
+      setAuthToken(localStorage.getItem("token"));
+    }
+    dispatch(setProjectLoading());
+    const res = await axios.get(`http://localhost:9000/api/${project_id}`);
+    dispatch({ type: GET_SINGLE_PROJECT, payload: res.data[0] });
+  } catch (err) {
+    push("/");
+    message.error("Project doesn't exists or unauthorized access!");
+  }
+};
+
+export const setFavorite = ({ project_id, status }) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/favorite`, { status: status });
+    dispatch({ type: SET_FAVORITE_PROJECT, payload: { id: project_id, status: status } });
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }
 };
 
-export const updateColor = ({ id, color }) => async (dispatch) => {
+export const setBudget = ({ project_id, budget }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/projects/color", { id: id, color: color });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/budget`, { budget: budget });
+    dispatch({ type: SET_PROJECT_BUDGET, payload: { id: project_id, budget: budget } });
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
+export const setCurrency = ({ project_id, currency }) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/currency`, { currency: currency });
+    dispatch({ type: SET_PROJECT_CURRENCY, payload: { id: project_id, budget: currency } });
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
+export const deleteProject = ({ project_id, push }) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`http://localhost:9000/api/${project_id}`);
+    dispatch({ type: LEAVE_PROJECT, payload: project_id });
+    push(`/`);
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
+export const updateColor = ({ project_id, color }) => async (dispatch) => {
+  try {
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/color`, { color: color });
     dispatch({ type: UPDATE_PROJECT_COLOR, payload: { color: color } });
   } catch (err) {
     dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
   }
 };
 
-export const updateStatus = ({ id, status }) => async (dispatch) => {
+export const updateStatus = ({ project_id, status }) => async (dispatch) => {
   try {
-    const res = await axios.patch("http://localhost:9000/api/projects/status", { id: id, status: status });
+    const res = await axios.patch(`http://localhost:9000/api/${project_id}/status`, { status: status });
     dispatch({ type: UPDATE_PROJECT_STATUS, payload: { status: status } });
     message.success("Status updated");
   } catch (err) {
@@ -72,5 +113,11 @@ export const updateStatus = ({ id, status }) => async (dispatch) => {
 export const setProjectLoading = () => {
   return {
     type: PROJECT_LOADING
+  };
+};
+
+export const resetAuth = () => {
+  return {
+    type: RESET_AUTH
   };
 };

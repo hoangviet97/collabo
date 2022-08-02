@@ -1,15 +1,17 @@
 const express = require("express");
-const authController = require("../../controllers/user.controller");
 const projectController = require("../../controllers/project.controller");
 const auth = require("../../middleware/auth");
 const permi = require("../../middleware/permission");
+const check = require("../../middleware/checkMembership");
 const router = express.Router();
 
-router.post("/add", auth, projectController.create);
-router.get("/", auth, projectController.getAll);
-router.post("/single", auth, projectController.getOne);
-router.patch("/favorite", auth, projectController.setFavorite);
-router.patch("/color", [auth, permi("Owner", "Admin")], projectController.updateColor);
-router.patch("/status", [auth, permi("Owner", "Admin")], projectController.updateStatus);
+router.post("/projects/add", [auth], projectController.create);
+router.get("/projects", auth, projectController.getAll);
+router.get("/:project", [auth, check], projectController.getOne);
+router.patch("/:project/favorite", auth, projectController.setFavorite);
+router.patch("/:project/currency", [auth, permi("Owner", "Admin")], projectController.setCurrency);
+router.patch("/:project/color", [auth, permi("Owner", "Admin")], projectController.updateColor);
+router.patch("/:project/status", [auth, permi("Owner", "Admin")], projectController.updateStatus);
+router.delete("/:project", [auth, permi("Owner")], projectController.deleteProject);
 
 module.exports = router;

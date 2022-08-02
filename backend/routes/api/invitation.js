@@ -4,9 +4,11 @@ const auth = require("../../middleware/auth");
 const permi = require("../../middleware/permission");
 const router = express.Router();
 
-router.post("/new", [auth, permi("Owner", "Admin")], invitationController.create);
-router.get("/private", auth, invitationController.getAllPrivate);
-router.post("/all", auth, invitationController.getAll);
-router.patch("/seen", auth, invitationController.updateSeenStatus);
+router.post("/:project/invitations/new", [auth], invitationController.create);
+router.get("/invitations/private", auth, invitationController.getAllPrivate);
+router.post("/:project/invitations/:id/accept", auth, invitationController.accept);
+router.get("/:project/invitations", auth, invitationController.getAll);
+router.patch("/:project/invitations/:id/seen", auth, invitationController.updateSeenStatus);
+router.delete("/:project/invitations/:id", auth, invitationController.delete);
 
 module.exports = router;

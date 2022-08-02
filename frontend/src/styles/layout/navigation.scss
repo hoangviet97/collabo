@@ -1,0 +1,43 @@
+.single-navigation {
+  display: flex;
+  gap: 30px;
+  position: relative;
+  float: left;
+  line-height: 60px;
+
+  &__list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 27px;
+  }
+
+  &__link {
+    color: #747d8c;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      color: #3f8ff7;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    height: 40px;
+    padding-left: 7px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__identity {
+    display: flex;
+  }
+}

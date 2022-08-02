@@ -13,32 +13,28 @@ class Note {
 module.exports = {
   Note,
   // create new member by user or by admin
-  create: async function (body, result) {
-    const newTalkingPoint = new TalkingPoint(uuid4(), body.session_id, body.text);
+  create: async function (id, text) {
+    const newNote = new Note(uuid4(), id, text);
+    const sql = `INSERT INTO notes (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
 
-    const sql = `INSERT INTO talking_points (id, sessions_id, text, created_at) VALUES (?, ?, ?, ?)`;
-    con.query(sql, [newTalkingPoint.id, newTalkingPoint.session_id, newTalkingPoint.text, newTalkingPoint.created_at], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [newNote.id, newNote.session_id, newNote.text, newNote.created_at]);
 
-      result(null, newTalkingPoint);
-      return;
-    });
+    return newNote;
   },
 
-  find: async function (session_id, result) {
-    const sql = `SELECT * FROM talking_points WHERE sessions_id = ?`;
+  find: async function (session_id) {
+    const sql = `SELECT * FROM notes WHERE sessions_id = ?`;
 
-    con.query(sql, [session_id], (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
+    const [rows] = await con.promise().query(sql, [session_id]);
 
-      result(null, res);
-      return;
-    });
+    return rows;
+  },
+
+  update: async function (id, text) {
+    const sql = `UPDATE notes SET text = ? WHERE id = ?`;
+
+    const [rows] = await con.promise().query(sql, [text, id]);
+
+    return rows;
   }
 };

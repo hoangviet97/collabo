@@ -3,17 +3,27 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // Create new projects
-  create: function (req, res) {
-    Note.create(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Note.create(req.params.session, req.body.text));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Note.find(req.body.session_id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getNote: async function (req, res) {
+    try {
+      return res.json(await Note.find(req.params.session));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  update: async function (req, res) {
+    try {
+      return res.json(await Note.update(req.params.id, req.body.text));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };

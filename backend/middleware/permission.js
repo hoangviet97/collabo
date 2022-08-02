@@ -8,10 +8,10 @@ module.exports = function permit(...permittedRoles) {
   return (req, res, next) => {
     try {
       const sql = `SELECT roles.name FROM members INNER JOIN roles ON members.roles_id = roles.id WHERE users_id = ? AND projects_id = ?`;
-      con.query(sql, [req.user.id, req.body.project], (err, dbResponse) => {
+      con.query(sql, [req.user.id, req.params.project], (err, dbResponse) => {
         if (err) return apiResponse.ErrorResponse(res, err.message);
 
-        console.log(dbResponse);
+        console.log(dbResponse[0].name);
 
         if (permittedRoles.includes(dbResponse[0].name)) {
           next();

@@ -3,17 +3,27 @@ const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
   // Create new projects
-  create: function (req, res) {
-    Talking_point.create(req.body, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  create: async function (req, res) {
+    try {
+      return res.json(await Talking_point.create(req.body.text, req.params.session));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   },
 
-  getAll: function (req, res) {
-    Talking_point.find(req.body.session_id, (err, result) => {
-      if (err) return apiResponse.ErrorResponse(res, err.message);
-      return res.json(result);
-    });
+  getAll: async function (req, res) {
+    try {
+      return res.json(await Talking_point.find(req.params.session));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  updateCheck: async function (req, res) {
+    try {
+      return res.json(await Talking_point.updateCheck(req.body.val, req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
   }
 };
