@@ -2,11 +2,11 @@ import React, { FC, useState } from "react";
 import prettyBytes from "pretty-bytes";
 import FileTypeIcon from "../../utils/FileTypeIcon";
 import SemiDonut from "../../utils/SemiDonut";
-import { useSelector } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
 
 const FilesStatistics = () => {
-  const statistics = useSelector((state) => state.file.statistics);
-  const sum = useSelector((state) => state.file.total);
+  const statistics = useSelector((state: RootStateOrAny) => state.file.statistics);
+  const sum = useSelector((state: RootStateOrAny) => state.file.total);
 
   return (
     <div className="files__statistics" style={{ overflowY: "scroll" }}>
@@ -15,7 +15,7 @@ const FilesStatistics = () => {
         <SemiDonut sum={sum} />
       </div>
       <div className="files__stats-list">
-        {statistics.map((item, index) => (
+        {statistics.map((item: any, index: number) => (
           <div className="files__stats-item" key={index}>
             <div>
               <FileTypeIcon type={item.type} size="55" />

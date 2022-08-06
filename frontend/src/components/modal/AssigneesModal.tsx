@@ -55,7 +55,7 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
       <div className="assignee-modal" style={{ borderRadius: "10px", zIndex: 99999 }}>
         <Row style={{ marginBottom: "10px" }}>
           <Col span="18">
-            <Input size="small" onChange={(e) => searchTextHandle(e)} />
+            <Input size="small" value={searchText} onChange={(e) => searchTextHandle(e)} />
           </Col>
           <Col span="6" style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
             <a onClick={close}>

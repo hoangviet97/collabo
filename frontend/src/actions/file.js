@@ -1,11 +1,11 @@
 import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, DELETE_FILE, GET_FOLDER_FILES, GET_TASK_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM, UPLOAD_ATTACH_FILE, EJECT_FILE } from "./types";
-import axios from "axios";
+import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
 export const uploadFile = ({ project_id, formData }) => async (dispatch) => {
   dispatch(setFileLoading());
   try {
-    const res = await axios.post(`http://localhost:9000/api/${project_id}/files/upload`, formData, {
+    const res = await axiosClient.post(`/${project_id}/files/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
@@ -20,7 +20,7 @@ export const uploadFile = ({ project_id, formData }) => async (dispatch) => {
 export const uploadAttachFile = ({ project_id, formData, task }) => async (dispatch) => {
   dispatch(setFileLoading());
   try {
-    const res = await axios.post(`http://localhost:9000/api/${project_id}/tasks/${task}/files/attachment/upload`, formData, {
+    const res = await axiosClient.post(`/${project_id}/tasks/${task}/files/attachment/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
@@ -34,7 +34,7 @@ export const uploadAttachFile = ({ project_id, formData, task }) => async (dispa
 
 export const deleteFile = ({ project_id, id }) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:9000/api/${project_id}/files/${id}`);
+    const res = await axiosClient.delete(`/${project_id}/files/${id}`);
     dispatch({ type: DELETE_FILE, payload: id });
     message.success("File deleted successfuly!");
   } catch (err) {
@@ -44,7 +44,7 @@ export const deleteFile = ({ project_id, id }) => async (dispatch) => {
 
 export const ejectFile = ({ project_id, id, task_id }) => async (dispatch) => {
   try {
-    const res = await axios.delete(`http://localhost:9000/api/${project_id}/tasks/${task_id}/files/${id}/eject`);
+    const res = await axiosClient.delete(`/${project_id}/tasks/${task_id}/files/${id}/eject`);
     dispatch({ type: EJECT_FILE, payload: id });
     message.success("File ejected successfuly!");
   } catch (err) {
@@ -54,7 +54,7 @@ export const ejectFile = ({ project_id, id, task_id }) => async (dispatch) => {
 
 export const getAllFiles = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/files`);
+    const res = await axiosClient.get(`/${project_id}/files`);
     dispatch({ type: GET_FILES, payload: res.data });
   } catch (err) {
     console.log(err);
@@ -64,7 +64,7 @@ export const getAllFiles = ({ project_id }) => async (dispatch) => {
 export const getFilesByFolder = ({ id, project_id }) => async (dispatch) => {
   try {
     dispatch(setFileLoading());
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/folders/${id}/files`);
+    const res = await axiosClient.get(`/${project_id}/folders/${id}/files`);
     dispatch({ type: GET_FOLDER_FILES, payload: res.data });
   } catch (err) {
     console.log(err);
@@ -74,7 +74,7 @@ export const getFilesByFolder = ({ id, project_id }) => async (dispatch) => {
 export const getFilesByTask = ({ id, project_id }) => async (dispatch) => {
   try {
     dispatch(setFileLoading());
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/tasks/${id}/files`);
+    const res = await axiosClient.get(`/${project_id}/tasks/${id}/files`);
     dispatch({ type: GET_TASK_FILES, payload: res.data });
   } catch (err) {
     console.log(err);
@@ -83,7 +83,7 @@ export const getFilesByTask = ({ id, project_id }) => async (dispatch) => {
 
 export const getFileTypes = ({ project_id }) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:9000/api/${project_id}/files/types`);
+    const res = await axiosClient.get(`/${project_id}/files/types`);
     dispatch({ type: GET_FILE_TYPES, payload: res.data });
   } catch (err) {
     console.log(err);
@@ -92,7 +92,7 @@ export const getFileTypes = ({ project_id }) => async (dispatch) => {
 
 export const moveToFolder = ({ project_id, id, folder_id }) => async (dispatch) => {
   try {
-    const res = await axios.post(`http://localhost:9000/api/${project_id}/files/${id}/move-folder`, { folder_id });
+    const res = await axiosClient.post(`/${project_id}/files/${id}/move-folder`, { folder_id });
     dispatch({ type: MOVE_TO_FOLDER, payload: { id: id } });
     dispatch({ type: UPDATE_FOLDER_NUM, payload: { id: folder_id } });
     message.success("This is a success message");

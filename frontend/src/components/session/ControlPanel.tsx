@@ -45,11 +45,17 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
           <div>
             <span style={{ fontSize: "20px", marginRight: "10px" }}>Sessions</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "15px" }}>
+          <div className="session__control-btns">
             <div>
-              <Button onClick={showAllSessions}>Active</Button>
-              <Button onClick={showTodaySessions}>Today</Button>
-              <Button onClick={showPastSessions}>Past</Button>
+              <Button className="session__control-btn" onClick={showAllSessions}>
+                Active
+              </Button>
+              <Button className="session__control-btn" onClick={showTodaySessions}>
+                Today
+              </Button>
+              <Button className="session__control-btn" onClick={showPastSessions}>
+                Past
+              </Button>
             </div>
             <Button onClick={addNewSession}>
               <PlusOutlined />

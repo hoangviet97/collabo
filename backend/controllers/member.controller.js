@@ -28,7 +28,7 @@ module.exports = {
 
   updateRole: async function (req, res) {
     try {
-      return res.json(await Member.updateRole(req.body.role_id, req.params.id));
+      return res.json(await Member.updateRole(req.body.role_id, req.params.id, req.member, req.params.project));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
@@ -36,15 +36,15 @@ module.exports = {
 
   deleteMember: async function (req, res) {
     try {
-      return res.json(await Member.delete(req.params.id));
+      return res.json(await Member.delete(req.params.id, req.member));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }
   },
 
-  leave: async function (req, res) {
+  leaveProject: async function (req, res) {
     try {
-      return res.json(await Member.leave(req.params.project, req.user.id));
+      return res.json(await Member.leave2(req.params.project, req.member));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

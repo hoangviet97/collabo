@@ -1,0 +1,130 @@
+@import "~antd/dist/antd.css";
+@import "./styles/abstract/variables.module.scss";
+@import "./styles/layout/layout.scss";
+@import "./styles/base/base";
+@import "./styles/base/typography.scss";
+@import "./styles/utils/utils.scss";
+@import "./styles/utils/colors.scss";
+@import "./styles/layout/navigation.scss";
+@import "./styles/layout/topbar.scss";
+@import "./styles/layout/sidebar.scss";
+@import "./styles/pages/new_project.scss";
+@import "../src/styles/components/projects.scss";
+@import "../src/styles/components/task.scss";
+@import "../src/styles/components/icons.scss";
+@import "../src/styles/components/modals.scss";
+@import "../src/styles/vendors/custom_antd.scss";
+@import "../src/styles/components/folders.scss";
+@import "./styles/pages/auth.scss";
+@import "../src/styles/components/timer.scss";
+@import "../src/styles/components/files.scss";
+@import "../src/styles/components/sessions.scss";
+@import "../src/styles/components/chat.scss";
+@import "../src/styles/components/posts.scss";
+@import "../src/styles/components/overview.scss";
+@import "../src/styles/components/report.scss";
+@import "../src/styles/components/team.scss";
+@import "../src/styles/components/budget.scss";
+@import "../src/styles/components/spinners.scss";
+@import "../src/styles/components/charts.scss";
+@import "../src/styles/components/polls.scss";
+@import "../src/styles/components/reviews.scss";
+@import "../src/styles/components/logs.scss";
+@import "../src/styles/components/comments.scss";
+
+html {
+  color: #2f3542;
+  background-color: $secondaty-blue-color;
+}
+
+.name-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+table tr td {
+  padding: 8px 0;
+}
+
+.logo {
+  font-size: 40px;
+  font-weight: bold;
+  top: 0;
+}
+
+.toolbox {
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+  display: flex;
+  gap: 3px;
+}
+
+.no-content {
+  background-color: rgb(245, 245, 245);
+  padding: 80px;
+  text-align: center;
+}
+
+.task-name-input {
+  border: none;
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.add-section-inputField {
+  display: flex;
+  gap: 5px;
+}
+
+.add-section-container {
+  width: 30%;
+}
+
+.task-column:first-of-type {
+  border-top: 0.5px solid #dfe4ea;
+}
+
+.panel-dropdown {
+  display: none;
+}
+
+.panel-header:hover .panel-dropdown {
+  display: inline-block;
+}
+
+.ant-modal-content {
+  overflow: auto;
+  border-radius: 12px;
+}
+
+/////// ant
+
+.ant-picker-calendar-mode-switch {
+  display: none;
+}
+
+.ant-picker-calendar-header {
+  display: flex;
+  justify-content: center;
+}
+
+.mod {
+  height: 600px;
+}
+
+.react-kanban-column {
+  border-radius: 10px !important;
+  background-color: #ecf0f1 !important;
+}
+
+.react-kanban-card {
+  border-radius: 10px !important;
+  padding: 15px 15px !important;
+  margin-bottom: 12px !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+}

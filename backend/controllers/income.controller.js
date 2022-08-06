@@ -7,7 +7,6 @@ module.exports = {
     try {
       return res.json(await Income.create(req.params.project, req.member, req.body.title, req.body.amount));
     } catch (err) {
-      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

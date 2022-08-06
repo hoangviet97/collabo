@@ -12,6 +12,7 @@ import { withRouter } from "react-router-dom";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
+  const [projectId, setProjectId] = useState("");
   const isVisible = useSelector((state) => state.modal.taskModal);
   const projects = useSelector((state) => state.project.modalProjects);
   const sections = useSelector((state) => state.section.modalSections);
@@ -33,7 +34,7 @@ const TaskModal = () => {
   };
 
   const projectSelected = (value) => {
-    console.log(value);
+    setProjectId(value);
     dispatch(getModalSections({ project_id: value }));
     dispatch(getModalMembers({ project_id: value }));
   };
@@ -56,7 +57,7 @@ const TaskModal = () => {
       };
     }
 
-    dispatch(createTask({ task: values, projectId: pathValue }));
+    dispatch(createTask({ project_id: projectId, task: values }));
 
     console.log("Received values of form: ", fieldsValue);
   };
@@ -115,7 +116,7 @@ const TaskModal = () => {
           <Form.Item name="description">
             <TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="Add description" />
           </Form.Item>
-          <div className="box">
+          <div>
             <Row>
               <Col span={12}>
                 <Form.Item name="statusId">
@@ -166,7 +167,9 @@ const TaskModal = () => {
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit">Create</Button>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button htmlType="submit">Create</Button>
+          </div>
         </Form>
       </Modal>
     </div>

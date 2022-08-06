@@ -6,7 +6,6 @@ module.exports = {
     try {
       return res.json(await Invitation.create(req.body.receiver_email, req.user.id, req.params.project));
     } catch (err) {
-      console.log(err.message);
       return res.status(400).send(err.message);
     }
   },
@@ -15,7 +14,6 @@ module.exports = {
     try {
       return res.json(await Invitation.accept(req.params.id, req.user.id, req.params.project));
     } catch (err) {
-      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

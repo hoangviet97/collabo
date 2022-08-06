@@ -1,24 +1,39 @@
 .single-navigation {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  gap: 30px;
+  margin-right: 30px;
   position: relative;
   float: left;
   line-height: 60px;
 
   &__list {
     list-style-type: none;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
-    gap: 27px;
   }
 
   &__link {
     color: #747d8c;
     font-weight: 500;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
-    gap: 6px;
+    padding-right: 20px;
+
+    &-icon {
+      margin-right: 5px;
+    }
 
     &:hover {
       color: #3f8ff7;
@@ -26,18 +41,30 @@
   }
 
   &__icon {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
 
   &__title {
     height: 40px;
     padding-left: 7px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
   }
 
   &__identity {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    margin-right: 35px;
   }
 }

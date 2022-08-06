@@ -43,6 +43,7 @@ function timeRecordsReducer(state = initialState, action: any) {
       };
     case GET_TIME_RECORDS_BY_USER:
       let days = getThisWeekDates();
+      let count = 0;
 
       for (let i = 0; i < payload.length; i++) {
         const val = days.find((x) => moment(x.dayFormat).format("MMM Do YY") === moment(payload[i].start).format("MMM Do YY"));
@@ -51,10 +52,15 @@ function timeRecordsReducer(state = initialState, action: any) {
         }
       }
 
+      for (let i = 0; i < payload.length; i++) {
+        count = count + payload[i].total;
+      }
+
       return {
         ...state,
         records: payload,
-        week_records: days
+        week_records: days,
+        sum: count
       };
     case GET_TIME_RECORDS_FAIL:
       return {
