@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
-const connection = require("./config/db");
 const cors = require("cors");
 const socketIo = require("socket.io");
 const routes = require("./routes/api/index");
@@ -10,18 +9,12 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-const PORT = process.env.PORT | 9000;
-const client_url = "http://localhost:3001";
+const PORT = process.env.PORT;
+const client_url = process.env.CLIENT_URL;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
-// Database connection
-connection.connect(function (err) {
-  if (err) throw err;
-  console.log("DB connected!");
-});
 
 const io = socketIo(server, {
   cors: {

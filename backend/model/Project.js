@@ -57,7 +57,6 @@ module.exports = {
     return rows;
   },
 
-  // get current project
   setFavoriteProject: async function (status, id) {
     const sql = `UPDATE projects SET favorite = ? WHERE id = ?`;
 
@@ -66,7 +65,6 @@ module.exports = {
     return rows;
   },
 
-  // get current project
   setBudget: async function (budget, id) {
     const sql = `UPDATE projects SET budget = ? WHERE id = ?`;
 
@@ -75,7 +73,6 @@ module.exports = {
     return rows;
   },
 
-  // get current project
   setBudgetIncome: async function (id, income) {
     const sql = `SELECT budget AS FROM projects WHERE id = ?`;
     const [curr] = await con.promise().query(sql, [id]);
@@ -89,7 +86,6 @@ module.exports = {
     return updated;
   },
 
-  // get current project
   setCurrency: async function (currency, id) {
     const sql = `UPDATE projects SET currency = ? WHERE id = ?`;
 
@@ -98,7 +94,6 @@ module.exports = {
     return rows;
   },
 
-  // get current project
   updateColor: async function (color, id) {
     const sql = `UPDATE projects SET color = ? WHERE id = ?`;
 
@@ -107,7 +102,6 @@ module.exports = {
     return rows;
   },
 
-  // get current project
   updateStatus: async function (status, id) {
     const sql = `UPDATE projects SET project_status_id = ? WHERE id = ?`;
 

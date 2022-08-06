@@ -17,25 +17,25 @@ interface Props {
 
 const Project: FC<Props> = ({ project, projectCardHandler, members }) => {
   return (
-    <div className="project-card">
-      <div className="project-card__header">
+    <div className="project__card">
+      <div className="project__card-header">
         <Row>
           <Col span={20}>
             <div className={`project-status project-status__${project.status_id}`}>{project.status}</div>
           </Col>
           <Col span={4} style={{ textAlign: "end" }}>
-            <div className="project-card__right-header">
+            <div className="project__card-right-header">
               <EllipsisOutlined className="more-icon" />
             </div>
           </Col>
         </Row>
       </div>
-      <div className="project-card__body" style={{ width: "80%", overflowX: "hidden" }} onClick={() => projectCardHandler(project.id)}>
+      <div className="project__card-body" onClick={() => projectCardHandler(project.id)}>
         <div className="text-ellipsis" style={{ fontSize: "20px" }}>
           {project.name}
         </div>
       </div>
-      <div className="project-card__footer">
+      <div className="project__card-footer">
         <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
           {members.map((item: member, index: number) => {
             return (

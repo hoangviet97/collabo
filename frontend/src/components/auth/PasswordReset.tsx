@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from "react";
-import { Button, Input, Form } from "antd";
-import { Link } from "react-router-dom";
-import { verifyAccount } from "../../actions/auth";
+import { Button, Input, Form, message } from "antd";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { setNewPassword } from "../../actions/auth";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
 interface Props {
@@ -10,24 +10,34 @@ interface Props {
 
 const Verification: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
+  const params: any = useParams();
+  const history = useHistory();
+
+  const submitHandler = (value: any) => {
+    if (value.password !== value.password_check) {
+      message.error("Passwords do not match!");
+    } else {
+      dispatch(setNewPassword({ token: params.id, password: value.password, history: history }));
+    }
+  };
 
   return (
     <div className="verify-container" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
       <h1>Reset your password</h1>
-      <Form>
-        <Form.Item>
-          <Input type="password" />
-        </Form.Item>
-        <Form.Item>
-          <Input type="password" />
-        </Form.Item>
-      </Form>
-      <div style={{ marginTop: "30px" }}>
-        <Link to="/login">
-          <Button size="large" type="primary">
-            Change
-          </Button>
-        </Link>
+      <div>
+        <Form onFinish={submitHandler}>
+          <Form.Item name="password">
+            <Input type="password" />
+          </Form.Item>
+          <Form.Item name="password_check">
+            <Input type="password" />
+          </Form.Item>
+          <div style={{ marginTop: "30px" }}>
+            <Button htmlType="submit" size="large" type="primary">
+              Change
+            </Button>
+          </div>
+        </Form>
       </div>
     </div>
   );

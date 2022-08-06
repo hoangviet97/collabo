@@ -1,13 +1,31 @@
-.project-card {
+.project__card {
   margin: 0px;
   padding: 25px;
   border-radius: 10px;
   background-color: white;
 
-  &__footer {
+  &-body {
+    width: 80%;
+    overflow-x: hidden;
+    margin: 10px 0;
+  }
+
+  &-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+}
+
+.projects {
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &-right {
+      display: flex;
+    }
   }
 }
 

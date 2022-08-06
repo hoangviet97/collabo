@@ -1,7 +1,7 @@
 const express = require("express");
 const invitationController = require("../../controllers/invitation.controller");
 const auth = require("../../middleware/auth");
-const permi = require("../../middleware/permission");
+const permit = require("../../middleware/permission");
 const router = express.Router();
 
 router.post("/:project/invitations/new", [auth], invitationController.create);

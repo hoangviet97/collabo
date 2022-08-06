@@ -17,7 +17,8 @@ function projectReducer(state = initialState, action: any) {
     case CREATE_PROJECT:
       return {
         ...state,
-        projects: [...state.projects, payload]
+        projects: [...state.projects, payload],
+        loading: false
       };
     case CREATE_PROJECT_FAIL:
       return {

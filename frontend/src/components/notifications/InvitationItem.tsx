@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteInvitation, acceptInvitation } from "../../actions/invitation";
+import moment from "moment";
 
 interface Props {
   data: any;
@@ -27,7 +28,7 @@ const InvitationItem: FC<Props> = ({ data }) => {
           </span>{" "}
           invited you to project <span style={{ fontWeight: "bolder" }}>{data.project_name}</span>
         </div>
-        <div>{data.created_at}</div>
+        <div>{moment(data.created_at).calendar()}</div>
       </div>
       <div style={{ display: "flex" }}>
         <Button style={{ marginRight: "5px", borderRadius: "5px" }} type="primary" onClick={acceptHandler}>

@@ -41,6 +41,9 @@ module.exports = {
 
       const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ?`;
       const [rows] = await con.promise().query(sql, [arr]);
+
+      //const logRow = await Log.create(project_id, task.assignees, sender, "session", session.name, text, "");
+
       return newTask;
     }
   },

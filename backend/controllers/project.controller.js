@@ -24,11 +24,9 @@ module.exports = {
 
   // Get specific project
   getOne: async function (req, res) {
-    console.log("memo");
     try {
       return res.json(await Project.findOne(req.params.project, req.user.id));
     } catch (err) {
-      console.log("no project");
       return apiResponse.ErrorResponse(res, err.message);
     }
   },
@@ -58,11 +56,9 @@ module.exports = {
   },
 
   updateColor: async function (req, res) {
-    console.log(req.body.color);
     try {
       return res.json(await Project.updateColor(req.body.color, req.params.project));
     } catch (err) {
-      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

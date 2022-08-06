@@ -55,7 +55,6 @@ module.exports = {
     try {
       return res.json(await Task.updateStatus(req.body.statusId, req.params.id));
     } catch (err) {
-      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

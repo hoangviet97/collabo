@@ -88,6 +88,8 @@ export const GET_MESSAGES: string = "GET_MESSAGES";
 export const GET_MESSAGES_FAIL: string = "GET_MESSAGES_FAIL";
 export const SEND_MESSAGE: string = "SEND_MESSAGE";
 export const GET_REPLIES: string = "GET_REPLIES";
+export const MESSAGE_LOADING: string = "MESSAGE_LOADING";
+
 // COLORS
 export const UPDATE_PROJECT_COLOR: string = "UPDATE_PROJECT_COLOR";
 // SESSIONS

@@ -1,9 +1,10 @@
-import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, SEND_MESSAGE, GET_REPLIES, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE } from "../../actions/types";
+import { CREATE_MESSAGE, CREATE_MESSAGE_FAIL, SEND_MESSAGE, GET_REPLIES, GET_MESSAGES, GET_MESSAGES_FAIL, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE, MESSAGE_LOADING } from "../../actions/types";
 
 const initialState = {
   messages: [],
   votes: [],
   loading: false,
+  msgLoading: false,
   replies: []
 };
 
@@ -16,10 +17,10 @@ function messageReducer(state = initialState, action: any) {
       const mergedMsg = Object.assign(payload.data.msg, { pollData: pollMerger });
       Object.assign(mergedMsg, { firstname: payload.user.firstname }, { lastname: payload.user.lastname }, { color: payload.user.color });
 
-      console.log(mergedMsg);
       return {
         ...state,
-        messages: [mergedMsg, ...state.messages]
+        messages: [mergedMsg, ...state.messages],
+        msgLoading: false
       };
     case CREATE_MESSAGE_FAIL:
       return {
@@ -62,6 +63,11 @@ function messageReducer(state = initialState, action: any) {
       return {
         ...state,
         loading: true
+      };
+    case MESSAGE_LOADING:
+      return {
+        ...state,
+        msgLoading: true
       };
     default:
       return state;

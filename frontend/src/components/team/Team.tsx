@@ -7,10 +7,11 @@ import InvitationPanel from "./InvitationPanel";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getMembers } from "../../actions/member";
 import { getAllProjectInvitations } from "../../actions/invitation";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const Team = () => {
   const { TabPane } = Tabs;
+  const history = useHistory();
   const dispatch = useDispatch();
   const params: any = useParams();
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);

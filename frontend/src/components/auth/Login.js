@@ -3,7 +3,6 @@ import { Form, Input, Button, Carousel } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/auth";
-import Img from "../../img/hero.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -69,11 +68,7 @@ const Login = () => {
           </div>
         </Form>
       </div>
-      <div class="auth__container auth__project-info-container" style={{ position: "relative" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "60%" }}>
-          <img src={Img} style={{ width: "100%" }} alt="" />
-        </div>
-      </div>
+      <div class="auth__container auth__hero"></div>
     </div>
   );
 };

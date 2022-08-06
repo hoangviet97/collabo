@@ -13,16 +13,12 @@ interface Props {
 }
 
 const ReviewControlPanel: FC<Props> = ({ match }) => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
-  const location = useLocation();
   const [memberList, setMemberList] = useState([]);
   const reviewMembers = useSelector((state: RootStateOrAny) => state.review.review_panel);
 
   return (
     <div className="review__panel">
       <h2>Reviews</h2>
-      <Input placeholder="Search members by name or e-mail" />
       <div style={{ marginTop: "30px" }}>
         {reviewMembers.map((member: any) => (
           <ReviewLink member={member} match={match} />

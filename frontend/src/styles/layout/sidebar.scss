@@ -5,9 +5,18 @@
   height: 100%;
   width: 70px;
   position: fixed;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   margin-bottom: 30px;
   z-index: 999;
@@ -20,12 +29,20 @@
 
 .side-nav {
   margin-top: 30px;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
-  gap: 25px;
 
   &__icon {
     font-size: 23px;
     color: rgb(199, 199, 199);
+  }
+
+  div {
+    margin-bottom: 20px;
   }
 }

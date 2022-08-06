@@ -9,6 +9,7 @@ import { Tabs } from "antd";
 import { FallOutlined, RiseOutlined } from "@ant-design/icons";
 import ExpenseList from "./ExpenseList";
 import IncomeList from "./IncomeList";
+import getCurrency from "../../helpers/currencyIcon";
 
 const BudgetPage = ({ match }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const BudgetPage = ({ match }) => {
   const [balance, setBalance] = useState(0);
   const [spending, setSpending] = useState(0);
   const role = useSelector((state) => state.project.currentProject.role);
+  const currency = useSelector((state) => state.project.currentProject.currency);
   const tasks = useSelector((state) => state.task.tasks);
   const incomes = useSelector((state) => state.income.sum);
 
@@ -41,7 +43,9 @@ const BudgetPage = ({ match }) => {
               <div class="budget__header-left">
                 <div className="budget__header-item">
                   <div className="budget__title">Total Balance</div>
-                  <div style={{ fontSize: "48px", marginBottom: "25px" }}>${parseInt(incomes) - parseInt(spending)}</div>
+                  <div style={{ fontSize: "48px", marginBottom: "25px" }}>
+                    {getCurrency(currency)} {parseInt(incomes) - parseInt(spending)}
+                  </div>
                 </div>
                 <div style={{ width: "100%" }}>
                   <div className="budget__title">Budget Spending</div>

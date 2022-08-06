@@ -3,7 +3,7 @@ import Review from "./Review";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getReviews } from "../../actions/review";
-import { Input } from "antd";
+import { Empty } from "antd";
 
 const ReviewList = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,17 @@ const ReviewList = () => {
   useEffect(() => {
     dispatch(getReviews({ project_id: params.id, member_id: params.memberId }));
   }, [params.memberId]);
-  return <div>{reviews.length < 1 ? <div style={{ textAlign: "center", fontSize: "20px", marginTop: "15px" }}>No reviews</div> : reviews.map((item: any) => <Review review={item} />)}</div>;
+  return (
+    <div>
+      {reviews.length < 1 ? (
+        <div style={{ textAlign: "center", fontSize: "20px", marginTop: "15px" }}>
+          <Empty />
+        </div>
+      ) : (
+        reviews.map((item: any) => <Review review={item} />)
+      )}
+    </div>
+  );
 };
 
 export default ReviewList;
