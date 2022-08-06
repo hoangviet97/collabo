@@ -21,7 +21,7 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
   };
 
   return (
-    <div className="session-item" style={{ backgroundColor: "#f7dbca", padding: "10px 18px", borderRadius: "10px", marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="session__panel-item">
       <div>
         <div className="session-item__title" style={{ marginBottom: "10px" }}>
           <Link to={`${match.url}/${session.id}`}>
@@ -29,12 +29,12 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
           </Link>
         </div>
         <div className="session__item__info">
-          <div className="session__item__date">
-            <CalendarOutlined style={{ color: "#2f3542" }} />
+          <div className="session__panel-datetime">
+            <CalendarOutlined style={{ color: "#2f3542", marginRight: "10px" }} />
             <span style={{ fontSize: "13px", color: "#2f3542" }}>{moment(session.date).format("MMM Do YY")}</span>
           </div>
-          <div className="session-item__time" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <ClockCircleOutlined style={{ color: "#2f3542" }} />
+          <div className="session__panel-datetime">
+            <ClockCircleOutlined style={{ color: "#2f3542", marginRight: "10px" }} />
             <span style={{ fontSize: "13px", color: "#2f3542" }}>
               {moment(session.start).format("LT")} - {moment(session.end).format("LT")}
             </span>

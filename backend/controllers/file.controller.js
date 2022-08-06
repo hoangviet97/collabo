@@ -47,7 +47,6 @@ module.exports = {
   },
 
   getAllByTask: async function (req, res) {
-    console.log(".....mmm");
     try {
       return res.json(await File.findByTasks(req.params.id));
     } catch (err) {

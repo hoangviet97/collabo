@@ -3,34 +3,41 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Table, Space, Avatar, Select, Menu, Dropdown, Drawer } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../utils/AvatarIcon";
-import { updateMemberRole, deleteMember } from "../../actions/member";
+import { updateMemberRole, deleteMember, leaveProject } from "../../actions/member";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import color from "../../styles/abstract/variables.module.scss";
+import { useParams, useHistory } from "react-router-dom";
 
 const Members = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const params: any = useParams();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
+  const auth = useSelector((state: RootStateOrAny) => state.auth.user);
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const { Option } = Select;
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
 
-  function roleHandle(id: string, value: any) {
-    dispatch(updateMemberRole({ id: id, project_id: params.id, role_id: value }));
+  function roleHandle(id: string, value: any, current: string) {
+    dispatch(updateMemberRole({ id: id, project_id: params.id, role_id: value, current_role_id: current }));
   }
 
-  const kickMemberHandle = (id: string) => {
-    dispatch(deleteMember({ id: id, project_id: params.id }));
+  const kickMemberHandle = (id: string, user_id: string) => {
+    if (auth.id === user_id) {
+      dispatch(leaveProject({ project_id: params.id, history: history }));
+    } else {
+      dispatch(deleteMember({ id: id, project_id: params.id }));
+    }
   };
 
   const drawerCloseHandler = () => {
     setDrawerVisible(false);
   };
 
-  const menu = (id: string) => (
+  const menu = (id: string, user_id: string) => (
     <Menu>
-      <Menu.Item key="0" onClick={() => kickMemberHandle(id)}>
-        <a>Kick member</a>
+      <Menu.Item key="0" onClick={() => kickMemberHandle(id, user_id)}>
+        {user_id === auth.id ? <a>Leave project</a> : <a>Kick member</a>}
       </Menu.Item>
     </Menu>
   );
@@ -42,7 +49,7 @@ const Members = () => {
       key: "name",
       render: (text: string, record: any) => (
         <Space size="middle">
-          <Avatar size="large">
+          <Avatar size="large" style={{ backgroundColor: record.color === null || record.color.length < 1 ? color.normal_orange : record.color }}>
             <AvatarIcon firstname={record.firstname} lastname={record.lastname} />
           </Avatar>
           <a onClick={() => setDrawerVisible(true)}>
@@ -61,17 +68,17 @@ const Members = () => {
       dataIndex: "role_id",
       key: "role_id",
       render: (text: string, record: any) => (
-        <Space size="middle">
+        <>
           {user_role === "Member" ? (
             <span>{record.role}</span>
           ) : (
-            <Select showArrow={false} bordered={false} defaultValue={record.role_id} onChange={(value) => roleHandle(record.id, value)} style={{ width: "100%" }}>
+            <Select showArrow={false} bordered={false} defaultValue={record.role_id} onChange={(value) => roleHandle(record.id, value, record.role_id)} style={{ width: "100%" }}>
               <Option value="0">Owner</Option>
               <Option value="1">Admin</Option>
               <Option value="2">Member</Option>
             </Select>
           )}
-        </Space>
+        </>
       )
     },
     {
@@ -86,7 +93,7 @@ const Members = () => {
       key: "more",
       render: (text: string, record: any) => (
         <Space size="middle">
-          <Dropdown overlay={() => menu(record.id)} trigger={["click"]}>
+          <Dropdown overlay={() => menu(record.id, record.user_id)} trigger={["click"]}>
             <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
               <EllipsisOutlined />
             </a>

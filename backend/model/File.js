@@ -24,30 +24,6 @@ class File {
 module.exports = {
   File,
 
-  upload2: async function (id, file) {
-    const fileId = uuid4();
-
-    const params = {
-      Bucket: "collabo-files",
-      Key: `${fileId}`,
-      Body: file.buffer,
-      ContentType: file.mimetype
-    };
-
-    const sqlCheck = "SELECT SUM(size) AS total FROM files WHERE projects_id = ?";
-    con.query(sqlCheck, [id], (err, checkRes) => {
-      console.log(parseInt(checkRes[0].total) + parseInt(file.size));
-      if (parseInt(checkRes[0].total) + parseInt(file.size) > 20971520) {
-        result("Out of space!", null);
-      } else {
-        s3.upload(params, (err, data) => {
-          const clearedType = file.originalname.split(".");
-          const newFile = new File(fileId, id, file.originalname, "", file.size, clearedType[clearedType.length - 1]);
-        });
-      }
-    });
-  },
-
   upload3: async function (id, file) {
     const fileId = uuid4();
     let newFile = null;
@@ -79,7 +55,6 @@ module.exports = {
   uploadAttachment: async function (id, file, task) {
     try {
       const fileRes = await this.upload3(id, file);
-      console.log(fileRes.id);
 
       const sql = `INSERT INTO tasks_has_files (tasks_id, files_id) VALUES (?, ?)`;
       const [rows] = await con.promise().query(sql, [task, fileRes.id]);

@@ -59,34 +59,68 @@ module.exports = {
     return rows;
   },
 
-  updateRole: async function (role_id, id) {
-    const ownerRole = "0";
-    const sqlCheck = `SELECT * FROM members WHERE roles_id = ${ownerRole} AND projects_id = ${project}`;
+  updateRole: async function (role_id, id, member, project) {
+    const updated = await this.findRole(id);
+    const updater = await this.findRole(member);
 
-    const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
+    const checkMembers = await this.find(project);
 
-    const [rows] = await con.promise().query(sql, [role_id, id]);
+    if (updater === "Admin" && updated === "Owner") {
+      throw new Error("You cannot change role of the owner!");
+    } else if (updater === "Admin" && role_id === "0") {
+      throw new Error("You have no permission for this action!");
+    } else if (updater === "Owner" && role_id !== "0" && checkMembers.length === 1) {
+      throw new Error("You cannot change your role right now!");
+    } else {
+      const sql = `UPDATE members SET roles_id = ? WHERE id = ?`;
+      const [rows] = await con.promise().query(sql, [role_id, id]);
+    }
 
-    return rows;
+    return { role_id, id };
   },
 
-  delete: async function (id) {
+  delete: async function (id, member) {
+    const kicked = await this.findRole(id);
+    const kicker = await this.findRole(member);
+
+    if (kicker === "Admin" && kicked === "Owner") {
+      throw new Error("You have no permission to kick the Owner!");
+    } else {
+      const sql = `DELETE from members WHERE id = ?`;
+      const [rows] = await con.promise().query(sql, [id]);
+    }
+
+    return id;
+  },
+
+  leave2: async function (project, member) {
+    const selfRole = await this.findRole(member);
+
+    const sqlRoles = `SELECT * FROM members
+                  WHERE members.projects_id = ?
+                  GROUP BY members.id
+                  HAVING roles_id = '0'`;
+
+    const [checkRoles] = await con.promise().query(sqlRoles, project);
+
+    if (checkRoles.length === 1 && selfRole === "Owner") {
+      throw new Error("You must choose new Owner before you leave");
+    } else {
+      const sql = `DELETE FROM members WHERE id = ?`;
+
+      const [rows] = await con.promise().query(sql, member);
+    }
+
+    return "ok";
+  },
+
+  findRole: async function (id) {
     const sqlCheck = `SELECT roles.name FROM members INNER JOIN roles ON members.roles_id = roles.id WHERE members.id = ?`;
-    const [roleCheck] = await con.promise().query(sqlCheck, [id]);
 
-    const sql = `DELETE from members WHERE id = ?`;
+    const [rows] = await con.promise().query(sqlCheck, [id]);
 
-    const [rows] = await con.promise().query(sql, [id]);
+    console.log(rows[0].name);
 
-    return rows;
-  },
-
-  // get current project
-  leave: async function (project, user) {
-    const sql = `DELETE FROM members WHERE users_id = ? AND projects_id = ?`;
-
-    const [rows] = await con.promise().query(sql, [user, project]);
-
-    return rows;
+    return rows[0].name;
   }
 };

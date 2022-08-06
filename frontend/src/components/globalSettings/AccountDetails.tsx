@@ -14,7 +14,6 @@ const AccountDetails: FC<Props> = ({ profile }) => {
   const dispatch = useDispatch();
   const [firstname, setFirstname] = useState(profile.firstname);
   const [lastname, setLastname] = useState(profile.lastname);
-  const [email, setEmail] = useState(profile.email);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
@@ -28,11 +27,6 @@ const AccountDetails: FC<Props> = ({ profile }) => {
   const lastnameHandler = () => {
     if (firstname !== profile.lastname) {
       dispatch(changeLastname({ lastname: lastname }));
-    }
-  };
-
-  const emailHandler = () => {
-    if (firstname !== profile.email) {
     }
   };
 
@@ -70,18 +64,9 @@ const AccountDetails: FC<Props> = ({ profile }) => {
       <Divider />
       <div style={{ width: "60%" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ flex: "2", fontWeight: "bolder" }}>E-mail</div>
-          <div style={{ display: "flex", flexDirection: "row", flex: "1" }}>
-            <Input style={{ width: "410px" }} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="firstname" />
-          </div>
-        </div>
-      </div>
-      <Divider />
-      <div style={{ width: "60%" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Bio</div>
           <div style={{ flex: "1" }}>
-            <Input.TextArea rows={4} style={{ width: "410px" }} placeholder="Current password" />
+            <Input.TextArea rows={4} style={{ width: "410px" }} />
           </div>
         </div>
       </div>

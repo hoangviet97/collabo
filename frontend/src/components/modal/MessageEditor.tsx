@@ -16,6 +16,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
   const { TextArea } = Input;
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
+  const loading = useSelector((state: RootStateOrAny) => state.message.msgLoading);
   const [value, setValue] = useState<string>("");
   const [pollWindow, setPollWindow] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
@@ -59,8 +60,8 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
               <UploadOutlined />
             </Button>
           </div>
-          <Button type="primary" onClick={submitHandler}>
-            Create message
+          <Button type="primary" disabled={loading} onClick={submitHandler}>
+            {loading ? "Please wait..." : "Create message"}
           </Button>
         </footer>
         {pollWindow && (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import Project from "./Project";
 import { Button, Skeleton, Select } from "antd";
-import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined, StarFilled, CloseOutlined } from "@ant-design/icons";
+import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
@@ -103,7 +103,7 @@ const Projects = () => {
   return (
     <div>
       <Container size="50">
-        <div className="projects-toolbar" style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+        <div className="projects__toolbar">
           <div className="new-project-container">
             <Link to="/projects/new">
               <Button type="primary">
@@ -112,19 +112,8 @@ const Projects = () => {
               </Button>
             </Link>
           </div>
-          <div className="projects-toolbar__right-side" style={{ display: "flex", gap: "15px" }}>
-            <div className="projects__favorite-filter">
-              {!isFvorite ? (
-                <Button onClick={showFavorite} style={{ borderRadius: "10px" }}>
-                  <StarFilled />
-                </Button>
-              ) : (
-                <Button onClick={showAll} style={{ borderRadius: "10px" }}>
-                  <CloseOutlined />
-                </Button>
-              )}
-            </div>
-            <div className="projects__sort">
+          <div className="projects__toolbar-right">
+            <div className="projects__sort" style={{ marginRight: "10px" }}>
               <Select style={{ width: 150, borderRadius: "10px" }} onChange={handleChange}>
                 <Option value="newest">Newest</Option>
                 <Option value="oldest">Oldest</Option>

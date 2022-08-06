@@ -18,20 +18,28 @@ const Sidebar = () => {
       <div className="sidebar__top">
         <div className="sidebar__logo">c.</div>
         <nav className="side-nav">
-          <Link className="side-nav__link" to="/">
-            <HomeOutlined className="side-nav__icon" />
-          </Link>
-          <Link className="side-nav__link" to="/my-tasks">
-            <ProfileOutlined className="side-nav__icon" />
-          </Link>
-          <Link className="side-nav__link" to="/notify">
-            <Badge count={invitations.length}>
-              <BellOutlined className="side-nav__icon" />
-            </Badge>
-          </Link>
-          <Link className="side-nav__link" to="/settings">
-            <SettingOutlined className="side-nav__icon" />
-          </Link>
+          <div>
+            <Link className="side-nav__link" to="/">
+              <HomeOutlined className="side-nav__icon" />
+            </Link>
+          </div>
+          <div>
+            <Link className="side-nav__link" to="/my-tasks">
+              <ProfileOutlined className="side-nav__icon" />
+            </Link>
+          </div>
+          <div>
+            <Link className="side-nav__link" to="/notify">
+              <Badge count={invitations.length}>
+                <BellOutlined className="side-nav__icon" />
+              </Badge>
+            </Link>
+          </div>
+          <div>
+            <Link className="side-nav__link" to="/settings">
+              <SettingOutlined className="side-nav__icon" />
+            </Link>
+          </div>
         </nav>
       </div>
       <div className="side-nav__profile">

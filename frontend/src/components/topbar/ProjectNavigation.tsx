@@ -14,6 +14,8 @@ interface Props {
 
 const ProjectNavigation: FC<Props> = ({ history }) => {
   let path = window.location.pathname;
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
+
   const { push } = history;
 
   const { TextArea } = Input;
@@ -74,12 +76,16 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
           <span>Budget</span>
         </Link>
       </p>
-      <p>
-        <Link className="single-navigation__link" to={`/${path.split("/")[1]}/reviews`}>
-          <FundOutlined className="single-navigation__link-icon" />
-          <span>Reviews</span>
-        </Link>
-      </p>
+      {user_role !== "Member" && (
+        <>
+          <p>
+            <Link className="single-navigation__link" to={`/${path.split("/")[1]}/reviews`}>
+              <FundOutlined className="single-navigation__link-icon" />
+              <span>Reviews</span>
+            </Link>
+          </p>
+        </>
+      )}
       <p>
         <Link className="single-navigation__link" to={`/${path.split("/")[1]}/activities`}>
           <EyeOutlined className="single-navigation__link-icon" />
@@ -193,7 +199,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
           </nav>
           <Modal title="Project Details" width="40%" centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
             <div className="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-              <div className="icon-box" style={{ width: "100px", height: "100px", backgroundColor: iconColorSelection, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
+              <div className="icon-box" style={{ width: "100px", height: "100px", backgroundColor: currentProject.color, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
               <div className="icon-box__select">
                 <Button onClick={() => setIconTab((prev) => !prev)}>Change Color</Button>
                 {showIconTab && (

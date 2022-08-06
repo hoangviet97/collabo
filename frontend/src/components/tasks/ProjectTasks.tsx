@@ -6,7 +6,7 @@ import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
-import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
@@ -224,7 +224,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                   Tags
                 </Button>
                 <Button onClick={showStatusSelectorHandler}>
-                  <TagsOutlined />
+                  <ExceptionOutlined />
                   Status
                 </Button>
                 <div className="projects-dimension">

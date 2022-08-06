@@ -11,8 +11,6 @@ module.exports = function permit(...permittedRoles) {
       con.query(sql, [req.user.id, req.params.project], (err, dbResponse) => {
         if (err) return apiResponse.ErrorResponse(res, err.message);
 
-        console.log(dbResponse[0].name);
-
         if (permittedRoles.includes(dbResponse[0].name)) {
           next();
         } else {

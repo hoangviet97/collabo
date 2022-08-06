@@ -8,9 +8,19 @@
   width: 100%;
   height: calc(100vh - 180px);
 
+  &__default {
+    text-align: center;
+    font-size: 18px;
+  }
+
   &__link {
     display: flex;
+    color: $primary-text-color;
     justify-content: space-between;
+
+    &:hover {
+      color: $normal_blue;
+    }
   }
 
   &__panel {

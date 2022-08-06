@@ -1,4 +1,4 @@
-import "./styles/main.scss";
+import "./App.scss";
 import * as React from "react";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";

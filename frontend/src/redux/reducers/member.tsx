@@ -33,7 +33,8 @@ function memberReducer(state = initialState, action: any) {
       };
     case UPDATE_MEMBER_ROLE_FAILED:
       return {
-        ...state
+        ...state,
+        members: state.members.map((item: member) => (item.id === payload.id ? { ...item, role_id: payload.current_role_id } : item))
       };
     case DELETE_MEMBER:
       return {

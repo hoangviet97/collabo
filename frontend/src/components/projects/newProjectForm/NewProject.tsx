@@ -1,9 +1,9 @@
 import React, { useState, FC } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createProject } from "../../../actions/project";
-import ColorCubic from "../../utils/ColorCubic";
+import colorVar from "../../../styles/abstract/variables.module.scss";
 
 interface Props {
   history: any;
@@ -11,9 +11,9 @@ interface Props {
 
 const NewProject: FC<Props> = ({ history }) => {
   const dispatch = useDispatch();
+  const loading = useSelector((state: RootStateOrAny) => state.project.loading);
   const [selected, setSelected] = useState<string>("");
-  const colorSet: string[] = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
-
+  const colorSet: string[] = [colorVar.normal_green, colorVar.normal_reef, colorVar.light_orange, colorVar.normal_orange, colorVar.normal_red, colorVar.normal_blue, colorVar.normal_purple, colorVar.normal_koamaru, colorVar.normal_grey];
   const [projectName, setProjectName] = useState({ name: "" });
   const [color, setColor] = useState<string>("");
   const [chosen, setChosen] = useState<number>();
@@ -55,8 +55,8 @@ const NewProject: FC<Props> = ({ history }) => {
               </div>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" onClick={submitHandler}>
-                Create project
+              <Button type="primary" onClick={submitHandler} disabled={loading}>
+                {loading ? "Please wait..." : " Create project"}
               </Button>
             </Form.Item>
           </Form>

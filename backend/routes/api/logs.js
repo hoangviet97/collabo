@@ -1,7 +1,6 @@
 const express = require("express");
 const logController = require("../../controllers/log.controller");
 const auth = require("../../middleware/auth");
-const permi = require("../../middleware/permission");
 const getMemberId = require("../../middleware/getMemberId");
 
 const router = express.Router();

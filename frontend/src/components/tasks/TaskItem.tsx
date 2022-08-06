@@ -12,6 +12,7 @@ import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
 import { useParams } from "react-router-dom";
+import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
 import moment from "moment";
 import TaskDate from "./TaskDate";
@@ -34,6 +35,8 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   const [done, setDone] = useState(task.statusId);
   const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
   const today = new Date();
+
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 
   const { Text } = Typography;
   const { Option } = Select;
@@ -67,6 +70,10 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
     </Menu>
   );
 
+  const assigneeContent = (data: any) => {
+    return `${data.firstname} ${data.lastname} (${data.email})`;
+  };
+
   const deleteTaskHandler = () => {
     dispatch(deleteTask({ id: task.id, project_id: params.id }));
   };
@@ -86,7 +93,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   };
 
   const showAssigness = () => {
-    if (task.statusId !== "5") {
+    if (task.statusId !== "5" || user_role !== "Member") {
       setAssignessModalVisible(true);
     }
   };
@@ -112,16 +119,18 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
           <>
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
               {assignees.map((assignee: any, index: number) => (
-                <Popover key={index} content={assignee.firstname}>
+                <Popover key={index} content={assigneeContent(assignee)}>
                   <Avatar key={index} style={{ backgroundColor: assignee.color === null || assignee.color.length < 1 ? color.normal_orange : assignee.color }}>
                     <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
                   </Avatar>
                 </Popover>
               ))}
             </Avatar.Group>
-            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
-            </div>
+            {user_role !== "Member" && (
+              <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
+              </div>
+            )}
           </>
         ) : (
           <div onClick={showAssigness} style={{ width: "30px", height: "30px", borderRadius: "50%", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -136,7 +145,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
             <span>Under Review</span>
           </div>
         ) : (
-          <Select className="task-select" defaultValue={task.statusId} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+          <Select className="task-select" defaultValue={task.statusId} disabled={user_role === "Member" ? true : false} onChange={switchTaskStatusHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
             <Option value="0">Open</Option>
             <Option value="1">In Progress</Option>
             <Option value="2">On Hold</Option>
@@ -146,7 +155,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
         )}
       </div>
       <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center", borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
-        <Select className="task-select" defaultValue={task.priorityId} disabled={task.statusId === "5" ? true : false} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
+        <Select className="task-select" defaultValue={task.priorityId} disabled={task.statusId === "5" || user_role === "Member" ? true : false} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
             <Tag color="gold">Low</Tag>
           </Option>

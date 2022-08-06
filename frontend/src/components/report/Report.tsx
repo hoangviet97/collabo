@@ -11,11 +11,14 @@ const Report = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [total, setTotal] = useState(0);
+  const [totalToday, setTotalToday] = useState(0);
+  const [avgTime, setAvgTime] = useState(0);
   const [data, setData] = useState<any>([]);
   const [completed, setCompleted] = useState<number>(0);
   const [inProgress, setInProgress] = useState<number>(0);
   const [underReview, setUnderReview] = useState<number>(0);
   const time_records = useSelector((state: RootStateOrAny) => state.time_record.records);
+  const time_sum = useSelector((state: RootStateOrAny) => state.time_record.sum);
   const week_records = useSelector((state: RootStateOrAny) => state.time_record.week_records);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
 
@@ -31,8 +34,18 @@ const Report = () => {
   }, [tasks]);
 
   useEffect(() => {
+    const today = new Date();
+    time_records.filter((i: any) => moment(i.created_at).format("YYYY MM DD") === moment(today).format("YYYY MM DD")).map((item: any) => setTotalToday((prev) => prev + item.total));
     const sum = time_records.map((item: any) => parseInt(item.total)).reduce((partialSum: any, a: any) => partialSum + a, 0);
     setTotal(sum);
+
+    const avg = sum / time_records.length;
+    setAvgTime(avg);
+
+    return () => {
+      setTotal(0);
+      setTotalToday(0);
+    };
   }, [time_records]);
 
   const config = {
@@ -63,21 +76,21 @@ const Report = () => {
             <BarChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
             <span style={{ fontSize: "22px" }}>Total working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{(total / 60).toFixed(0)}m</div>
+          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(total / 60) < 5400 ? `${Math.floor(total / 60)}  minutes` : `${Math.floor(total / 3600)}  hours`}</div>
         </div>
         <div className="report-item__time">
           <div style={{ marginBottom: "10px" }}>
             <LineChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
             <span style={{ fontSize: "22px" }}>Today working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{(total / 60).toFixed(0)}m</div>
+          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(totalToday / 60) < 5400 ? `${Math.floor(totalToday / 60)}  minutes` : `${Math.floor(totalToday / 3600)}  hours`}</div>
         </div>
         <div className="report-item__time">
           <div style={{ marginBottom: "10px" }}>
             <LineChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
             <span style={{ fontSize: "22px" }}>Average working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{(total / 60).toFixed(0)}m</div>
+          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(avgTime / 60) < 5400 ? `${Math.floor(avgTime / 60)}  minutes` : `${Math.floor(avgTime / 3600)}  hours`}</div>
         </div>
       </div>
 

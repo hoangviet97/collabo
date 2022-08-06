@@ -23,94 +23,76 @@ class User {
 module.exports = {
   User,
 
-  createUser: async function (data, result) {
-    const email_check_sql = `SELECT * FROM users WHERE email = ?`;
+  createUser: async function (data) {
+    const checkEmail = await this.checkUser(data.email);
 
-    con.query(email_check_sql, [data.email], async (err, res) => {
-      if (Object.keys(res).length > 0) {
-        result("Email already exist", null);
-        return;
-      } else {
-        const newUser = new User(uuid4(), data.email, data.password, data.firstname, data.lastname);
+    if (checkEmail.length === 1) {
+      throw new Error("E-mail already exist");
+    } else {
+      const newUser = new User(uuid4(), data.email, data.password, data.firstname, data.lastname);
+      const salt = await bcrypt.genSalt(10);
+      newUser.password = await bcrypt.hash(data.password, salt);
 
-        // encrypt password
-        const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(data.password, salt);
+      const sql = `INSERT INTO users (id, email, password, firstname, lastname, created_at, verification_status, token, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      const [createRows] = await con.promise().query(sql, [newUser.id, newUser.email, newUser.password, newUser.firstname, newUser.lastname, newUser.created_at, newUser.verification_status, newUser.token, newUser.color]);
 
-        const sql = `INSERT INTO users (id, email, password, firstname, lastname, created_at, verification_status, token, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        con.query(sql, [newUser.id, newUser.email, newUser.password, newUser.firstname, newUser.lastname, newUser.created_at, newUser.verification_status, newUser.token, newUser.color], (err, res) => {
-          if (err) {
-            result(err, null);
-            return;
-          }
+      const transport = nodemailer.createTransport({
+        host: process.env.MAIL_HOST,
+        secureConnection: false,
+        port: process.env.MAIL_PORT,
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASSWORD
+        }
+      });
 
-          const transport = nodemailer.createTransport({
-            host: "smtp-mail.outlook.com", // hostname
-            secureConnection: false, // TLS requires secureConnection to be false
-            port: 587,
-            auth: {
-              user: "hoangviet97@outlook.com",
-              pass: "dobroviz192"
-            }
-          });
+      const url = `${process.env.CLIENT_URL}/verify/${newUser.token}`;
 
-          const url = `http://localhost:3000/verify/${newUser.token}`;
+      let mailOpt = {
+        from: process.env.MAIL_USER,
+        to: newUser.email,
+        subject: "E-mail confirmation",
+        text: `Click here to activate your collaboat account: ${url}`
+      };
 
-          let mailOpt = {
-            from: "hoangviet97@outlook.com",
-            to: newUser.email,
-            subject: "E-mail confirmation",
-            text: `Click here for activate your collabo account: ${url}`
-          };
+      transport.sendMail(mailOpt, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(info.response);
+        }
+      });
 
-          transport.sendMail(mailOpt, (err, info) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(info.response);
-            }
-          });
-
-          result(null, "Success...");
-          return;
-        });
-      }
-    });
+      return "Registration success";
+    }
   },
 
-  // login existing user
-  loginUser: function (data, result) {
-    const sql = `SELECT id, password, verification_status FROM users WHERE email = '${data.email}'`;
-    con.query(sql, async (err, res) => {
-      if (res[0].verification_status === "pending") {
-        result("This account is not activated!", null);
-        return;
-      } else {
-        if (Object.keys(res).length === 0) {
-          result("Invalid credentionals", null);
-          return;
-        }
-        const isMatch = await bcrypt.compare(data.password, res[0].password, (err, matched) => {
-          if (err || matched === false) {
-            console.log(matched);
-            result("Invalid credentionals", null);
-            return;
-          }
+  loginUser2: async function (data) {
+    const userCheck = await this.checkUser(data.email);
 
-          const payload = {
-            user: {
-              id: res[0].id
-            }
-          };
+    if (data.email.length < 1 || data.password.length < 1) {
+      throw new Error("Error!");
+    } else if (userCheck.length < 1) {
+      throw new Error("Invalid credentionals");
+    } else if (userCheck[0].verification_status === "pending") {
+      throw new Error("This account is not activated!");
+    } else {
+      const isMatch = await bcrypt.compare(data.password, userCheck[0].password);
 
-          jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "5 days" }, (err, token) => {
-            if (err) throw err;
-            result(null, token);
-            return;
-          });
-        });
+      if (isMatch === false) {
+        throw new Error("Invalid credentionals");
       }
-    });
+
+      const payload = {
+        user: {
+          id: userCheck[0].id
+        }
+      };
+
+      const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "5 days" });
+
+      return token;
+    }
   },
 
   // get current logged in user --> client loaduser()
@@ -118,6 +100,13 @@ module.exports = {
     const sql = `SELECT users.id, users.email, users.firstname, users.lastname, users.color, users.created_at FROM users WHERE id = ?`;
 
     const [rows] = await con.promise().query(sql, id);
+
+    return rows;
+  },
+
+  checkUser: async function (email) {
+    const sql = `SELECT * FROM users WHERE email = ?`;
+    const [rows] = await con.promise().query(sql, email);
 
     return rows;
   },
@@ -201,6 +190,24 @@ module.exports = {
     }
   },
 
+  setNewPassword: async function (token, password) {
+    const userSql = `SELECT * FROM users WHERE token = ?`;
+    const [userFinder] = await con.promise().query(userSql, token);
+
+    const salt = await bcrypt.genSalt(10);
+    const pwd = await bcrypt.hash(password, salt);
+
+    const pwdSql = `UPDATE users SET password = ? WHERE token = ?`;
+    const [pwdRows] = await con.promise().query(pwdSql, [pwd, token]);
+
+    const newToken = uuid4();
+
+    const sql = `UPDATE users SET token = ? WHERE id = ?`;
+    const [rows] = await con.promise().query(sql, [newToken, userFinder[0].id]);
+
+    return rows;
+  },
+
   getUserByProject: async function (id, project) {
     const sql = `SELECT users.* FROM members 
                   INNER JOIN users ON members.users_id = users.id
@@ -225,19 +232,19 @@ module.exports = {
       con.query(sqlToken, [newToken, body.email]);
 
       const transport = nodemailer.createTransport({
-        host: "smtp-mail.outlook.com", // hostname
+        host: process.env.MAIL_HOST, // hostname
         secureConnection: false, // TLS requires secureConnection to be false
-        port: 587,
+        port: process.env.MAIL_PORT,
         auth: {
-          user: "hoangviet97@outlook.com",
-          pass: "dobroviz192"
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASSWORD
         }
       });
 
-      const url = `http://localhost:3000/pwd-reset/${newToken}`;
+      const url = `${process.env.CLIENT_URL}/pwd-reset/${newToken}`;
 
       let mailOpt = {
-        from: "hoangviet97@outlook.com",
+        from: process.env.MAIL_USER,
         to: body.email,
         subject: "Reset password",
         text: `Click here to set your new password: ${url}`

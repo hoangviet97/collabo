@@ -52,25 +52,25 @@ const Overview: FC<Props> = ({ match }) => {
         <div className="overview__left">
           <div className="a">
             <div className="overview__highlight-item">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <FormOutlined style={{ fontSize: "25px", marginRight: "10px", zIndex: 888 }} />
+              <div className="items-center">
+                <FormOutlined className="overview__highlight-icon" />
                 <span style={{ fontSize: "16px", zIndex: 888 }}>Total tasks</span>
               </div>
-              <div style={{ fontSize: "35px", zIndex: 888 }}>{tasks.length}</div>
+              <div className="overview__highlight-value">{tasks.length}</div>
             </div>
             <div className="overview__highlight-item">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <ClockCircleOutlined style={{ fontSize: "30px", marginRight: "10px", zIndex: 888 }} />
+              <div className="items-center">
+                <ClockCircleOutlined className="overview__highlight-icon" />
                 <span style={{ fontSize: "16px", zIndex: 888 }}>Total time</span>
               </div>
-              <div style={{ fontSize: "35px", zIndex: 888 }}>{Math.floor(time / 60) < 5400 ? `${Math.floor(time / 60)} min` : `${Math.floor(time / 3600)} h`}</div>
+              <div className="overview__highlight-value">{Math.floor(time / 60) < 5400 ? `${Math.floor(time / 60)} min` : `${Math.floor(time / 3600)} h`}</div>
             </div>
             <div className="overview__highlight-item">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <TeamOutlined style={{ fontSize: "30px", marginRight: "10px", zIndex: 888 }} />
+              <div className="items-center">
+                <TeamOutlined className="overview__highlight-icon" />
                 <span style={{ fontSize: "16px", zIndex: 888 }}>Total members</span>
               </div>
-              <div style={{ fontSize: "35px", zIndex: 888 }}>{members.length}</div>
+              <div className="overview__highlight-value">{members.length}</div>
             </div>
           </div>
           <div className="b">
@@ -79,8 +79,8 @@ const Overview: FC<Props> = ({ match }) => {
         </div>
         <div className="overview__right">
           <div className="d" style={{ position: "relative" }}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
+            <div className="items-center">
+              <div className="items-center">
                 <FundProjectionScreenOutlined style={{ marginRight: "8px", fontSize: "25px" }} />
                 <div>Upcoming Sessions</div>
               </div>
@@ -93,7 +93,7 @@ const Overview: FC<Props> = ({ match }) => {
             </div>
           </div>
           <div className="e">
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+            <div className="items-center" style={{ marginBottom: "20px" }}>
               <EyeOutlined style={{ marginRight: "8px", fontSize: "25px" }} />
               <div>Activities</div>
             </div>
