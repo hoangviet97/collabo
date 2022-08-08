@@ -15,7 +15,7 @@ import { notification } from "antd";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const socket = io("http://localhost:9000");
+  const socket = io("https://collaboatbe.herokuapp.com");
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
   const unread = useSelector((state: RootStateOrAny) => state.invitation.unread); // get all unread invitations
   const [unreadNum, setUnreadNum] = useState(0);
