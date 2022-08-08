@@ -1,4 +1,4 @@
-import { CREATE_REVIEW, GET_REVIEWS, REVIEWS_LOADING, REVIEW_LOADING, DELETE_REVIEW, GET_PROJECT_REVIEWS, GET_REVIEW_PANEL, DECREASE_REVIEW } from "../../actions/types";
+import { CREATE_REVIEW, GET_REVIEWS, REVIEWS_LOADING, REVIEW_LOADING, DELETE_REVIEW, GET_PROJECT_REVIEWS, GET_REVIEW_PANEL, DECREASE_REVIEW, GET_REVIEW_FILES } from "../../actions/types";
 
 const initialState = {
   reviews: [],
@@ -21,7 +21,13 @@ function reviewReducer(state = initialState, action: any) {
     case GET_REVIEWS:
       return {
         ...state,
-        reviews: payload,
+        reviews: payload.map((item: any) => ({ ...item, files: [] })),
+        loading: false
+      };
+    case GET_REVIEW_FILES:
+      return {
+        ...state,
+        reviews: state.reviews.map((item: any) => (item.id === payload.id ? { ...item, files: payload.data } : item)),
         loading: false
       };
     case GET_PROJECT_REVIEWS:

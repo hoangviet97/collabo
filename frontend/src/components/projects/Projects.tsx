@@ -88,16 +88,6 @@ const Projects = () => {
         })}
       </div>
     );
-  } else {
-    content = (
-      <div className="no-content">
-        <InboxOutlined style={{ fontSize: "50px", color: "grey" }} />
-        <h2>There're no project for you</h2>
-        <Button type="primary">
-          <Link to="/projects/new">Create your first project</Link>
-        </Button>
-      </div>
-    );
   }
 
   return (

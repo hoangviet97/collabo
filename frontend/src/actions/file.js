@@ -1,4 +1,4 @@
-import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, MOVE_TO_FOLDER, DELETE_FILE, GET_FOLDER_FILES, GET_TASK_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM, UPLOAD_ATTACH_FILE, EJECT_FILE } from "./types";
+import { GET_FILES, UPLOAD_FILE, GET_INVITATIONS_FAIL, GET_REVIEW_FILES, MOVE_TO_FOLDER, DELETE_FILE, GET_FOLDER_FILES, GET_TASK_FILES, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, UPDATE_FOLDER_NUM, UPLOAD_ATTACH_FILE, EJECT_FILE } from "./types";
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
@@ -76,6 +76,16 @@ export const getFilesByTask = ({ id, project_id }) => async (dispatch) => {
     dispatch(setFileLoading());
     const res = await axiosClient.get(`/${project_id}/tasks/${id}/files`);
     dispatch({ type: GET_TASK_FILES, payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getFilesByReview = ({ review, id, project_id }) => async (dispatch) => {
+  try {
+    dispatch(setFileLoading());
+    const res = await axiosClient.get(`/${project_id}/tasks/${id}/files`);
+    dispatch({ type: GET_REVIEW_FILES, payload: { id: review, data: res.data } });
   } catch (err) {
     console.log(err);
   }

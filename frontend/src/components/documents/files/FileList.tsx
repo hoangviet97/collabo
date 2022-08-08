@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Table, Space, Dropdown, Menu, Typography, Modal, Button, Select, message } from "antd";
 import moment from "moment";
 import axios from "axios";
+import axiosClient from "../../../helpers/axios";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { moveToFolder, deleteFile } from "../../../actions/file";
 import fileDownload from "js-file-download";
@@ -18,13 +19,12 @@ const FileList = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [fileId, setFileId] = useState<string>("");
   const [folderId, setFolderId] = useState<string>("");
-  const [folderNum, setFolderNum] = useState<number>(0);
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
   const files = useSelector((state: RootStateOrAny) => state.file.files);
 
   const download = (record: any) => {
-    axios({
-      url: `http://localhost:9000/api/${params.id}/files/${record.id}/download`, //your url
+    axiosClient({
+      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`, //your url
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {

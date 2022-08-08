@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { getTypeColor } from "../../helpers/log";
-import { Avatar, Divider } from "antd";
+import { Avatar } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
 import color from "../../styles/abstract/variables.module.scss";

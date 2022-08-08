@@ -17,10 +17,10 @@ const Activities = () => {
 
   return (
     <Container size="50">
-      <header style={{ display: "flex", justifyContent: "center" }}>
+      <header className="activity__header">
         <div style={{ fontSize: "30px" }}>Activity Log</div>
       </header>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+      <div className="activity__content">
         <div>
           {logs.map((item: any) => (
             <ActivityItem data={item} />

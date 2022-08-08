@@ -17,7 +17,6 @@ export const getMessages = ({ project_id }) => async (dispatch) => {
   try {
     dispatch(setLoading());
     const res = await axiosClient.get(`/${project_id}/messages`);
-    console.log(res.data);
     dispatch({ type: GET_MESSAGES, payload: res.data });
   } catch (err) {
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
@@ -48,7 +47,6 @@ export const sendReply = ({ project_id, message_id, text }) => async (dispatch) 
   try {
     const res = await axiosClient.post(`/${project_id}/messages/${message_id}/replies`, { text });
     dispatch({ type: SEND_MESSAGE, payload: res.data });
-    console.log(res);
   } catch (err) {
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
@@ -58,7 +56,6 @@ export const getAllReplies = ({ project_id }) => async (dispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/messages/replies`);
     dispatch({ type: GET_REPLIES, payload: res.data });
-    console.log(res.data);
   } catch (err) {
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }

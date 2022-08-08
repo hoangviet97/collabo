@@ -14,6 +14,7 @@ interface Props {
 
 const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }) => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const { Option } = Select;
   const { TextArea } = Input;
@@ -43,12 +44,13 @@ const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }
       message.error("End time cannot be sooner than start time!");
     } else {
       dispatch(createSession({ session: values, project_id: project_id }));
+      form.resetFields();
     }
   };
 
   return (
     <Modal title="Create New Session" width="600px" visible={visible} onCancel={handleCancel} footer={null}>
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item label="Event title" name="name">
           <Input />
         </Form.Item>

@@ -23,11 +23,6 @@ const Project: FC<Props> = ({ project, projectCardHandler, members }) => {
           <Col span={20}>
             <div className={`project-status project-status__${project.status_id}`}>{project.status}</div>
           </Col>
-          <Col span={4} style={{ textAlign: "end" }}>
-            <div className="project__card-right-header">
-              <EllipsisOutlined className="more-icon" />
-            </div>
-          </Col>
         </Row>
       </div>
       <div className="project__card-body" onClick={() => projectCardHandler(project.id)}>

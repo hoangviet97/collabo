@@ -183,18 +183,15 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
           <div class="task__attachment">
             <div className="task__detail-title">
               <h4>Attachment</h4>
-              <div style={{ display: "flex", gap: "5px" }}>
+              <div>
                 <Button shape="round" type="dashed" onClick={() => setIsModalVisible(true)}>
                   + New File
-                </Button>
-                <Button shape="round" type="dashed" onClick={() => setExistingFiles(true)}>
-                  + Existing File
                 </Button>
               </div>
             </div>
             <div className="task__attachment-list">
               {files.map((item) => (
-                <FileMiniCard data={item} task_id={task.id} />
+                <FileMiniCard data={item} task_id={task.id} deleteProp={true} />
               ))}
             </div>
           </div>

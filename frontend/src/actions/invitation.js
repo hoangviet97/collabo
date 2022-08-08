@@ -50,9 +50,7 @@ export const getAllProjectInvitations = ({ project_id }) => async (dispatch) => 
 export const updateSeenStatus = ({ project_id, id }) => async (dispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/invitations/${id}/seen`);
-    console.log(res.data);
     dispatch({ type: UPDATE_SEEN_INVITATION, payload: { id: id, seenStatus: res.data } });
-    console.log(res.data);
   } catch (err) {
     dispatch({ type: GET_INVITATIONS_FAIL });
   }

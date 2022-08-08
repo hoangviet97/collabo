@@ -5,7 +5,6 @@ import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { session } from "../../types/types";
-import { filterActiveSessions, filterTodaySessions, filterPastSessions } from "../../actions/session";
 
 interface Props {
   addNewSession: any;
@@ -20,16 +19,12 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
 
   useEffect(() => {
     showAllSessions();
-  }, []);
+  }, [sessions]);
 
   const showAllSessions = () => {
     const today = moment().format();
     const x = sessions.filter((item: session) => moment(item.date).isAfter(today) === true);
     setFilteredSessions(x);
-  };
-
-  const showTodaySessions = () => {
-    dispatch(filterTodaySessions());
   };
 
   const showPastSessions = () => {
@@ -49,9 +44,6 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
             <div>
               <Button className="session__control-btn" onClick={showAllSessions}>
                 Active
-              </Button>
-              <Button className="session__control-btn" onClick={showTodaySessions}>
-                Today
               </Button>
               <Button className="session__control-btn" onClick={showPastSessions}>
                 Past

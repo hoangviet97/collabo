@@ -9,10 +9,6 @@ interface Props {
 }
 
 const ReviewContent: FC<Props> = ({ match }) => {
-  useEffect(() => {
-    console.log(match);
-  }, []);
-
   return (
     <div className="review__content">
       <Switch>

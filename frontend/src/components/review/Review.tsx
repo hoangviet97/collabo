@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { Input, Button, Tag } from "antd";
+import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteReview, acceptReview } from "../../actions/review";
 import { useParams } from "react-router-dom";
-import { getFilesByTask } from "../../actions/file";
+import { getFilesByReview, getFilesByTask } from "../../actions/file";
+import FileMiniCard from "../documents/files/FileMiniCard";
 
 interface Props {
   review: any;
@@ -12,8 +13,9 @@ interface Props {
 const Review: FC<Props> = ({ review }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
-  const [comment, setComment] = useState("");
-  const [isCommentVisible, setIsCommentVisible] = useState(false);
+  const [comment, setComment] = useState<string>("");
+  const [isCommentVisible, setIsCommentVisible] = useState<boolean>(false);
+  const [showFileButton, setShowFileButton] = useState<boolean>(true);
   const { TextArea } = Input;
 
   useEffect(() => {
@@ -21,7 +23,6 @@ const Review: FC<Props> = ({ review }) => {
   }, []);
 
   const deleteHandler = () => {
-    console.log(comment);
     dispatch(deleteReview({ project_id: params.id, id: review.review_id, task_id: review.task_id, member_id: review.member_id, comment: comment }));
   };
 
@@ -37,12 +38,24 @@ const Review: FC<Props> = ({ review }) => {
     setIsCommentVisible(false);
   };
 
+  const filesHandler = () => {
+    setShowFileButton(false);
+    dispatch(getFilesByReview({ review: review.id, id: review.task_id, project_id: params.id }));
+  };
+
   return (
     <div className="review__item">
       <header className="review__title">
         <span style={{ color: "#747d8c" }}>{review.section_name}</span>
         <span style={{ fontSize: "23px" }}>{review.title}</span>
       </header>
+      <div className="review__files">
+        <Button onClick={filesHandler} type="link" style={{ padding: 0 }}>
+          Show all files
+        </Button>
+
+        <div className="review__file-list">{review.files && review.files.map((item: any) => <FileMiniCard data={item} task_id={review.task_id} deleteProp={false} />)}</div>
+      </div>
       <div className="review__body">
         {isCommentVisible && (
           <div style={{ margin: "10px 0" }}>
@@ -50,7 +63,7 @@ const Review: FC<Props> = ({ review }) => {
           </div>
         )}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className="review__footer">
         <div className="review__body">{isCommentVisible === false ? <Button onClick={() => setIsCommentVisible(true)}>{comment.length > 0 ? "Edit" : "Add"} comment</Button> : <Button onClick={saveCommentHandler}>Save comment</Button>}</div>
         <div>
           <Button type="link" danger style={{ borderRadius: "8px" }} onClick={deleteHandler}>
