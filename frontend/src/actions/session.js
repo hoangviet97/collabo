@@ -6,6 +6,7 @@ export const createSession = ({ session, project_id }) => async (dispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/sessions/add`, { session });
     dispatch({ type: CREATE_SESSION, payload: res.data });
+    message.success("Session created!");
   } catch (err) {
     dispatch({ type: CREATE_SESSION_FAIL });
   }

@@ -4,7 +4,6 @@ import axiosClient from "../helpers/axios";
 export const createTalkingPoint = ({ session_id, project_id, text }) => async (dispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/sessions/${session_id}/talking-points/add`, { text });
-    console.log(res.data);
     dispatch({ type: CREATE_TALKING_POINT, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_TALKING_POINT_FAIL });

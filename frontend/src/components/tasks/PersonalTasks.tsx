@@ -11,6 +11,7 @@ import { getPersonalTasks, createTask, getAllAssignees } from "../../actions/tas
 import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
+import TaskDetailModal from "../modal/TaskDetailModal";
 
 const PersonalTasks = () => {
   const project_id = "66285580";
@@ -23,6 +24,7 @@ const PersonalTasks = () => {
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
   const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
+  const allTags = useSelector((state: RootStateOrAny) => state.tag.tags);
   const auth = useSelector((state: RootStateOrAny) => state.auth.user);
 
   const [taskVisual, setTaskVisual] = useState<string | null>("");
@@ -261,6 +263,7 @@ const PersonalTasks = () => {
               )}
             </div>
           )}
+          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} assignees={filteredAssignees} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

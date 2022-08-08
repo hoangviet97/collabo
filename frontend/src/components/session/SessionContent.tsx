@@ -8,8 +8,6 @@ interface Props {
 }
 
 const SessionContent: FC<Props> = ({ match }) => {
-  console.log(match);
-
   return (
     <div className="session__content">
       <Switch>

@@ -1,39 +1,37 @@
 import React, { FC, useState } from "react";
 import FileTypeIcon from "../../utils/FileTypeIcon";
 import moment from "moment";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { DownloadOutlined, DeleteOutlined, DisconnectOutlined } from "@ant-design/icons";
 import fileDownload from "js-file-download";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { deleteFile, ejectFile } from "../../../actions/file";
 import { useDispatch } from "react-redux";
-import { stringOrDate } from "react-big-calendar";
+import axiosClient from "../../../helpers/axios";
 
 interface Props {
   data: any;
   task_id: string;
+  deleteProp: boolean;
 }
 
-const FileMiniCard: FC<Props> = ({ data, task_id }) => {
+const FileMiniCard: FC<Props> = ({ data, task_id, deleteProp }) => {
   const params: any = useParams();
   const dispatch = useDispatch();
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
 
   const download = () => {
-    axios({
-      url: `http://localhost:9000/api/${params.id}/files/${data.id}/download`,
+    axiosClient({
+      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${data.id}/download`,
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {
-      console.log(response);
+      console.log(response.data.message);
       fileDownload(response.data, `${data.title}.${data.file_mimetype}`);
     });
   };
 
   const deleteFileHandler = () => {
-    console.log(data.id);
-    console.log(params.id);
     dispatch(deleteFile({ project_id: params.id, id: data.id }));
   };
 
@@ -52,10 +50,20 @@ const FileMiniCard: FC<Props> = ({ data, task_id }) => {
           <span style={{ fontSize: "12px" }}>{moment(data.created_at).calendar()}</span>
         </div>
       ) : (
-        <div style={{ width: "100%", height: "100%", transition: "all 0.3s", display: "flex", alignItems: "center", justifyContent: "center", gap: "20px" }}>
-          <Button onClick={() => download()} style={{ border: "none", color: "#3498db" }} icon={<DownloadOutlined style={{ fontSize: "20px" }} />}></Button>
-          <Button onClick={ejectFileHandler} style={{ border: "none", color: "#f1c40f" }} icon={<DisconnectOutlined style={{ fontSize: "20px" }} />}></Button>
-          <Button onClick={deleteFileHandler} style={{ border: "none", color: "crimson" }} icon={<DeleteOutlined style={{ fontSize: "20px" }} />}></Button>
+        <div className="task__attachment-actions">
+          <Tooltip title="Download">
+            <Button className="task__attachment-btn" onClick={() => download()} style={{ color: "#3498db" }} icon={<DownloadOutlined className="task__attachment-icon" />}></Button>
+          </Tooltip>
+          {deleteProp && (
+            <Tooltip title="Eject from the task">
+              <Button className="task__attachment-btn" onClick={ejectFileHandler} style={{ color: "#f1c40f" }} icon={<DisconnectOutlined className="task__attachment-icon" />}></Button>
+            </Tooltip>
+          )}
+          {deleteProp && (
+            <Tooltip title="Delete">
+              <Button className="task__attachment-btn" onClick={deleteFileHandler} style={{ color: "crimson" }} icon={<DeleteOutlined className="task__attachment-icon" />}></Button>
+            </Tooltip>
+          )}
         </div>
       )}
     </div>

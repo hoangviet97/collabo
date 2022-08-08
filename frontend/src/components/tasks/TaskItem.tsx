@@ -43,22 +43,10 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
 
   const sectionMenu = () => (
     <Menu>
-      <Menu.Item key="0">
-        <span>
-          <FormOutlined />
-          Rename
-        </span>
-      </Menu.Item>
       <Menu.Item key="1" onClick={submitTaskHandler}>
         <span>
           <CopyOutlined />
           Submit for review
-        </span>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <span>
-          <StarOutlined />
-          Add to favorite
         </span>
       </Menu.Item>
       <Menu.Item key="3" onClick={deleteTaskHandler}>

@@ -12,6 +12,7 @@ import { withRouter } from "react-router-dom";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const [projectId, setProjectId] = useState("");
   const isVisible = useSelector((state) => state.modal.taskModal);
   const projects = useSelector((state) => state.project.modalProjects);
@@ -42,30 +43,29 @@ const TaskModal = () => {
   const onFinish = (fieldsValue) => {
     const rangeValue = fieldsValue["range-picker"];
     let values;
+    let finalObj = [];
 
-    if (rangeValue === undefined || rangeValue === null) {
-      values = {
-        ...fieldsValue,
-        start_date: null,
-        due_date: null
-      };
-    } else {
-      values = {
-        ...fieldsValue,
-        start_date: rangeValue[0].format("YYYY-MM-DD"),
-        due_date: rangeValue[1].format("YYYY-MM-DD")
-      };
+    if (fieldsValue.assignees.length > 0) {
+      const pom = members.filter((item) => fieldsValue.assignees.includes(item.user_id));
+      finalObj = pom.map((item) => item.id);
     }
+
+    values = {
+      ...fieldsValue,
+      start_date: rangeValue === undefined ? null : rangeValue[0].format("YYYY-MM-DD"),
+      due_date: rangeValue === undefined ? null : rangeValue[1].format("YYYY-MM-DD"),
+      assignees_members: finalObj
+    };
 
     dispatch(createTask({ project_id: projectId, task: values }));
 
-    console.log("Received values of form: ", fieldsValue);
+    form.resetFields();
   };
 
   return (
     <div className="modal">
       <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={isVisible} closable={false} footer={null}>
-        <Form style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
+        <Form form={form} style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
           <Form.Item name="title">
             <Row>
               <Col span={22}>
@@ -105,7 +105,7 @@ const TaskModal = () => {
             </Col>
           </Row>
           <Form.Item name="assignees">
-            <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select members">
+            <Select mode="multiple" allowClear style={{ width: "100%" }} onChange={(value) => console.log(value)} placeholder="Please select members">
               {members.map((item) => (
                 <Option key={item.user_id} value={item.user_id}>
                   {item.firstname} {item.lastname} &nbsp; | &nbsp; {item.email}

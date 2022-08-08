@@ -16,7 +16,7 @@ const ReviewList = () => {
   return (
     <div>
       {reviews.length < 1 ? (
-        <div style={{ textAlign: "center", fontSize: "20px", marginTop: "15px" }}>
+        <div className="review__empty">
           <Empty />
         </div>
       ) : (

@@ -11,6 +11,7 @@ import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
 import { section, tag, task } from "../../types/types";
+import TaskHeader from "./TaskHeader";
 
 interface Props {
   match: any;
@@ -259,6 +260,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
           <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section: section, index: number) => (
               <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
+                {localStorage.getItem("task_visual") === "list" && <TaskHeader />}
                 <div className={`task__visual-${taskVisual}`}>
                   {taskContainer
                     .filter((x: task) => {

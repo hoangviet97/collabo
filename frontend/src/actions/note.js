@@ -4,7 +4,6 @@ import axiosClient from "../helpers/axios";
 export const createNote = ({ project_id, session_id, text }) => async (dispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/sessions/${session_id}/notes/add`, { text });
-    console.log(res.data);
     dispatch({ type: CREATE_NOTE, payload: res.data[0] });
   } catch (err) {
     console.log("...");
@@ -14,7 +13,6 @@ export const createNote = ({ project_id, session_id, text }) => async (dispatch)
 export const getNote = ({ project_id, session_id }) => async (dispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/sessions/${session_id}/notes`);
-    console.log(res.data);
     dispatch({ type: GET_NOTE, payload: res.data[0] });
   } catch (err) {
     console.log("...");

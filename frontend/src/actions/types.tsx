@@ -118,6 +118,7 @@ export const UPLOAD_ATTACH_FILE: string = "UPLOAD_ATTACH_FILE";
 export const GET_FILE_TYPES: string = "GET_FILE_TYPES";
 export const GET_FOLDER_FILES: string = "GET_FOLDER_FILES";
 export const GET_TASK_FILES: string = "GET_TASK_FILES";
+export const GET_REVIEW_FILES: string = "GET_REVIEW_FILES";
 export const GET_FILES: string = "GET_FILES";
 export const MOVE_TO_FOLDER: string = "MOVE_TO_FOLDER";
 export const FILE_DETAIL: string = "FILE_DETAIL";

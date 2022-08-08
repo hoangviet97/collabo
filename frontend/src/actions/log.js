@@ -6,7 +6,6 @@ export const getLogs = ({ project_id }) => async (dispatch) => {
     const res = await axiosClient.get(`/${project_id}/logs`);
     dispatch({ type: GET_LOGS, payload: res.data });
   } catch (err) {
-    console.log(err);
     //dispatch({ type: GET_MEMBERS_FAIL });
   }
 };

@@ -34,7 +34,6 @@ export const updateMemberRole = ({ id, project_id, role_id, current_role_id }) =
     const res = await axiosClient.patch(`/${project_id}/members/${id}/role`, { role_id });
     dispatch({ type: UPDATE_MEMBER_ROLE, payload: { id, role_id } });
     message.success("Role of the member was updated");
-    console.log(res);
   } catch (err) {
     dispatch({ type: UPDATE_MEMBER_ROLE_FAILED, payload: { id, current_role_id } });
     message.error(err.response.data.message);

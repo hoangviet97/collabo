@@ -1,11 +1,8 @@
-import React, { useEffect, FC, useState } from "react";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { useParams, Link, useLocation } from "react-router-dom";
+import React, { FC } from "react";
+import { useSelector, RootStateOrAny } from "react-redux";
 import { getMembers } from "../../actions/member";
 import { getReviewPanel } from "../../actions/review";
 import { member } from "../../types/types";
-import AvatarIcon from "../utils/AvatarIcon";
-import { Avatar, Input, Badge } from "antd";
 import ReviewLink from "./ReviewLink";
 
 interface Props {
@@ -13,7 +10,6 @@ interface Props {
 }
 
 const ReviewControlPanel: FC<Props> = ({ match }) => {
-  const [memberList, setMemberList] = useState([]);
   const reviewMembers = useSelector((state: RootStateOrAny) => state.review.review_panel);
 
   return (

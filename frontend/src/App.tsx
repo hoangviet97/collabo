@@ -8,7 +8,7 @@ import PasswordReset from "./components/auth/PasswordReset";
 import Dashboard from "./components/main/Dashboard";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./redux/store";
 import setAuthToken from "./helpers/setAuthToken";
 import { loadUser } from "./actions/auth";
 import { useEffect } from "react";
