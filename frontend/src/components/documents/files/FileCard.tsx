@@ -26,7 +26,7 @@ const FileCard: FC<Props> = ({ file }) => {
 
   const download = (record: file) => {
     axios({
-      url: `http://localhost:9000/api/${params.id}/files/${record.id}/download`, //your url
+      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`, //your url
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {

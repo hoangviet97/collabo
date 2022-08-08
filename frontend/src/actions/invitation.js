@@ -4,7 +4,7 @@ import { message } from "antd";
 
 export const createInvitation = ({ receiver_email, project_id, socket }) => async (dispatch) => {
   try {
-    const res = await axiosClient.post(`http://localhost:9000/api/${project_id}/invitations/new`, { receiver_email });
+    const res = await axiosClient.post(`/${project_id}/invitations/new`, { receiver_email });
     dispatch({ type: CREATE_INVITATION, payload: res.data });
     socket.emit("send-invitation", { receiver: receiver_email, data: res.data });
   } catch (err) {
