@@ -20,7 +20,7 @@ const Activities = () => {
       <header className="activity__header">
         <div style={{ fontSize: "30px" }}>Activity Log</div>
       </header>
-      <div className="activity__content">
+      <div className="activity__wrapper">
         <div>
           {logs.map((item: any) => (
             <ActivityItem data={item} />

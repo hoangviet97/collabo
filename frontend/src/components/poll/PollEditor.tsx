@@ -53,8 +53,8 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
         Cancel
       </Button>
       {!viewData && (
-        <div style={{ display: "flex", marginTop: "20px", gap: "10px" }}>
-          <Input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." />
+        <div className="poll__editor-question">
+          <Input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." style={{ marginRight: "10px" }} />
           <Button type="primary" onClick={setQuestionHandler}>
             Set question
           </Button>
@@ -72,7 +72,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
           <form onSubmit={submitOptionHandler}>
             <Input value={option} onChange={(e) => setOption(e.target.value)} placeholder="Enter the option..." />
           </form>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+          <div className="poll__editor-create">
             <Button type="primary" onClick={submitPollHandler}>
               Create poll
             </Button>

@@ -50,7 +50,7 @@ const FileHomePage = () => {
               </div>
             </div>
           </div>
-          <Modal title="Basic Modal" width="500px" visible={isModalVisible} onOk={() => handleOk("upload")} onCancel={() => handleCancel("upload")} footer={null}>
+          <Modal title="Upload" width="500px" visible={isModalVisible} onOk={() => handleOk("upload")} onCancel={() => handleCancel("upload")} footer={null}>
             <NewFileForm />
           </Modal>
           <Modal title="files" width="500px" visible={isFolderModalVisible} onOk={() => handleOk("folder")} onCancel={() => handleCancel("folder")} footer={null}>
@@ -65,7 +65,7 @@ const FileHomePage = () => {
           </Modal>
           <FileList />
         </div>
-        <div style={{ gridArea: "stats", backgroundColor: "white", borderRadius: "10px", height: "calc(100vh - 180px)", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: "20px" }}>
+        <div className="files__statistics-wrap">
           <FilesStatistics />
         </div>
       </div>
