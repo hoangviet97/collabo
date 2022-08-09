@@ -5,6 +5,17 @@
   width: 70%;
   padding: 30px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+  &__editor-create {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  &__editor-question {
+    display: flex;
+    margin-top: 20px;
+  }
 }
 
 .option {

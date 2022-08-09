@@ -3,7 +3,7 @@ import { FieldTimeOutlined } from "@ant-design/icons";
 
 const ComingSoon = () => {
   return (
-    <div className="coming__soon" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
+    <div className="coming-soon">
       <div>
         <div>
           <FieldTimeOutlined style={{ fontSize: "60px" }} />

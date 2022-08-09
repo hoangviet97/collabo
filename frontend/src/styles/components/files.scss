@@ -2,6 +2,15 @@
   position: relative;
   height: calc(100vh - 180px);
 
+  &__statistics-wrap {
+    grid-area: stats;
+    background-color: white;
+    border-radius: 10px;
+    height: calc(100vh - 180px);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 20px;
+  }
+
   &__stats-content {
     display: flex;
     justify-content: justify-content;
