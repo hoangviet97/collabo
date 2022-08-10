@@ -1,5 +1,5 @@
 # Collaboat
-Web application for project management
+Collaboat is an open source web application for project management designed to help teams control, organize and manage their project. Teams can create projects, break out work into to sections and associated tasks. Application also includes multiple task views, messages, file management, sessions planner, reporting tool, budget control, time tracker, task review system and role-based access control.
 ## How to use
 Try it [here](https://collaboat.cz)
 <br/>
