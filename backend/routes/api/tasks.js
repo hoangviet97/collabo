@@ -6,7 +6,7 @@ const check = require("../../middleware/checkMembership");
 const getMemberId = require("../../middleware/getMemberId");
 const router = express.Router();
 
-router.post("/:project/tasks/add", [auth, permit("Owner", "Admin")], taskController.create);
+router.post("/:project/tasks/add", [auth, getMemberId, permit("Owner", "Admin")], taskController.create);
 router.get("/:project/tasks", [auth], taskController.getAll);
 router.get("/:project/members/:member/tasks", [auth], taskController.getPersonal);
 router.get("/:project/users/:user/tasks", [auth], taskController.getPersonalUser);

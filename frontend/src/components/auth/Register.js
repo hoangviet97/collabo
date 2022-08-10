@@ -7,6 +7,7 @@ import { passwordStrength } from "check-password-strength";
 import Img from "../../img/hero_auth.png";
 
 const Register = (props) => {
+  const [form] = Form.useForm();
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
   const [errMsg, setErrMsg] = useState("");
   const { email, password, passwordCheck, firstname, lastname } = formData;
@@ -30,7 +31,7 @@ const Register = (props) => {
       setErrMsg("");
       const { push } = props.history;
       props.register({ firstname, lastname, email, password, push });
-      setFormData({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
+      form.resetFields();
     }
   };
 
