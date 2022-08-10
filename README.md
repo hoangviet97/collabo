@@ -14,11 +14,19 @@ Password: testcase123
 - Redux + thunk
 - SASS
 - Ant Design
+
 ### Backend
 - Express.js
 - JWT
 - MySQL
 - Socket.io
+
+### Services and platforms
+- Heroku
+- Vercel
+- AWS S3
+
+## To-do
 ### Services and platforms
 - Heroku
 - Vercel

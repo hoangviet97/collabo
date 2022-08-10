@@ -2,6 +2,7 @@ const con = require("../config/db");
 const uuid4 = require("uuid4");
 const Task = require("./Task");
 const Log = require("./Log");
+const File = require("./File");
 
 class Review {
   constructor(id, member_id, task_id, message, accepted) {
@@ -64,8 +65,6 @@ module.exports = {
 
     const [rows] = await con.promise().query(sql, project);
 
-    console.log(rows);
-
     return rows;
   },
 
@@ -77,7 +76,6 @@ module.exports = {
     const taskRow = await Task.updateStatus("1", task_id);
 
     const singleTaskRow = await Task.getOne(task_id);
-    console.log(singleTaskRow[0].title);
 
     const text = `rejected your submitted task`;
 
@@ -96,8 +94,6 @@ module.exports = {
     const singleTaskRow = await Task.getOne(task_id);
 
     const text = `accepted your submitted task`;
-
-    console.log(comment);
 
     const logRow = await Log.create(project_id, member_id, sender, "task", singleTaskRow[0].title, text, comment);
 

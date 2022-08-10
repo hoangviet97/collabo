@@ -5,8 +5,9 @@ module.exports = {
   // Create new projects
   create: async function (req, res) {
     try {
-      return res.json(await Task.create(req.body.task));
+      return res.json(await Task.create(req.body.task, req.member, req.params.project));
     } catch (err) {
+      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },

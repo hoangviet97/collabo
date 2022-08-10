@@ -23,7 +23,6 @@ const ReportControlPanel: FC<Props> = ({ match }) => {
   return (
     <div className="report__panel">
       <h2>Reports</h2>
-      <Input placeholder="Search members by name or e-mail" />
       <div style={{ marginTop: "30px" }}>
         {members.map((member: member) => (
           <div className="report__panel-list">

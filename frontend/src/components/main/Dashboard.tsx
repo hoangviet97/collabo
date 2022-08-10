@@ -31,7 +31,6 @@ const Dashboard = () => {
         message: "Project invitation",
         description: "You have been invited to project."
       });
-      console.log(data);
       dispatch(addInvitation(data));
       setUnreadNum((prev) => prev + 1);
     });

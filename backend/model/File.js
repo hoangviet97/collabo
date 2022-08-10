@@ -4,7 +4,7 @@ const aws = require("aws-sdk");
 require("dotenv").config();
 
 const s3 = new aws.S3({
-  region: "eu-central-1",
+  region: process.env.AWS_REGION,
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_KEY
 });
@@ -29,7 +29,7 @@ module.exports = {
     let newFile = null;
 
     const params = {
-      Bucket: "collabo-files",
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: `${fileId}`,
       Body: file.buffer,
       ContentType: file.mimetype
@@ -101,23 +101,6 @@ module.exports = {
     return rows;
   },
 
-  download2: async function (id, result) {
-    const s3 = new aws.S3({
-      region: "eu-central-1",
-      accessKeyId: process.env.AWS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_KEY
-    });
-
-    let x = await s3
-      .getObject({
-        Bucket: "collabo-files",
-        Key: "6ab5iz.jpg"
-      })
-      .createReadStream();
-
-    result(null, x.Body);
-  },
-
   addFolder: async function (folder_id, id) {
     const sql = `UPDATE files SET folders_id = ? WHERE id = ?`;
 
@@ -136,18 +119,19 @@ module.exports = {
 
   delete: function (id, result) {
     const s3 = new aws.S3({
-      region: "eu-central-1",
+      region: process.env.AWS_REGION,
       accessKeyId: process.env.AWS_ACCESS_KEY,
       secretAccessKey: process.env.AWS_SECRET_KEY
     });
 
     let params = {
-      Bucket: "collabo-files",
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: id
     };
 
     s3.deleteObject(params, async function (err, data) {
       if (err) {
+        console.log(err);
         result(err, null);
         return;
       }
