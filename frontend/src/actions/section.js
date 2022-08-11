@@ -33,6 +33,7 @@ export const getModalSections = ({ project_id }) => async (dispatch) => {
 };
 
 export const deleteSection = ({ project_id, id }) => async (dispatch) => {
+  console.log(id);
   try {
     const res = await axiosClient.delete(`/${project_id}/sections/${id}`);
     message.success("Section deleted!");

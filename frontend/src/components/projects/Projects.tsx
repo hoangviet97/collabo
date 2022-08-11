@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import Container from "../utils/Container";
 import Project from "./Project";
 import { Button, Skeleton, Select } from "antd";
-import { InboxOutlined, AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getProjects } from "../../actions/project";
 import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
 import { project, member } from "../../types/types";
-import color from "../../styles/abstract/variables.module.scss";
 
 const Projects = () => {
   const dispatch = useDispatch();

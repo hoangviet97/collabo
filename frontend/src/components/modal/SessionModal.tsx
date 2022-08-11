@@ -51,7 +51,7 @@ const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }
   return (
     <Modal title="Create New Session" width="600px" visible={visible} onCancel={handleCancel} footer={null}>
       <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item label="Event title" name="name">
+        <Form.Item label="Event title" rules={[{ required: true, message: "Please input your title!" }]} name="name">
           <Input />
         </Form.Item>
 
@@ -75,16 +75,16 @@ const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }
 
         <Row>
           <Col span={16} style={{ display: "flex", gap: "10px" }}>
-            <Form.Item label="Date" name="date">
+            <Form.Item label="Date" name="date" rules={[{ required: true, message: "Please input your date!" }]}>
               <DatePicker />
             </Form.Item>
-            <Form.Item label="Start time" name="start">
+            <Form.Item label="Start time" name="start" rules={[{ required: true, message: "Please input your start time!" }]}>
               <TimePicker format="HH:mm" />
             </Form.Item>
           </Col>
 
           <Col span={8}>
-            <Form.Item label="End time" name="end">
+            <Form.Item label="End time" name="end" rules={[{ required: true, message: "Please input your end time!" }]}>
               <TimePicker onSelect={timeHandle} format="HH:mm" />
             </Form.Item>
           </Col>

@@ -23,7 +23,7 @@ const Notifications = () => {
   return (
     <Container size="30">
       <div className="notifications" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <h1>Notifications</h1>
+        <h1>Invitations</h1>
         <div className="invitation__box" style={{ width: "60%" }}>
           {invitations.map((item: Invitation, index: number) => (
             <InvitationItem key={index} data={item} />

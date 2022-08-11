@@ -30,6 +30,16 @@ const BudgetPage = ({ match }) => {
   }, []);
 
   useEffect(() => {
+    const calc = incomes - spending;
+    setBalance(calc);
+  }, [incomes, spending]);
+
+  useEffect(() => {
+    const calc = incomes - spending;
+    setBalance(calc);
+  }, [incomes, spending]);
+
+  useEffect(() => {
     const st = tasks.map((item) => item.budget).reduce((prev, next) => prev + next, 0);
     setSpending(st);
   }, [tasks]);
@@ -44,7 +54,7 @@ const BudgetPage = ({ match }) => {
                 <div className="budget__header-item">
                   <div className="budget__title">Total Balance</div>
                   <div style={{ fontSize: "48px", marginBottom: "25px" }}>
-                    {getCurrency(currency)} {parseInt(incomes) - parseInt(spending)}
+                    {getCurrency(currency)} {isNaN(balance) ? "0" : balance}
                   </div>
                 </div>
                 <div style={{ width: "100%" }}>
@@ -64,7 +74,9 @@ const BudgetPage = ({ match }) => {
                   </div>
                   <div className="budget__header-item" style={{ marginRight: "20px" }}>
                     <div className="budget__title">Total budget</div>
-                    <div>${incomes}</div>
+                    <div>
+                      {getCurrency(currency)} {isNaN(incomes) ? "0" : incomes}
+                    </div>
                   </div>
                 </div>
               </div>

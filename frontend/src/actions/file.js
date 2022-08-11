@@ -38,7 +38,7 @@ export const deleteFile = ({ project_id, id }) => async (dispatch) => {
     dispatch({ type: DELETE_FILE, payload: id });
     message.success("File deleted successfuly!");
   } catch (err) {
-    console.log(err.response);
+    console.log(err.response.data.message);
   }
 };
 
@@ -48,7 +48,7 @@ export const ejectFile = ({ project_id, id, task_id }) => async (dispatch) => {
     dispatch({ type: EJECT_FILE, payload: id });
     message.success("File ejected successfuly!");
   } catch (err) {
-    console.log(err.response);
+    console.log(err.response.data.message);
   }
 };
 

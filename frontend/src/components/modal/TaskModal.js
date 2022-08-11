@@ -66,7 +66,7 @@ const TaskModal = () => {
     <div className="modal">
       <Modal width={500} bodyStyle={{ overflowY: "scroll", height: "550px" }} visible={isVisible} closable={false} footer={null}>
         <Form form={form} style={{ position: "relative" }} name="complex-form" onFinish={onFinish} initialValues={{ remember: true }}>
-          <Form.Item name="title">
+          <Form.Item name="title" rules={[{ required: true, message: "Please input task title!" }]}>
             <Row>
               <Col span={22}>
                 <Input className="task-name-input" placeholder="Enter task name" />
@@ -78,7 +78,7 @@ const TaskModal = () => {
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item name="project">
+          <Form.Item name="project" rules={[{ required: true }]}>
             <Select onSelect={(value) => projectSelected(value)} placeholder="Select project" style={{ width: "100%" }}>
               {projects.map((project, index) => (
                 <Option key={index} value={project.id}>
@@ -87,7 +87,7 @@ const TaskModal = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="sectionId">
+          <Form.Item name="sectionId" rules={[{ required: true }]}>
             <Select placeholder="Select section" style={{ width: "100%" }}>
               {sections.map((section, index) => (
                 <Option key={index} value={section.id}>

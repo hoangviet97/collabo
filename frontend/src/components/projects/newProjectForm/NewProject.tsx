@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createProject } from "../../../actions/project";
 import colorVar from "../../../styles/abstract/variables.module.scss";
@@ -29,14 +29,17 @@ const NewProject: FC<Props> = ({ history }) => {
   };
 
   const colorCubicStateHandler = (item: any, index: number) => {
-    console.log(item);
     handleIconColor(item);
     setChosen(index);
   };
 
   const submitHandler = () => {
     const { push } = history;
-    dispatch(createProject({ name, color, push }));
+    if (color.length === 0) {
+      message.error("Choose your project color!");
+    } else {
+      dispatch(createProject({ name, color, push }));
+    }
   };
 
   return (

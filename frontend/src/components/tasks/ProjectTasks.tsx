@@ -6,7 +6,7 @@ import { getTagsByTasks, getTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
-import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
+import { CloseOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
@@ -23,7 +23,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
 
   // Ant components
   const { Panel } = Collapse;
-  const { Text } = Typography;
   const { Option } = Select;
 
   // Selectors
@@ -121,43 +120,21 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     }
   };
 
+  const deleteSectionHandler = (id: string) => {
+    dispatch(deleteSection({ project_id: project_id, id: id }));
+  };
+
   const panelHeader = (name: string, id: string) => (
     <React.Fragment>
-      <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <span className="panel-header__title" style={{ fontSize: "20px" }}>
+      <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="panel-header__title" style={{ marginRight: "30px", fontSize: "20px" }}>
           {name}
-        </span>
-        <Dropdown className="panel-dropdown" overlay={sectionMenu} trigger={["hover"]}>
-          <a
-            style={{ padding: "0px" }}
-            type="link"
-            onClick={(event) => {
-              setSelectedSection(id);
-              console.log(id);
-              event.stopPropagation();
-            }}
-          >
-            <EllipsisOutlined />
-          </a>
-        </Dropdown>
+        </div>
+        <div style={{ position: "absolute", right: "30px", color: "red", fontSize: "12px" }} onClick={() => deleteSectionHandler(id)}>
+          Delete
+        </div>
       </div>
     </React.Fragment>
-  );
-
-  const sectionMenu = () => (
-    <Menu>
-      <Menu.Item key="0">
-        <Text>Rename</Text>
-      </Menu.Item>
-      <Menu.Item
-        key="1"
-        onClick={(event) => {
-          dispatch(deleteSection({ project_id: project_id, id: selectedSection }));
-        }}
-      >
-        <Text type="danger">Delete</Text>
-      </Menu.Item>
-    </Menu>
   );
 
   const showModal = (task: any, section: any) => {
