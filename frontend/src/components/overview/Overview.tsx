@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, FC } from "react";
+import React, { useEffect, FC } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import StatusChart from "./StatusChart";
@@ -9,7 +9,6 @@ import { getProject } from "../../actions/project";
 import { getSessions } from "../../actions/session";
 import { getTimeRecordsSum } from "../../actions/time_record";
 import MainSpinner from "../utils/spinners/MainSpinner";
-import { message, Carousel, Divider } from "antd";
 import SessionPreview from "../session/SessionPreview";
 import { session, task, member } from "../../types/types";
 import { useParams } from "react-router-dom";
@@ -86,11 +85,7 @@ const Overview: FC<Props> = ({ match }) => {
               </div>
               {sessions.length > 0 && <div className="blob red"></div>}
             </div>
-            <div className="overview__session">
-              {sessions.slice(0, 1).map((item: any) => (
-                <SessionPreview session={item} />
-              ))}
-            </div>
+            <div className="overview__session">{sessions.length < 1 ? <div className="overview__session-empty">No data</div> : sessions.slice(0, 1).map((item: session) => <SessionPreview session={item} />)}</div>
           </div>
           <div className="e">
             <div className="items-center" style={{ marginBottom: "20px" }}>

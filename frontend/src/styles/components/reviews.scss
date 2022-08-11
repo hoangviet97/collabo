@@ -8,6 +8,11 @@
   width: 100%;
   height: calc(100vh - 180px);
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__empty {
     text-align: center;
     font-size: 20px;

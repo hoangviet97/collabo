@@ -5,6 +5,7 @@ import { deleteReview, acceptReview } from "../../actions/review";
 import { useParams } from "react-router-dom";
 import { getFilesByReview, getFilesByTask } from "../../actions/file";
 import FileMiniCard from "../documents/files/FileMiniCard";
+import moment from "moment";
 
 interface Props {
   review: any;
@@ -45,21 +46,26 @@ const Review: FC<Props> = ({ review }) => {
 
   return (
     <div className="review__item">
-      <header className="review__title">
-        <span style={{ color: "#747d8c" }}>{review.section_name}</span>
-        <span style={{ fontSize: "23px" }}>{review.title}</span>
+      <header className="review__header">
+        <div className="review__title">
+          <span style={{ color: "#747d8c" }}>{review.section_name}</span>
+          <span style={{ fontSize: "23px" }}>{review.title}</span>
+        </div>
+        <div className="review__title">
+          <span style={{ color: "#747d8c", alignSelf: "flex-end" }}>Submitted</span>
+          <span style={{ fontSize: "12px" }}>{moment(review.created_at).calendar()}</span>
+        </div>
       </header>
       <div className="review__files">
         <Button onClick={filesHandler} type="link" style={{ padding: 0 }}>
           Show all files
         </Button>
-
-        <div className="review__file-list">{review.files && review.files.map((item: any) => <FileMiniCard data={item} task_id={review.task_id} deleteProp={false} />)}</div>
+        <div className="review__file-list">{review.files && review.files.map((item: any) => <FileMiniCard data={item} task_id={review.task_id} deleteProp={false} bordered={true} />)}</div>
       </div>
       <div className="review__body">
         {isCommentVisible && (
           <div style={{ margin: "10px 0" }}>
-            <TextArea rows={4} onChange={(e) => setComment(e.target.value)} onBlur={onBlurComment} autoFocus />
+            <TextArea rows={4} value={comment} onChange={(e) => setComment(e.target.value)} onBlur={onBlurComment} autoFocus />
           </div>
         )}
       </div>
