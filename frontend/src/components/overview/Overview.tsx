@@ -3,18 +3,18 @@ import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import StatusChart from "./StatusChart";
 import { TeamOutlined, ClockCircleOutlined, FormOutlined, FundProjectionScreenOutlined, EyeOutlined } from "@ant-design/icons";
-import { getProjectTasks, getStatusGroup, getPersonalTasks } from "../../actions/task";
+import { getProjectTasks, getStatusGroup } from "../../actions/task";
 import { getMembers } from "../../actions/member";
 import { getProject } from "../../actions/project";
 import { getSessions } from "../../actions/session";
 import { getTimeRecordsSum } from "../../actions/time_record";
-import MainSpinner from "../utils/spinners/MainSpinner";
 import SessionPreview from "../session/SessionPreview";
-import { session, task, member } from "../../types/types";
+import { session, log, member } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { getLogs } from "../../actions/log";
 import LogPreview from "../logs/LogPreview";
 import color from "../../styles/abstract/variables.module.scss";
+import moment from "moment";
 
 interface Props {
   match: any;
@@ -36,13 +36,9 @@ const Overview: FC<Props> = ({ match }) => {
     dispatch(getProjectTasks({ project_id: params.id }));
     dispatch(getStatusGroup({ project_id: params.id }));
     dispatch(getMembers({ project_id: params.id }));
-    dispatch(getSessions({ project_id: params.id }));
-    dispatch(getTimeRecordsSum({ project_id: params.id }));
-    dispatch(getLogs({ project_id: params.id }));
-
-    return () => {
-      console.log("unmount");
-    };
+    dispatch(getSessions(params.id));
+    dispatch(getTimeRecordsSum(params.id));
+    dispatch(getLogs(params.id));
   }, []);
 
   return (
@@ -53,21 +49,21 @@ const Overview: FC<Props> = ({ match }) => {
             <div className="overview__highlight-item">
               <div className="items-center">
                 <FormOutlined className="overview__highlight-icon" />
-                <span style={{ fontSize: "16px", zIndex: 888 }}>Total tasks</span>
+                <span className="overview__highlight-title">Total tasks</span>
               </div>
               <div className="overview__highlight-value">{tasks.length}</div>
             </div>
             <div className="overview__highlight-item">
               <div className="items-center">
                 <ClockCircleOutlined className="overview__highlight-icon" />
-                <span style={{ fontSize: "16px", zIndex: 888 }}>Total time</span>
+                <span className="overview__highlight-title">Total time</span>
               </div>
               <div className="overview__highlight-value">{Math.floor(time / 60) < 5400 ? `${Math.floor(time / 60)} min` : `${Math.floor(time / 3600)} h`}</div>
             </div>
             <div className="overview__highlight-item">
               <div className="items-center">
                 <TeamOutlined className="overview__highlight-icon" />
-                <span style={{ fontSize: "16px", zIndex: 888 }}>Total members</span>
+                <span className="overview__highlight-title">Total members</span>
               </div>
               <div className="overview__highlight-value">{members.length}</div>
             </div>
@@ -85,7 +81,16 @@ const Overview: FC<Props> = ({ match }) => {
               </div>
               {sessions.length > 0 && <div className="blob red"></div>}
             </div>
-            <div className="overview__session">{sessions.length < 1 ? <div className="overview__session-empty">No data</div> : sessions.slice(0, 1).map((item: session) => <SessionPreview session={item} />)}</div>
+            <div className="overview__session">
+              {sessions.length < 1 ? (
+                <div className="overview__session-empty">No data</div>
+              ) : (
+                sessions
+                  .filter((item: session) => moment(item.date) > moment())
+                  .slice(0, 1)
+                  .map((item: session) => <SessionPreview session={item} />)
+              )}
+            </div>
           </div>
           <div className="e">
             <div className="items-center" style={{ marginBottom: "20px" }}>
@@ -93,7 +98,7 @@ const Overview: FC<Props> = ({ match }) => {
               <div>Activities</div>
             </div>
             <div style={{ width: "100%" }}>
-              {logs.slice(0, 3).map((item: any) => (
+              {logs.slice(0, 3).map((item: log) => (
                 <LogPreview data={item} />
               ))}
             </div>

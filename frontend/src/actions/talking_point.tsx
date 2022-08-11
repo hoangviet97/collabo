@@ -1,7 +1,7 @@
 import { CREATE_TALKING_POINT, CREATE_TALKING_POINT_FAIL, GET_TALKING_POINTS, GET_TALKING_POINTS_FAIL, UPDATE_CHECK_STATUS } from "./types";
 import axiosClient from "../helpers/axios";
 
-export const createTalkingPoint = ({ session_id, project_id, text }) => async (dispatch) => {
+export const createTalkingPoint = (session_id: string, project_id: string, text: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/sessions/${session_id}/talking-points/add`, { text });
     dispatch({ type: CREATE_TALKING_POINT, payload: res.data });
@@ -10,7 +10,7 @@ export const createTalkingPoint = ({ session_id, project_id, text }) => async (d
   }
 };
 
-export const getTalkingPoints = ({ session_id, project_id }) => async (dispatch) => {
+export const getTalkingPoints = (session_id: string, project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/sessions/${session_id}/talking-points`);
     dispatch({ type: GET_TALKING_POINTS, payload: res.data });
@@ -19,7 +19,7 @@ export const getTalkingPoints = ({ session_id, project_id }) => async (dispatch)
   }
 };
 
-export const updateCheckTalkingPoint = ({ session_id, id, project_id, val }) => async (dispatch) => {
+export const updateCheckTalkingPoint = (session_id: string, id: string, project_id: string, val: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/sessions/${session_id}/talking-points/${id}/check`, { val });
     dispatch({ type: UPDATE_CHECK_STATUS, payload: { id: id, val: val } });

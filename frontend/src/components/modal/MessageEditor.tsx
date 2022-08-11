@@ -26,7 +26,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
     if (value.length < 1) {
       message.error("Text cannot be empty!");
     } else {
-      dispatch(createMessage({ project_id: project, text: value, question: question, options: options, user: user }));
+      dispatch(createMessage(project, value, question, options, user));
       setValue("");
       setQuestion("");
       setOptions([]);
@@ -56,16 +56,13 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
                 </span>
               )}
             </Button>
-            <Button>
-              <UploadOutlined />
-            </Button>
           </div>
           <Button type="primary" disabled={loading} onClick={submitHandler}>
             {loading ? "Please wait..." : "Create message"}
           </Button>
         </footer>
         {pollWindow && (
-          <div style={{ position: "absolute", padding: "20px", top: "0px", left: "0px", backgroundColor: "white", width: "100%", height: "100%" }}>
+          <div className="poll__window">
             <PollEditor setPollWindow={setPollWindow} getPollData={getPollData} />
           </div>
         )}

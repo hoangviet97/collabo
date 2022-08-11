@@ -35,12 +35,12 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
 
   return (
     <div className="option">
-      <div className="option__wrap" style={{ backgroundColor: isChecked ? "#74b9ff" : "white" }}>
+      <div className="option__wrap" style={{ backgroundColor: isChecked ? color.light_blue : color.base_white }}>
         <div style={{ marginBottom: "5px" }}>
           <div className="option__content">
             <div style={{ flex: 2 }}>
               <Checkbox checked={isChecked} onChange={(e) => checkboxHandler(e)} />
-              <span style={{ marginLeft: "10px", color: isChecked ? "white" : "black" }}>{data.text}</span>
+              <span style={{ marginLeft: "10px", color: isChecked ? color.base_white : color.primary_text }}>{data.text}</span>
             </div>
             <div style={{ flex: 1, textAlign: "right" }}>
               <Avatar.Group>

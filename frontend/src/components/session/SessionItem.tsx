@@ -22,10 +22,10 @@ const SessionItem = () => {
   let params: any = useParams();
 
   useEffect(() => {
-    dispatch(getSession({ id: params.sessionId, project_id: params.id }));
-    dispatch(getParticipants({ id: params.sessionId, project_id: params.id }));
-    dispatch(getTalkingPoints({ session_id: params.sessionId, project_id: params.id }));
-    dispatch(getNote({ project_id: params.id, session_id: params.sessionId }));
+    dispatch(getSession(params.sessionId, params.id));
+    dispatch(getParticipants(params.sessionId, params.id));
+    dispatch(getTalkingPoints(params.sessionId, params.id));
+    dispatch(getNote(params.id, params.sessionId));
 
     if (note !== undefined) {
       setNoteText(note.text);
@@ -41,21 +41,21 @@ const SessionItem = () => {
   const talkingPointHandle = (e: any) => {
     e.preventDefault();
     if (talkingPoint.length > 0) {
-      dispatch(createTalkingPoint({ session_id: params.sessionId, project_id: params.id, text: talkingPoint }));
+      dispatch(createTalkingPoint(params.sessionId, params.id, talkingPoint));
       setTalkingPoint("");
     }
   };
 
   const pointCheckHandle = (e: boolean, id: string) => {
     console.log(e);
-    dispatch(updateCheckTalkingPoint({ session_id: params.sessionId, id: id, project_id: params.id, val: e === true ? "T" : "F" }));
+    dispatch(updateCheckTalkingPoint(params.sessionId, id, params.id, e === true ? "T" : "F"));
   };
 
   const submitNoteText = () => {
     if (note === undefined) {
-      dispatch(createNote({ project_id: params.id, session_id: params.sessionId, text: noteText }));
+      dispatch(createNote(params.id, params.sessionId, noteText));
     } else {
-      dispatch(updateNote({ project_id: params.id, session_id: params.sessionId, id: note.id, text: noteText }));
+      dispatch(updateNote(params.id, params.sessionId, note.id, noteText));
     }
   };
 

@@ -60,12 +60,12 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     } else {
       setTaskVisual(localStorage.getItem("task_visual"));
     }
-    dispatch(getSections({ project_id: project_id }));
+    dispatch(getSections(project_id));
     dispatch(getMembers({ project_id: project_id }));
     dispatch(getAllAssignees({ project_id: project_id }));
     dispatch(getProjectTasks({ project_id: project_id }));
-    dispatch(getTagsByTasks({ project_id: project_id }));
-    dispatch(getTags({ project_id: project_id }));
+    dispatch(getTagsByTasks(project_id));
+    dispatch(getTags(project_id));
   }, []);
 
   useEffect(() => {
@@ -115,13 +115,13 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     if (newSection.length === 0) {
       console.log("empty");
     } else {
-      dispatch(createSection({ project_id: project_id, name: newSection }));
+      dispatch(createSection(project_id, newSection));
       setNewSection("");
     }
   };
 
   const deleteSectionHandler = (id: string) => {
-    dispatch(deleteSection({ project_id: project_id, id: id }));
+    dispatch(deleteSection(project_id, id));
   };
 
   const panelHeader = (name: string, id: string) => (
@@ -282,7 +282,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} assignees={filteredAssignees} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

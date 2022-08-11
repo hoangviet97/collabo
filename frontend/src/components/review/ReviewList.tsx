@@ -11,7 +11,7 @@ const ReviewList = () => {
   const params: any = useParams();
 
   useEffect(() => {
-    dispatch(getReviews({ project_id: params.id, member_id: params.memberId }));
+    dispatch(getReviews(params.id, params.memberId));
   }, [params.memberId]);
   return (
     <div>

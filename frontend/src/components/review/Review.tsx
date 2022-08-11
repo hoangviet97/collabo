@@ -24,11 +24,11 @@ const Review: FC<Props> = ({ review }) => {
   }, []);
 
   const deleteHandler = () => {
-    dispatch(deleteReview({ project_id: params.id, id: review.review_id, task_id: review.task_id, member_id: review.member_id, comment: comment }));
+    dispatch(deleteReview(params.id, review.review_id, review.task_id, review.member_id, comment));
   };
 
   const acceptHandler = () => {
-    dispatch(acceptReview({ project_id: params.id, id: review.review_id, task_id: review.task_id, member_id: review.member_id, comment: comment }));
+    dispatch(acceptReview(params.id, review.review_id, review.task_id, review.member_id, comment));
   };
 
   const saveCommentHandler = () => {

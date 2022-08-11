@@ -17,7 +17,7 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
   const params: any = useParams();
 
   const deleteHandler = () => {
-    dispatch(deleteSession({ id: session.id, project_id: params.id }));
+    dispatch(deleteSession(session.id, params.id));
   };
 
   return (

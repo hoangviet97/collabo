@@ -19,7 +19,7 @@ const Team = () => {
 
   useEffect(() => {
     dispatch(getMembers({ project_id: params.id }));
-    dispatch(getAllProjectInvitations({ project_id: params.id }));
+    dispatch(getAllProjectInvitations(params.id));
   }, []);
 
   const inviteHeader = (

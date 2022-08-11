@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, DatePicker, Typography, Button, Row, Col, Select, Avatar } from "antd";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { Form, Input, DatePicker, Typography, Button, Row, Col, Select } from "antd";
 import { closeTaskModal } from "../../actions/modal";
 import { getModalMembers } from "../../actions/member";
 import { getModalProjects } from "../../actions/project";
 import { getModalSections } from "../../actions/section";
 import { createTask } from "../../actions/task";
-import { CloseOutlined, PlusOutlined, BorderOutlined, AntDesignOutlined, UserOutlined } from "@ant-design/icons";
+import { CloseOutlined, BorderOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
+import { member, section, project } from "../../types/types";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const [projectId, setProjectId] = useState("");
-  const isVisible = useSelector((state) => state.modal.taskModal);
-  const projects = useSelector((state) => state.project.modalProjects);
-  const sections = useSelector((state) => state.section.modalSections);
-  const members = useSelector((state) => state.member.modalMembers);
+  const [projectId, setProjectId] = useState<string>("");
+  const isVisible = useSelector((state: RootStateOrAny) => state.modal.taskModal);
+  const projects = useSelector((state: RootStateOrAny) => state.project.modalProjects);
+  const sections = useSelector((state: RootStateOrAny) => state.section.modalSections);
+  const members = useSelector((state: RootStateOrAny) => state.member.modalMembers);
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const { TextArea } = Input;
@@ -27,27 +28,24 @@ const TaskModal = () => {
     projects && dispatch(getModalProjects());
   }, []);
 
-  let path = window.location.pathname;
-  let pathValue = path.split("/")[1];
-
   const closeModal = () => {
     dispatch(closeTaskModal());
   };
 
-  const projectSelected = (value) => {
+  const projectSelected = (value: string) => {
     setProjectId(value);
-    dispatch(getModalSections({ project_id: value }));
+    dispatch(getModalSections(value));
     dispatch(getModalMembers({ project_id: value }));
   };
 
-  const onFinish = (fieldsValue) => {
+  const onFinish = (fieldsValue: any) => {
     const rangeValue = fieldsValue["range-picker"];
     let values;
     let finalObj = [];
 
     if (fieldsValue.assignees.length > 0) {
-      const pom = members.filter((item) => fieldsValue.assignees.includes(item.user_id));
-      finalObj = pom.map((item) => item.id);
+      const pom = members.filter((item: member) => fieldsValue.assignees.includes(item.user_id));
+      finalObj = pom.map((item: member) => item.id);
     }
 
     values = {
@@ -79,8 +77,8 @@ const TaskModal = () => {
             </Row>
           </Form.Item>
           <Form.Item name="project" rules={[{ required: true }]}>
-            <Select onSelect={(value) => projectSelected(value)} placeholder="Select project" style={{ width: "100%" }}>
-              {projects.map((project, index) => (
+            <Select onSelect={(value: any) => projectSelected(value)} placeholder="Select project" style={{ width: "100%" }}>
+              {projects.map((project: project, index: number) => (
                 <Option key={index} value={project.id}>
                   {project.name}
                 </Option>
@@ -89,7 +87,7 @@ const TaskModal = () => {
           </Form.Item>
           <Form.Item name="sectionId" rules={[{ required: true }]}>
             <Select placeholder="Select section" style={{ width: "100%" }}>
-              {sections.map((section, index) => (
+              {sections.map((section: section, index: number) => (
                 <Option key={index} value={section.id}>
                   {section.name}
                 </Option>
@@ -100,13 +98,13 @@ const TaskModal = () => {
             <Col span={13}>
               {/* date picker for task */}
               <Form.Item name="range-picker">
-                <RangePicker allowClear="true" style={{ width: "100%" }} />
+                <RangePicker allowClear={true} style={{ width: "100%" }} />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item name="assignees">
-            <Select mode="multiple" allowClear style={{ width: "100%" }} onChange={(value) => console.log(value)} placeholder="Please select members">
-              {members.map((item) => (
+            <Select mode="multiple" allowClear style={{ width: "100%" }} placeholder="Please select members">
+              {members.map((item: member) => (
                 <Option key={item.user_id} value={item.user_id}>
                   {item.firstname} {item.lastname} &nbsp; | &nbsp; {item.email}
                 </Option>
@@ -120,25 +118,25 @@ const TaskModal = () => {
             <Row>
               <Col span={12}>
                 <Form.Item name="statusId">
-                  <Select placeholder="Select a status" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                  <Select placeholder="Select a status" optionFilterProp="children">
                     <Option value="0">
-                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#ecf0f1" }} />
+                      <BorderOutlined className="task__status-select" style={{ backgroundColor: "#ecf0f1" }} />
                       &nbsp;&nbsp;Open
                     </Option>
                     <Option value="1">
-                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#3498db" }} />
+                      <BorderOutlined className="task__status-select" style={{ backgroundColor: "#3498db" }} />
                       &nbsp;&nbsp;In Progress
                     </Option>
                     <Option value="2">
-                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#f1c40f" }} />
+                      <BorderOutlined className="task__status-select" style={{ backgroundColor: "#f1c40f" }} />
                       &nbsp;&nbsp;On Hold
                     </Option>
                     <Option value="3">
-                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#27ae60" }} />
+                      <BorderOutlined className="task__status-select" style={{ backgroundColor: "#27ae60" }} />
                       &nbsp;&nbsp;Completed
                     </Option>
                     <Option value="4">
-                      <BorderOutlined style={{ fontSize: "10px", color: "transparent", backgroundColor: "#e74c3c" }} />
+                      <BorderOutlined className="task__status-select" style={{ backgroundColor: "#e74c3c" }} />
                       &nbsp;&nbsp;Canceled
                     </Option>
                   </Select>
@@ -146,7 +144,7 @@ const TaskModal = () => {
               </Col>
               <Col span={12}>
                 <Form.Item name="priorityId">
-                  <Select placeholder="Select a priority" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                  <Select placeholder="Select a priority" optionFilterProp="children">
                     <Option value="0">
                       <Text strong style={{ color: "#f1c40f" }}>
                         Low

@@ -15,7 +15,7 @@ const InvitationPanel = () => {
   const submitHandle = (e: any) => {
     e.preventDefault();
     // dispatch with passed socket
-    dispatch(createInvitation({ receiver_email: email, project_id: params.id, socket: socket }));
+    dispatch(createInvitation(email, params.id, socket));
     setEmail("");
   };
 
@@ -23,7 +23,7 @@ const InvitationPanel = () => {
     <div className="team__invite">
       <h2 className="team__invite-header">Invite New People 👋</h2>
       <div className="team__invite-content">
-        <Input style={{ flex: "60%", marginRight: "5px", border: "transparent" }} placeholder="Enter e-mail address" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input className="team__invite-input" placeholder="Enter e-mail address" value={email} onChange={(e) => setEmail(e.target.value)} />
         <Button type="primary" style={{ borderRadius: "7px" }} onClick={submitHandle}>
           Send
         </Button>

@@ -15,7 +15,7 @@ const ReviewPage: FC<Props> = ({ match }) => {
   const params: any = useParams();
 
   useEffect(() => {
-    dispatch(getReviewPanel({ project_id: params.id }));
+    dispatch(getReviewPanel(params.id));
   }, []);
 
   return (

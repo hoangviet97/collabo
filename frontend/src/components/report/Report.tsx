@@ -23,7 +23,7 @@ const Report = () => {
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
 
   useEffect(() => {
-    dispatch(getMemberRecords({ project_id: params.id, id: params.memberId }));
+    dispatch(getMemberRecords(params.id, params.memberId));
     dispatch(getUserTasks({ project_id: params.id, id: params.memberId }));
   }, [params.memberId]);
 

@@ -46,12 +46,12 @@ const PersonalTasks = () => {
   const { Option } = Select;
 
   const getData = (id: string) => {
-    dispatch(getSections({ project_id: id }));
+    dispatch(getSections(id));
     dispatch(getMembers({ project_id: id }));
     dispatch(getAllAssignees({ project_id: id }));
     dispatch(getPersonalTasks({ project_id: id, id: auth.id }));
-    dispatch(getTagsByTasks({ project_id: id }));
-    dispatch(getTags({ project_id: id }));
+    dispatch(getTagsByTasks(id));
+    dispatch(getTags(id));
   };
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const PersonalTasks = () => {
       <Menu.Item
         key="1"
         onClick={(event) => {
-          dispatch(deleteSection({ project_id: project_id, id: selectedSection }));
+          dispatch(deleteSection(project_id, selectedSection));
         }}
       >
         <Text type="danger">Delete</Text>
@@ -125,7 +125,7 @@ const PersonalTasks = () => {
     if (newSection.length === 0) {
       console.log("empty");
     } else {
-      dispatch(createSection({ project_id: project_id, name: newSection }));
+      dispatch(createSection(project_id, newSection));
       setNewSection("");
     }
   };
@@ -263,7 +263,7 @@ const PersonalTasks = () => {
               )}
             </div>
           )}
-          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} assignees={filteredAssignees} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

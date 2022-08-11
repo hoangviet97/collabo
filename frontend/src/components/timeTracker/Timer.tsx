@@ -13,7 +13,7 @@ const Timer: FC<Props> = ({ localstorage }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [timer, setTimer] = useState<number>(0);
-  let finalFormat = "";
+  let finalFormat: string = "";
   const [isActive, setIsActive] = useState<any>(false);
   const countRef: any = useRef(null);
 
@@ -37,7 +37,7 @@ const Timer: FC<Props> = ({ localstorage }) => {
     setIsActive(false);
     const datem = moment(JSON.parse(localStorage.getItem(`timer${localstorage}`)!));
     const datem2 = moment(new Date());
-    dispatch(createTimeRecord({ start: moment(datem).format("YYYY-MM-DD hh:mm:ss"), end: moment(datem2).format("YYYY-MM-DD hh:mm:ss"), task_id: localstorage, total: datem2.diff(datem, "seconds"), project_id: params.id }));
+    dispatch(createTimeRecord(moment(datem).format("YYYY-MM-DD hh:mm:ss"), moment(datem2).format("YYYY-MM-DD hh:mm:ss"), localstorage, datem2.diff(datem, "seconds"), params.id));
     localStorage.removeItem(`timer${localstorage}`);
     setTimer(0);
   };

@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import Option from "./Option";
 import { setPoolVote, deletePoolVote } from "../../actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
@@ -17,11 +17,11 @@ const Poll: FC<Props> = ({ pollData, id }) => {
   const voteCount = votes;
 
   const setVoteHandler = (option: any) => {
-    dispatch(setPoolVote({ project_id: params.id, message_id: id, firstname: profile.firstname, lastname: profile.lastname, email: profile.email, color: profile.color, poll_id: pollData.id, option_id: option }));
+    dispatch(setPoolVote(params.id, id, profile.firstname, profile.lastname, profile.email, profile.color, pollData.id, option));
   };
 
   const deleteVoteHandler = (option: any) => {
-    dispatch(deletePoolVote({ project_id: params.id, message_id: id, email: profile.email, poll_id: pollData.id, option_id: option }));
+    dispatch(deletePoolVote(params.id, id, profile.email, pollData.id, option));
   };
 
   return (

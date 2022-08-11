@@ -1,8 +1,8 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING, ACTIVE_SESSIONS, TODAY_SESSIONS, PAST_SESSIONS } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
-export const createSession = ({ session, project_id }) => async (dispatch) => {
+export const createSession = (session: any, project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/sessions/add`, { session });
     dispatch({ type: CREATE_SESSION, payload: res.data });
@@ -12,7 +12,7 @@ export const createSession = ({ session, project_id }) => async (dispatch) => {
   }
 };
 
-export const getSessions = ({ project_id }) => async (dispatch) => {
+export const getSessions = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setSessionsLoading());
     const res = await axiosClient.get(`/${project_id}/sessions`);
@@ -22,7 +22,7 @@ export const getSessions = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getSession = ({ id, project_id }) => async (dispatch) => {
+export const getSession = (id: string, project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setSessionLoading());
     const res = await axiosClient.get(`/${project_id}/sessions/${id}`);
@@ -32,7 +32,7 @@ export const getSession = ({ id, project_id }) => async (dispatch) => {
   }
 };
 
-export const deleteSession = ({ id, project_id }) => async (dispatch) => {
+export const deleteSession = (id: string, project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setSessionLoading());
     const res = await axiosClient.delete(`/${project_id}/sessions/${id}`);
@@ -43,7 +43,7 @@ export const deleteSession = ({ id, project_id }) => async (dispatch) => {
   }
 };
 
-export const getParticipants = ({ id, project_id }) => async (dispatch) => {
+export const getParticipants = (id: string, project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/sessions/${id}/participants`);
 
@@ -51,25 +51,6 @@ export const getParticipants = ({ id, project_id }) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }
-};
-
-export const filterActiveSessions = () => {
-  return {
-    type: ACTIVE_SESSIONS
-  };
-};
-
-export const filterTodaySessions = () => {
-  return {
-    type: TODAY_SESSIONS
-  };
-};
-
-export const filterPastSessions = (today) => {
-  return {
-    type: PAST_SESSIONS,
-    payload: today
-  };
 };
 
 export const setSessionLoading = () => {
