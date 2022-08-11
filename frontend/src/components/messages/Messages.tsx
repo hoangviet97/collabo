@@ -19,7 +19,7 @@ const Messages: FC<Props> = ({ match }) => {
   const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getMessages({ project_id: match.params.id }));
+    dispatch(getMessages(match.params.id));
   }, []);
 
   const handleCancel = () => {

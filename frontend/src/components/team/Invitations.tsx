@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from "react";
-import { getAllProjectInvitations, deleteInvitation } from "../../actions/invitation";
+import React, { FC } from "react";
+import { deleteInvitation } from "../../actions/invitation";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Table, Space, Button } from "antd";
 import moment from "moment";
@@ -11,7 +11,7 @@ const Invitations: FC = () => {
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
   const deleteRecordHandler = (id: string) => {
-    dispatch(deleteInvitation({ project_id: params.id, id: id }));
+    dispatch(deleteInvitation(params.id, id));
   };
 
   const columns = [

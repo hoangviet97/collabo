@@ -1,7 +1,7 @@
 import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING } from "./types";
 import axiosClient from "../helpers/axios";
 
-export const createTag = ({ project_id, name, color }) => async (dispatch) => {
+export const createTag = (project_id: string, name: string, color: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tags/add`, { name, color });
     console.log(res.data);
@@ -11,7 +11,7 @@ export const createTag = ({ project_id, name, color }) => async (dispatch) => {
   }
 };
 
-export const createTaskTag = ({ project_id, task, tag }) => async (dispatch) => {
+export const createTaskTag = (project_id: string, task: any, tag: any) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tags/task-tag`, { task, tag });
     dispatch({ type: CREATE_TASK_TAG, payload: { task, tag } });
@@ -20,7 +20,7 @@ export const createTaskTag = ({ project_id, task, tag }) => async (dispatch) => 
   }
 };
 
-export const getTags = ({ project_id }) => async (dispatch) => {
+export const getTags = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setTagsLoading());
     const res = await axiosClient.get(`/${project_id}/tags`);
@@ -30,7 +30,7 @@ export const getTags = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getTagsByTasks = ({ project_id }) => async (dispatch) => {
+export const getTagsByTasks = (project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tags/tasks`);
     dispatch({ type: GET_TASK_TAGS, payload: res.data });
@@ -39,7 +39,7 @@ export const getTagsByTasks = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const deleteTag = ({ project_id, id }) => async (dispatch) => {
+export const deleteTag = (project_id: string, id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/tags/${id}`);
     dispatch({ type: DELETE_TAGS, payload: id });

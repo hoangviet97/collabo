@@ -15,6 +15,12 @@
     border-radius: 12px;
     margin-bottom: 20px;
 
+    &-input {
+      flex: 60%;
+      margin-right: 5px;
+      border: transparent;
+    }
+
     &-header {
       color: white;
       font-size: 30px;

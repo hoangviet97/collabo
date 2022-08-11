@@ -14,8 +14,8 @@ const TagGroup: FC<Props> = ({ title, tags }) => {
   const dispatch = useDispatch();
   let params: any = useParams();
 
-  const deleteHandler = (id: String) => {
-    dispatch(deleteTag({ project_id: params.id, id: id }));
+  const deleteHandler = (id: string) => {
+    dispatch(deleteTag(params.id, id));
   };
 
   return (

@@ -37,6 +37,12 @@
   -ms-flex-direction: column;
   flex-direction: column;
 
+  &__logout {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #b4babe;
+  }
+
   &__icon {
     font-size: 23px;
     color: rgb(199, 199, 199);

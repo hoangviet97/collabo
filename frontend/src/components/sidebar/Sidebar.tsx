@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -44,7 +44,7 @@ const Sidebar = () => {
       </div>
       <div className="side-nav__profile">
         <a onClick={logoutHandler}>
-          <ImportOutlined style={{ fontSize: "30px", marginBottom: "20px", color: "#b4babe" }} />
+          <ImportOutlined className="side-nav__logout" />
         </a>
       </div>
     </div>

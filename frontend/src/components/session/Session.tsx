@@ -5,7 +5,7 @@ import SessionContent from "./SessionContent";
 import SessionModal from "../modal/SessionModal";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSessions, filterActiveSessions } from "../../actions/session";
+import { getSessions } from "../../actions/session";
 
 interface Props {
   match: any;
@@ -17,7 +17,7 @@ const Session: FC<Props> = ({ match }) => {
   const [isModal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getSessions({ project_id: params.id }));
+    dispatch(getSessions(params.id));
   }, []);
 
   const addNewSession = () => {

@@ -15,7 +15,7 @@ const Documents: FC<Props> = ({ match }) => {
   const params: any = useParams();
 
   useEffect(() => {
-    dispatch(getAllFolders({ project_id: params.id }));
+    dispatch(getAllFolders(params.id));
     dispatch(getAllFiles({ project_id: params.id }));
     dispatch(getFileTypes({ project_id: params.id }));
   }, []);

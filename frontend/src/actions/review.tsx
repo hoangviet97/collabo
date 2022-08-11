@@ -2,7 +2,7 @@ import { CREATE_REVIEW, GET_REVIEWS, REVIEW_LOADING, REVIEWS_LOADING, REVIEW_FAI
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
-export const createReview = ({ task_id, project_id }) => async (dispatch) => {
+export const createReview = (task_id: string, project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setReviewLoading());
     const res = await axiosClient.post(`/${project_id}/reviews/add`, { task_id });
@@ -14,7 +14,7 @@ export const createReview = ({ task_id, project_id }) => async (dispatch) => {
   }
 };
 
-export const getProjectReviews = ({ project_id }) => async (dispatch) => {
+export const getProjectReviews = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setReviewsLoading());
     const res = await axiosClient.get(`/${project_id}/reviews`);
@@ -24,7 +24,7 @@ export const getProjectReviews = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getReviews = ({ project_id, member_id }) => async (dispatch) => {
+export const getReviews = (project_id: string, member_id: string) => async (dispatch: any) => {
   try {
     dispatch(setReviewsLoading());
     const res = await axiosClient.get(`/${project_id}/reviews/${member_id}`);
@@ -34,7 +34,7 @@ export const getReviews = ({ project_id, member_id }) => async (dispatch) => {
   }
 };
 
-export const getReviewPanel = ({ project_id }) => async (dispatch) => {
+export const getReviewPanel = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setReviewsLoading());
     const res = await axiosClient.get(`/${project_id}/reviews/members`);
@@ -44,7 +44,7 @@ export const getReviewPanel = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const acceptReview = ({ project_id, id, task_id, member_id, comment }) => async (dispatch) => {
+export const acceptReview = (project_id: string, id: string, task_id: string, member_id: string, comment: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/reviews/${id}/accept`, { task_id, member_id, comment });
     message.success("Review accepted!");
@@ -56,7 +56,7 @@ export const acceptReview = ({ project_id, id, task_id, member_id, comment }) =>
   }
 };
 
-export const deleteReview = ({ project_id, id, task_id, member_id, comment }) => async (dispatch) => {
+export const deleteReview = (project_id: string, id: string, task_id: string, member_id: string, comment: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/reviews/${id}/return`, { task_id, member_id, comment });
     message.success("Review returned!");

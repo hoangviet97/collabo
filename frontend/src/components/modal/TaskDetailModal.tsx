@@ -1,32 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button, Modal, Input, Avatar, Select, Divider, Typography, Tag } from "antd";
-import { EditOutlined, UserAddOutlined, MinusOutlined, PlusOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
+import React, { useState, useEffect, FC } from "react";
+import { Breadcrumb, Button, Modal, Input, Select, Divider, Typography, Tag } from "antd";
+import { EditOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createTaskTag } from "../../actions/tag";
 import { getFilesByTask, getAllFiles } from "../../actions/file";
-import { setBudget, setProgress, setDescription, updateTaskPriority, updateTaskStatus } from "../../actions/task";
-import AvatarPreview from "../avatar/AvatarPreview";
+import { setBudget, setDescription, updateTaskPriority, updateTaskStatus } from "../../actions/task";
 import NewFileForm from "../documents/files/NewFileForm";
-import FileTypeIcon from "../utils/FileTypeIcon";
 import FileMiniCard from "../documents/files/FileMiniCard";
 import TaskDate from "../tasks/TaskDate";
-import { getPriorityName } from "../../helpers/converter";
 import ExistingFilesModal from "./ExistingFilesModal";
+import { tag, member, file } from "../../types/types";
 
-const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible, closeModal }) => {
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [tagGroup, setTagGroup] = useState([]);
-  const [budget, setmyBudget] = useState(0);
-  const [showTitleInput, setShowTitleInput] = useState(false);
+interface Props {
+  task: any;
+  members: member[];
+  tags: tag[];
+  projectId: string;
+  isVisible: boolean;
+  closeModal: () => void;
+}
+
+const TaskDetailModal: FC<Props> = ({ task, members, tags, projectId, isVisible, closeModal }) => {
+  const [taskTitle, setTaskTitle] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
+  const [tagGroup, setTagGroup] = useState<any[]>([]);
+  const [budget, setmyBudget] = useState<number>(0);
+  const [showTitleInput, setShowTitleInput] = useState<boolean>(false);
   const [showTextArea, setShowTextArea] = useState(false);
-  const [tagSelected, setTagSelected] = useState("");
-  const [children, setChildren] = useState([]);
-  const [assigneeBase, setAssigneeBase] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [existingFiles, setExistingFiles] = useState(false);
-  const files = useSelector((state) => state.file.task_files);
+  const [tagSelected, setTagSelected] = useState<string>("");
+  const [children, setChildren] = useState<any[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [existingFiles, setExistingFiles] = useState<boolean>(false);
+  const files = useSelector((state: RootStateOrAny) => state.file.task_files);
 
   const { TextArea } = Input;
 
@@ -34,8 +40,6 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const assigneesArr = assignees.map((i) => i.email);
-    setAssigneeBase(assigneesArr);
     setTaskTitle(task.title);
     setmyBudget(task.budget);
     setTagGroup(task.tags);
@@ -70,7 +74,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
   };
 
   const confirmDescription = () => {
-    dispatch(setDescription({ id: task.id, description: taskDescription, projects_id: projectId }));
+    dispatch(setDescription({ id: task.id, description: taskDescription, project_id: projectId }));
     setShowTextArea(false);
   };
 
@@ -82,13 +86,13 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
     dispatch(setBudget({ id: task.id, budget: budget, project_id: projectId }));
   };
 
-  const tagSelectorHandler = (value) => {
+  const tagSelectorHandler = (value: any) => {
     setTagSelected(value);
   };
 
   const submitNewTag = () => {
     const str = tagSelected.split("/");
-    dispatch(createTaskTag({ project_id: projectId, task: task.id, tag: str[0] }));
+    dispatch(createTaskTag(projectId, task.id, str[0]));
     setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
     setTagSelected("");
   };
@@ -110,9 +114,9 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
         </Button>
       </header>
       <div style={{ display: "flex", height: "calc(100% - 60px)" }}>
-        <div className="task__detail" style={{ flex: 1, borderRight: "0.5px solid #f1f2f6", overflowY: "scroll" }}>
+        <div className="task__detail">
           <div className="task__detail-body">
-            <div className="task__detail-data" style={{ width: "100%", height: "100%", padding: "20px" }}>
+            <div className="task__detail-data">
               <div className="task__detail__meta">
                 <div className="task__detail-title">
                   {showTitleInput ? (
@@ -124,27 +128,27 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                   )}
                   <Button onClick={showTitleInputHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
                 </div>
-                <div class="task__detail-base">
+                <div className="task__detail-base">
                   <div className="task__detail-base-item">
-                    <span style={{ fontSize: "12px", fontWeight: "500", color: "#a4b0be", textTransform: "uppercase" }}>Status</span>
+                    <span className="task__detail-base-title">Status</span>
                     <span>{task.statusName}</span>
                   </div>
                   <div className="task__detail-base-item">
-                    <span style={{ fontSize: "12px", fontWeight: "500", color: "#a4b0be", textTransform: "uppercase" }}>Priority</span>
+                    <span className="task__detail-base-title">Priority</span>
                     <span>{task.priorityName}</span>
                   </div>
                   <div className="task__detail-base-item">
-                    <span style={{ fontSize: "12px", fontWeight: "500", color: "#a4b0be", textTransform: "uppercase" }}>Created</span>
+                    <span className="task__detail-base-title">Created</span>
                     <span>{moment(task.created_at).format("MMMM Do YYYY, h:mm a")}</span>
                   </div>
                   <div className="task__detail-base-item">
-                    <span style={{ fontSize: "12px", fontWeight: "500", color: "#a4b0be", textTransform: "uppercase" }}>Start</span>
+                    <span className="task__detail-base-title">Start</span>
                     <div>
                       <TaskDate id={task.id} date={task.start_date} type="start_date" />
                     </div>
                   </div>
                   <div className="task__detail-base-item">
-                    <span style={{ fontSize: "12px", fontWeight: "500", color: "#a4b0be", textTransform: "uppercase" }}>Due</span>
+                    <span className="task__detail-base-title">Due</span>
                     <TaskDate id={task.id} date={task.due_date} type="due_date" />
                   </div>
                 </div>
@@ -154,7 +158,7 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                     <h4>Description</h4>
                     {showTextArea ? <Button onClick={confirmDescription} shape="round" type="dashed" icon={<CheckOutlined />}></Button> : <Button onClick={showTextAreaHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>}
                   </div>
-                  <div>{showTextArea ? <TextArea rows="5" value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{taskDescription}</p>}</div>
+                  <div>{showTextArea ? <TextArea rows={5} value={taskDescription} onChange={(e) => setTaskDescription(e.target.value)} onBlur={confirmDescription} /> : <p>{taskDescription}</p>}</div>
                 </div>
                 <Divider />
                 <div className="task-budget">
@@ -172,15 +176,15 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
                 <Divider />
                 <div className="task-budget">
                   <h4>Budget</h4>
-                  <Input value={budget} style={{ width: "40%", marginRight: "5px" }} type="number" onChange={(e) => setmyBudget(e.target.value)} />
+                  <Input value={budget} style={{ width: "40%", marginRight: "5px" }} type="number" onChange={(e: any) => setmyBudget(e.target.value)} />
                   <Button onClick={setBudgetHandler}>Set</Button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="task__right-side" style={{ flex: 1, height: "100%", width: "100%", padding: "20px" }}>
-          <div class="task__attachment">
+        <div className="task__right-side">
+          <div className="task__attachment">
             <div className="task__detail-title">
               <h4>Attachment</h4>
               <div>
@@ -190,15 +194,15 @@ const TaskDetailModal = ({ task, members, tags, projectId, assignees, isVisible,
               </div>
             </div>
             <div className="task__attachment-list">
-              {files.map((item) => (
-                <FileMiniCard data={item} task_id={task.id} deleteProp={true} />
+              {files.map((item: file) => (
+                <FileMiniCard data={item} task_id={task.id} deleteProp={true} bordered={false} />
               ))}
             </div>
           </div>
           <Divider />
         </div>
       </div>
-      <Modal title="Basic Modal" width="500px" visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
+      <Modal title="New File" width="500px" visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>
         <NewFileForm task={task.id} />
       </Modal>
       <ExistingFilesModal isVisible={existingFiles} close={existingFilesModalHandler} />

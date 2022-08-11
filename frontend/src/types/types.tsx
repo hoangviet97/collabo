@@ -100,3 +100,20 @@ export type time_record = {
   task_title: string;
   section_name: string;
 };
+
+export type log = {
+  id: string;
+  projects_id: string;
+  members_id: string;
+  sender: string;
+  type: string;
+  title: string;
+  text: string;
+  created_at: Date;
+  seen: string;
+  comment: string | null;
+  firstname: string;
+  lastname: string;
+  email: string;
+  color: string;
+};

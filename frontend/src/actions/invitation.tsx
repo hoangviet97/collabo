@@ -2,7 +2,7 @@ import { CREATE_INVITATION, ACCEPT_INVITATION, DELETE_INVITATION, UPDATE_SEEN_IN
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
-export const createInvitation = ({ receiver_email, project_id, socket }) => async (dispatch) => {
+export const createInvitation = (receiver_email: string, project_id: string, socket: any) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/invitations/new`, { receiver_email });
     dispatch({ type: CREATE_INVITATION, payload: res.data });
@@ -13,14 +13,14 @@ export const createInvitation = ({ receiver_email, project_id, socket }) => asyn
   }
 };
 
-export const addInvitation = (data) => {
+export const addInvitation = (data: any) => {
   return {
     type: ADD_INVITATION,
     payload: data
   };
 };
 
-export const acceptInvitation = ({ id, project_id }) => async (dispatch) => {
+export const acceptInvitation = (id: string, project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/invitations/${id}/accept`);
     dispatch({ type: DELETE_INVITATION, payload: id });
@@ -29,7 +29,7 @@ export const acceptInvitation = ({ id, project_id }) => async (dispatch) => {
   }
 };
 
-export const getAllInvitations = () => async (dispatch) => {
+export const getAllInvitations = () => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/invitations/private`);
     dispatch({ type: GET_INVITATIONS, payload: res.data });
@@ -38,7 +38,7 @@ export const getAllInvitations = () => async (dispatch) => {
   }
 };
 
-export const getAllProjectInvitations = ({ project_id }) => async (dispatch) => {
+export const getAllProjectInvitations = (project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/invitations`);
     dispatch({ type: GET_PROJECT_INVITATIONS, payload: res.data });
@@ -47,7 +47,7 @@ export const getAllProjectInvitations = ({ project_id }) => async (dispatch) => 
   }
 };
 
-export const updateSeenStatus = ({ project_id, id }) => async (dispatch) => {
+export const updateSeenStatus = (project_id: string, id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/invitations/${id}/seen`);
     dispatch({ type: UPDATE_SEEN_INVITATION, payload: { id: id, seenStatus: res.data } });
@@ -56,7 +56,7 @@ export const updateSeenStatus = ({ project_id, id }) => async (dispatch) => {
   }
 };
 
-export const deleteInvitation = ({ project_id, id }) => async (dispatch) => {
+export const deleteInvitation = (project_id: string, id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/invitations/${id}`);
     dispatch({ type: DELETE_INVITATION, payload: id });

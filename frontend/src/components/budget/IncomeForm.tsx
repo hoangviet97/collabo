@@ -13,7 +13,7 @@ const IncomeForm = () => {
   const submitHandler = () => {
     console.log(typeof amount);
     if (amount > 0) {
-      dispatch(createIncome({ title: title, amount: amount, project_id: params.id }));
+      dispatch(createIncome(title, amount, params.id));
       setTitle("");
       setAmount(0);
     } else {

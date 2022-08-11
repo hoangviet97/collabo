@@ -16,7 +16,7 @@ const FolderCard: FC<Props> = ({ folder }) => {
   const location: any = useLocation();
 
   const deleteFolderHandler = () => {
-    dispatch(deleteFolder({ project_id: params.id, folder_id: folder.id }));
+    dispatch(deleteFolder(params.id, folder.id));
   };
 
   const menu = (

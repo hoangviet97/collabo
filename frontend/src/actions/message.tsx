@@ -2,7 +2,7 @@ import { CREATE_MESSAGE, GET_MESSAGES, DATA_LOADING, UPDATE_VOTE, DELETE_VOTE, S
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
-export const createMessage = ({ project_id, text, question, options, user }) => async (dispatch) => {
+export const createMessage = (project_id: string, text: string, question: string, options: any, user: any) => async (dispatch: any) => {
   try {
     dispatch(setMsgLoading());
     const res = await axiosClient.post(`/${project_id}/messages/add`, { text, question, options });
@@ -13,7 +13,7 @@ export const createMessage = ({ project_id, text, question, options, user }) => 
   }
 };
 
-export const getMessages = ({ project_id }) => async (dispatch) => {
+export const getMessages = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setLoading());
     const res = await axiosClient.get(`/${project_id}/messages`);
@@ -23,7 +23,7 @@ export const getMessages = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const setPoolVote = ({ project_id, message_id, firstname, lastname, email, color, poll_id, option_id }) => async (dispatch) => {
+export const setPoolVote = (project_id: string, message_id: string, firstname: string, lastname: string, email: string, color: string, poll_id: string, option_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/messages/${message_id}/polls/${poll_id}/options/${option_id}/vote`);
     const poolItem = Object.assign(res.data, { firstname: firstname }, { lastname: lastname }, { email: email }, { color: color });
@@ -34,7 +34,7 @@ export const setPoolVote = ({ project_id, message_id, firstname, lastname, email
   }
 };
 
-export const deletePoolVote = ({ project_id, message_id, email, poll_id, option_id }) => async (dispatch) => {
+export const deletePoolVote = (project_id: string, message_id: string, email: string, poll_id: string, option_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/messages/${message_id}/polls/${poll_id}/options/${option_id}/vote`);
     dispatch({ type: DELETE_VOTE, payload: { email, option_id } });
@@ -43,7 +43,7 @@ export const deletePoolVote = ({ project_id, message_id, email, poll_id, option_
   }
 };
 
-export const sendReply = ({ project_id, message_id, text }) => async (dispatch) => {
+export const sendReply = (project_id: string, message_id: string, text: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/messages/${message_id}/replies`, { text });
     dispatch({ type: SEND_MESSAGE, payload: res.data });
@@ -52,7 +52,7 @@ export const sendReply = ({ project_id, message_id, text }) => async (dispatch) 
   }
 };
 
-export const getAllReplies = ({ project_id }) => async (dispatch) => {
+export const getAllReplies = (project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/messages/replies`);
     dispatch({ type: GET_REPLIES, payload: res.data });

@@ -30,7 +30,7 @@ const FileHomePage = () => {
   };
 
   const createFolderHandler = () => {
-    dispatch(createFolder({ title: newFolder, project_id: params.id }));
+    dispatch(createFolder(newFolder, params.id));
     setIsFolderModalVisible(false);
   };
 

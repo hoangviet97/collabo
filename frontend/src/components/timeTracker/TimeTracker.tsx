@@ -15,7 +15,7 @@ const TimeTracker: FC<Props> = ({ match }) => {
   const records = useSelector((state: RootStateOrAny) => state.time_record.records);
 
   useEffect(() => {
-    dispatch(getTimeRecords({ project_id: project_id }));
+    dispatch(getTimeRecords(project_id));
   }, []);
 
   return (

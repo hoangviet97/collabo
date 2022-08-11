@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getExpenses } from "../../actions/task";
 import { getAllIncomes, getIncomeSum } from "../../actions/income";
 import { task } from "../../types/types";
@@ -11,22 +11,26 @@ import ExpenseList from "./ExpenseList";
 import IncomeList from "./IncomeList";
 import getCurrency from "../../helpers/currencyIcon";
 
-const BudgetPage = ({ match }) => {
+interface Props {
+  match: any;
+}
+
+const BudgetPage: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const [totalBudget, setTotalBudget] = useState(0);
   const [balance, setBalance] = useState(0);
   const [spending, setSpending] = useState(0);
-  const role = useSelector((state) => state.project.currentProject.role);
-  const currency = useSelector((state) => state.project.currentProject.currency);
-  const tasks = useSelector((state) => state.task.tasks);
-  const incomes = useSelector((state) => state.income.sum);
+  const role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
+  const currency = useSelector((state: RootStateOrAny) => state.project.currentProject.currency);
+  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
+  const incomes = useSelector((state: RootStateOrAny) => state.income.sum);
 
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    dispatch(getExpenses({ project_id: match.params.id }));
-    dispatch(getAllIncomes({ project_id: match.params.id }));
-    dispatch(getIncomeSum({ project_id: match.params.id }));
+    dispatch(getExpenses(match.params.id));
+    dispatch(getAllIncomes(match.params.id));
+    dispatch(getIncomeSum(match.params.id));
   }, []);
 
   useEffect(() => {
@@ -40,7 +44,7 @@ const BudgetPage = ({ match }) => {
   }, [incomes, spending]);
 
   useEffect(() => {
-    const st = tasks.map((item) => item.budget).reduce((prev, next) => prev + next, 0);
+    const st = tasks.map((item: task) => item.budget).reduce((prev: number, next: number) => prev + next, 0);
     setSpending(st);
   }, [tasks]);
 
@@ -50,7 +54,7 @@ const BudgetPage = ({ match }) => {
         <div style={{ display: "flex", width: "100%" }}>
           <header className="budget__header" style={{ width: "65%" }}>
             <div style={{ display: "flex" }}>
-              <div class="budget__header-left">
+              <div className="budget__header-left">
                 <div className="budget__header-item">
                   <div className="budget__title">Total Balance</div>
                   <div style={{ fontSize: "48px", marginBottom: "25px" }}>
@@ -66,7 +70,7 @@ const BudgetPage = ({ match }) => {
                   </div>
                 </div>
               </div>
-              <div class="budget__header-right" style={{ display: "flex", alignItems: "flex-end", marginLeft: "10px" }}>
+              <div className="budget__header-right">
                 <div style={{ display: "flex" }}>
                   <div className="budget__header-item" style={{ marginRight: "20px" }}>
                     <div className="budget__title">Spent</div>

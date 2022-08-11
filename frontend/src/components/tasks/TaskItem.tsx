@@ -67,7 +67,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   };
 
   const submitTaskHandler = () => {
-    dispatch(createReview({ task_id: task.id, project_id: params.id }));
+    dispatch(createReview(task.id, params.id));
   };
 
   const switchTaskStatusHandler = (value: any) => {

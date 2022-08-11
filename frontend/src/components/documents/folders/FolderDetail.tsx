@@ -17,7 +17,7 @@ const FolderDetail = () => {
 
   useEffect(() => {
     dispatch(getFilesByFolder({ id: params.folderId, project_id: params.id }));
-    dispatch(getFolder({ id: params.folderId, project_id: params.id }));
+    dispatch(getFolder(params.folderId, params.id));
   }, []);
 
   return (

@@ -2,7 +2,7 @@ import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
-export const createSection = ({ project_id, name }) => async (dispatch) => {
+export const createSection = (project_id: string, name: string) => async (dispatch: any) => {
   try {
     dispatch(setSectionLoading());
     const res = await axiosClient.post(`/${project_id}/sections/add`, { name });
@@ -13,7 +13,7 @@ export const createSection = ({ project_id, name }) => async (dispatch) => {
   }
 };
 
-export const getSections = ({ project_id }) => async (dispatch) => {
+export const getSections = (project_id: string) => async (dispatch: any) => {
   try {
     dispatch(setSectionLoading());
     const res = await axiosClient.get(`/${project_id}/sections`);
@@ -23,7 +23,7 @@ export const getSections = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const getModalSections = ({ project_id }) => async (dispatch) => {
+export const getModalSections = (project_id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.get(`/${project_id}/sections`);
     dispatch({ type: GET_MODAL_SECTIONS, payload: res.data });
@@ -32,8 +32,7 @@ export const getModalSections = ({ project_id }) => async (dispatch) => {
   }
 };
 
-export const deleteSection = ({ project_id, id }) => async (dispatch) => {
-  console.log(id);
+export const deleteSection = (project_id: string, id: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/sections/${id}`);
     message.success("Section deleted!");
