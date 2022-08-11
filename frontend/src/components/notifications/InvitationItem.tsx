@@ -12,11 +12,11 @@ const InvitationItem: FC<Props> = ({ data }) => {
   const dispatch = useDispatch();
 
   const acceptHandler = () => {
-    dispatch(acceptInvitation({ id: data.id, project_id: data.projects_id }));
+    dispatch(acceptInvitation(data.id, data.projects_id));
   };
 
   const rejectHandler = () => {
-    dispatch(deleteInvitation({ project_id: data.projects_id, id: data.id }));
+    dispatch(deleteInvitation(data.projects_id, data.id));
   };
 
   return (
