@@ -10,8 +10,8 @@ Try it [here](https://collaboat.cz)
 ####
 
 Please login with your existing account or create a new one. You can also use test account for quick access: <br />
-E-mail: collaboat.test@seznam.cz <br/>
-Password: dobroviz192
+E-mail: user@test.cz <br/>
+Password: testcase123
 
 ## Main technologies
 
@@ -29,6 +29,12 @@ Password: dobroviz192
 - JWT
 - MySQL
 - Socket.io
+
+### Services and platforms
+
+- Heroku
+- Vercel
+- AWS S3
 
 ### Services and platforms
 
