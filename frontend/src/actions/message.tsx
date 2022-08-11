@@ -9,6 +9,7 @@ export const createMessage = (project_id: string, text: string, question: string
     dispatch({ type: CREATE_MESSAGE, payload: { data: res.data, user: user } });
     message.success("Message created");
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
@@ -19,6 +20,7 @@ export const getMessages = (project_id: string) => async (dispatch: any) => {
     const res = await axiosClient.get(`/${project_id}/messages`);
     dispatch({ type: GET_MESSAGES, payload: res.data });
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
@@ -30,6 +32,7 @@ export const setPoolVote = (project_id: string, message_id: string, firstname: s
 
     dispatch({ type: UPDATE_VOTE, payload: poolItem });
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
@@ -39,6 +42,7 @@ export const deletePoolVote = (project_id: string, message_id: string, email: st
     const res = await axiosClient.delete(`/${project_id}/messages/${message_id}/polls/${poll_id}/options/${option_id}/vote`);
     dispatch({ type: DELETE_VOTE, payload: { email, option_id } });
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
@@ -48,6 +52,7 @@ export const sendReply = (project_id: string, message_id: string, text: string) 
     const res = await axiosClient.post(`/${project_id}/messages/${message_id}/replies`, { text });
     dispatch({ type: SEND_MESSAGE, payload: res.data });
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
@@ -57,6 +62,7 @@ export const getAllReplies = (project_id: string) => async (dispatch: any) => {
     const res = await axiosClient.get(`/${project_id}/messages/replies`);
     dispatch({ type: GET_REPLIES, payload: res.data });
   } catch (err) {
+    message.error("Error");
     //dispatch({ type: CREATE_TALKING_POINT_FAIL });
   }
 };
