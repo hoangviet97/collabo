@@ -52,7 +52,7 @@ export const acceptReview = (project_id: string, id: string, task_id: string, me
     dispatch({ type: DECREASE_REVIEW, payload: { id, member_id } });
   } catch (err) {
     dispatch({ type: REVIEW_FAIL });
-    message.error(err.response.data.message);
+    message.error("Error");
   }
 };
 
@@ -64,7 +64,7 @@ export const deleteReview = (project_id: string, id: string, task_id: string, me
     dispatch({ type: DECREASE_REVIEW, payload: { id, member_id } });
   } catch (err) {
     dispatch({ type: REVIEW_FAIL });
-    message.error(err.response.data.message);
+    message.error("Error");
   }
 };
 

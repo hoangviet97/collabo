@@ -9,7 +9,7 @@ export const createSection = (project_id: string, name: string) => async (dispat
     dispatch({ type: CREATE_SECTION, payload: res.data });
   } catch (err) {
     dispatch({ type: CREATE_SECTION_FAIL });
-    message.error(err.response.data.message);
+    message.error("Error");
   }
 };
 
@@ -39,7 +39,7 @@ export const deleteSection = (project_id: string, id: string) => async (dispatch
     dispatch({ type: DELETE_SECTION, payload: id });
   } catch (err) {
     dispatch({ type: DELETE_SECTION_FAIL });
-    message.error(err.response.data.message);
+    message.error("Error");
   }
 };
 
