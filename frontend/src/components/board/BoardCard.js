@@ -44,13 +44,8 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
 
   return (
     <div className="board-card" onClick={showModalHandler} style={{ backgroundColor: "white", padding: "15px", margin: "5px", width: "290px", borderRadius: "10px" }} dragging={dragging}>
-      <div className="board-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="board-card-header">
         <h3 className="board-card-title">{title}</h3>
-        <Popconfirm title="Are you sure to delete this task?" onConfirm={confirm} onCancel={cancel} okText="Yes" cancelText="No">
-          <button style={{ border: "none", backgroundColor: "transparent" }}>
-            <CloseOutlined />
-          </button>
-        </Popconfirm>
       </div>
       <div className="board-card-description">{description !== null ? description : <span style={{ color: "#bdc3c7" }}>No description</span>}</div>
       <div className="board-card-footer" style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
