@@ -36,12 +36,6 @@ Password: testcase123
 - Vercel
 - AWS S3
 
-### Services and platforms
-
-- Heroku
-- Vercel
-- AWS S3
-
 ## To-do
 
 - Responsive design
