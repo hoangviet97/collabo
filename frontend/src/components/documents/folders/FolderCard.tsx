@@ -35,7 +35,7 @@ const FolderCard: FC<Props> = ({ folder }) => {
   };
 
   return (
-    <div className="folder-card" style={{ backgroundColor: "white", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+    <div className="folder-card">
       <div className="folder-card__header">
         <div>
           <FolderFilled style={{ fontSize: "30px" }} />

@@ -4,9 +4,11 @@ import { CloseOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { deleteTask } from "../../actions/task";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const BoardCard = ({ id, title, description, priority, due_date, dragging, showModalHandler }) => {
   const dispatch = useDispatch();
+  const params = useParams();
   const [priorityColor, setPriorityColor] = useState("");
   const [dayColor, setDayColor] = useState("black");
   const today = new Date();
@@ -37,18 +39,21 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
   }, [due_date]);
 
   const confirm = () => {
-    dispatch(deleteTask({ id: id }));
+    dispatch(deleteTask(id, params.id));
   };
 
-  const cancel = () => {};
-
   return (
-    <div className="board-card" onClick={showModalHandler} style={{ backgroundColor: "white", padding: "15px", margin: "5px", width: "290px", borderRadius: "10px" }} dragging={dragging}>
-      <div className="board-card-header">
-        <h3 className="board-card-title">{title}</h3>
+    <div className="board__card" onClick={showModalHandler} dragging={dragging}>
+      <div className="board__card-header">
+        <h3 className="board__card-title">{title}</h3>
+        <Popconfirm title="Are you sure to delete this task?" onConfirm={confirm} okText="Yes" cancelText="No">
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
+            <CloseOutlined />
+          </button>
+        </Popconfirm>
       </div>
-      <div className="board-card-description">{description !== null ? description : <span style={{ color: "#bdc3c7" }}>No description</span>}</div>
-      <div className="board-card-footer" style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+      <div className="board__card-description">{description !== null ? description : <span style={{ color: "#bdc3c7" }}>No description</span>}</div>
+      <div className="board__card-footer">
         <Tag color={priorityColor}>{priority}</Tag>
         <div className="board-card-">{due_date === null ? "" : moment(due_date).diff(moment(), "days") > 0 ? <span style={{ color: "green" }}>{`${moment(due_date).diff(moment(), "days")} days left`}</span> : <span style={{ color: "red" }}>{`${moment(due_date).diff(moment(), "days") * -1} days behind`}</span>}</div>
       </div>

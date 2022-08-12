@@ -17,9 +17,9 @@ interface Props {
 
 const BudgetPage: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const [totalBudget, setTotalBudget] = useState(0);
-  const [balance, setBalance] = useState(0);
-  const [spending, setSpending] = useState(0);
+  const [totalBudget, setTotalBudget] = useState<number>(0);
+  const [balance, setBalance] = useState<number>(0);
+  const [spending, setSpending] = useState<number>(0);
   const role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const currency = useSelector((state: RootStateOrAny) => state.project.currentProject.currency);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
@@ -34,12 +34,12 @@ const BudgetPage: FC<Props> = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    const calc = incomes - spending;
+    const calc: number = incomes - spending;
     setBalance(calc);
   }, [incomes, spending]);
 
   useEffect(() => {
-    const calc = incomes - spending;
+    const calc: number = incomes - spending;
     setBalance(calc);
   }, [incomes, spending]);
 

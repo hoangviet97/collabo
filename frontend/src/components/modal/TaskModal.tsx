@@ -43,7 +43,7 @@ const TaskModal = () => {
     let values;
     let finalObj = [];
 
-    if (fieldsValue.assignees.length > 0 || fieldsValue.assignees !== undefined) {
+    if (fieldsValue.assignees !== undefined) {
       const pom = members.filter((item: member) => fieldsValue.assignees.includes(item.user_id));
       finalObj = pom.map((item: member) => item.id);
     }
@@ -55,7 +55,7 @@ const TaskModal = () => {
       assignees_members: finalObj
     };
 
-    dispatch(createTask({ project_id: projectId, task: values }));
+    dispatch(createTask(projectId, values));
 
     form.resetFields();
   };

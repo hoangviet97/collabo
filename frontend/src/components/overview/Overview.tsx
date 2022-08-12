@@ -33,8 +33,8 @@ const Overview: FC<Props> = ({ match }) => {
   const auth = useSelector((state: RootStateOrAny) => state.auth.user);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ project_id: params.id }));
-    dispatch(getStatusGroup({ project_id: params.id }));
+    dispatch(getProjectTasks(params.id));
+    dispatch(getStatusGroup(params.id));
     dispatch(getMembers({ project_id: params.id }));
     dispatch(getSessions(params.id));
     dispatch(getTimeRecordsSum(params.id));

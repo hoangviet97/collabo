@@ -8,8 +8,8 @@ import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col, m
 interface Props {
   project_id: string;
   visible: boolean;
-  handleCancel: any;
-  handleOk: any;
+  handleCancel: () => void;
+  handleOk: () => void;
 }
 
 const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }) => {

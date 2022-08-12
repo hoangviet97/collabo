@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Modal, Input, Avatar, Select } from "antd";
 import { getAllFiles } from "../../actions/file";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import Paragraph from "antd/lib/skeleton/Paragraph";
+import { file } from "../../types/types";
 
 interface Props {
   isVisible: boolean;
@@ -23,7 +23,7 @@ const ExistingFilesModal: FC<Props> = ({ isVisible, close }) => {
   return (
     <Modal title="Basic Modal" width="500px" visible={isVisible} onCancel={() => close(false)} footer={null}>
       <Select style={{ width: 120 }}>
-        {files.map((item: any) => {
+        {files.map((item: file) => {
           <Option value={item.id}>{item.title}</Option>;
         })}
       </Select>

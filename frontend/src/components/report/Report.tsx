@@ -1,18 +1,18 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import { TeamOutlined, ClockCircleOutlined, FormOutlined, BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
+import { BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
 import { getMemberRecords } from "../../actions/time_record";
-import { getPersonalTasks, getUserTasks } from "../../actions/task";
+import { getUserTasks } from "../../actions/task";
 import moment from "moment";
 import { Column } from "@ant-design/plots";
 
 const Report = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
-  const [total, setTotal] = useState(0);
-  const [totalToday, setTotalToday] = useState(0);
-  const [avgTime, setAvgTime] = useState(0);
+  const [total, setTotal] = useState<number>(0);
+  const [totalToday, setTotalToday] = useState<number>(0);
+  const [avgTime, setAvgTime] = useState<number>(0);
   const [data, setData] = useState<any>([]);
   const [completed, setCompleted] = useState<number>(0);
   const [inProgress, setInProgress] = useState<number>(0);
@@ -24,7 +24,7 @@ const Report = () => {
 
   useEffect(() => {
     dispatch(getMemberRecords(params.id, params.memberId));
-    dispatch(getUserTasks({ project_id: params.id, id: params.memberId }));
+    dispatch(getUserTasks(params.id, params.memberId));
   }, [params.memberId]);
 
   useEffect(() => {
@@ -73,37 +73,37 @@ const Report = () => {
       <div className="report-item__header">
         <div className="report-item__time">
           <div style={{ marginBottom: "10px" }}>
-            <BarChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
+            <BarChartOutlined className="report__header-icon" />
             <span style={{ fontSize: "22px" }}>Total working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(total / 60) < 5400 ? `${Math.floor(total / 60)}  minutes` : `${Math.floor(total / 3600)}  hours`}</div>
+          <div className="report__header-value">{Math.floor(total / 60) < 5400 ? `${Math.floor(total / 60)}  minutes` : `${Math.floor(total / 3600)}  hours`}</div>
         </div>
         <div className="report-item__time">
           <div style={{ marginBottom: "10px" }}>
-            <LineChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
+            <LineChartOutlined className="report__header-icon" />
             <span style={{ fontSize: "22px" }}>Today working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(totalToday / 60) < 5400 ? `${Math.floor(totalToday / 60)}  minutes` : `${Math.floor(totalToday / 3600)}  hours`}</div>
+          <div className="report__header-value">{Math.floor(totalToday / 60) < 5400 ? `${Math.floor(totalToday / 60)}  minutes` : `${Math.floor(totalToday / 3600)}  hours`}</div>
         </div>
         <div className="report-item__time">
           <div style={{ marginBottom: "10px" }}>
-            <LineChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
+            <LineChartOutlined className="report__header-icon" />
             <span style={{ fontSize: "22px" }}>Average working time</span>
           </div>
-          <div style={{ fontSize: "22px", marginLeft: "41px" }}>{Math.floor(avgTime / 60) < 5400 ? `${Math.floor(avgTime / 60)}  minutes` : `${Math.floor(avgTime / 3600)}  hours`}</div>
+          <div className="report__header-value">{Math.floor(avgTime / 60) < 5400 ? `${Math.floor(avgTime / 60)}  minutes` : `${Math.floor(avgTime / 3600)}  hours`}</div>
         </div>
       </div>
 
       <div className="report-item__week">
         <div style={{ marginBottom: "10px" }}>
-          <BarChartOutlined style={{ fontSize: "30px", marginRight: "10px" }} />
+          <BarChartOutlined className="report__header-icon" />
           <span style={{ fontSize: "22px" }}>
             Weekly progress <span style={{ fontSize: "12px" }}>(minutes)</span>
           </span>
         </div>
         <Column {...config} />
       </div>
-      <div style={{ paddingTop: "120px", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>
+      <div className="report__status">
         <div className="report__status-card" style={{ backgroundColor: "black" }}>
           <div>Total Tasks</div>
           <div>{tasks.length}</div>

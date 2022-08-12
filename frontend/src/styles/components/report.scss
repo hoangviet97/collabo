@@ -8,7 +8,22 @@
   width: 100%;
   min-height: calc(100vh - 160px);
 
+  &__header-value {
+    font-size: 22px;
+    margin-left: 41px;
+  }
+
+  &__header-icon {
+    font-size: 30px;
+    margin-right: 10px;
+  }
+
   &__status {
+    padding-top: 120px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
     &-card {
       color: white;
       padding: 20px;

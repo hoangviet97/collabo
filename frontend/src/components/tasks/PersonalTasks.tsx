@@ -48,8 +48,8 @@ const PersonalTasks = () => {
   const getData = (id: string) => {
     dispatch(getSections(id));
     dispatch(getMembers({ project_id: id }));
-    dispatch(getAllAssignees({ project_id: id }));
-    dispatch(getPersonalTasks({ project_id: id, id: auth.id }));
+    dispatch(getAllAssignees(id));
+    dispatch(getPersonalTasks(id, auth.id));
     dispatch(getTagsByTasks(id));
     dispatch(getTags(id));
   };
@@ -145,7 +145,7 @@ const PersonalTasks = () => {
     };
 
     if (newTask.length > 0) {
-      dispatch(createTask({ project_id: project_id, task: values }));
+      dispatch(createTask(project_id, values));
       setNewTask("");
       setSelectedVal([]);
     }
@@ -216,7 +216,7 @@ const PersonalTasks = () => {
               <Divider />
               <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
                 {sections.map((section: section, index: number) => (
-                  <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
+                  <Panel className="task__panel" key={section.id} header={panelHeader(section.name, section.id)}>
                     <div className={`task__visual-${taskVisual}`}>
                       {taskContainer
                         .filter((x: task) => {
@@ -263,7 +263,7 @@ const PersonalTasks = () => {
               )}
             </div>
           )}
-          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

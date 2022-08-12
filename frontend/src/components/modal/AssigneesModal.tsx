@@ -25,11 +25,11 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
   };
 
   const addNewAssignee = (id: string) => {
-    dispatch(createAssignee({ user_id: id, task_id: task_id, project_id: params.id }));
+    dispatch(createAssignee(id, task_id, params.id));
   };
 
   const removeAssignee = (id: string, email: string) => {
-    dispatch(deleteAssignee({ user_id: id, task_id: task_id, project_id: params.id }));
+    dispatch(deleteAssignee(id, task_id, params.id));
   };
 
   const isAssigneed = (email: string, id: string) => {
@@ -65,10 +65,10 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
         </Row>
         <div className="assignee-modal__members">
           {members
-            .filter((i: any) => {
+            .filter((i: member) => {
               return i.firstname.toLowerCase().includes(searchText.toLowerCase()) || i.lastname.toLowerCase().includes(searchText.toLowerCase()) || i.email.toLowerCase().includes(searchText.toLowerCase());
             })
-            .map((item: any, index: number) => (
+            .map((item: member, index: number) => (
               <div className="assignee-modal__item" key={index}>
                 <div className="assignee-modal__identity">
                   <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>

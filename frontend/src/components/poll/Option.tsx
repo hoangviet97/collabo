@@ -14,7 +14,6 @@ interface Props {
 
 const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVotehandler }) => {
   const [isChecked, setIsChecked] = useState<boolean>();
-  const [voteLength, setVoteLength] = useState<number>(0);
   const profile = useSelector((state: RootStateOrAny) => state.auth.user.email);
 
   useEffect(() => {

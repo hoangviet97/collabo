@@ -1,0 +1,23 @@
+.board {
+  overflow-x: scroll;
+
+  &__card {
+    background-color: white;
+    padding: 15px;
+    margin: 5px;
+    width: 290px;
+    border-radius: 10px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  }
+}

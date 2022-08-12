@@ -8,7 +8,6 @@ const Toolbox = () => {
 
   const taskModalHandler = () => {
     dispatch(showTaskModal());
-    //upravit na localni modal
   };
 
   return (
