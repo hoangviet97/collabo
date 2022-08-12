@@ -63,7 +63,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   };
 
   const deleteTaskHandler = () => {
-    dispatch(deleteTask({ id: task.id, project_id: params.id }));
+    dispatch(deleteTask(task.id, params.id));
   };
 
   const submitTaskHandler = () => {
@@ -72,12 +72,12 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
 
   const switchTaskStatusHandler = (value: any) => {
     setDone(value);
-    dispatch(updateTaskStatus({ id: task.id, statusId: value, project_id: params.id }));
+    dispatch(updateTaskStatus(task.id, value, params.id));
   };
 
   const switchPriorityHandler = (value: any) => {
     console.log(getPriorityName(value));
-    dispatch(updateTaskPriority({ id: task.id, priorityId: value, project_id: params.id }));
+    dispatch(updateTaskPriority(task.id, value, params.id));
   };
 
   const showAssigness = () => {

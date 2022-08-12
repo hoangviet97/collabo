@@ -14,14 +14,13 @@ import { tag, member, file } from "../../types/types";
 
 interface Props {
   task: any;
-  members: member[];
   tags: tag[];
   projectId: string;
   isVisible: boolean;
   closeModal: () => void;
 }
 
-const TaskDetailModal: FC<Props> = ({ task, members, tags, projectId, isVisible, closeModal }) => {
+const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeModal }) => {
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [taskDescription, setTaskDescription] = useState<string>("");
   const [tagGroup, setTagGroup] = useState<any[]>([]);
@@ -74,7 +73,7 @@ const TaskDetailModal: FC<Props> = ({ task, members, tags, projectId, isVisible,
   };
 
   const confirmDescription = () => {
-    dispatch(setDescription({ id: task.id, description: taskDescription, project_id: projectId }));
+    dispatch(setDescription(task.id, taskDescription, projectId));
     setShowTextArea(false);
   };
 
@@ -83,7 +82,7 @@ const TaskDetailModal: FC<Props> = ({ task, members, tags, projectId, isVisible,
   };
 
   const setBudgetHandler = () => {
-    dispatch(setBudget({ id: task.id, budget: budget, project_id: projectId }));
+    dispatch(setBudget(task.id, budget, projectId));
   };
 
   const tagSelectorHandler = (value: any) => {

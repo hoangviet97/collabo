@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "../utils/Container";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProjectTasks, updateTaskStatus } from "../../actions/task";
 import Board, { moveCard } from "@asseinfo/react-kanban";
 import "@asseinfo/react-kanban/dist/styles.css";
@@ -77,7 +77,7 @@ const KanbanBoard = ({ match }) => {
   const showModalHandler = () => {};
 
   return (
-    <div className="board" style={{ overflowX: "scroll" }}>
+    <div className="board">
       <Container size="50">
         <Board
           onCardDragEnd={handleCardMove}

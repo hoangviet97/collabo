@@ -37,7 +37,7 @@ const FolderDetail = () => {
         <div className="file__list">
           {files
             .filter((item: file) => item.folders_id === params.folderId)
-            .map((i: any, index: number) => (
+            .map((i: file, index: number) => (
               <FileCard key={index} file={i} />
             ))}
         </div>

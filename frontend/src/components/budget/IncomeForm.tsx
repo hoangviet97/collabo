@@ -11,7 +11,6 @@ const IncomeForm = () => {
   const [amount, setAmount] = useState<number>(0);
 
   const submitHandler = () => {
-    console.log(typeof amount);
     if (amount > 0) {
       dispatch(createIncome(title, amount, params.id));
       setTitle("");

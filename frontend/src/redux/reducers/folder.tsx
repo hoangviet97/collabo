@@ -23,7 +23,7 @@ function folderReducer(state = initialState, action: any) {
       };
     case UPDATE_FOLDER_NUM:
       let updatedFolders: folder[] = state.folders;
-      const ind: any = updatedFolders.findIndex((i: any) => i.id === payload.id);
+      const ind: any = updatedFolders.findIndex((i: folder) => i.id === payload.id);
       const num = updatedFolders[ind].total_files;
 
       return {

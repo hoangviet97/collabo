@@ -20,7 +20,7 @@ interface Props {
 const FileMiniCard: FC<Props> = ({ data, task_id, deleteProp, bordered }) => {
   const params: any = useParams();
   const dispatch = useDispatch();
-  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+  const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(false);
 
   const download = () => {
     axiosClient({

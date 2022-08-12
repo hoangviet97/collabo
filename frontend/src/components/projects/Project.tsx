@@ -1,9 +1,7 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { FC } from "react";
 import { connect } from "react-redux";
 import { setFavorite } from "../../actions/project";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Row, Col, Button, Avatar, Tooltip } from "antd";
-import { EllipsisOutlined, StarFilled } from "@ant-design/icons";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
 import { project, member } from "../../types/types";

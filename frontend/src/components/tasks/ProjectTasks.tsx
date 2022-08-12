@@ -62,8 +62,8 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     }
     dispatch(getSections(project_id));
     dispatch(getMembers({ project_id: project_id }));
-    dispatch(getAllAssignees({ project_id: project_id }));
-    dispatch(getProjectTasks({ project_id: project_id }));
+    dispatch(getAllAssignees(project_id));
+    dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));
     dispatch(getTags(project_id));
   }, []);
@@ -103,7 +103,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     };
 
     if (newTask.length > 0) {
-      dispatch(createTask({ project_id: project_id, task: values }));
+      dispatch(createTask(project_id, values));
       setNewTask("");
       setSelectedVal([]);
     }
@@ -236,7 +236,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
           <Divider />
           <Collapse className="task__collapse" collapsible="header" defaultActiveKey={["1"]} ghost>
             {sections.map((section: section, index: number) => (
-              <Panel style={{ backgroundColor: "white", marginBottom: "10px", borderRadius: "12px" }} className="task-panel" key={section.id} header={panelHeader(section.name, section.id)}>
+              <Panel className="task__panel" key={section.id} header={panelHeader(section.name, section.id)}>
                 {localStorage.getItem("task_visual") === "list" && <TaskHeader />}
                 <div className={`task__visual-${taskVisual}`}>
                   {taskContainer
@@ -282,7 +282,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} members={members} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

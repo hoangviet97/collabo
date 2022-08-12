@@ -17,7 +17,7 @@ const ProjectCalendar: FC<Props> = ({ match }) => {
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ project_id: match.params.id }));
+    dispatch(getProjectTasks(match.params.id));
   }, []);
 
   return (
