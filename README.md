@@ -10,8 +10,8 @@ Try it [here](https://collaboat.cz)
 ####
 
 Please login with your existing account or create a new one. You can also use test account for quick access: <br />
-E-mail: user@test.cz <br/>
-Password: testcase123
+E-mail: collaboat.test@seznam.cz <br/>
+Password: dobroviz192
 
 ## Main technologies
 
