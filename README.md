@@ -38,5 +38,6 @@ Password: dobroviz192
 
 ## To-do
 
+- Bug fixing
 - Responsive design
 - Improve messages with file attachment and socket
