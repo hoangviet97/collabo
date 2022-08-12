@@ -10,8 +10,8 @@ Try it [here](https://collaboat.cz)
 ####
 
 Please login with your existing account or create a new one. You can also use test account for quick access: <br />
-E-mail: user@test.cz <br/>
-Password: testcase123
+E-mail: collaboat.test@seznam.cz <br/>
+Password: dobroviz192
 
 ## Main technologies
 
@@ -36,19 +36,8 @@ Password: testcase123
 - Vercel
 - AWS S3
 
-### Services and platforms
-
-- Heroku
-- Vercel
-- AWS S3
-
-### Services and platforms
-
-- Heroku
-- Vercel
-- AWS S3
-
 ## To-do
 
+- Bug fixing
 - Responsive design
 - Improve messages with file attachment and socket
