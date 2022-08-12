@@ -43,7 +43,7 @@ const TaskModal = () => {
     let values;
     let finalObj = [];
 
-    if (fieldsValue.assignees.length > 0) {
+    if (fieldsValue.assignees.length > 0 || fieldsValue.assignees !== undefined) {
       const pom = members.filter((item: member) => fieldsValue.assignees.includes(item.user_id));
       finalObj = pom.map((item: member) => item.id);
     }
