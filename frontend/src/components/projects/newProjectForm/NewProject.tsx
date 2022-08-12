@@ -14,15 +14,9 @@ const NewProject: FC<Props> = ({ history }) => {
   const loading = useSelector((state: RootStateOrAny) => state.project.loading);
   const [selected, setSelected] = useState<string>("");
   const colorSet: string[] = [colorVar.normal_green, colorVar.normal_reef, colorVar.light_orange, colorVar.normal_orange, colorVar.normal_red, colorVar.normal_blue, colorVar.normal_purple, colorVar.normal_koamaru, colorVar.normal_grey];
-  const [projectName, setProjectName] = useState({ name: "" });
+  const [name, setName] = useState<string>("");
   const [color, setColor] = useState<string>("");
   const [chosen, setChosen] = useState<number>();
-
-  const { name } = projectName;
-
-  const changeHandler = (e: any) => {
-    setProjectName({ name: e.target.value });
-  };
 
   const handleIconColor = (e: any) => {
     setColor(e);
@@ -35,8 +29,8 @@ const NewProject: FC<Props> = ({ history }) => {
 
   const submitHandler = () => {
     const { push } = history;
-    if (color.length === 0) {
-      message.error("Choose your project color!");
+    if (color.length === 0 || name.length === 0) {
+      message.error("Choose your project title and color!");
     } else {
       dispatch(createProject({ name, color, push }));
     }
@@ -48,7 +42,7 @@ const NewProject: FC<Props> = ({ history }) => {
         <div className="new-project__form">
           <Form layout="vertical">
             <Form.Item label="Choose your project name">
-              <Input value={name} onChange={(e) => changeHandler(e)} placeholder="input placeholder" />
+              <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="input placeholder" />
             </Form.Item>
             <Form.Item label="Choose your color">
               <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
