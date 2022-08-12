@@ -240,7 +240,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                     </Radio.Group>
                   </div>
                   <div>
-                    <Button onClick={deleteHandler} type="primary" danger>
+                    <Button onClick={deleteHandler} type="primary" disabled={user_role === "Owner" ? false : true} danger>
                       Delete Project
                     </Button>
                   </div>
