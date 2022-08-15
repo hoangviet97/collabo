@@ -23,6 +23,7 @@ export const UPDATE_PROJECT_STATUS: string = "UPDATE_PROJECT_STATUS";
 export const UPDATE_PROJECT_STATUS_FAIL: string = "UPDATE_PROJECT_STATUS_FAIL";
 export const SET_PROJECT_BUDGET: string = "SET_PROJECT_BUDGET";
 export const SET_PROJECT_CURRENCY: string = "SET_PROJECT_CURRENCY";
+export const RESET_SINGLE_PROJECT: string = "RESET_SINGLE_PROJECT";
 // MODAL
 export const SHOW_TASK_MODAL: string = "SHOW_TASK_MODAL";
 export const CLOSE_TASK_MODAL: string = "CLOSE_TASK_MODAL";
@@ -68,6 +69,7 @@ export const GET_PERSONAL_TASKS: string = "GET_PERSONAL_TASKS";
 export const GET_PERSONAL_TASKS_FAIL: string = "GET_PERSONAL_TASK_FAIL";
 export const SET_BUDGET: string = "SET_BUDGET";
 export const GET_EXPENSES: string = "GET_EXPENSES";
+export const RESET_TASKS: string = "RESET_TASKS";
 // INVITATION
 export const CREATE_INVITATION: string = "CREATE_INVITATION";
 export const CREATE_INVITATION_FAIL: string = "CREATE_INVITATION_FAIL";
@@ -107,13 +109,13 @@ export const TODAY_SESSIONS: string = "TODAY_SESSIONS";
 export const PAST_SESSIONS: string = "PAST_SESSIONS";
 
 export const DATA_LOADING: string = "DATA_LOADING";
-
+// TALKING POINTS
 export const CREATE_TALKING_POINT: string = "CREATE_TALKING_POINT";
 export const CREATE_TALKING_POINT_FAIL: string = "CREATE_TALKING_POINT_FAIL";
 export const GET_TALKING_POINTS: string = "GET_TALKING_POINTS";
 export const GET_TALKING_POINTS_FAIL: string = "GET_TALKING_POINTS_FAIL";
 export const UPDATE_CHECK_STATUS: string = "UPDATE_CHECK_STATUS";
-
+// FILES
 export const UPLOAD_FILE: string = "UPLOAD_FILE";
 export const UPLOAD_ATTACH_FILE: string = "UPLOAD_ATTACH_FILE";
 export const GET_FILE_TYPES: string = "GET_FILE_TYPES";
@@ -125,7 +127,7 @@ export const MOVE_TO_FOLDER: string = "MOVE_TO_FOLDER";
 export const FILE_DETAIL: string = "FILE_DETAIL";
 export const DELETE_FILE: string = "DELETE_FILE";
 export const EJECT_FILE: string = "EJECT_FILE";
-
+// FOLDERS
 export const CREATE_FOLDER: string = "CREATE_FOLDER";
 export const CREATE_FOLDER_FAIL: string = "CREATE_FOLDER_FAIL";
 export const GET_FOLDERS: string = "GET_FOLDERS";
@@ -133,25 +135,26 @@ export const GET_FOLDERS_FAIL: string = "GET_FOLDERS_FAIL";
 export const GET_FOLDER: string = "GET_FOLDER";
 export const UPDATE_FOLDER_NUM: string = "UPDATE_FOLDER_NUM";
 export const DELETE_FOLDER: string = "DELETE_FOLDER";
-
+// TIMERS
 export const CREATE_TIME_RECORD: string = "CREATE_TIME_RECORD";
 export const CREATE_TIME_RECORD_FAIL: string = "CREATE_TIME_RECORD_FAIL";
 export const GET_TIME_RECORDS: string = "GET_TIME_RECORDS";
 export const GET_TIME_RECORDS_BY_USER: string = "GET_TIME_RECORDS_BY_USERS";
 export const GET_TIME_RECORDS_FAIL: string = "GET_TIME_RECORDS_FAIL";
 export const TIME_RECORD_SUM: string = "TIME_RECORD_SUM";
-
+// NOTES
 export const CREATE_NOTE: string = "CREATE_NOTE";
 export const UPDATE_NOTE: string = "UPDATE_NOTE";
 export const GET_NOTE: string = "GET_NOTE";
 
 export const GET_STATUS_GROUP: string = "GET_STATUS_GROUP";
-
+//TAGS
 export const CREATE_TAG: string = "CREATE_TAG";
 export const CREATE_TASK_TAG: string = "CREATE_TASK_TAG";
 export const GET_TAGS: string = "GET_TAGS";
 export const GET_TASK_TAGS: string = "GET_TASK_TAGS";
 export const DELETE_TAGS: string = "DELETE_TAGS";
+export const RESET_TAGS: string = "RESET_TAGS";
 
 export const SET_PROGRESS: string = "SET_PROGRESS";
 export const RESET_AUTH: string = "RESET_AUTH";
@@ -160,17 +163,17 @@ export const GET_PROJECT_AUTH: string = "GET_PROJECT_AUTH";
 
 export const FILTER_STATUS: string = "FILTER_STATUS";
 export const FILTER_PRIORITY: string = "FILTER_PRIORITY";
-
+// POLLS
 export const CREATE_POLL: string = "CREATE_POLL";
 export const UPDATE_VOTE: string = "UPDATE_VOTE";
 export const DELETE_VOTE: string = "DELETE_VOTE";
-
+// INCOMES
 export const CREATE_INCOME: string = "CREATE_INCOME";
 export const GET_INCOMES: string = "GET_INCOMES";
 export const DELETE_INCOME: string = "DELETE_INCOME";
 export const INCOME_FAIL: string = "INCOME_FAIL";
 export const INCOME_SUM: string = "INCOME_SUM";
-
+// REVIEWS
 export const CREATE_REVIEW: string = "CREATE_REVIEW";
 export const GET_REVIEWS: string = "GET_REVIEWS";
 export const GET_PROJECT_REVIEWS: string = "GET_PROJECT_REVIEWS";
@@ -179,7 +182,7 @@ export const DELETE_REVIEW: string = "DELETE_REVIEW";
 export const REVIEW_FAIL: string = "REVIEW_FAIL";
 export const ACCEPT_REVIEW: string = "ACCEPT_REVIEW";
 export const DECREASE_REVIEW: string = "DECREASE_REVIEW";
-
+// LOADING
 export const FOLDER_LOADING: string = "FOLDER_LOADING";
 export const SESSION_LOADING: string = "SESSION_LOADING";
 export const SESSIONS_LOADING: string = "SESSIONS_LOADING";
@@ -191,7 +194,7 @@ export const SECTIONS_LOADING: string = "SECTIONS_LOADING";
 export const PROJECT_LOADING: string = "PROJECT_LOADING";
 export const REVIEW_LOADING: string = "REVIEW_LOADING";
 export const REVIEWS_LOADING: string = "REVIEWS_LOADING";
-
+// LOGS
 export const GET_LOGS: string = "GET_LOGS";
 export const GET_UNSEEN_LOGS: string = "GET_UNSEEN_LOGS";
 export const UPDATE_UNSEEN_LOGS: string = "UPDATE_UNSEEN_LOGS";

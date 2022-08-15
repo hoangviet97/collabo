@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Select, Divider, Skeleton } from "antd";
-import { EllipsisOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined } from "@ant-design/icons";
 import { section, tag, task } from "../../types/types";
 import TaskItem from "./TaskItem";
 import TaskCard from "./TaskCard";
-import { createSection, getSections, deleteSection } from "../../actions/section";
-import { getPersonalTasks, createTask, getAllAssignees } from "../../actions/task";
-import { getTagsByTasks, getTags } from "../../actions/tag";
+import { createSection, getSections, deleteSection, resetSections } from "../../actions/section";
+import { getPersonalTasks, createTask, getAllAssignees, resetTasks } from "../../actions/task";
+import { getTagsByTasks, getTags, resetTags } from "../../actions/tag";
+import { resetProject } from "../../actions/project";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
 import TaskDetailModal from "../modal/TaskDetailModal";
@@ -60,6 +61,13 @@ const PersonalTasks = () => {
       setTaskVisual(localStorage.getItem("task_visual"));
     }
     dispatch(getProjects());
+
+    return () => {
+      dispatch(resetProject());
+      dispatch(resetTasks());
+      dispatch(resetSections());
+      dispatch(resetTags());
+    };
   }, []);
 
   useEffect(() => {
