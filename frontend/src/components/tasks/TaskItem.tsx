@@ -18,13 +18,13 @@ import { getPriorityName } from "../../helpers/converter";
 import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
-  showModal: any;
-  closeModal: any;
+  showModal: (task: task, sectionName: string) => void;
+  closeModal: () => void;
   sectionName: string;
   assignees: any;
   members: member[];
   task: task;
-  start_date: any;
+  start_date: Date;
 }
 
 const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, members, task, start_date }) => {

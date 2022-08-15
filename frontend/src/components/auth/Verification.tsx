@@ -2,7 +2,7 @@ import React, { useEffect, FC } from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { verifyAccount } from "../../actions/auth";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface Props {
   match: any;
@@ -10,14 +10,13 @@ interface Props {
 
 const Verification: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const verified = useSelector((state: RootStateOrAny) => state.auth.verified);
 
   useEffect(() => {
     dispatch(verifyAccount({ id: match.params.id }));
   }, []);
 
   return (
-    <div className="verify-container" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
+    <div className="verify-container">
       <h1>Account Activated</h1>
 
       <div style={{ marginTop: "30px" }}>

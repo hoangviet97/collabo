@@ -56,6 +56,7 @@ export const UPDATE_TASK_START_FAIL: string = "UPDATE_TASK_START_FAIL";
 export const UPDATE_TASK_END: string = "UPDATE_TASK_END";
 export const UPDATE_TASK_END_FAIL: string = "UPDATE_TASK_END_FAIL";
 export const UPDATE_TASK_FAIL: string = "UPDATE_TASK_FAIL";
+export const UPDATE_TASK_TITLE: string = "UPDATE_TASK_TITLE";
 export const DELETE_TASK: string = "DELETE_TASK";
 export const DELETE_TASK_FAIL: string = "DELETE_TASK_FAIL";
 export const CREATE_TASK_FAIL: string = "CREATE_TASK_FAIL";

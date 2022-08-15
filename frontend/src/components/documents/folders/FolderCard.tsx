@@ -38,7 +38,7 @@ const FolderCard: FC<Props> = ({ folder }) => {
     <div className="folder-card">
       <div className="folder-card__header">
         <div>
-          <FolderFilled style={{ fontSize: "30px" }} />
+          <FolderFilled className="folder-card__icon" />
         </div>
         <div>
           <Dropdown overlay={menu}>
@@ -48,9 +48,9 @@ const FolderCard: FC<Props> = ({ folder }) => {
           </Dropdown>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }} onClick={redirectHandle}>
-        <a style={{ fontWeight: "bolder" }}>{folder.title}</a>
-        <span style={{ fontSize: "12px" }}>{folder.total_files > 0 ? folder.total_files : "no"} files</span>
+      <div className="folder-card__text" onClick={redirectHandle}>
+        <a className="folder-card__title">{folder.title}</a>
+        <span className="folder-card__count">{folder.total_files > 0 ? folder.total_files : "no"} files</span>
       </div>
     </div>
   );

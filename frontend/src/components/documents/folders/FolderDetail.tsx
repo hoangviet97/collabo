@@ -22,7 +22,7 @@ const FolderDetail: React.FunctionComponent = () => {
 
   return (
     <div>
-      <div className="folder-header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+      <div className="folder__header">
         <Breadcrumb>
           <Breadcrumb.Item>
             <Link to={`/${params.id}/documents`}>Home</Link>

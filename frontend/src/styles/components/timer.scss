@@ -51,3 +51,20 @@
 .time__page {
   height: calc(100vh - 180px);
 }
+
+.time__button {
+  border: 0.5px solid #ecf0f1;
+  display: inline-block;
+  border-radius: 12px;
+
+  &-content {
+    display: flex;
+    padding: 5px 8px;
+    gap: 12px;
+  }
+
+  &-action {
+    border: none;
+    background-color: transparent;
+  }
+}

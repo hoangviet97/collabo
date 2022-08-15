@@ -26,7 +26,7 @@ const FileCard: FC<Props> = ({ file }) => {
 
   const download = (record: file) => {
     axios({
-      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`, //your url
+      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`,
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {
@@ -36,21 +36,21 @@ const FileCard: FC<Props> = ({ file }) => {
   };
 
   return (
-    <div className="file-card" style={{ backgroundColor: "white" }}>
-      <div className="file-card__header" style={{ display: "flex", justifyContent: "space-between" }}>
+    <div className="file-card">
+      <div className="file-card__header">
         <StarFilled onClick={favoriteToggle} className="file-card__favorite" />
         <div style={{ padding: 0, cursor: "pointer" }} onClick={showDetail}>
           <InfoCircleOutlined style={{ fontSize: "20px" }} />
         </div>
       </div>
-      <div className="file-card__body" style={{ textAlign: "center", overflow: "hidden" }}>
+      <div className="file-card__body">
         <div style={{ display: "flex", justifyContent: "center" }}>
           <FileTypeIcon type={file.file_mimetype} />
         </div>
         <h3>{file.title}</h3>
       </div>
-      <div className="file-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div className="file-card__filesize" style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+      <div className="file-card__footer">
+        <div className="file-card__filesize">
           <span>Filesize:</span>
           <span>{prettyBytes(file.size)}</span>
         </div>

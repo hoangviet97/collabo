@@ -15,8 +15,8 @@ const Reset: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="reset-box">
-      <div style={{ width: "700px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", padding: "50px 30px", borderRadius: "10px" }}>
+    <div className="reset">
+      <div className="reset__wrapper">
         <div>
           <div style={{ backgroundColor: color.light_blue, display: "inline-block", position: "relative", borderRadius: "50%", width: "80px", height: "80px" }}>
             <KeyOutlined style={{ fontSize: "40px", color: color.normal_blue, position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />

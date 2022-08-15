@@ -9,6 +9,23 @@
   flex-direction: column;
   justify-content: space-between;
 
+  &__icon {
+    font-size: 30px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-weight: bolder;
+  }
+
+  &__count {
+    font-size: 12px;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -19,5 +36,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.folder {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 }

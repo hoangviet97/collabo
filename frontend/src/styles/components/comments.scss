@@ -6,6 +6,15 @@
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
+  &__author {
+    display: flex;
+    align-items: center;
+  }
+
+  &__body {
+    margin-bottom: 15px;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;

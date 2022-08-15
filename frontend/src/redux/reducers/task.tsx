@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
 import moment from "moment";
 import { task } from "../../types/types";
 
@@ -82,10 +82,15 @@ function taskReducer(state = initialState, action: any) {
         ...state,
         tasks: []
       };
+    case UPDATE_TASK_TITLE:
+      return {
+        ...state,
+        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, title: payload.title } : item))
+      };
     case UPDATE_TASK_STATUS:
       return {
         ...state,
-        tasks: state.tasks.map((item: any) => (item.id === payload.id ? { ...item, statusId: payload.status } : item))
+        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, statusId: payload.status } : item))
       };
     case SET_BUDGET:
       return {

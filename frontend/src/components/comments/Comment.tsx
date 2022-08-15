@@ -18,7 +18,7 @@ const Comment: FC<Props> = ({ data }) => {
   return (
     <div className="comment">
       <div className="comment__header">
-        <div className="comment__author" style={{ display: "flex", alignItems: "center" }}>
+        <div className="comment__author">
           <Avatar size={50} style={{ marginRight: "10px", backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }}>
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} />
           </Avatar>
@@ -28,7 +28,7 @@ const Comment: FC<Props> = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="comment__body" style={{ marginBottom: "15px" }}>
+      <div className="comment__body">
         <div className="comment__text">
           <p>{data.text}</p>
         </div>
