@@ -35,9 +35,10 @@ function projectReducer(state = initialState, action: any) {
         authorized: false
       };
     case RESET_SINGLE_PROJECT:
+      const resetProject = { ...state.currentProject, color: "", name: "" };
       return {
         ...state,
-        currentProject: {}
+        currentProject: resetProject
       };
     case GET_PROJECTS:
       return {
