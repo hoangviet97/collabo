@@ -34,7 +34,7 @@ const TaskDateModdal: FC<Props> = ({ taskId, type, show, close, pos }) => {
 
   return show ? (
     <div className="back-drop" onClick={close}>
-      <div id="date-picker__window" onClick={(e) => e.stopPropagation()} style={{ top: y, left: x }}>
+      <div className="date-picker__window" onClick={(e) => e.stopPropagation()} style={{ top: y, left: x }}>
         <div>
           <Calendar fullscreen={false} onSelect={dateChangeHandler} />
         </div>
