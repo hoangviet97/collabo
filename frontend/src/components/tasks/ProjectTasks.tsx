@@ -1,9 +1,10 @@
 import React, { useEffect, useState, FC } from "react";
 import Container from "../utils/Container";
-import { createSection, getSections, deleteSection } from "../../actions/section";
-import { getProjectTasks, createTask, getAllAssignees } from "../../actions/task";
-import { getTagsByTasks, getTags } from "../../actions/tag";
+import { createSection, getSections, deleteSection, resetSections } from "../../actions/section";
+import { getProjectTasks, createTask, getAllAssignees, resetTasks } from "../../actions/task";
+import { getTagsByTasks, getTags, resetTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
+import { resetProject } from "../../actions/project";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
 import { CloseOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
@@ -66,6 +67,13 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));
     dispatch(getTags(project_id));
+
+    return () => {
+      dispatch(resetProject());
+      dispatch(resetTasks());
+      dispatch(resetSections());
+      dispatch(resetTags());
+    };
   }, []);
 
   useEffect(() => {

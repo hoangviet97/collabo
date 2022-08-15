@@ -1,4 +1,4 @@
-import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING } from "./types";
+import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING, RESET_TAGS } from "./types";
 import axiosClient from "../helpers/axios";
 
 export const createTag = (project_id: string, name: string, color: string) => async (dispatch: any) => {
@@ -46,6 +46,18 @@ export const deleteTag = (project_id: string, id: string) => async (dispatch: an
   } catch (err) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
   }
+};
+
+export const resetTags = () => {
+  return {
+    type: RESET_TAGS
+  };
+};
+
+export const setTags = () => {
+  return {
+    type: TAGS_LOADING
+  };
 };
 
 export const setTagsLoading = () => {
