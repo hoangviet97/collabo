@@ -40,4 +40,5 @@ Password: dobroviz192
 
 - Bug fixing
 - Responsive design
+- Realtime notifications for activities and reviews
 - Improve messages with file attachment and socket
