@@ -60,20 +60,6 @@ const Projects: React.FunctionComponent = () => {
     }
   }
 
-  const showFavorite = () => {
-    setIsFavorite(true);
-    const data = projects.filter((item: any) => item.favorite === "T");
-    setFilteredData(data);
-  };
-
-  const showAll = () => {
-    setIsFavorite(false);
-    const data = projects.filter((item: any) => item.favorite === "T" || item.favorite === "F");
-    setFilteredData(data);
-  };
-
-  //kotva
-
   let content;
 
   if (loading) {

@@ -2,6 +2,13 @@
   position: relative;
   height: calc(100vh - 180px);
 
+  &__statistics {
+    &-title {
+      font-size: 30px;
+      font-weight: bolder;
+    }
+  }
+
   &__statistics-wrap {
     grid-area: stats;
     background-color: white;
@@ -80,6 +87,29 @@
   &-card {
     border-radius: 10px;
     padding: 15px;
+    background-color: white;
+
+    &__body {
+      text-align: center;
+      overflow: hidden;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__filesize {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &__icon {

@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, GET_CALENDAR_TASKS, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES, GET_ASSIGNEE_TASKS, GET_PERSONAL_TASKS } from "./types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES, GET_ASSIGNEE_TASKS, GET_PERSONAL_TASKS } from "./types";
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
@@ -106,6 +106,17 @@ export const updateTaskPriority = (id: string, priorityId: string, project_id: s
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/priority`, { priorityId });
     dispatch({ type: UPDATE_TASK_PRIORITY, payload: { id, priorityId } });
+    message.success("Task updated!");
+  } catch (err) {
+    dispatch({ type: UPDATE_TASK_FAIL });
+    message.error("Something went wrong!");
+  }
+};
+
+export const updateTitle = (id: string, title: string, project_id: string) => async (dispatch: any) => {
+  try {
+    const res = await axiosClient.patch(`/${project_id}/tasks/${id}/title`, { title });
+    dispatch({ type: UPDATE_TASK_TITLE, payload: { id, title } });
     message.success("Task updated!");
   } catch (err) {
     dispatch({ type: UPDATE_TASK_FAIL });

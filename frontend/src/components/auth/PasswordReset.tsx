@@ -22,7 +22,7 @@ const Verification: FC<Props> = ({ match }) => {
   };
 
   return (
-    <div className="verify-container" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
+    <div className="verify-container">
       <h1>Reset your password</h1>
       <div>
         <Form onFinish={submitHandler}>

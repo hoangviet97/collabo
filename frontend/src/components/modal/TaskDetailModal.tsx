@@ -5,7 +5,7 @@ import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createTaskTag } from "../../actions/tag";
 import { getFilesByTask, getAllFiles } from "../../actions/file";
-import { setBudget, setDescription, updateTaskPriority, updateTaskStatus } from "../../actions/task";
+import { setBudget, setDescription, updateTaskPriority, updateTitle } from "../../actions/task";
 import NewFileForm from "../documents/files/NewFileForm";
 import FileMiniCard from "../documents/files/FileMiniCard";
 import TaskDate from "../tasks/TaskDate";
@@ -45,10 +45,6 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
     setTaskDescription(task.description);
     dispatch(getFilesByTask({ id: task.id, project_id: projectId }));
     dispatch(getAllFiles({ project_id: projectId }));
-
-    return () => {
-      setTaskTitle("");
-    };
   }, [task]);
 
   useEffect(() => {
@@ -100,6 +96,13 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
     setExistingFiles(false);
   };
 
+  const changeTitleHandler = () => {
+    if (taskTitle !== task.title) {
+      dispatch(updateTitle(task.id, taskTitle, projectId));
+    }
+    setShowTitleInput(false);
+  };
+
   return (
     <Modal visible={isVisible} width="90%" centered closable={false} footer={false} bodyStyle={{ height: "90vh", padding: "0" }}>
       <header className="task__detail-header">
@@ -119,13 +122,19 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
               <div className="task__detail__meta">
                 <div className="task__detail-title">
                   {showTitleInput ? (
-                    <Input value={taskTitle} />
+                    <Input value={taskTitle} onBlur={changeTitleHandler} onChange={(e: any) => setTaskTitle(e.target.value)} />
                   ) : (
                     <div className="text-ellipsis" style={{ fontSize: "32px", width: "100%" }}>
                       {taskTitle}
                     </div>
                   )}
-                  <Button onClick={showTitleInputHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
+                  {showTitleInput ? (
+                    <Button onClick={changeTitleHandler} shape="round" type="dashed">
+                      Done
+                    </Button>
+                  ) : (
+                    <Button onClick={showTitleInputHandler} shape="round" type="dashed" icon={<EditOutlined />}></Button>
+                  )}
                 </div>
                 <div className="task__detail-base">
                   <div className="task__detail-base-item">

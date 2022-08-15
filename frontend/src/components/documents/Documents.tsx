@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 import Container from "../utils/Container";
-import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAllFiles, getFileTypes } from "../../actions/file";
 import { getAllFolders } from "../../actions/folder";
 import Content from "./Content";

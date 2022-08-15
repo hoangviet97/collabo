@@ -65,16 +65,16 @@ const Timer: FC<Props> = ({ localstorage }) => {
 
   return (
     <div>
-      <div className="stopwatch-card" style={{ border: "0.5px solid #ecf0f1", display: "inline-block", borderRadius: "12px", backgroundColor: isActive ? "#e74c3c" : "white", color: isActive && "white" }}>
-        <div className="stopwatch-content" style={{ display: "flex", padding: "5px 8px", gap: "12px" }}>
+      <div className="time__button" style={{ backgroundColor: isActive ? "#e74c3c" : "white", color: isActive && "white" }}>
+        <div className="time__button-content">
           <span>{formatTime()}</span>
           <div className="buttons">
             {!isActive ? (
-              <button style={{ border: "none", backgroundColor: "transparent" }} onClick={handleStart}>
+              <button className="time__button-action" onClick={handleStart}>
                 <CaretRightOutlined />
               </button>
             ) : (
-              <button style={{ border: "none", backgroundColor: "transparent" }} onClick={handleReset}>
+              <button className="time__button-action" onClick={handleReset}>
                 <PauseOutlined />
               </button>
             )}

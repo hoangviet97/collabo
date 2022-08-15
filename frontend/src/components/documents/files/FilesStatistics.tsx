@@ -10,7 +10,7 @@ const FilesStatistics: React.FunctionComponent = () => {
 
   return (
     <div className="files__statistics" style={{ overflowY: "scroll" }}>
-      <div style={{ fontSize: "30px", fontWeight: "bolder" }}>Storage</div>
+      <div className="files__statistics-title">Storage</div>
       <div className="files__donut">
         <SemiDonut sum={sum} />
       </div>
