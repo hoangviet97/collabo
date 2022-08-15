@@ -51,7 +51,7 @@ const KanbanBoard = ({ match }) => {
   const [controlledBoard, setBoard] = useState(board);
 
   useEffect(() => {
-    dispatch(getProjectTasks({ project_id: match.params.id }));
+    dispatch(getProjectTasks(match.params.id));
   }, []);
 
   useEffect(() => {

@@ -7,8 +7,8 @@ export const createInvitation = (receiver_email: string, project_id: string, soc
     const res = await axiosClient.post(`/${project_id}/invitations/new`, { receiver_email });
     dispatch({ type: CREATE_INVITATION, payload: res.data });
     socket.emit("send-invitation", { receiver: receiver_email, data: res.data });
-  } catch (err) {
-    //message.error(err.response.data.message);
+  } catch (err: any) {
+    message.error(err.response.data);
   }
 };
 

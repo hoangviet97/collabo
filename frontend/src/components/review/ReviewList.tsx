@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getReviews } from "../../actions/review";
 import { Empty } from "antd";
 
-const ReviewList = () => {
+const ReviewList: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const reviews = useSelector((state: RootStateOrAny) => state.review.reviews);
   const params: any = useParams();

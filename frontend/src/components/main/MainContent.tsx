@@ -20,8 +20,8 @@ import Session from "../session/Session";
 import PersonalTasks from "../tasks/PersonalTasks";
 import ReviewPage from "../review/ReviewPage";
 import { getProject } from "../../actions/project";
-import { getAllInvitations } from "../../actions/invitation";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { getUnseenLogs } from "../../actions/log";
+import { useDispatch } from "react-redux";
 import ProtectedProjectRoute from "../routing/ProtectedProjectRoute";
 
 interface Props {

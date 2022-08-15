@@ -1,5 +1,5 @@
-import { GET_LOGS } from "../../actions/types";
-import { folder } from "../../types/types";
+import { GET_UNSEEN_LOGS, GET_LOGS } from "../../actions/types";
+import { log } from "../../types/types";
 
 const initialState = {
   logs: [],
@@ -14,6 +14,12 @@ function logReducer(state = initialState, action: any) {
       return {
         ...state,
         logs: payload,
+        loading: false
+      };
+    case GET_UNSEEN_LOGS:
+      return {
+        ...state,
+        logs: payload.filter((item: log) => item.seen === "F"),
         loading: false
       };
     default:

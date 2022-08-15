@@ -10,7 +10,7 @@ import { getMembers2 } from "../../actions/member";
 import "./Project.scss";
 import { project, member } from "../../types/types";
 
-const Projects = () => {
+const Projects: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const projects = useSelector((state: RootStateOrAny) => state.project.projects);
   const members = useSelector((state: RootStateOrAny) => state.member.members);

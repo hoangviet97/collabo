@@ -6,7 +6,7 @@ import AvatarIcon from "../utils/AvatarIcon";
 import { Link } from "react-router-dom";
 import color from "../../styles/abstract/variables.module.scss";
 
-const Topbar = () => {
+const Topbar: React.FunctionComponent = () => {
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
   let path = window.location.pathname;

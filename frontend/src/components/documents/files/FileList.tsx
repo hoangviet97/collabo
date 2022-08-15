@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { folder } from "../../../types/types";
 
-const FileList = () => {
+const FileList: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const { Text, Link } = Typography;

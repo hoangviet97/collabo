@@ -5,7 +5,7 @@ import { useSelector, RootStateOrAny } from "react-redux";
 import AccountDetails from "./AccountDetails";
 import PasswordSettings from "./PasswordSettings";
 
-const UserSettings = () => {
+const UserSettings: React.FunctionComponent = () => {
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
   const { TabPane } = Tabs;
 

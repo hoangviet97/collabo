@@ -1,7 +1,6 @@
-import React, { useState, useEffect, FC } from "react";
-import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, FormOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
+import React, { useState, FC } from "react";
+import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
-import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { createReview } from "../../actions/review";
@@ -14,7 +13,6 @@ import AssigneesModal from "../modal/AssigneesModal";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
-import moment from "moment";
 import TaskDate from "./TaskDate";
 import { getPriorityName } from "../../helpers/converter";
 import color from "../../styles/abstract/variables.module.scss";

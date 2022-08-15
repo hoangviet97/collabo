@@ -6,7 +6,7 @@ import Container from "../utils/Container";
 import SocketContext from "../../context/SocketContext";
 import { Invitation } from "../../types/types";
 
-const Notifications = () => {
+const Notifications: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const invitations: Invitation[] = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 

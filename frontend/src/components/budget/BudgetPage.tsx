@@ -17,7 +17,6 @@ interface Props {
 
 const BudgetPage: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
-  const [totalBudget, setTotalBudget] = useState<number>(0);
   const [balance, setBalance] = useState<number>(0);
   const [spending, setSpending] = useState<number>(0);
   const role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
@@ -32,11 +31,6 @@ const BudgetPage: FC<Props> = ({ match }) => {
     dispatch(getAllIncomes(match.params.id));
     dispatch(getIncomeSum(match.params.id));
   }, []);
-
-  useEffect(() => {
-    const calc: number = incomes - spending;
-    setBalance(calc);
-  }, [incomes, spending]);
 
   useEffect(() => {
     const calc: number = incomes - spending;

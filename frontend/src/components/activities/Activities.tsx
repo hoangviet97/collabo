@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from "react";
 import Container from "../utils/Container";
 import ActivityItem from "./ActivityItem";
-import { getLogs } from "../../actions/log";
+import { getLogs, updateUnseenLogs } from "../../actions/log";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { log } from "../../types/types";
 
-const Activities = () => {
+const Activities: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
 

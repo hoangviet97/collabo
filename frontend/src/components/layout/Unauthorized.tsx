@@ -1,7 +1,7 @@
 import React from "react";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
-const Unauthorized = () => {
+const Unauthorized: React.FunctionComponent = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", marginTop: "100px", textAlign: "center" }}>
       <div>

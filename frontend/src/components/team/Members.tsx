@@ -8,7 +8,7 @@ import moment from "moment";
 import color from "../../styles/abstract/variables.module.scss";
 import { useParams, useHistory } from "react-router-dom";
 
-const Members = () => {
+const Members: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const params: any = useParams();

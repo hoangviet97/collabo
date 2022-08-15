@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect } from "react";
 import Container from "../utils/Container";
 import { Tabs, Badge } from "antd";
 import Members from "./Members";
@@ -9,7 +9,7 @@ import { getMembers } from "../../actions/member";
 import { getAllProjectInvitations } from "../../actions/invitation";
 import { useParams, useHistory } from "react-router-dom";
 
-const Team = () => {
+const Team: React.FunctionComponent = () => {
   const { TabPane } = Tabs;
   const history = useHistory();
   const dispatch = useDispatch();

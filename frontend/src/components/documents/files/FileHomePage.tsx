@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import FilesStatistics from "./FilesStatistics";
 import { useParams } from "react-router-dom";
 
-const FileHomePage = () => {
+const FileHomePage: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
 

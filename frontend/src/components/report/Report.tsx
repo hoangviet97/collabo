@@ -7,7 +7,7 @@ import { getUserTasks } from "../../actions/task";
 import moment from "moment";
 import { Column } from "@ant-design/plots";
 
-const Report = () => {
+const Report: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [total, setTotal] = useState<number>(0);

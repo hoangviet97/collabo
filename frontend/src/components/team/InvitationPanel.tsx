@@ -1,11 +1,11 @@
-import React, { useState, FC, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { createInvitation } from "../../actions/invitation";
 import SocketContext from "../../context/SocketContext";
 import { useParams } from "react-router-dom";
 
-const InvitationPanel = () => {
+const InvitationPanel: React.FunctionComponent = () => {
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SessionWelcome = () => {
+const SessionWelcome: React.FunctionComponent = () => {
   return (
     <div className="session__welcome">
       <div className="session-welcome__content">

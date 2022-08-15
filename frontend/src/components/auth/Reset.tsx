@@ -6,7 +6,7 @@ import { reset } from "../../actions/auth";
 import { KeyOutlined } from "@ant-design/icons";
 import color from "../../styles/abstract/variables.module.scss";
 
-const Reset = () => {
+const Reset: React.FunctionComponent = () => {
   const [email, setEmail] = useState<string>("");
   const dispatch = useDispatch();
 

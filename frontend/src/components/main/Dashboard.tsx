@@ -13,12 +13,10 @@ import { useParams } from "react-router-dom";
 import { getAllInvitations, addInvitation } from "../../actions/invitation";
 import { notification } from "antd";
 
-const Dashboard = () => {
+const Dashboard: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const socket = io("https://collaboatbe.herokuapp.com");
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
-  const unread = useSelector((state: RootStateOrAny) => state.invitation.unread); // get all unread invitations
-  const [unreadNum, setUnreadNum] = useState(0);
 
   useEffect(() => {
     // fetch invitations for sidebar
@@ -32,13 +30,8 @@ const Dashboard = () => {
         description: "You have been invited to project."
       });
       dispatch(addInvitation(data));
-      setUnreadNum((prev) => prev + 1);
     });
   }, []);
-
-  useEffect(() => {
-    setUnreadNum(unread);
-  }, [unread]);
 
   return (
     <div className="dashboard">

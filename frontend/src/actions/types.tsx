@@ -192,3 +192,5 @@ export const REVIEW_LOADING: string = "REVIEW_LOADING";
 export const REVIEWS_LOADING: string = "REVIEWS_LOADING";
 
 export const GET_LOGS: string = "GET_LOGS";
+export const GET_UNSEEN_LOGS: string = "GET_UNSEEN_LOGS";
+export const UPDATE_UNSEEN_LOGS: string = "UPDATE_UNSEEN_LOGS";
