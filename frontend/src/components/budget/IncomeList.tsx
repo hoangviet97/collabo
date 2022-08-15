@@ -3,7 +3,7 @@ import Income from "./Income";
 import { task } from "../../types/types";
 import { useSelector, RootStateOrAny } from "react-redux";
 
-const IncomeList = () => {
+const IncomeList: React.FunctionComponent = () => {
   const incomes = useSelector((state: RootStateOrAny) => state.income.incomes);
 
   return (

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
-import { Popover, Modal, Form, Input, Dropdown, Menu, Button, Radio, Select } from "antd";
+import { Popover, Modal, Form, Input, Menu, Button, Radio, Select, Badge } from "antd";
 import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { updateColor, updateStatus, deleteProject, setBudget, setCurrency } from "../../actions/project";
+import { updateColor, updateStatus, deleteProject, setCurrency } from "../../actions/project";
 import { getProjectTasks } from "../../actions/task";
 import AvatarIcon from "../utils/AvatarIcon";
 import ColorList, { colorList } from "../utils/Colors";
@@ -15,6 +15,7 @@ interface Props {
 const ProjectNavigation: FC<Props> = ({ history }) => {
   let path = window.location.pathname;
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
+  const logs = useSelector((state: RootStateOrAny) => state.log.logs);
 
   const { push } = history;
 
@@ -24,17 +25,14 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const currentProject = useSelector((state: RootStateOrAny) => state.project.currentProject);
   const auth = useSelector((state: RootStateOrAny) => state.project.authorized);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
-  const [totalBudget, setTotalBudget] = useState<any>(0);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [projectName, setProjectName] = useState<string>("");
   const [showIconTab, setIconTab] = useState<boolean>(false);
   const [projectDescription, setProjectDescription] = useState<string>("");
-  const colorSet = ["#f9ca24", "#f0932b", "#eb4d4b", "#badc58", "#7ed6df", "#e056fd", "#686de0", "#30336b", "#535c68"];
   const [iconColorSelection, setIconColorSelection] = useState("");
 
   useEffect(() => {
     setProjectName(currentProject.name);
-    setTotalBudget(currentProject.budget);
     setProjectDescription(currentProject.description);
   }, [currentProject]);
 
@@ -89,7 +87,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
       <p>
         <Link className="single-navigation__link" to={`/${path.split("/")[1]}/activities`}>
           <EyeOutlined className="single-navigation__link-icon" />
-          <span>Activities</span>
+          <span style={{ marginRight: "5px" }}>Activities</span>
         </Link>
       </p>
     </div>
@@ -189,7 +187,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                 <span>Team</span>
               </Link>
             </li>
-            <li className="single-navigation__item">
+            <li className="single-navigation__item" style={{ display: "flex" }}>
               <Popover className="popover" placement="bottom" content={moreContent} trigger="click">
                 <Link className="single-navigation__link" to="">
                   <EllipsisOutlined className="single-navigation__link-icon" style={{ fontSize: "25px" }} />

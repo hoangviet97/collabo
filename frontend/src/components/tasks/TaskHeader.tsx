@@ -1,7 +1,7 @@
 import React from "react";
 import color from "../../styles/abstract/variables.module.scss";
 
-const TaskHeader = () => {
+const TaskHeader: React.FunctionComponent = () => {
   return (
     <div className="task-column" style={{ marginBottom: "10px" }}>
       <div className="task-column__item task-column__name task__top-header">Name</div>

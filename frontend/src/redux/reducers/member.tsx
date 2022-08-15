@@ -39,7 +39,7 @@ function memberReducer(state = initialState, action: any) {
     case DELETE_MEMBER:
       return {
         ...state,
-        members: state.members.filter((item: member) => item.id !== payload.id)
+        members: state.members.filter((item: member) => item.id !== payload)
       };
     default:
       return state;

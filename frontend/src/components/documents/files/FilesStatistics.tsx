@@ -1,10 +1,10 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import prettyBytes from "pretty-bytes";
 import FileTypeIcon from "../../utils/FileTypeIcon";
 import SemiDonut from "../../utils/SemiDonut";
 import { useSelector, RootStateOrAny } from "react-redux";
 
-const FilesStatistics = () => {
+const FilesStatistics: React.FunctionComponent = () => {
   const statistics = useSelector((state: RootStateOrAny) => state.file.statistics);
   const sum = useSelector((state: RootStateOrAny) => state.file.total);
 

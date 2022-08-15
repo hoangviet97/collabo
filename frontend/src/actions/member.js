@@ -36,7 +36,7 @@ export const updateMemberRole = ({ id, project_id, role_id, current_role_id }) =
     message.success("Role of the member was updated");
   } catch (err) {
     dispatch({ type: UPDATE_MEMBER_ROLE_FAILED, payload: { id, current_role_id } });
-    message.error(err.response.data.message);
+    message.error(err.response.data);
   }
 };
 
@@ -45,7 +45,7 @@ export const deleteMember = ({ id, project_id }) => async (dispatch) => {
     const res = await axiosClient.delete(`/${project_id}/members/${id}`);
     dispatch({ type: DELETE_MEMBER, payload: id });
   } catch (err) {
-    message.error(err.response.data.message);
+    message.error(err.response.data);
   }
 };
 
@@ -54,6 +54,6 @@ export const leaveProject = ({ project_id, history }) => async (dispatch) => {
     const res = await axiosClient.delete(`/${project_id}/members`);
     history.push("/");
   } catch (err) {
-    message.error(err.response.data.message);
+    message.error(err.response.data);
   }
 };

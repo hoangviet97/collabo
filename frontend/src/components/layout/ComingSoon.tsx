@@ -1,7 +1,7 @@
 import React from "react";
 import { FieldTimeOutlined } from "@ant-design/icons";
 
-const ComingSoon = () => {
+const ComingSoon: React.FunctionComponent = () => {
   return (
     <div className="coming-soon">
       <div>

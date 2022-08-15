@@ -5,7 +5,7 @@ import { logout } from "../../actions/auth";
 import { ImportOutlined, BellOutlined, HomeOutlined, SettingOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 
-const Sidebar = () => {
+const Sidebar: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 

@@ -14,7 +14,6 @@ import { getProjects } from "../../actions/project";
 import TaskDetailModal from "../modal/TaskDetailModal";
 
 const PersonalTasks = () => {
-  const project_id = "66285580";
   const dispatch = useDispatch();
   const projects = useSelector((state: RootStateOrAny) => state.project.projects);
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);
@@ -102,7 +101,7 @@ const PersonalTasks = () => {
       <Menu.Item
         key="1"
         onClick={(event) => {
-          dispatch(deleteSection(project_id, selectedSection));
+          dispatch(deleteSection(selectedProject, selectedSection));
         }}
       >
         <Text type="danger">Delete</Text>
@@ -125,7 +124,7 @@ const PersonalTasks = () => {
     if (newSection.length === 0) {
       console.log("empty");
     } else {
-      dispatch(createSection(project_id, newSection));
+      dispatch(createSection(selectedProject, newSection));
       setNewSection("");
     }
   };
@@ -145,7 +144,7 @@ const PersonalTasks = () => {
     };
 
     if (newTask.length > 0) {
-      dispatch(createTask(project_id, values));
+      dispatch(createTask(selectedProject, values));
       setNewTask("");
       setSelectedVal([]);
     }
@@ -263,7 +262,7 @@ const PersonalTasks = () => {
               )}
             </div>
           )}
-          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal task={taskDetail} tags={allTags} projectId={selectedProject} isVisible={isModalVisible} closeModal={closeModal} />
         </Container>
       )}
     </div>

@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 import { deleteInvitation } from "../../actions/invitation";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Table, Space, Button } from "antd";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
-const Invitations: FC = () => {
+const Invitations: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);

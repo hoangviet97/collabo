@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { useDispatch } from "react-redux";
 import { showTaskModal } from "../../actions/modal";
 
-const Toolbox = () => {
+const Toolbox: React.FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const taskModalHandler = () => {

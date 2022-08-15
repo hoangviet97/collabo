@@ -46,6 +46,7 @@ function invitationReducer(state = initialState, action: any) {
     case DELETE_INVITATION:
       return {
         ...state,
+        sended: state.sended.filter((item: any) => item.id !== payload),
         invitations: state.invitations.filter((item: any) => item.id !== payload)
       };
     case UPDATE_SEEN_INVITATION:

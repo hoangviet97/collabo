@@ -11,7 +11,7 @@ import { CloseOutlined, BorderOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
 import { member, section, project } from "../../types/types";
 
-const TaskModal = () => {
+const TaskModal: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [projectId, setProjectId] = useState<string>("");

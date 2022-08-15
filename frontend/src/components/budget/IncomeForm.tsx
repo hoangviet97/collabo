@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createIncome } from "../../actions/income";
 
-const IncomeForm = () => {
+const IncomeForm: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [title, setTitle] = useState<string>("");

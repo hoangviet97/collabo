@@ -9,7 +9,7 @@ import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import color from "../../styles/abstract/variables.module.scss";
 
-const SessionItem = () => {
+const SessionItem: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: RootStateOrAny) => state.session.singleLoading);
   const single = useSelector((state: RootStateOrAny) => state.session.single);

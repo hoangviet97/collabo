@@ -1,13 +1,13 @@
-import React, { useState, FC } from "react";
+import React, { useState } from "react";
 import { Divider, message, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { changePassword } from "../../actions/auth";
 
-const AccountDetails = () => {
+const AccountDetails: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const [currentPwd, setCurrentPwd] = useState("");
-  const [firstPwd, setFirstPwd] = useState("");
-  const [rePwd, setRePwd] = useState("");
+  const [currentPwd, setCurrentPwd] = useState<string>("");
+  const [firstPwd, setFirstPwd] = useState<string>("");
+  const [rePwd, setRePwd] = useState<string>("");
 
   const changePwdHandler = () => {
     if (firstPwd === rePwd) {

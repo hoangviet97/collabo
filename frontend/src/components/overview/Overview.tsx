@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import StatusChart from "./StatusChart";
@@ -16,11 +16,7 @@ import LogPreview from "../logs/LogPreview";
 import color from "../../styles/abstract/variables.module.scss";
 import moment from "moment";
 
-interface Props {
-  match: any;
-}
-
-const Overview: FC<Props> = ({ match }) => {
+const Overview: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const statusGroup = useSelector((state: RootStateOrAny) => state.task.statusGroup);

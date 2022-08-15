@@ -8,7 +8,7 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import FileCard from "../files/FileCard";
 import { file } from "../../../types/types";
 
-const FolderDetail = () => {
+const FolderDetail: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const files = useSelector((state: RootStateOrAny) => state.file.folder_files);
   const isLoading = useSelector((state: RootStateOrAny) => state.file.loading);
