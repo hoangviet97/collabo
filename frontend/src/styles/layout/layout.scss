@@ -27,6 +27,11 @@
   justify-content: center;
 }
 
+.justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .coming-soon {
   position: absolute;
   top: 50%;

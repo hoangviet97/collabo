@@ -25,6 +25,21 @@
     color: rgb(199, 199, 199);
     font-size: 40px;
   }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-user {
+      display: none;
+
+      @media screen and (max-width: 1090px) {
+        display: block;
+      }
+    }
+  }
 }
 
 .side-nav {

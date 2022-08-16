@@ -12,16 +12,14 @@
   }
 
   &-footer {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     align-items: center;
   }
 }
 
 .projects {
   &__toolbar {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     margin-bottom: 20px;
 
     &-right {
@@ -31,8 +29,7 @@
 }
 
 .projects-dimension {
-  display: flex;
-  justify-content: space-between;
+  @extend .justify-between;
   align-items: center;
   background-color: white;
   height: 35px;
@@ -86,4 +83,8 @@
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: auto;
   grid-gap: 1rem;
+
+  @media screen and (max-width: 1040px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

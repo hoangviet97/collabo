@@ -13,8 +13,7 @@
   }
 
   &__preview {
-    display: flex;
-    align-items: center;
+    @extend .items-center;
     margin-top: 20px;
     width: 100%;
   }

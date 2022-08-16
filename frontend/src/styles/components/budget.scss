@@ -3,8 +3,7 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   height: 35vh;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
+  @extend .items-center;
   padding: 0 30px;
 }
 
@@ -21,8 +20,7 @@
   }
 
   &__progress {
-    display: flex;
-    align-items: center;
+    @extend .items-center;
     margin-top: 10px;
   }
 
@@ -42,8 +40,7 @@
   border-radius: 10px;
   margin-bottom: 12px;
   padding: 15px 28px;
-  display: flex;
-  justify-content: space-between;
+  @extend .justify-between;
 }
 
 .income {
@@ -51,8 +48,7 @@
   border-radius: 10px;
   margin-bottom: 12px;
   padding: 15px 28px;
-  display: flex;
-  justify-content: space-between;
+  @extend .justify-between;
 
   &__form {
     width: 35%;
@@ -61,8 +57,7 @@
     border-radius: 12px;
     margin-left: 15px;
     padding: 30px;
-    display: flex;
-    justify-content: center;
+    @extend .justify-center;
     align-items: center;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }

@@ -1,7 +1,6 @@
 .session {
   height: calc(100vh - 180px);
   display: flex;
-  gap: 30px;
 
   &__welcome {
     position: absolute;
@@ -91,6 +90,7 @@
 
   &__control-panel {
     background-color: white;
+    margin-right: 25px;
     padding: 25px 35px;
     height: calc(100vh - 180px);
     width: 450px;

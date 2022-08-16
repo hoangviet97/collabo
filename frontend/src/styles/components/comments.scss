@@ -7,8 +7,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   &__author {
-    display: flex;
-    align-items: center;
+    @extend .items-center;
   }
 
   &__body {
@@ -16,8 +15,7 @@
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     align-items: center;
     margin-bottom: 20px;
   }

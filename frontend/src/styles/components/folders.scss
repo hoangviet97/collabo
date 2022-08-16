@@ -41,8 +41,7 @@
 
 .folder {
   &__header {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     margin-bottom: 20px;
   }
 }

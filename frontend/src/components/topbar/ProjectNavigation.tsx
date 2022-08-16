@@ -144,8 +144,10 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
               </div>
             </div>
             <div className="single-navigation__title">
-              <div>
-                <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div className="single-navigation__name">
+                  <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
+                </div>
                 <InfoCircleOutlined onClick={() => setIsModalVisible(true)} />
               </div>
             </div>

@@ -9,8 +9,7 @@
   height: calc(100vh - 180px);
 
   &__header {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
   }
 
   &__empty {
@@ -32,9 +31,8 @@
   }
 
   &__link {
-    display: flex;
+    @extend .justify-between;
     color: $primary-text-color;
-    justify-content: space-between;
 
     &:hover {
       color: $normal_blue;
@@ -44,8 +42,7 @@
   &__footer {
     border-top: 0.5px solid #bdc3c738;
     padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
   }
 
   &__panel {

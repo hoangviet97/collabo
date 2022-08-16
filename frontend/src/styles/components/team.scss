@@ -31,8 +31,7 @@
       width: 40%;
       height: 50px;
       background-color: white;
-      display: flex;
-      align-items: center;
+      @extend .items-center;
       border-radius: 12px;
       padding: 0 8px;
       margin-left: 30px;

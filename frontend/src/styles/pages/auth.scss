@@ -16,6 +16,10 @@
     display: flex;
     align-items: center;
     overflow: hidden;
+
+    @include tablet {
+      flex: 0;
+    }
   }
 
   &__container {
@@ -30,10 +34,18 @@
     align-items: center;
     justify-content: center;
     box-shadow: 10px 0 5px -2px #888;
+
+    @include tablet {
+      flex: 1;
+    }
   }
 
   &__form {
     width: 70%;
+
+    @include phone {
+      width: 90%;
+    }
   }
 
   &__element {

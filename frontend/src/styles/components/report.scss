@@ -43,8 +43,7 @@
     height: calc(100vh - 160px);
 
     &-list {
-      display: flex;
-      align-items: center;
+      @extend .items-center;
       margin-bottom: 15px;
     }
   }
@@ -66,8 +65,7 @@
     }
 
     &__header {
-      display: flex;
-      justify-content: space-between;
+      @extend .justify-between;
       gap: 60px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       padding: 25px;
