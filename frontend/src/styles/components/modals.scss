@@ -22,8 +22,7 @@
   }
 
   &__identity {
-    display: flex;
-    align-items: center;
+    @extend .items-center;
     gap: 8px;
   }
 }

@@ -7,9 +7,17 @@
   padding: 0 50px;
   z-index: 999;
 
+  @media screen and (max-width: 1090px) {
+    overflow-x: scroll;
+  }
+
   &__profile {
     float: right;
     line-height: 60px;
+
+    @media screen and (max-width: 1090px) {
+      display: none;
+    }
 
     &-name {
       margin-left: 10px;

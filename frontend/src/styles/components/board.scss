@@ -9,14 +9,12 @@
     border-radius: 10px;
 
     &-header {
-      display: flex;
-      justify-content: space-between;
+      @extend .justify-between;
       align-items: center;
     }
 
     &-footer {
-      display: flex;
-      justify-content: space-between;
+      @extend .justify-between;
       margin-top: 20px;
     }
   }

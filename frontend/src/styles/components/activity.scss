@@ -1,12 +1,10 @@
 .activity {
   &__header {
-    display: flex;
-    justify-content: center;
+    @extend .justify-center;
   }
 
   &__wrapper {
-    display: flex;
-    justify-content: center;
+    @extend .justify-center;
     margin-top: 50px;
   }
 }

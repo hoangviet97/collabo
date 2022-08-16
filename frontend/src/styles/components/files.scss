@@ -41,8 +41,7 @@
   }
 
   &__folders-header {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     align-items: start;
     margin-bottom: 10px;
   }
@@ -64,8 +63,7 @@
   }
 
   &__recent-files-header {
-    display: flex;
-    justify-content: space-between;
+    @extend .justify-between;
     align-items: start;
     margin-bottom: 10px;
   }
@@ -95,8 +93,7 @@
     }
 
     &__header {
-      display: flex;
-      justify-content: space-between;
+      @extend .justify-between;
     }
 
     &__filesize {
@@ -106,8 +103,7 @@
     }
 
     &__footer {
-      display: flex;
-      justify-content: space-between;
+      @extend .justify-between;
       align-items: center;
     }
   }
