@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -9,6 +9,7 @@ import color from "../../styles/abstract/variables.module.scss";
 
 const Sidebar: React.FunctionComponent = () => {
   const dispatch = useDispatch();
+  const [selectedItem, setSelectedItem] = useState<string>("");
   const invitations = useSelector((state: RootStateOrAny) => state.invitation.invitations);
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
 
@@ -21,32 +22,32 @@ const Sidebar: React.FunctionComponent = () => {
       <div className="sidebar__top">
         <div className="sidebar__logo">c.</div>
         <nav className="side-nav">
-          <div>
+          <div style={{ textAlign: "center" }}>
             <Tooltip placement="right" title="Home">
-              <Link className="side-nav__link" to="/">
+              <Link className="side-nav__link" to="/" onClick={() => setSelectedItem("home")}>
                 <HomeOutlined className="side-nav__icon" />
               </Link>
             </Tooltip>
           </div>
-          <div>
+          <div style={{ textAlign: "center" }}>
             <Tooltip placement="right" title="My Tasks">
-              <Link className="side-nav__link" to="/my-tasks">
+              <Link className="side-nav__link" to="/my-tasks" onClick={() => setSelectedItem("tasks")}>
                 <ProfileOutlined className="side-nav__icon" />
               </Link>
             </Tooltip>
           </div>
-          <div>
+          <div style={{ textAlign: "center" }}>
             <Tooltip placement="right" title="Invitations">
-              <Link className="side-nav__link" to="/notify">
+              <Link className="side-nav__link" to="/notify" onClick={() => setSelectedItem("invitations")}>
                 <Badge count={invitations.length}>
                   <BellOutlined className="side-nav__icon" />
                 </Badge>
               </Link>
             </Tooltip>
           </div>
-          <div>
+          <div style={{ textAlign: "center" }}>
             <Tooltip placement="right" title="Settings">
-              <Link className="side-nav__link" to="/settings">
+              <Link className="side-nav__link" to="/settings" onClick={() => setSelectedItem("settings")}>
                 <SettingOutlined className="side-nav__icon" />
               </Link>
             </Tooltip>

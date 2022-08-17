@@ -3,7 +3,7 @@ import SessionPanelItem from "./SessionPanelItem";
 import { session } from "../../types/types";
 
 interface Props {
-  sessions: any;
+  sessions: session[];
   match: any;
 }
 

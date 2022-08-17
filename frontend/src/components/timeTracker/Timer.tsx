@@ -7,9 +7,10 @@ import { useParams } from "react-router-dom";
 
 interface Props {
   localstorage: any;
+  disabled: boolean;
 }
 
-const Timer: FC<Props> = ({ localstorage }) => {
+const Timer: FC<Props> = ({ localstorage, disabled }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [timer, setTimer] = useState<number>(0);
@@ -70,7 +71,7 @@ const Timer: FC<Props> = ({ localstorage }) => {
           <span>{formatTime()}</span>
           <div className="buttons">
             {!isActive ? (
-              <button className="time__button-action" onClick={handleStart}>
+              <button disabled={disabled} className="time__button-action" onClick={handleStart}>
                 <CaretRightOutlined />
               </button>
             ) : (

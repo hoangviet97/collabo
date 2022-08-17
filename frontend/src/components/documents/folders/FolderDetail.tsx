@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Button, Skeleton } from "antd";
 import { getFolder } from "../../../actions/folder";
 import { getFilesByFolder } from "../../../actions/file";
-import { getProjectTasks } from "../../../actions/task";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import FileCard from "../files/FileCard";
 import { file } from "../../../types/types";

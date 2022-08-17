@@ -1,12 +1,17 @@
 import { GET_UNSEEN_LOGS, GET_LOGS } from "../../actions/types";
 import { log } from "../../types/types";
 
+interface logState {
+  logs: log[];
+  loading: boolean;
+}
+
 const initialState = {
   logs: [],
   loading: false
 };
 
-function logReducer(state = initialState, action: any) {
+function logReducer(state: logState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

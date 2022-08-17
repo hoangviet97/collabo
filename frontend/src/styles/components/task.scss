@@ -206,6 +206,8 @@
       width: 11%;
       display: flex;
       justify-content: center;
+      color: grey;
+      align-items: center;
     }
 
     &__done {
@@ -234,7 +236,7 @@
       height: 100%;
       display: flex;
       align-items: center;
-      border-right: "0.5px solid #dfe4ea";
+      border-right: 0.5px solid #dfe4ea;
       text-align: center;
     }
 
@@ -242,10 +244,6 @@
       border-right: none;
     }
   }
-}
-
-.task-select {
-  transition: color 0.2s;
 }
 
 .back-drop {

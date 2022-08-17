@@ -35,8 +35,9 @@ export const deleteFolder = (project_id: string, folder_id: string) => async (di
     const res = await axiosClient.delete(`/${project_id}/folders/${folder_id}`);
     dispatch({ type: DELETE_FOLDER, payload: folder_id });
     message.success("Folder deleted");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_FOLDERS_FAIL });
+    message.error(err.response.data.message);
   }
 };
 

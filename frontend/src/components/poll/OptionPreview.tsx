@@ -4,7 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 
 interface Props {
   text: string;
-  removeOption: any;
+  removeOption: (text: string) => void;
 }
 
 const OptionPreview: FC<Props> = ({ text, removeOption }) => {

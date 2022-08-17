@@ -1,5 +1,5 @@
-import React, { useEffect, FC } from "react";
-import { Avatar, Input, Badge } from "antd";
+import React, { FC } from "react";
+import { Avatar, Badge } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Link } from "react-router-dom";
 import color from "../../styles/abstract/variables.module.scss";
@@ -12,7 +12,7 @@ interface Props {
 const ReviewLink: FC<Props> = ({ member, match }) => {
   return (
     <div className="review__link">
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
+      <div className="review__link-wrapper">
         <Avatar style={{ backgroundColor: member.color === null || member.color.length < 1 ? color.normal_orange : member.color }}>
           <AvatarIcon firstname={member.firstname} lastname={member.lastname} />
         </Avatar>

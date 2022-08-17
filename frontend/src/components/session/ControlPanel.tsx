@@ -12,10 +12,10 @@ interface Props {
 }
 
 const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
-  const dispatch = useDispatch();
   const [filteredSessions, setFilteredSessions] = useState([]);
   const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const sessionsLoading = useSelector((state: RootStateOrAny) => state.session.loading);
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 
   useEffect(() => {
     showAllSessions();
@@ -49,7 +49,7 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
                 Past
               </Button>
             </div>
-            <Button onClick={addNewSession}>
+            <Button disabled={user_role === "Member" ? true : false} onClick={addNewSession}>
               <PlusOutlined />
             </Button>
           </div>

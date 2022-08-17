@@ -10,7 +10,7 @@ interface Props {
 const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
   const [question, setQuestion] = useState<string>("");
   const [viewData, setViewData] = useState<boolean>(false);
-  const [optionArr, setOptionArr] = useState<any>([]);
+  const [optionArr, setOptionArr] = useState<string[]>([]);
   const [option, setOption] = useState<string>("");
 
   const submitOptionHandler = (e: any) => {
@@ -23,8 +23,8 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
     }
   };
 
-  const removeOption = (value: any) => {
-    const newArr = optionArr.filter((x: any) => x !== value);
+  const removeOption = (value: string) => {
+    const newArr = optionArr.filter((x: string) => x !== value);
     setOptionArr(newArr);
   };
 

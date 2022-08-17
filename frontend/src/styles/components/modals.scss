@@ -9,6 +9,13 @@
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   //box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
+
+  &__col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 
   &__item {
     margin-bottom: 6px;

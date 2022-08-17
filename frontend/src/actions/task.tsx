@@ -7,9 +7,9 @@ export const createTask = (project_id: string, task: any) => async (dispatch: an
     const res = await axiosClient.post(`/${project_id}/tasks/add`, { task });
     message.success("New task created!");
     dispatch({ type: CREATE_TASK, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: CREATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -65,10 +65,9 @@ export const updateTaskStatus = (id: string, statusId: string, project_id: strin
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/status`, { statusId });
     dispatch({ type: UPDATE_TASK_STATUS, payload: { id: id, status: statusId } });
     message.success("Task updated!");
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -76,9 +75,9 @@ export const setBudget = (id: string, budget: number, project_id: string) => asy
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/budget`, { budget });
     message.success("Task updated!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -86,9 +85,9 @@ export const setProgress = (id: string, progress: number, project_id: string) =>
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/progress`, { progress });
     dispatch({ type: SET_PROGRESS, payload: { id: id, progress: progress } });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -96,9 +95,9 @@ export const setDescription = (id: string, description: string, project_id: stri
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/description`, { description });
     message.success("Task updated!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -107,9 +106,9 @@ export const updateTaskPriority = (id: string, priorityId: string, project_id: s
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/priority`, { priorityId });
     dispatch({ type: UPDATE_TASK_PRIORITY, payload: { id, priorityId } });
     message.success("Task updated!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -118,9 +117,9 @@ export const updateTitle = (id: string, title: string, project_id: string) => as
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/title`, { title });
     dispatch({ type: UPDATE_TASK_TITLE, payload: { id, title } });
     message.success("Task updated!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -128,9 +127,9 @@ export const updateTaskStartDate = (id: string, date: any, project_id: string) =
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/start`, { date });
     dispatch({ type: UPDATE_TASK_START, payload: { id, date } });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -167,9 +166,9 @@ export const createAssignee = (user_id: string, task_id: string, project_id: str
     const res = await axiosClient.post(`/${project_id}/tasks/${task_id}/assignees/${user_id}`);
     console.log(res);
     dispatch({ type: CREATE_ASSIGNEE, payload: res.data[0] });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 
@@ -177,8 +176,9 @@ export const deleteAssignee = (user_id: string, task_id: string, project_id: str
   try {
     const res = await axiosClient.delete(`/${project_id}/tasks/${task_id}/assignees/${user_id}`);
     dispatch({ type: DELETE_ASSIGNEE, payload: { user_id, task_id } });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
+    message.error(err.response.data.message);
   }
 };
 
@@ -187,9 +187,9 @@ export const deleteTask = (id: string, project_id: string) => async (dispatch: a
     const res = await axiosClient.delete(`/${project_id}/tasks/${id}`);
     dispatch({ type: DELETE_TASK, payload: id });
     message.success("Task deleted!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: DELETE_TASK_FAIL });
-    message.error("Something went wrong!");
+    message.error(err.response.data.message);
   }
 };
 

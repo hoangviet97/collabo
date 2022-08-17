@@ -34,6 +34,12 @@
     @extend .justify-between;
     color: $primary-text-color;
 
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
     &:hover {
       color: $normal_blue;
     }

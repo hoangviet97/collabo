@@ -9,6 +9,7 @@ const Invitations: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 
   const deleteRecordHandler = (id: string) => {
     dispatch(deleteInvitation(params.id, id));
@@ -32,7 +33,7 @@ const Invitations: React.FunctionComponent = () => {
       key: "",
       render: (record: any) => (
         <Space size="middle">
-          <Button type="link" onClick={() => deleteRecordHandler(record.id)}>
+          <Button disabled={user_role === "Member" ? true : false} type="link" onClick={() => deleteRecordHandler(record.id)}>
             Delete
           </Button>
         </Space>

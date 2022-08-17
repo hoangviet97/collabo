@@ -55,6 +55,15 @@ export const getProject = ({ project_id, push }) => async (dispatch) => {
   }
 };
 
+export const changeName = ({ project_id, name }) => async (dispatch) => {
+  try {
+    const res = await axiosClient.patch(`/${project_id}/name`, { name });
+    dispatch({ type: SET_PROJECT_BUDGET, payload: name });
+  } catch (err) {
+    dispatch({ type: SET_FAVORITE_PROJECT_FAIL });
+  }
+};
+
 export const setFavorite = ({ project_id, status }) => async (dispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/favorite`, { status: status });

@@ -2,6 +2,14 @@ import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING
 import moment from "moment";
 import { session } from "../../types/types";
 
+interface sessionState {
+  sessions: session[];
+  single: any;
+  loading: boolean;
+  singleLoading: boolean;
+  participants: any[];
+}
+
 const initialState = {
   sessions: [],
   single: {},
@@ -10,7 +18,7 @@ const initialState = {
   participants: []
 };
 
-function sessionReducer(state = initialState, action: any) {
+function sessionReducer(state: sessionState = initialState, action: any) {
   const { type, payload } = action;
   const today: Date = new Date();
 
@@ -34,7 +42,8 @@ function sessionReducer(state = initialState, action: any) {
     case GET_SESSIONS_FAIL:
       return {
         ...state,
-        sessions: []
+        sessions: [],
+        loading: false
       };
     case GET_SESSION:
       return {

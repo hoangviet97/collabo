@@ -65,10 +65,10 @@ const Tags: FC<Props> = ({ match }) => {
           <Spin />
         ) : (
           <div className="tag__groups">
-            {groupList.map((i) => {
+            {groupList.map((i, index: number) => {
               const letter = i.title;
               const tagslist = tags.filter((x: tag) => x.name.charAt(0) === i.title.toLocaleLowerCase());
-              return <TagGroup title={i.title} tags={tagslist} />;
+              return <TagGroup key={index} title={i.title} tags={tagslist} />;
             })}
           </div>
         )}

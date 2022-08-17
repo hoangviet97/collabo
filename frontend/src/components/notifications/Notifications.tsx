@@ -10,15 +10,13 @@ const Notifications: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const invitations: Invitation[] = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
-  const socket = useContext(SocketContext);
-
   useEffect(() => {
     dispatch(getAllInvitations());
   }, []);
 
   return (
     <Container size="30">
-      <div className="notifications" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div className="invitation">
         <h1>Invitations</h1>
         <div className="invitation__box" style={{ width: "60%" }}>
           {invitations.map((item: Invitation, index: number) => (

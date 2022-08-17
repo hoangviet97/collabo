@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { FC } from "react";
 import { Switch, Route } from "react-router-dom";
 import ReviewList from "./ReviewList";
 import ReviewDefault from "./ReviewDefault";

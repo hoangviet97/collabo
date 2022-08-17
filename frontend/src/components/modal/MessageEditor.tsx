@@ -6,10 +6,10 @@ import { PlusCircleOutlined, UploadOutlined, CheckCircleOutlined } from "@ant-de
 import PollEditor from "../poll/PollEditor";
 
 interface Props {
-  project: any;
-  visible: any;
-  handleCancel: any;
-  handleOk: any;
+  project: string;
+  visible: boolean;
+  handleCancel: () => void;
+  handleOk: () => void;
 }
 
 const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) => {
