@@ -3,6 +3,7 @@ import { Breadcrumb, Button, Modal, Input, Select, Divider, Typography, Tag } fr
 import { EditOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useParams } from "react-router-dom";
 import { createTaskTag } from "../../actions/tag";
 import { getFilesByTask, getAllFiles } from "../../actions/file";
 import { setBudget, setDescription, updateTaskPriority, updateTitle } from "../../actions/task";
@@ -36,6 +37,7 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
   const { TextArea } = Input;
 
   const { Option } = Select;
+  const params: any = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,10 +48,6 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
     dispatch(getFilesByTask({ id: task.id, project_id: projectId }));
     dispatch(getAllFiles({ project_id: projectId }));
   }, [task]);
-
-  useEffect(() => {
-    console.log("hahaha");
-  }, [taskTitle]);
 
   useEffect(() => {
     const child = [];

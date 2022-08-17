@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import Container from "../utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Dropdown, Menu, Typography, Select, Divider, Skeleton } from "antd";
@@ -14,7 +14,11 @@ import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
 import TaskDetailModal from "../modal/TaskDetailModal";
 
-const PersonalTasks = () => {
+interface Props {
+  match: any;
+}
+
+const PersonalTasks: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const projects = useSelector((state: RootStateOrAny) => state.project.projects);
   const sections = useSelector((state: RootStateOrAny) => state.section.sections);
@@ -233,7 +237,7 @@ const PersonalTasks = () => {
                           if (section.id === task.sections_id) {
                             const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                             if (taskVisual === "list") {
-                              return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
+                              return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
                             } else if (taskVisual === "card") {
                               return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                             }

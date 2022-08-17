@@ -20,7 +20,7 @@ const ReviewList: React.FunctionComponent = () => {
           <Empty />
         </div>
       ) : (
-        reviews.map((item: any) => <Review review={item} />)
+        reviews.map((item: any, index: number) => <Review key={index} review={item} />)
       )}
     </div>
   );

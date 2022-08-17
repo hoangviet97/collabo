@@ -253,7 +253,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
-                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} />;
+                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
                         } else if (taskVisual === "card") {
                           return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }

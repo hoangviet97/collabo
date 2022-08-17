@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu, Typography, Tag, Popover } from "antd";
+import { Avatar, Dropdown, Menu, Typography, Tag, Popover, message } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { createReview } from "../../actions/review";
@@ -9,7 +9,7 @@ import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Redirect } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
 import TaskDate from "./TaskDate";
@@ -25,9 +25,10 @@ interface Props {
   members: member[];
   task: task;
   start_date: Date;
+  match: any;
 }
 
-const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, members, task, start_date }) => {
+const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, members, task, start_date, match }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const loc = useLocation();
@@ -35,10 +36,8 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
 
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
-
   const { Text } = Typography;
   const { Option } = Select;
-  console.log(loc);
   const sectionMenu = () => (
     <Menu>
       <Menu.Item key="1" onClick={submitTaskHandler}>
@@ -65,7 +64,11 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
   };
 
   const submitTaskHandler = () => {
-    dispatch(createReview(task.id, params.id));
+    if (localStorage.getItem(`timer${task.id}`) === null) {
+      dispatch(createReview(task.id, params.id));
+    } else {
+      message.error("Timer is running!");
+    }
   };
 
   const switchTaskStatusHandler = (value: any) => {
