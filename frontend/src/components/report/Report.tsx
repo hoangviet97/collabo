@@ -90,7 +90,7 @@ const Report: React.FunctionComponent = () => {
             <LineChartOutlined className="report__header-icon" />
             <span style={{ fontSize: "22px" }}>Average working time</span>
           </div>
-          <div className="report__header-value">{Math.floor(avgTime / 60) < 5400 ? `${Math.floor(avgTime / 60)}  minutes` : `${Math.floor(avgTime / 3600)}  hours`}</div>
+          <div className="report__header-value">{Math.floor(avgTime / 60) < 5400 ? `${isNaN(Math.floor(avgTime / 60)) ? 0 : Math.floor(avgTime / 60)}  minutes` : `${isNaN(Math.floor(avgTime / 3600)) ? 0 : Math.floor(avgTime / 3600)}  hours`}</div>
         </div>
       </div>
 

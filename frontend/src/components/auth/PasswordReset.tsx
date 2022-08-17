@@ -1,8 +1,8 @@
-import React, { useEffect, FC } from "react";
+import React, { FC } from "react";
 import { Button, Input, Form, message } from "antd";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { setNewPassword } from "../../actions/auth";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface Props {
   match: any;

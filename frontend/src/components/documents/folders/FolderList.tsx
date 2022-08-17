@@ -6,7 +6,7 @@ import { useSelector, RootStateOrAny } from "react-redux";
 import CardSkeleton from "../../skeletons/CardSkeleton";
 
 interface Props {
-  showModal: any;
+  showModal: (modalType: string) => void;
 }
 
 const FolderList: FC<Props> = ({ showModal }) => {

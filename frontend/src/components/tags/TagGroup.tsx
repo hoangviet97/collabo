@@ -22,8 +22,8 @@ const TagGroup: FC<Props> = ({ title, tags }) => {
     <div style={{ margin: "18px 0" }}>
       <Divider />
       <h2 style={{ fontSize: "35px", color: "grey" }}>{title}</h2>
-      {tags.map((i: tag) => (
-        <Tag color="cyan" style={{ fontSize: "18px", padding: "6px" }} onClose={() => deleteHandler(i.id)} closable>
+      {tags.map((i: tag, index: number) => (
+        <Tag key={index} color="cyan" style={{ fontSize: "18px", padding: "6px" }} onClose={() => deleteHandler(i.id)} closable>
           #{i.name}
         </Tag>
       ))}

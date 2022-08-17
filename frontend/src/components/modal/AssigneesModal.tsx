@@ -52,12 +52,12 @@ const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
 
   return (
     <>
-      <div className="assignee-modal" style={{ borderRadius: "10px", zIndex: 99999 }}>
+      <div className="assignee-modal">
         <Row style={{ marginBottom: "10px" }}>
           <Col span="18">
             <Input size="small" value={searchText} onChange={(e) => searchTextHandle(e)} />
           </Col>
-          <Col span="6" style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+          <Col span="6" className="assignee-modal__col">
             <a onClick={close}>
               <CloseCircleOutlined style={{ color: "crimson", fontSize: "18px" }} />
             </a>

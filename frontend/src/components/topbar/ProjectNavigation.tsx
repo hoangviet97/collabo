@@ -1,12 +1,11 @@
 import React, { useState, useEffect, FC } from "react";
-import { Popover, Modal, Form, Input, Menu, Button, Radio, Select, Badge } from "antd";
+import { Popover, Modal, Form, Input, Menu, Button, Radio, Select } from "antd";
 import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { updateColor, updateStatus, deleteProject, setCurrency } from "../../actions/project";
-import { getProjectTasks } from "../../actions/task";
+import { updateColor, updateStatus, deleteProject, setCurrency, changeName } from "../../actions/project";
 import AvatarIcon from "../utils/AvatarIcon";
-import ColorList, { colorList } from "../utils/Colors";
+import { colorList } from "../utils/Colors";
 
 interface Props {
   history: any;
@@ -15,7 +14,6 @@ interface Props {
 const ProjectNavigation: FC<Props> = ({ history }) => {
   let path = window.location.pathname;
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
-  const logs = useSelector((state: RootStateOrAny) => state.log.logs);
 
   const { push } = history;
 
@@ -24,7 +22,6 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   const dispatch = useDispatch();
   const currentProject = useSelector((state: RootStateOrAny) => state.project.currentProject);
   const auth = useSelector((state: RootStateOrAny) => state.project.authorized);
-  const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [projectName, setProjectName] = useState<string>("");
   const [showIconTab, setIconTab] = useState<boolean>(false);
@@ -111,8 +108,13 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
 
   const handleIconColor = (color: string) => {
     setIconColorSelection(color);
-    console.log(color);
     dispatch(updateColor({ project_id: currentProject.id, color: color }));
+  };
+
+  const changeProjectNameHandler = () => {
+    if (projectName !== currentProject.name) {
+      dispatch(changeName({ project_id: currentProject.id, name: projectName }));
+    }
   };
 
   const projectStatusHandle = (e: any) => {
@@ -123,14 +125,6 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
     dispatch(setCurrency({ project_id: currentProject.id, currency: value }));
   };
 
-  const projectInfoMenu = (
-    <Menu>
-      <Menu.Item>
-        <a onClick={showModal}>Show details</a>
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
     <>
       {auth === false ? (
@@ -139,16 +133,13 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
         <div className="single-navigation">
           <div className="single-navigation__identity">
             <div className="single-navigation__icon">
-              <div style={{ width: "40px", display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "29px", height: "40px", borderRadius: "8px", backgroundColor: currentProject.color !== null || currentProject.color !== undefined ? currentProject.color : "grey" }}>
+              <div className="single-navigation__box" onClick={() => setIsModalVisible(true)} style={{ backgroundColor: currentProject.color !== null || currentProject.color !== undefined ? currentProject.color : "grey" }}>
                 <AvatarIcon firstname={currentProject.name} />
               </div>
             </div>
             <div className="single-navigation__title">
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <div className="single-navigation__name">
-                  <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
-                </div>
-                <InfoCircleOutlined onClick={() => setIsModalVisible(true)} />
+              <div className="single-navigation__name">
+                <span style={{ marginRight: "4px", color: "#2f3542" }}>{currentProject && currentProject.name}</span>
               </div>
             </div>
           </div>
@@ -201,7 +192,9 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
             <div className="project-detail__icon-box" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
               <div className="icon-box" style={{ width: "100px", height: "100px", backgroundColor: currentProject.color, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "50px", borderRadius: "12px", color: "white" }}></div>
               <div className="icon-box__select">
-                <Button onClick={() => setIconTab((prev) => !prev)}>Change Color</Button>
+                <Button disabled={user_role === "Member" ? true : false} onClick={() => setIconTab((prev) => !prev)}>
+                  Change Color
+                </Button>
                 {showIconTab && (
                   <div className="icon-custombox" style={{ position: "absolute", marginTop: "5px", zIndex: 99999, backgroundColor: "white", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", padding: "15px 15px", borderRadius: "12px", width: "350px" }}>
                     <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
@@ -216,14 +209,14 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
             <Form>
               <Form.Item>
                 <label>Project name</label>
-                <Input value={projectName} />
+                <Input disabled={user_role === "Member" ? true : false} value={projectName} onBlur={changeProjectNameHandler} onChange={(e) => setProjectName(e.target.value)} />
               </Form.Item>
               <Form.Item>
                 <label>Project description</label>
-                <TextArea rows={4} value={projectDescription} placeholder="Set new description..." />
+                <TextArea disabled={user_role === "Member" ? true : false} rows={4} value={projectDescription} placeholder="Set new description..." />
               </Form.Item>
               <Form.Item>
-                <Select defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
+                <Select disabled={user_role === "Member" ? true : false} defaultValue={currentProject.currency} style={{ width: 120 }} onChange={currencyHandle}>
                   <Option value="czk">CZK</Option>
                   <Option value="usd">USD</Option>
                   <Option value="eur">EUR</Option>
@@ -233,7 +226,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                   <div>
                     <p>Project status</p>
-                    <Radio.Group onChange={projectStatusHandle} defaultValue={currentProject.project_status_id}>
+                    <Radio.Group disabled={user_role === "Member" ? true : false} onChange={projectStatusHandle} defaultValue={currentProject.project_status_id}>
                       <Radio.Button value="0">On Progress</Radio.Button>
                       <Radio.Button value="1">Completed</Radio.Button>
                       <Radio.Button value="2">Canceled</Radio.Button>

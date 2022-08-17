@@ -9,8 +9,8 @@ import { task, member } from "../../types/types";
 interface Props {
   task: task;
   sectionName: string;
-  showModal: any;
-  closeModal: any;
+  showModal: (task: task, sectionName: string) => void;
+  closeModal: () => void;
   assignees: any;
   members: member[];
 }
@@ -64,7 +64,7 @@ const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assigne
           )}
           {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
         </div>
-        <Timer localstorage={task.id} />
+        <Timer localstorage={task.id} disabled={task.statusId === "5" ? true : false} />
       </div>
     </div>
   );

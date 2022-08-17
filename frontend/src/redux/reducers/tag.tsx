@@ -1,13 +1,19 @@
 import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, TAGS_LOADING, RESET_TAGS } from "../../actions/types";
 import { tag } from "../../types/types";
 
+interface tagState {
+  tags: tag[];
+  taskTags: any[];
+  loading: boolean;
+}
+
 const initialState = {
   tags: [],
   taskTags: [],
   loading: false
 };
 
-function tagReducer(state = initialState, action: any) {
+function tagReducer(state: tagState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

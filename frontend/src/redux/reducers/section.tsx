@@ -1,13 +1,19 @@
 import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL, RESET_SECTIONS } from "../../actions/types";
 import { section } from "../../types/types";
 
+interface sectionState {
+  sections: section[];
+  modalSections: section[];
+  loading: boolean;
+}
+
 const initialState = {
   sections: [],
   modalSections: [],
   loading: false
 };
 
-function sectionReducer(state = initialState, action: any) {
+function sectionReducer(state: sectionState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -19,7 +25,8 @@ function sectionReducer(state = initialState, action: any) {
       };
     case CREATE_SECTION_FAIL:
       return {
-        ...state
+        ...state,
+        loading: false
       };
     case GET_SECTIONS:
       return {
@@ -39,7 +46,8 @@ function sectionReducer(state = initialState, action: any) {
       };
     case DELETE_SECTION_FAIL:
       return {
-        ...state
+        ...state,
+        loading: false
       };
     case GET_MODAL_SECTIONS:
       return {
@@ -49,7 +57,8 @@ function sectionReducer(state = initialState, action: any) {
     case GET_MODAL_SECTIONS_FAIL:
       return {
         ...state,
-        modalSections: []
+        modalSections: [],
+        loading: false
       };
     case RESET_SECTIONS:
       return {

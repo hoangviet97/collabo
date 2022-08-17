@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, message, Carousel } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";

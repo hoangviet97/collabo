@@ -1,7 +1,7 @@
-import React, { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 import Container from "../utils/Container";
 import ActivityItem from "./ActivityItem";
-import { getLogs, updateUnseenLogs } from "../../actions/log";
+import { getLogs } from "../../actions/log";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { log } from "../../types/types";
@@ -23,8 +23,8 @@ const Activities: React.FunctionComponent = () => {
       </header>
       <div className="activity__wrapper">
         <div>
-          {logs.map((item: log) => (
-            <ActivityItem data={item} />
+          {logs.map((item: log, index: number) => (
+            <ActivityItem key={index} data={item} />
           ))}
         </div>
       </div>

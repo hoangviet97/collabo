@@ -12,7 +12,6 @@ interface Props {
 const TaskDate: FC<Props> = ({ id, date, type }) => {
   const [datePosition, setDatePosition] = useState({ x: 0, y: 0 });
   const [datePicker, setDatePicker] = useState<any | null>(null);
-  const today = new Date();
 
   const getE = (e: any) => {
     var elem = e.target;

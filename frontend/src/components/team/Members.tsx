@@ -88,7 +88,7 @@ const Members: React.FunctionComponent = () => {
       key: "more",
       render: (text: string, record: any) => (
         <Space size="middle">
-          <Dropdown overlay={() => menu(record.id, record.user_id)} trigger={["click"]}>
+          <Dropdown disabled={user_role === "Member" ? true : false} overlay={() => menu(record.id, record.user_id)} trigger={["click"]}>
             <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
               <EllipsisOutlined />
             </a>

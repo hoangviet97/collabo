@@ -16,7 +16,7 @@ const TimerHeader: FC<Props> = ({ records }) => {
       setTotal((prev) => prev + item.total);
     });
 
-    records.filter((i: any) => moment(i.created_at).format("YYYY MM DD") === moment(today).format("YYYY MM DD")).map((item: any) => setTotalToday((prev) => prev + item.total));
+    records.filter((i: time_record) => moment(i.created_at).format("YYYY MM DD") === moment(today).format("YYYY MM DD")).map((item: any) => setTotalToday((prev) => prev + item.total));
 
     return () => {
       setTotal(0);

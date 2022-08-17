@@ -1,6 +1,4 @@
 .single-navigation {
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   margin-right: 30px;
   position: relative;
@@ -9,15 +7,7 @@
 
   &__list {
     list-style-type: none;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+    @extend .flex-center;
   }
 
   &__link {
@@ -40,29 +30,27 @@
     }
   }
 
+  &__box {
+    width: 40px;
+    @extend .flex-center;
+    cursor: pointer;
+    color: white;
+    font-size: 29px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
   &__icon {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+    @extend .items-center;
   }
 
   &__title {
-    height: 40px;
+    height: 60px;
     padding-left: 7px;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
   }
 
   &__name {
-    max-width: 120px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

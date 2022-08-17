@@ -6,8 +6,9 @@ export const createIncome = (title: string, amount: number, project_id: string) 
   try {
     const res = await axiosClient.post(`/${project_id}/incomes/add`, { title, amount });
     dispatch({ type: CREATE_INCOME, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: INCOME_FAIL });
+    message.error(err.response.data.message);
   }
 };
 

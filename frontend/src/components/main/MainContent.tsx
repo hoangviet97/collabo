@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, useParams } from "react-router-dom";
 import TimeTracker from "../timeTracker/TimeTracker";
 import Projects from "../projects/Projects";
 import UserSettings from "../globalSettings/UserSettings";
@@ -19,8 +19,10 @@ import NotFound from "../layout/NotFound";
 import Session from "../session/Session";
 import PersonalTasks from "../tasks/PersonalTasks";
 import ReviewPage from "../review/ReviewPage";
-import { getProject } from "../../actions/project";
-import { getUnseenLogs } from "../../actions/log";
+import { getProject, resetProject } from "../../actions/project";
+import { resetTasks } from "../../actions/task";
+import { resetSections } from "../../actions/section";
+import { resetTags } from "../../actions/tag";
 import { useDispatch } from "react-redux";
 import ProtectedProjectRoute from "../routing/ProtectedProjectRoute";
 
@@ -38,6 +40,11 @@ const MainContent: FC<Props> = ({ match, history }) => {
   useEffect(() => {
     if (pathValue.length === 8 && /^\d+$/.test(pathValue)) {
       dispatch(getProject({ project_id: pathValue, push: push }));
+    } else {
+      dispatch(resetProject());
+      dispatch(resetTasks());
+      dispatch(resetSections());
+      dispatch(resetTags());
     }
   }, [match]);
 

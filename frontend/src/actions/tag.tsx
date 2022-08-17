@@ -1,13 +1,14 @@
 import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING, RESET_TAGS } from "./types";
 import axiosClient from "../helpers/axios";
+import { message } from "antd";
 
 export const createTag = (project_id: string, name: string, color: string) => async (dispatch: any) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tags/add`, { name, color });
-    console.log(res.data);
     dispatch({ type: CREATE_TAG, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: CREATE_TALKING_POINT_FAIL });
+    message.error(err.response.data.message);
   }
 };
 
@@ -43,8 +44,9 @@ export const deleteTag = (project_id: string, id: string) => async (dispatch: an
   try {
     const res = await axiosClient.delete(`/${project_id}/tags/${id}`);
     dispatch({ type: DELETE_TAGS, payload: id });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
+    message.error(err.response.data.message);
   }
 };
 

@@ -16,11 +16,11 @@ const Poll: FC<Props> = ({ pollData, id }) => {
   const votes = useSelector((state: RootStateOrAny) => state.message.votes);
   const voteCount = votes;
 
-  const setVoteHandler = (option: any) => {
+  const setVoteHandler = (option: string) => {
     dispatch(setPoolVote(params.id, id, profile.firstname, profile.lastname, profile.email, profile.color, pollData.id, option));
   };
 
-  const deleteVoteHandler = (option: any) => {
+  const deleteVoteHandler = (option: string) => {
     dispatch(deletePoolVote(params.id, id, profile.email, pollData.id, option));
   };
 

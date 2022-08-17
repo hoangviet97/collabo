@@ -48,6 +48,10 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
   }, [task]);
 
   useEffect(() => {
+    console.log("hahaha");
+  }, [taskTitle]);
+
+  useEffect(() => {
     const child = [];
     for (let i = 0; i < tags.length; i++) {
       child.push(
@@ -202,8 +206,8 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
               </div>
             </div>
             <div className="task__attachment-list">
-              {files.map((item: file) => (
-                <FileMiniCard data={item} task_id={task.id} deleteProp={true} bordered={false} />
+              {files.map((item: file, index: number) => (
+                <FileMiniCard key={index} data={item} task_id={task.id} deleteProp={true} bordered={false} />
               ))}
             </div>
           </div>

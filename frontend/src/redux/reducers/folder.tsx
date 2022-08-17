@@ -1,13 +1,19 @@
 import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER, FOLDER_LOADING } from "../../actions/types";
 import { folder } from "../../types/types";
 
+interface folderState {
+  folders: folder[];
+  folder: any;
+  loading: boolean;
+}
+
 const initialState = {
   folders: [],
   folder: {},
   loading: false
 };
 
-function folderReducer(state = initialState, action: any) {
+function folderReducer(state: folderState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

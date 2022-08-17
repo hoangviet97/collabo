@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Carousel } from "antd";
+import { Form, Input, Button } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/auth";

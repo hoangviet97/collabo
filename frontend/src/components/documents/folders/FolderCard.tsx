@@ -4,9 +4,10 @@ import { EllipsisOutlined, FolderFilled } from "@ant-design/icons";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { deleteFolder } from "../../../actions/folder";
 import { useDispatch } from "react-redux";
+import { folder } from "../../../types/types";
 
 interface Props {
-  folder: any;
+  folder: folder;
 }
 
 const FolderCard: FC<Props> = ({ folder }) => {

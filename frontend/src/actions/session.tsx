@@ -7,8 +7,9 @@ export const createSession = (session: any, project_id: string) => async (dispat
     const res = await axiosClient.post(`/${project_id}/sessions/add`, { session });
     dispatch({ type: CREATE_SESSION, payload: res.data });
     message.success("Session created!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: CREATE_SESSION_FAIL });
+    message.error(err.response.data.message);
   }
 };
 
@@ -38,8 +39,9 @@ export const deleteSession = (id: string, project_id: string) => async (dispatch
     const res = await axiosClient.delete(`/${project_id}/sessions/${id}`);
     dispatch({ type: DELETE_SESSION, payload: id });
     message.success("Session deleted!");
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_SESSION_FAIL });
+    message.error(err.response.data.message);
   }
 };
 

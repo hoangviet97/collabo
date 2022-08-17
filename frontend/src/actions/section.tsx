@@ -7,9 +7,9 @@ export const createSection = (project_id: string, name: string) => async (dispat
     dispatch(setSectionLoading());
     const res = await axiosClient.post(`/${project_id}/sections/add`, { name });
     dispatch({ type: CREATE_SECTION, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: CREATE_SECTION_FAIL });
-    message.error("Error");
+    message.error(err.response.data.message);
   }
 };
 
@@ -37,9 +37,9 @@ export const deleteSection = (project_id: string, id: string) => async (dispatch
     const res = await axiosClient.delete(`/${project_id}/sections/${id}`);
     message.success("Section deleted!");
     dispatch({ type: DELETE_SECTION, payload: id });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: DELETE_SECTION_FAIL });
-    message.error("Error");
+    message.error(err.response.data.message);
   }
 };
 

@@ -1,21 +1,21 @@
 import React, { useState, FC } from "react";
-import { CalendarOutlined, CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu, Typography, DatePicker, Tag, Popover } from "antd";
+import { CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, Menu, Typography, Tag, Popover } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { createReview } from "../../actions/review";
 import { Select } from "antd";
-import TaskDateModal from "../modal/TaskDateModdal";
 import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
 import TaskDate from "./TaskDate";
 import { getPriorityName } from "../../helpers/converter";
 import color from "../../styles/abstract/variables.module.scss";
+import { getStatusColor } from "../../helpers/colorConverter";
 
 interface Props {
   showModal: (task: task, sectionName: string) => void;
@@ -30,15 +30,15 @@ interface Props {
 const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, members, task, start_date }) => {
   const dispatch = useDispatch();
   const params: any = useParams();
+  const loc = useLocation();
   const [done, setDone] = useState(task.statusId);
   const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
-  const today = new Date();
 
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 
   const { Text } = Typography;
   const { Option } = Select;
-
+  console.log(loc);
   const sectionMenu = () => (
     <Menu>
       <Menu.Item key="1" onClick={submitTaskHandler}>
@@ -96,11 +96,13 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
 
   return (
     <div className="task-column">
-      <div onClick={modalHandler} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px", overflow: "hidden", borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
-        <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? "#6ab04c" : "#ededed" }} />
-        <div className="text-ellipsis">{task.title}</div>
+      <div onClick={modalHandler} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px", overflow: "hidden" }}>
+        <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? color.light_green : "#ededed" }} />
+        <div className="text-ellipsis" style={{ textDecoration: done === "3" ? "line-through" : "" }}>
+          {task.title}
+        </div>
       </div>
-      <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center", borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
+      <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         {assignees.length > 0 ? (
           <>
             <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
@@ -125,9 +127,9 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
         )}
         {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
       </div>
-      <div className="task-column__item task-column__status task-column__status--active" style={{ borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
+      <div className="task-column__item task-column__status task-column__status--active" style={{ backgroundColor: done === "3" ? color.light_green : "white" }}>
         {task.statusId === "5" ? (
-          <div className="task__review-title">
+          <div>
             <span>Under Review</span>
           </div>
         ) : (
@@ -140,7 +142,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
           </Select>
         )}
       </div>
-      <div className="task-column__item task-column__priority" style={{ color: "grey", display: "flex", justifyContent: "center", alignItems: "center", borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
+      <div className="task-column__item task-column__priority">
         <Select className="task-select" defaultValue={task.priorityId} disabled={task.statusId === "5" || user_role === "Member" ? true : false} onChange={switchPriorityHandler} showArrow={false} style={{ width: "100%" }} bordered={false}>
           <Option value="0">
             <Tag color="gold">Low</Tag>
@@ -153,13 +155,13 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
           </Option>
         </Select>
       </div>
-      <div className="task-column__item task-column__due-date" style={{ borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
+      <div className="task-column__item task-column__due-date">
         <TaskDate id={task.id} date={task.due_date} type="due_date" />
       </div>
-      <div className="task-column__item task-column__timer" style={{ borderRight: "0.5px solid #dfe4ea", backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
-        <Timer localstorage={task.id} />
+      <div className="task-column__item task-column__timer">
+        <Timer localstorage={task.id} disabled={task.statusId === "5" ? true : false} />
       </div>
-      <div className="task-column__item task-column__more" style={{ backgroundColor: done === "3" ? "#e2f6d4" : "white" }}>
+      <div className="task-column__item task-column__more">
         {task.statusId === "5" ? (
           <EllipsisOutlined style={{ fontSize: "22px" }} />
         ) : (

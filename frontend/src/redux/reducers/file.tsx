@@ -1,6 +1,16 @@
 import { GET_FILES, UPLOAD_FILE, GET_FOLDER_FILES, MOVE_TO_FOLDER, FILE_DETAIL, FILE_LOADING, GET_FILE_TYPES, DELETE_FILE, GET_TASK_FILES, UPLOAD_ATTACH_FILE, EJECT_FILE } from "../../actions/types";
 import { file } from "../../types/types";
 
+interface fileState {
+  files: file[];
+  folder_files: any[];
+  task_files: any[];
+  fileDetail: any;
+  loading: boolean;
+  statistics: any[];
+  total: number;
+}
+
 const initialState = {
   files: [],
   folder_files: [],
@@ -11,7 +21,7 @@ const initialState = {
   total: 0
 };
 
-function fileReducer(state = initialState, action: any) {
+function fileReducer(state: fileState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

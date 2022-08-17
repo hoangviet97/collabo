@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, RESET_TASKS, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, RESET_TASKS, UPDATE_TASK_START, UPDATE_TASK_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
 import moment from "moment";
 import { task } from "../../types/types";
 
@@ -23,7 +23,13 @@ function taskReducer(state = initialState, action: any) {
       };
     case CREATE_TASK_FAIL:
       return {
-        ...state
+        ...state,
+        loading: false
+      };
+    case UPDATE_TASK_FAIL:
+      return {
+        ...state,
+        loading: false
       };
     case GET_ASSIGNEES:
       return {
@@ -80,7 +86,8 @@ function taskReducer(state = initialState, action: any) {
     case GET_PROJECT_TASKS_FAIL:
       return {
         ...state,
-        tasks: []
+        tasks: [],
+        loading: false
       };
     case UPDATE_TASK_TITLE:
       return {
@@ -124,7 +131,8 @@ function taskReducer(state = initialState, action: any) {
       };
     case DELETE_TASK_FAIL:
       return {
-        ...state
+        ...state,
+        loading: false
       };
     case RESET_TASKS:
       return {

@@ -6,8 +6,8 @@ import { getTagsByTasks, getTags, resetTags } from "../../actions/tag";
 import { getMembers } from "../../actions/member";
 import { resetProject } from "../../actions/project";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Collapse, Input, Button, Dropdown, Menu, Typography, Spin, Select, Divider, Skeleton } from "antd";
-import { CloseOutlined, TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
+import { Collapse, Input, Button, Select, Divider, Skeleton } from "antd";
+import { TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskCard from "./TaskCard";
@@ -35,6 +35,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const assignees = useSelector((state: RootStateOrAny) => state.task.assignees);
   const tags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
   const allTags = useSelector((state: RootStateOrAny) => state.tag.tags);
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 
   // States
   const [taskNameForSearch, setTaskNameForSearch] = useState<string>("");
@@ -67,13 +68,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));
     dispatch(getTags(project_id));
-
-    return () => {
-      dispatch(resetProject());
-      dispatch(resetTasks());
-      dispatch(resetSections());
-      dispatch(resetTags());
-    };
   }, []);
 
   useEffect(() => {
@@ -88,7 +82,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     setNewSection(e.target.value);
   };
 
-  const newTaskVisibilityHandler = (index: any) => {
+  const newTaskVisibilityHandler = (index: number) => {
     setNewTaskIndexes({ [index]: true });
   };
 
@@ -138,9 +132,13 @@ const ProjectTasks: FC<Props> = ({ match }) => {
         <div className="panel-header__title" style={{ marginRight: "30px", fontSize: "20px" }}>
           {name}
         </div>
-        <div style={{ position: "absolute", right: "30px", color: "red", fontSize: "12px" }} onClick={() => deleteSectionHandler(id)}>
-          Delete
-        </div>
+        {user_role !== "Member" ? (
+          <div style={{ position: "absolute", right: "30px", color: "red", fontSize: "12px" }} onClick={() => deleteSectionHandler(id)}>
+            Delete
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </React.Fragment>
   );
@@ -170,7 +168,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     setSelectedVal(val);
     const tasksIds = tags.filter((x: any) => val.includes(x.tags_id));
     const pom = tasksIds.map((x: any) => x.tasks_id);
-    const newTasks = tasks.filter((item: any) => pom.includes(item.id));
+    const newTasks = tasks.filter((item: task) => pom.includes(item.id));
 
     if (val.length > 0) {
       setTaskContainer(newTasks);

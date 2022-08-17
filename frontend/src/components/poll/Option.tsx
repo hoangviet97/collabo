@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, ChangeEvent } from "react";
 import { Checkbox, Avatar, Tooltip } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useSelector, RootStateOrAny } from "react-redux";
@@ -8,8 +8,8 @@ interface Props {
   data: any;
   voteCount: any;
   votes: any;
-  setVoteHandler: any;
-  deleteVotehandler: any;
+  setVoteHandler: (option: string) => void;
+  deleteVotehandler: (option: string) => void;
 }
 
 const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVotehandler }) => {
@@ -22,7 +22,7 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
     setIsChecked(res);
   }, [votes]);
 
-  const checkboxHandler = (e: any) => {
+  const checkboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setVoteHandler(data.id);
       setIsChecked((prev) => !prev);
@@ -38,7 +38,7 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
         <div style={{ marginBottom: "5px" }}>
           <div className="option__content">
             <div style={{ flex: 2 }}>
-              <Checkbox checked={isChecked} onChange={(e) => checkboxHandler(e)} />
+              <Checkbox checked={isChecked} onChange={(e: any) => checkboxHandler(e)} />
               <span style={{ marginLeft: "10px", color: isChecked ? color.base_white : color.primary_text }}>{data.text}</span>
             </div>
             <div style={{ flex: 1, textAlign: "right" }}>

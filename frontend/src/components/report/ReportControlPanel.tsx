@@ -24,8 +24,8 @@ const ReportControlPanel: FC<Props> = ({ match }) => {
     <div className="report__panel">
       <h2>Reports</h2>
       <div style={{ marginTop: "30px" }}>
-        {members.map((member: member) => (
-          <div className="report__panel-list">
+        {members.map((member: member, index: number) => (
+          <div key={index} className="report__panel-list">
             <Avatar style={{ backgroundColor: member.color === null || member.color.length < 1 ? color.normal_orange : member.color }}>
               <AvatarIcon firstname={member.firstname} lastname={member.lastname} />
             </Avatar>
