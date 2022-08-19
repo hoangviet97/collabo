@@ -1,4 +1,4 @@
-import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, TAGS_LOADING, RESET_TAGS } from "../../actions/types";
+import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, DELETE_TASK_TAG, TAGS_LOADING, RESET_TAGS } from "../../actions/types";
 import { tag } from "../../types/types";
 
 interface tagState {
@@ -25,7 +25,7 @@ function tagReducer(state: tagState = initialState, action: any) {
     case CREATE_TASK_TAG:
       return {
         ...state,
-        taskTags: [...state.taskTags, { tasks_id: payload.task, tags_id: payload.tag }]
+        taskTags: [...state.taskTags, { tasks_id: payload.task, tags_id: payload.tag, name: payload.name, color: "green" }]
       };
     case GET_TAGS:
       return {
@@ -42,6 +42,11 @@ function tagReducer(state: tagState = initialState, action: any) {
       return {
         ...state,
         tags: state.tags.filter((x: tag) => x.id !== payload)
+      };
+    case DELETE_TASK_TAG:
+      return {
+        ...state,
+        taskTags: state.taskTags.filter((x: any) => x.tags_id !== payload.tag)
       };
     case RESET_TAGS:
       return {

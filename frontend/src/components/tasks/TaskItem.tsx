@@ -9,7 +9,7 @@ import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
-import { useParams, useLocation, Redirect } from "react-router-dom";
+import { useParams, useLocation, Redirect, Link } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
 import TaskDate from "./TaskDate";
@@ -101,9 +101,11 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, sectionName, assignees, me
     <div className="task-column">
       <div onClick={modalHandler} className="task-column__item task-column__name" style={{ display: "flex", alignItems: "center", gap: "10px", overflow: "hidden" }}>
         <CheckCircleOutlined className="task-column__done" style={{ color: done === "3" ? color.light_green : "#ededed" }} />
-        <div className="text-ellipsis" style={{ textDecoration: done === "3" ? "line-through" : "" }}>
-          {task.title}
-        </div>
+        <Link to={`${match.url}/${task.id}`}>
+          <div className="text-ellipsis" style={{ textDecoration: done === "3" ? "line-through" : "" }}>
+            {task.title}
+          </div>
+        </Link>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
         {assignees.length > 0 ? (

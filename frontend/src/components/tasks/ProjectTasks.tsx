@@ -10,6 +10,7 @@ import { Collapse, Input, Button, Select, Divider, Skeleton } from "antd";
 import { TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
 import TaskDetailModal from "../modal/TaskDetailModal";
+import TaskDetailModal2 from "../modal/TaskDetailModal2";
 import TaskCard from "./TaskCard";
 import { section, tag, task } from "../../types/types";
 import TaskHeader from "./TaskHeader";
@@ -67,12 +68,17 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     dispatch(getAllAssignees(project_id));
     dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));
-    dispatch(getTags(project_id));
   }, []);
 
   useEffect(() => {
     setTaskContainer(tasks);
   }, [tasks]);
+
+  useEffect(() => {
+    if (match.params.taskId !== undefined) {
+      showModal();
+    }
+  }, []);
 
   const taskHandler = (e: any) => {
     setNewTask(e.target.value);
@@ -143,15 +149,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     </React.Fragment>
   );
 
-  const showModal = (task: any, section: any) => {
-    Object.assign(task, { section_name: section });
-    const filteredTags = tags.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { tags: filteredTags });
-    const filteredAssignees = assignees.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { assignees: filteredAssignees });
-    const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
-    setFilteredAssignees(assigneesArray);
-    setTaskDetail(task);
+  const showModal = () => {
     setIsModalVisible(true);
   };
 
@@ -191,6 +189,8 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     setTaskVisual(value);
     localStorage.setItem("task_visual", value);
   };
+
+  // <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
 
   return (
     <div className="project-tasks">
@@ -288,7 +288,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal2 task={match.params.taskId} isVisible={isModalVisible} closeModal={closeModal} match={match} />
         </Container>
       )}
     </div>

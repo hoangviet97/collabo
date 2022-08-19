@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Modal, Input, Select, Divider, Typography, Tag } fr
 import { EditOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { createTaskTag } from "../../actions/tag";
 import { getFilesByTask, getAllFiles } from "../../actions/file";
 import { setBudget, setDescription, updateTaskPriority, updateTitle } from "../../actions/task";
@@ -45,9 +45,11 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
     setmyBudget(task.budget);
     setTagGroup(task.tags);
     setTaskDescription(task.description);
-    dispatch(getFilesByTask({ id: task.id, project_id: projectId }));
-    dispatch(getAllFiles({ project_id: projectId }));
   }, [task]);
+
+  useEffect(() => {
+    dispatch(getFilesByTask({ id: task.id, project_id: projectId }));
+  }, [params.taskId]);
 
   useEffect(() => {
     const child = [];
@@ -89,7 +91,7 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
 
   const submitNewTag = () => {
     const str = tagSelected.split("/");
-    dispatch(createTaskTag(projectId, task.id, str[0]));
+    //dispatch(createTaskTag(projectId, task.id, str[0]));
     setTagGroup([...tagGroup, { id: task.id, projects_id: projectId, name: str[1], color: "green" }]);
     setTagSelected("");
   };
@@ -113,9 +115,11 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
             <Breadcrumb.Item>{task.section_name}</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <Button type="primary" style={{ borderRadius: "10px" }} onClick={() => closeModal()}>
-          X
-        </Button>
+        <Link to={"/"}>
+          <Button type="primary" style={{ borderRadius: "10px" }} onClick={() => closeModal()}>
+            X
+          </Button>
+        </Link>
       </header>
       <div style={{ display: "flex", height: "calc(100% - 60px)" }}>
         <div className="task__detail">
@@ -209,7 +213,6 @@ const TaskDetailModal: FC<Props> = ({ task, tags, projectId, isVisible, closeMod
               ))}
             </div>
           </div>
-          <Divider />
         </div>
       </div>
       <Modal title="New File" width="500px" visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={null}>

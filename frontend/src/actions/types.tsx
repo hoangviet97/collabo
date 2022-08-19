@@ -46,6 +46,7 @@ export const GET_MODAL_SECTIONS: string = "GET_MODAL_SECTIONS";
 export const GET_MODAL_SECTIONS_FAIL: string = "GET_MODAL_SECTIONS_FAIL";
 // TASKS
 export const CREATE_TASK: string = "CREATE_TASK";
+export const GET_TASK: string = "GET_TASK";
 export const GET_ASSIGNEES: string = "GET_ASSIGNEES";
 export const GET_ASSIGNEES_FAIL: string = "GET_ASSIGNEES_FAIL";
 export const CREATE_ASSIGNEE: string = "CREATE_ASSIGNEE";
@@ -154,6 +155,7 @@ export const CREATE_TASK_TAG: string = "CREATE_TASK_TAG";
 export const GET_TAGS: string = "GET_TAGS";
 export const GET_TASK_TAGS: string = "GET_TASK_TAGS";
 export const DELETE_TAGS: string = "DELETE_TAGS";
+export const DELETE_TASK_TAG: string = "DELETE_TASK_TAG";
 export const RESET_TAGS: string = "RESET_TAGS";
 
 export const SET_PROGRESS: string = "SET_PROGRESS";
