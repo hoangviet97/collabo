@@ -12,7 +12,7 @@ import { getTagsByTasks, getTags, resetTags } from "../../actions/tag";
 import { resetProject } from "../../actions/project";
 import { getMembers } from "../../actions/member";
 import { getProjects } from "../../actions/project";
-import TaskDetailModal from "../modal/TaskDetailModal";
+import TaskDetailModal2 from "../modal/TaskDetailModal2";
 
 interface Props {
   match: any;
@@ -73,6 +73,12 @@ const PersonalTasks: FC<Props> = ({ match }) => {
       dispatch(resetTags());
     };
   }, []);
+
+  useEffect(() => {
+    if (match.params.taskId !== undefined) {
+      showModal();
+    }
+  }, [match.params.taskId]);
 
   useEffect(() => {
     getData(selectedProject);
@@ -174,19 +180,12 @@ const PersonalTasks: FC<Props> = ({ match }) => {
     setNewTaskIndexes({ [index]: true });
   };
 
-  const closeModal = () => {
+  const closeModal = (project?: string) => {
+    project && getData(project);
     setIsModalVisible(false);
   };
 
-  const showModal = (task: any, section: any) => {
-    Object.assign(task, { section_name: section });
-    const filteredTags = tags.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { tags: filteredTags });
-    const filteredAssignees = assignees.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { assignees: filteredAssignees });
-    const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
-    setFilteredAssignees(assigneesArray);
-    setTaskDetail(task);
+  const showModal = () => {
     setIsModalVisible(true);
   };
 
@@ -237,7 +236,7 @@ const PersonalTasks: FC<Props> = ({ match }) => {
                           if (section.id === task.sections_id) {
                             const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                             if (taskVisual === "list") {
-                              return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
+                              return <TaskItem showModal={showModal} closeModal={closeModal} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
                             } else if (taskVisual === "card") {
                               return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                             }
@@ -274,7 +273,7 @@ const PersonalTasks: FC<Props> = ({ match }) => {
               )}
             </div>
           )}
-          <TaskDetailModal task={taskDetail} tags={allTags} projectId={selectedProject} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal2 task={match.params.taskId} isVisible={isModalVisible} closeModal={closeModal} match={match} view="personal" project={selectedProject} />
         </Container>
       )}
     </div>

@@ -9,7 +9,6 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Select, Divider, Skeleton } from "antd";
 import { TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
-import TaskDetailModal from "../modal/TaskDetailModal";
 import TaskDetailModal2 from "../modal/TaskDetailModal2";
 import TaskCard from "./TaskCard";
 import { section, tag, task } from "../../types/types";
@@ -54,7 +53,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [newSection, setNewSection] = useState<string>("");
   const [selectedSection, setSelectedSection] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [taskDetail, setTaskDetail] = useState({});
   const [newTaskIndexes, setNewTaskIndexes] = useState<any>([]);
 
   useEffect(() => {
@@ -78,7 +76,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     if (match.params.taskId !== undefined) {
       showModal();
     }
-  }, []);
+  }, [match.params.taskId]);
 
   const taskHandler = (e: any) => {
     setNewTask(e.target.value);
@@ -153,7 +151,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     setIsModalVisible(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (project?: string) => {
     setIsModalVisible(false);
   };
 
@@ -189,8 +187,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     setTaskVisual(value);
     localStorage.setItem("task_visual", value);
   };
-
-  // <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
 
   return (
     <div className="project-tasks">
@@ -253,7 +249,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
-                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
+                          return <TaskItem showModal={showModal} closeModal={closeModal} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
                         } else if (taskVisual === "card") {
                           return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
@@ -288,7 +284,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal2 task={match.params.taskId} isVisible={isModalVisible} closeModal={closeModal} match={match} />
+          <TaskDetailModal2 task={match.params.taskId} isVisible={isModalVisible} closeModal={closeModal} match={match} view="project" />
         </Container>
       )}
     </div>

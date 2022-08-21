@@ -1,4 +1,4 @@
-import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_STATUS_GROUP, GET_TASK, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, RESET_TASKS, UPDATE_TASK_START, UPDATE_TASK_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
+import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, GET_TASK_ASSIGNEES, GET_STATUS_GROUP, GET_TASK, CREATE_TASK_FAIL, SET_BUDGET, SET_PROGRESS, GET_ASSIGNEES, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, DELETE_TASK, DELETE_TASK_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, RESET_TASKS, UPDATE_TASK_START, UPDATE_TASK_FAIL, UPDATE_TASK_END, UPDATE_TASK_END_FAIL, CREATE_ASSIGNEE, DELETE_ASSIGNEE, GET_EXPENSES, GET_ASSIGNEE_TASKS } from "../../actions/types";
 import moment from "moment";
 import { task } from "../../types/types";
 
@@ -9,6 +9,7 @@ const initialState = {
   filtered: [],
   expenses: [],
   assignees: [],
+  single_assignees: [],
   statusGroup: [],
   loading: false
 };
@@ -43,6 +44,11 @@ function taskReducer(state = initialState, action: any) {
         ...state,
         assignees: payload
       };
+    case GET_TASK_ASSIGNEES:
+      return {
+        ...state,
+        single_assignees: payload.data.filter((item: any) => item.tasks_id === payload.task)
+      };
     case GET_ASSIGNEE_TASKS:
       return {
         ...state,
@@ -73,16 +79,22 @@ function taskReducer(state = initialState, action: any) {
     case CREATE_ASSIGNEE:
       return {
         ...state,
-        assignees: [...state.assignees, payload]
+        assignees: [...state.assignees, payload],
+        single_assignees: [...state.single_assignees, payload]
       };
     case DELETE_ASSIGNEE:
       const deletedItem = state.assignees.find((item: any) => {
         return item.user_id === payload.user_id && item.tasks_id === payload.task_id;
       });
 
+      const deletedItem2 = state.single_assignees.find((item: any) => {
+        return item.user_id === payload.user_id && item.tasks_id === payload.task_id;
+      });
+
       return {
         ...state,
-        assignees: state.assignees.filter((item: any) => item !== deletedItem)
+        assignees: state.assignees.filter((item: any) => item !== deletedItem),
+        single_assignees: state.single_assignees.filter((item: any) => item !== deletedItem2)
       };
     case GET_PROJECT_TASKS:
       return {
@@ -104,7 +116,8 @@ function taskReducer(state = initialState, action: any) {
     case UPDATE_TASK_STATUS:
       return {
         ...state,
-        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, statusId: payload.status } : item))
+        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, statusId: payload.statusId } : item)),
+        task: { ...state.task, statusId: payload.statusId }
       };
     case SET_BUDGET:
       return {
@@ -119,7 +132,8 @@ function taskReducer(state = initialState, action: any) {
     case UPDATE_TASK_PRIORITY:
       return {
         ...state,
-        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, priorityId: payload.priorityId } : item))
+        tasks: state.tasks.map((item: task) => (item.id === payload.id ? { ...item, priorityId: payload.priorityId } : item)),
+        task: { ...state.task, priorityId: payload.priorityId }
       };
     case UPDATE_TASK_START:
       const singleStart = Object.keys(state.task).length === 0 ? {} : { ...state.task, start_date: payload.date };

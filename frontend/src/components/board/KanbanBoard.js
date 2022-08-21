@@ -5,7 +5,6 @@ import { getProjectTasks, updateTaskStatus } from "../../actions/task";
 import Board, { moveCard } from "@asseinfo/react-kanban";
 import "@asseinfo/react-kanban/dist/styles.css";
 import BoardCard from "./BoardCard";
-import TaskDetailModal from "../modal/TaskDetailModal";
 import { Button } from "antd";
 import { showTaskModal } from "../../actions/modal";
 
@@ -67,7 +66,7 @@ const KanbanBoard = ({ match }) => {
     const updatedBoard = moveCard(controlledBoard, source, destination);
     setBoard(updatedBoard);
     //
-    dispatch(updateTaskStatus({ id: _card.id, statusId: destination.toColumnId, project: match.params.id }));
+    dispatch(updateTaskStatus(_card.id, destination.toColumnId, match.params.id));
   }
 
   const newTaskHandler = () => {
