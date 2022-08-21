@@ -1,4 +1,4 @@
-import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING, RESET_TAGS } from "./types";
+import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, DELETE_TASK_TAG, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING, RESET_TAGS } from "./types";
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
@@ -12,12 +12,13 @@ export const createTag = (project_id: string, name: string, color: string) => as
   }
 };
 
-export const createTaskTag = (project_id: string, task: any, tag: any) => async (dispatch: any) => {
+export const createTaskTag = (project_id: string, task: string, tag: string, name: string) => async (dispatch: any) => {
   try {
-    const res = await axiosClient.post(`/${project_id}/tags/task-tag`, { task, tag });
-    dispatch({ type: CREATE_TASK_TAG, payload: { task, tag } });
-  } catch (err) {
+    const res = await axiosClient.post(`/${project_id}/tags/task-tag`, { task, tag, name });
+    dispatch({ type: CREATE_TASK_TAG, payload: { task, tag, name } });
+  } catch (err: any) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
+    message.error("Error!");
   }
 };
 
@@ -44,6 +45,17 @@ export const deleteTag = (project_id: string, id: string) => async (dispatch: an
   try {
     const res = await axiosClient.delete(`/${project_id}/tags/${id}`);
     dispatch({ type: DELETE_TAGS, payload: id });
+  } catch (err: any) {
+    dispatch({ type: GET_TALKING_POINTS_FAIL });
+    message.error(err.response.data.message);
+  }
+};
+
+export const deleteTaskTag = (project_id: string, tag: string, task: string) => async (dispatch: any) => {
+  try {
+    const res = await axiosClient.delete(`/${project_id}/tasks/${task}/tags/${tag}`);
+    dispatch({ type: DELETE_TASK_TAG, payload: { tag, task } });
+    console.log(res);
   } catch (err: any) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
     message.error(err.response.data.message);

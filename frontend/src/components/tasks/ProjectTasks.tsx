@@ -9,7 +9,7 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Collapse, Input, Button, Select, Divider, Skeleton } from "antd";
 import { TagsOutlined, PlusOutlined, AppstoreOutlined, MenuOutlined, ExceptionOutlined } from "@ant-design/icons";
 import TaskItem from "./TaskItem";
-import TaskDetailModal from "../modal/TaskDetailModal";
+import TaskDetailModal2 from "../modal/TaskDetailModal2";
 import TaskCard from "./TaskCard";
 import { section, tag, task } from "../../types/types";
 import TaskHeader from "./TaskHeader";
@@ -53,7 +53,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [newSection, setNewSection] = useState<string>("");
   const [selectedSection, setSelectedSection] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [taskDetail, setTaskDetail] = useState({});
   const [newTaskIndexes, setNewTaskIndexes] = useState<any>([]);
 
   useEffect(() => {
@@ -67,12 +66,17 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     dispatch(getAllAssignees(project_id));
     dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));
-    dispatch(getTags(project_id));
   }, []);
 
   useEffect(() => {
     setTaskContainer(tasks);
   }, [tasks]);
+
+  useEffect(() => {
+    if (match.params.taskId !== undefined) {
+      showModal();
+    }
+  }, [match.params.taskId]);
 
   const taskHandler = (e: any) => {
     setNewTask(e.target.value);
@@ -143,19 +147,11 @@ const ProjectTasks: FC<Props> = ({ match }) => {
     </React.Fragment>
   );
 
-  const showModal = (task: any, section: any) => {
-    Object.assign(task, { section_name: section });
-    const filteredTags = tags.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { tags: filteredTags });
-    const filteredAssignees = assignees.filter((x: any) => x.tasks_id === task.id);
-    Object.assign(task, { assignees: filteredAssignees });
-    const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
-    setFilteredAssignees(assigneesArray);
-    setTaskDetail(task);
+  const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (project?: string) => {
     setIsModalVisible(false);
   };
 
@@ -253,7 +249,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                       if (section.id === task.sections_id) {
                         const assigneesArray = assignees.filter((i: any) => i.tasks_id === task.id);
                         if (taskVisual === "list") {
-                          return <TaskItem showModal={showModal} closeModal={closeModal} sectionName={section.name} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
+                          return <TaskItem showModal={showModal} closeModal={closeModal} key={i} assignees={assigneesArray} members={members} task={task} start_date={task.start_date} match={match} />;
                         } else if (taskVisual === "card") {
                           return <TaskCard key={i} task={task} sectionName={section.name} showModal={showModal} closeModal={closeModal} assignees={assigneesArray} members={members} />;
                         }
@@ -288,7 +284,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
               </div>
             </div>
           )}
-          <TaskDetailModal task={taskDetail} tags={allTags} projectId={project_id} isVisible={isModalVisible} closeModal={closeModal} />
+          <TaskDetailModal2 task={match.params.taskId} isVisible={isModalVisible} closeModal={closeModal} match={match} view="project" />
         </Container>
       )}
     </div>

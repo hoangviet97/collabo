@@ -58,6 +58,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
         <ProtectedProjectRoute exact path="/:id/overview" component={Overview} />
         <Route exact path="/notify" component={Notifications} />
         <Route exact path="/my-tasks" component={PersonalTasks} />
+        <Route exact path="/my-tasks/:taskId" component={PersonalTasks} />
         <ProtectedProjectRoute exact path="/:id/calendar" component={ProjectCalendar} />
         <ProtectedProjectRoute exact path="/:id/board" component={KanbanBoard} />
         <ProtectedProjectRoute exact path="/:id/tags" component={Tags} />
