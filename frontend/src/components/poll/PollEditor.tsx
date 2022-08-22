@@ -65,7 +65,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
         <div className="" style={{ marginTop: "20px" }}>
           <h2>{question}</h2>
           <div className="option__preview-list" style={{ marginBottom: "10px" }}>
-            {optionArr.map((item: any, index: number) => (
+            {optionArr.map((item: string, index: number) => (
               <OptionPreview key={index} text={item} removeOption={removeOption} />
             ))}
           </div>

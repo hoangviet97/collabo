@@ -6,7 +6,7 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { createTaskTag, getTags, getTagsByTasks, deleteTaskTag } from "../../actions/tag";
 import { getFilesByTask } from "../../actions/file";
-import { setBudget, setDescription, updateTaskPriority, updateTaskStatus, updateTitle, getTask } from "../../actions/task";
+import { setBudget, setDescription, updateTaskPriority, updateTaskStatus, getTaskAssignees, updateTitle, getTask } from "../../actions/task";
 import NewFileForm from "../documents/files/NewFileForm";
 import FileMiniCard from "../documents/files/FileMiniCard";
 import TaskDate from "../tasks/TaskDate";
@@ -39,6 +39,7 @@ const TaskDetailModal2: FC<Props> = ({ task, isVisible, closeModal, match, view,
   const task_loading = useSelector((state: RootStateOrAny) => state.task.loading);
   const tags = useSelector((state: RootStateOrAny) => state.tag.tags);
   const alltags = useSelector((state: RootStateOrAny) => state.tag.taskTags);
+  const assignees = useSelector((state: RootStateOrAny) => state.task.single_assignees);
 
   const { TextArea } = Input;
 
@@ -58,6 +59,7 @@ const TaskDetailModal2: FC<Props> = ({ task, isVisible, closeModal, match, view,
   useEffect(() => {
     if (params.taskId !== undefined) {
       setTagGroup(alltags);
+      dispatch(getTaskAssignees(params.id, params.taskId));
       dispatch(getTask(params.id, task));
       dispatch(getFilesByTask({ id: task, project_id: params.id }));
       dispatch(getTagsByTasks(params.id));
@@ -208,7 +210,7 @@ const TaskDetailModal2: FC<Props> = ({ task, isVisible, closeModal, match, view,
                         <TaskDate id={task} date={single_task.due_date} type="due_date" />
                       </div>
                       <div className="task__detail-base-item">
-                        <AssigneesBox project_id={params.id} task={params.taskId} />
+                        <AssigneesBox assignees={assignees} id={params.taskId} type="task" />
                       </div>
                     </div>
                     <Divider />

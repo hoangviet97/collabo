@@ -1,8 +1,6 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import Spinner from "../utils/Spinner";
-import { Skeleton } from "antd";
 import FullPageSkeleton from "../skeletons/FullpageSkeleton";
 
 const ProtectedProjectRoute = ({ component: Component, authorized, ...rest }) => {

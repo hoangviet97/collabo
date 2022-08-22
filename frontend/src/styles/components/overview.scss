@@ -9,6 +9,11 @@
   width: 100%;
   height: calc(100vh - 180px);
 
+  &__sec-icon {
+    margin-right: 8px;
+    font-size: 25px;
+  }
+
   &__left {
     grid-area: left;
 

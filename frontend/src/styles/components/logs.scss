@@ -16,6 +16,12 @@
     @extend .items-center;
     margin-top: 20px;
     width: 100%;
+
+    &-content {
+      margin-left: 8px;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__title {

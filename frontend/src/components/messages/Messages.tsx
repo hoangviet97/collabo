@@ -1,11 +1,11 @@
 import React, { useState, useEffect, FC } from "react";
 import Container from "../utils/Container";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
-import { Avatar, Input } from "antd";
-import AvatarIcon from "../utils/AvatarIcon";
+import { Input } from "antd";
 import MessageEditor from "../modal/MessageEditor";
-import { getMessages, getAllReplies } from "../../actions/message";
+import { getMessages } from "../../actions/message";
 import Comment from "../comments/Comment";
+import { message } from "../../types/types";
 
 interface Props {
   match: any;
@@ -36,14 +36,14 @@ const Messages: FC<Props> = ({ match }) => {
 
   return (
     <Container size="30">
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "40px" }}>
-        <div className="messages__editor" style={{ width: "100%", textAlign: "center" }}>
-          <Input onClick={openModal} placeholder="Add new message..." style={{ textAlign: "center", borderRadius: "12px", width: "400px", padding: "10px 25px" }} />
+      <div className="messages">
+        <div className="messages__editor">
+          <Input className="messages__input" onClick={openModal} placeholder="Add new message..." />
         </div>
-        <div style={{ marginTop: "80px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="messages__container">
           {loading
             ? "loading..."
-            : messages.map((item: any, index: number) => {
+            : messages.map((item: message, index: number) => {
                 return <Comment key={index} data={item} match={match} project={match.params.id} />;
               })}
         </div>

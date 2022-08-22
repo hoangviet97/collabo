@@ -5,6 +5,10 @@
   border-radius: 12px;
   @extend .items-center;
   padding: 0 30px;
+
+  &-item {
+    margin-right: 20px;
+  }
 }
 
 .budget {

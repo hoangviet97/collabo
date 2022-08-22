@@ -1,29 +1,22 @@
-import React, { FC, useState, useEffect } from "react";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import React, { FC, useState } from "react";
+import { useSelector, RootStateOrAny } from "react-redux";
 import color from "../../styles/abstract/variables.module.scss";
 import { Avatar, Popover } from "antd";
-import { useParams } from "react-router-dom";
-import { getTaskAssignees } from "../../actions/task";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
 import AvatarIcon from "../utils/AvatarIcon";
 
 interface Props {
-  project_id: any;
-  task: string;
+  id: string;
+  assignees: any;
+  type: string;
 }
 
-const AssigneesBox: FC<Props> = ({ project_id, task }) => {
-  const dispatch = useDispatch();
+const AssigneesBox: FC<Props> = ({ assignees, id, type }) => {
   const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
 
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
-  const assignees = useSelector((state: RootStateOrAny) => state.task.single_assignees);
   const members = useSelector((state: RootStateOrAny) => state.member.members);
-
-  useEffect(() => {
-    dispatch(getTaskAssignees(project_id, task));
-  }, [task]);
 
   const closeAssigness = () => {
     setAssignessModalVisible(false);
@@ -47,7 +40,7 @@ const AssigneesBox: FC<Props> = ({ project_id, task }) => {
             ))}
           </Avatar.Group>
           {user_role !== "Member" && (
-            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "47px" : "70px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div onClick={showAssigness} style={{ position: "absolute", width: "20px", height: "20px", marginTop: "-23px", borderRadius: "50%", marginLeft: assignees.length < 2 ? "32px" : "55px", border: "0.7px dotted #bdc3c7", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
             </div>
           )}
@@ -57,7 +50,7 @@ const AssigneesBox: FC<Props> = ({ project_id, task }) => {
           <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
         </div>
       )}
-      {assignessModalVisible && <AssigneesModal task_id={task} assignees={assignees} members={members} close={closeAssigness} />}
+      {assignessModalVisible && <AssigneesModal item_id={id} assignees={assignees} members={members} close={closeAssigness} type={type} />}
     </div>
   );
 };

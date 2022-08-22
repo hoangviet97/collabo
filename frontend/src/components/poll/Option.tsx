@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC, ChangeEvent } from "react";
-import { Checkbox, Avatar, Tooltip } from "antd";
+import { Checkbox, Avatar } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { useSelector, RootStateOrAny } from "react-redux";
 import color from "../../styles/abstract/variables.module.scss";

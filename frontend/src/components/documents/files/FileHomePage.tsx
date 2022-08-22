@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { useState } from "react";
 import NewFileForm from "./NewFileForm";
 import FolderList from "../folders/FolderList";
 import FileList from "./FileList";

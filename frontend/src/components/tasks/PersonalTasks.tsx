@@ -90,7 +90,7 @@ const PersonalTasks: FC<Props> = ({ match }) => {
 
   const panelHeader = (name: string, id: string) => (
     <React.Fragment>
-      <div className="panel-header" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+      <div className="panel-header">
         <span className="panel-header__title" style={{ fontSize: "20px" }}>
           {name}
         </span>

@@ -33,9 +33,7 @@ const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assigne
         <EllipsisOutlined />
       </div>
       <div>
-        <a style={{ fontSize: "18px" }} onClick={() => showModal(task, sectionName)}>
-          {task.title}
-        </a>
+        <a style={{ fontSize: "18px" }}>{task.title}</a>
       </div>
       <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
         <Progress percent={task.progress} size="small" />
@@ -62,7 +60,7 @@ const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assigne
               <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
             </div>
           )}
-          {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
+          {assignessModalVisible && <AssigneesModal item_id={task.id} assignees={assignees} members={members} close={closeAssigness} type="task" />}
         </div>
         <Timer localstorage={task.id} disabled={task.statusId === "5" ? true : false} />
       </div>

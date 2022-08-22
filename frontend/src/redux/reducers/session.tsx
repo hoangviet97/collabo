@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSION_LOADING, DELETE_SESSION, UPDATE_NOTE, ACTIVE_SESSIONS, TODAY_SESSIONS, PAST_SESSIONS } from "../../actions/types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, ADD_PARTICIPANT, DELETE_PARTICIPANT, SESSIONS_LOADING, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, GET_SESSION_FAIL, SESSION_LOADING, DELETE_SESSION, UPDATE_NOTE, ACTIVE_SESSIONS, TODAY_SESSIONS, PAST_SESSIONS } from "../../actions/types";
 import moment from "moment";
 import { session } from "../../types/types";
 
@@ -55,6 +55,18 @@ function sessionReducer(state: sessionState = initialState, action: any) {
       return {
         ...state,
         sessions: state.sessions.filter((item: session) => item.id !== payload)
+      };
+    case ADD_PARTICIPANT:
+      return {
+        ...state,
+        participants: [...state.participants, payload],
+        loading: false
+      };
+    case DELETE_PARTICIPANT:
+      return {
+        ...state,
+        participants: state.participants.filter((item: any) => item.email !== payload),
+        loading: false
       };
     case GET_PARTICIPANTS:
       return {

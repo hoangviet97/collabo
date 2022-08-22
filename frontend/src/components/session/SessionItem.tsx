@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSession, getParticipants } from "../../actions/session";
@@ -8,8 +8,9 @@ import { Divider, Input, Checkbox, Skeleton, Avatar, Tooltip } from "antd";
 import moment from "moment";
 import AvatarIcon from "../utils/AvatarIcon";
 import color from "../../styles/abstract/variables.module.scss";
+import AssigneesBox from "../assignees/AssigneesBox";
 
-const SessionItem: React.FunctionComponent = () => {
+const SessionItem = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: RootStateOrAny) => state.session.singleLoading);
   const single = useSelector((state: RootStateOrAny) => state.session.single);
@@ -86,15 +87,7 @@ const SessionItem: React.FunctionComponent = () => {
             <div>
               <div className="session__item-col">Participants</div>
               <div>
-                <Avatar.Group maxCount={2} size="large" maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf", cursor: "pointer" }}>
-                  {participants.map((item: any, index: number) => (
-                    <Tooltip title={item.email} placement="top">
-                      <Avatar key={index} style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
-                        <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
-                      </Avatar>
-                    </Tooltip>
-                  ))}
-                </Avatar.Group>
+                <AssigneesBox id={params.sessionId} assignees={participants} type="session" />
               </div>
             </div>
           </header>

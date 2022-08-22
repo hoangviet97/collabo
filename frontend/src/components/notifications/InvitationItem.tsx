@@ -31,10 +31,10 @@ const InvitationItem: FC<Props> = ({ data }) => {
         <div>{moment(data.created_at).calendar()}</div>
       </div>
       <div style={{ display: "flex" }}>
-        <Button style={{ marginRight: "5px", borderRadius: "5px" }} type="primary" onClick={acceptHandler}>
+        <Button className="invitation__btn" type="primary" onClick={acceptHandler}>
           Accept
         </Button>
-        <Button style={{ borderRadius: "5px" }} type="ghost" onClick={rejectHandler}>
+        <Button className="invitation__btn" type="ghost" onClick={rejectHandler}>
           Reject
         </Button>
       </div>

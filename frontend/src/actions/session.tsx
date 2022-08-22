@@ -1,4 +1,4 @@
-import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
+import { CREATE_SESSION, CREATE_SESSION_FAIL, GET_PARTICIPANTS, GET_SESSIONS, ADD_PARTICIPANT, DELETE_PARTICIPANT, GET_SESSIONS_FAIL, GET_SESSION, DELETE_SESSION, GET_SESSION_FAIL, SESSIONS_LOADING, SESSION_LOADING } from "./types";
 import axiosClient from "../helpers/axios";
 import { message } from "antd";
 
@@ -28,6 +28,7 @@ export const getSession = (id: string, project_id: string) => async (dispatch: a
     dispatch(setSessionLoading());
     const res = await axiosClient.get(`/${project_id}/sessions/${id}`);
     dispatch({ type: GET_SESSION, payload: res.data[0] });
+    console.log(res);
   } catch (err) {
     dispatch({ type: GET_SESSION_FAIL });
   }
@@ -42,6 +43,26 @@ export const deleteSession = (id: string, project_id: string) => async (dispatch
   } catch (err: any) {
     dispatch({ type: GET_SESSION_FAIL });
     message.error(err.response.data.message);
+  }
+};
+
+export const deleteParticipant = (user_id: string, session_id: string, project_id: string, email: string) => async (dispatch: any) => {
+  try {
+    const res = await axiosClient.delete(`/${project_id}/sessions/${session_id}/participants/${user_id}`);
+    dispatch({ type: DELETE_PARTICIPANT, payload: email });
+    console.log(res.data);
+  } catch (err) {
+    dispatch({ type: GET_SESSION_FAIL });
+  }
+};
+
+export const addParticipant = (user_id: string, session_id: string, project_id: string) => async (dispatch: any) => {
+  try {
+    const res = await axiosClient.post(`/${project_id}/sessions/${session_id}/participants/${user_id}`);
+    dispatch({ type: ADD_PARTICIPANT, payload: res.data[0] });
+    console.log(res.data[0]);
+  } catch (err) {
+    dispatch({ type: GET_SESSION_FAIL });
   }
 };
 

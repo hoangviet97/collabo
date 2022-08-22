@@ -19,7 +19,8 @@ const BudgetPage: FC<Props> = ({ match }) => {
   const dispatch = useDispatch();
   const [balance, setBalance] = useState<number>(0);
   const [spending, setSpending] = useState<number>(0);
-  const role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
+
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const currency = useSelector((state: RootStateOrAny) => state.project.currentProject.currency);
   const tasks = useSelector((state: RootStateOrAny) => state.task.tasks);
   const incomes = useSelector((state: RootStateOrAny) => state.income.sum);
@@ -46,7 +47,7 @@ const BudgetPage: FC<Props> = ({ match }) => {
     <div>
       <Container size="50">
         <div style={{ display: "flex", width: "100%" }}>
-          <header className="budget__header" style={{ width: "65%" }}>
+          <header className="budget__header" style={{ width: user_role === "Member" ? "100%" : "65%" }}>
             <div style={{ display: "flex" }}>
               <div className="budget__header-left">
                 <div className="budget__header-item">
@@ -66,11 +67,11 @@ const BudgetPage: FC<Props> = ({ match }) => {
               </div>
               <div className="budget__header-right">
                 <div style={{ display: "flex" }}>
-                  <div className="budget__header-item" style={{ marginRight: "20px" }}>
+                  <div className="budget__header-item">
                     <div className="budget__title">Spent</div>
                     <div>{isNaN(spending / incomes) ? "0" : Math.floor((spending / incomes) * 100).toFixed(2)}%</div>
                   </div>
-                  <div className="budget__header-item" style={{ marginRight: "20px" }}>
+                  <div className="budget__header-item">
                     <div className="budget__title">Total budget</div>
                     <div>
                       {getCurrency(currency)} {isNaN(incomes) ? "0" : incomes}
@@ -80,7 +81,7 @@ const BudgetPage: FC<Props> = ({ match }) => {
               </div>
             </div>
           </header>
-          {role === "Owner" && <IncomeForm />}
+          {user_role === "Owner" && <IncomeForm />}
         </div>
         <div style={{ marginTop: "30px" }}>
           <Tabs defaultActiveKey="1">
