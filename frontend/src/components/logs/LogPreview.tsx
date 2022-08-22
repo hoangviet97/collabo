@@ -14,7 +14,7 @@ const LogPreview: FC<Props> = ({ data }) => {
       <Avatar style={{ backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }}>
         <AvatarIcon firstname={data.firstname} lastname={data.lastname} size={17} />
       </Avatar>
-      <div style={{ marginLeft: "8px", display: "flex", flexDirection: "column" }}>
+      <div className="log__preview-content">
         <div>
           <span style={{ fontWeight: "bolder" }}>
             {data.firstname} {data.lastname}{" "}

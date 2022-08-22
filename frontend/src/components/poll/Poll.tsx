@@ -3,6 +3,7 @@ import Option from "./Option";
 import { setPoolVote, deletePoolVote } from "../../actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
+import { option } from "../../types/types";
 
 interface Props {
   pollData: any;
@@ -28,7 +29,7 @@ const Poll: FC<Props> = ({ pollData, id }) => {
     <div className="poll">
       <h3>{pollData.question}</h3>
       <div style={{ marginTop: "10px" }}>
-        {pollData.optionArray.map((item: any, index: number) => {
+        {pollData.optionArray.map((item: option, index: number) => {
           let filteredVotes = votes.filter((i: any) => i.option_id === item.id);
           return <Option key={index} data={item} voteCount={voteCount} votes={filteredVotes} setVoteHandler={setVoteHandler} deleteVotehandler={deleteVoteHandler} />;
         })}

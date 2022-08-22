@@ -12,7 +12,7 @@ const OverviewSessions = () => {
     <>
       <div className="items-center">
         <div className="items-center">
-          <FundProjectionScreenOutlined style={{ marginRight: "8px", fontSize: "25px" }} />
+          <FundProjectionScreenOutlined className="overview__sec-icon" />
           <div>Upcoming Sessions</div>
         </div>
         {sessions.length > 0 && <div className="blob red"></div>}

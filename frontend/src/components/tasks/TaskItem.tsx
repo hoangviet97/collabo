@@ -1,20 +1,18 @@
 import React, { useState, FC } from "react";
 import { CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu, Typography, Tag, Popover, message } from "antd";
+import { Avatar, Dropdown, Menu, Typography, Tag, message } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { createReview } from "../../actions/review";
 import { Select } from "antd";
-import AvatarIcon from "../utils/AvatarIcon";
 import Timer from "../timeTracker/Timer";
-import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
-import AssigneesModal from "../modal/AssigneesModal";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { task, member } from "../../types/types";
 import TaskDate from "./TaskDate";
 import { getPriorityName } from "../../helpers/converter";
 import color from "../../styles/abstract/variables.module.scss";
+import AssigneesBox from "../assignees/AssigneesBox";
 
 interface Props {
   showModal: () => void;
@@ -31,7 +29,6 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, assignees, members, task, 
   const params: any = useParams();
   const history = useHistory();
   const [done, setDone] = useState(task.statusId);
-  const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
 
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const { Text } = Typography;
@@ -75,16 +72,6 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, assignees, members, task, 
     dispatch(updateTaskPriority(task.id, value, params.id));
   };
 
-  const showAssigness = () => {
-    if (task.statusId !== "5" || user_role !== "Member") {
-      setAssignessModalVisible(true);
-    }
-  };
-
-  const closeAssigness = () => {
-    setAssignessModalVisible(false);
-  };
-
   const modalHandler = () => {
     history.push(`${match.url}/${task.id}`);
   };
@@ -98,29 +85,7 @@ const TaskItem: FC<Props> = ({ showModal, closeModal, assignees, members, task, 
         </div>
       </div>
       <div className="task-column__item task-column__assignees" style={{ display: "flex", justifyContent: "center" }}>
-        {assignees.length > 0 ? (
-          <>
-            <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-              {assignees.map((assignee: any, index: number) => (
-                <Popover key={index} content={`${assignee.firstname} ${assignee.lastname} (${assignee.email})`}>
-                  <Avatar key={index} style={{ backgroundColor: assignee.color === null || assignee.color.length < 1 ? color.normal_orange : assignee.color }}>
-                    <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
-                  </Avatar>
-                </Popover>
-              ))}
-            </Avatar.Group>
-            {user_role !== "Member" && (
-              <div className="task__assignees-edit" onClick={showAssigness} style={{ marginLeft: assignees.length < 2 ? "47px" : "70px" }}>
-                <EditOutlined style={{ fontSize: "10px", color: "#bdc3c7" }} />
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="task__assignees-add" onClick={showAssigness}>
-            <UserAddOutlined style={{ fontSize: "20px", color: "#bdc3c7" }} />
-          </div>
-        )}
-        {assignessModalVisible && <AssigneesModal task_id={task.id} assignees={assignees} members={members} close={closeAssigness} />}
+        <AssigneesBox assignees={assignees} id={task.id} type="task" />
       </div>
       <div className="task-column__item task-column__status task-column__status--active" style={{ backgroundColor: done === "3" ? color.light_green : "white" }}>
         {task.statusId === "5" ? (

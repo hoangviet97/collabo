@@ -1,35 +1,48 @@
 import React, { useState, FC } from "react";
 import { useDispatch } from "react-redux";
 import { createAssignee, deleteAssignee } from "../../actions/task";
+import { addParticipant, deleteParticipant } from "../../actions/session";
 import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { member } from "../../types/types";
 import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
-  task_id: string;
+  item_id: string;
   assignees: any;
   members: member[];
   close: any;
+  type: string;
 }
 
-const AssigneesModal: FC<Props> = ({ task_id, assignees, members, close }) => {
+const AssigneesModal: FC<Props> = ({ item_id, assignees, members, close, type }) => {
   const dispatch = useDispatch();
+  const loc = useLocation();
   const params: any = useParams();
   const [searchText, setSearchText] = useState<string>("");
+
+  const path = loc.pathname.split("/");
 
   const searchTextHandle = (e: any) => {
     setSearchText(e.target.value);
   };
 
   const addNewAssignee = (id: string) => {
-    dispatch(createAssignee(id, task_id, params.id));
+    if (type === "task") {
+      dispatch(createAssignee(id, item_id, params.id));
+    } else {
+      dispatch(addParticipant(id, item_id, path[1]));
+    }
   };
 
   const removeAssignee = (id: string, email: string) => {
-    dispatch(deleteAssignee(id, task_id, params.id));
+    if (type === "task") {
+      dispatch(deleteAssignee(id, item_id, params.id));
+    } else {
+      dispatch(deleteParticipant(id, item_id, path[1], email));
+    }
   };
 
   const isAssigneed = (email: string, id: string) => {

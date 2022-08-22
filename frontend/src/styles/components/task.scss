@@ -269,6 +269,24 @@
   }
 }
 
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__title {
+    margin-right: 30px;
+    font-size: 20px;
+  }
+
+  &__delete {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: 12px;
+  }
+}
+
 .back-drop {
   cursor: default;
   position: absolute;

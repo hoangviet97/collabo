@@ -1,9 +1,8 @@
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
-import { Avatar, Button, Divider } from "antd";
+import { Avatar, Divider } from "antd";
 import Poll from "../poll/Poll";
-import { useDispatch, useSelector } from "react-redux";
 import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
@@ -13,8 +12,6 @@ interface Props {
 }
 
 const Comment: FC<Props> = ({ data }) => {
-  const dispatch = useDispatch();
-
   return (
     <div className="comment">
       <div className="comment__header">

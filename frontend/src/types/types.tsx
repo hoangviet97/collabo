@@ -117,3 +117,28 @@ export type log = {
   email: string;
   color: string;
 };
+
+export type option = {
+  id: string;
+  polls_id: string;
+  text: string;
+  total: number;
+};
+
+export type poll = {
+  id: string;
+  messages_id: string;
+  question: string;
+  created_at: Date;
+  optionArray: option[];
+};
+
+export type message = {
+  id: string;
+  text: string;
+  created_at: Date;
+  firstname: string;
+  lastname: string;
+  color: string;
+  pollData: poll[];
+};

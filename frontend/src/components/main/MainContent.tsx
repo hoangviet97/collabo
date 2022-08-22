@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import { Route, Switch, withRouter, useParams } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import TimeTracker from "../timeTracker/TimeTracker";
 import Projects from "../projects/Projects";
 import UserSettings from "../globalSettings/UserSettings";

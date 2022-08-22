@@ -9,7 +9,7 @@ const OverviewLogs = () => {
   return (
     <>
       <div className="items-center" style={{ marginBottom: "20px" }}>
-        <EyeOutlined style={{ marginRight: "8px", fontSize: "25px" }} />
+        <EyeOutlined className="overview__sec-icon" />
         <div>Activities</div>
       </div>
       <div style={{ width: "100%" }}>

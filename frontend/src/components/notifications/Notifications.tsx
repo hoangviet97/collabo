@@ -1,9 +1,8 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect } from "react";
 import InvitationItem from "./InvitationItem";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getAllInvitations } from "../../actions/invitation";
 import Container from "../utils/Container";
-import SocketContext from "../../context/SocketContext";
 import { Invitation } from "../../types/types";
 
 const Notifications: React.FunctionComponent = () => {
@@ -18,7 +17,7 @@ const Notifications: React.FunctionComponent = () => {
     <Container size="30">
       <div className="invitation">
         <h1>Invitations</h1>
-        <div className="invitation__box" style={{ width: "60%" }}>
+        <div className="invitation__box">
           {invitations.map((item: Invitation, index: number) => (
             <InvitationItem key={index} data={item} />
           ))}

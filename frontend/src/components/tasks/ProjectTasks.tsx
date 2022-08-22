@@ -132,12 +132,10 @@ const ProjectTasks: FC<Props> = ({ match }) => {
 
   const panelHeader = (name: string, id: string) => (
     <React.Fragment>
-      <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div className="panel-header__title" style={{ marginRight: "30px", fontSize: "20px" }}>
-          {name}
-        </div>
+      <div className="panel-header">
+        <div className="panel-header__title">{name}</div>
         {user_role !== "Member" ? (
-          <div style={{ position: "absolute", right: "30px", color: "red", fontSize: "12px" }} onClick={() => deleteSectionHandler(id)}>
+          <div className="panel-header__delete" onClick={() => deleteSectionHandler(id)}>
             Delete
           </div>
         ) : (
@@ -195,7 +193,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
       ) : (
         <Container size="50">
           <header style={{ marginRight: "20px" }}>
-            <div className="task__header-options" style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="task__header-options justify-between">
               <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Filter by: &nbsp;</span>

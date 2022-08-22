@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import TaskModal from "../modal/TaskModal";
 import MainContent from "./MainContent";
@@ -9,7 +9,6 @@ import NewProject from "../projects/newProjectForm/NewProject";
 import { io } from "socket.io-client";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import SocketContext from "../../context/SocketContext";
-import { useParams } from "react-router-dom";
 import { getAllInvitations, addInvitation } from "../../actions/invitation";
 import { notification } from "antd";
 
