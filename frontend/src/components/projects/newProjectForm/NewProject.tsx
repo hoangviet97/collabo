@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ChangeEvent } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
@@ -42,7 +42,7 @@ const NewProject: FC<Props> = ({ history }) => {
         <div className="new-project__form">
           <Form layout="vertical">
             <Form.Item label="Choose your project name">
-              <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="input placeholder" />
+              <Input value={name} onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)} placeholder="input placeholder" />
             </Form.Item>
             <Form.Item label="Choose your color">
               <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>

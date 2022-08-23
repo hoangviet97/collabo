@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ChangeEvent } from "react";
 import { Button, Input, message } from "antd";
 import OptionPreview from "./OptionPreview";
 
@@ -70,7 +70,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
             ))}
           </div>
           <form onSubmit={submitOptionHandler}>
-            <Input value={option} onChange={(e) => setOption(e.target.value)} placeholder="Enter the option..." />
+            <Input value={option} onChange={(e: ChangeEvent<HTMLInputElement>) => setOption(e.target.value)} placeholder="Enter the option..." />
           </form>
           <div className="poll__editor-create">
             <Button type="primary" onClick={submitPollHandler}>

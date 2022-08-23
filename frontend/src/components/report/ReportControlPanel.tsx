@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getMembers } from "../../actions/member";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
-import { Avatar, Input } from "antd";
+import { Avatar } from "antd";
 import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {

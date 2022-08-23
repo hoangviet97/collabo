@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { createAssignee, deleteAssignee } from "../../actions/task";
 import { addParticipant, deleteParticipant } from "../../actions/session";
@@ -68,7 +68,7 @@ const AssigneesModal: FC<Props> = ({ item_id, assignees, members, close, type })
       <div className="assignee-modal">
         <Row style={{ marginBottom: "10px" }}>
           <Col span="18">
-            <Input size="small" value={searchText} onChange={(e) => searchTextHandle(e)} />
+            <Input size="small" value={searchText} onChange={(e: ChangeEvent<HTMLInputElement>) => searchTextHandle(e)} />
           </Col>
           <Col span="6" className="assignee-modal__col">
             <a onClick={close}>

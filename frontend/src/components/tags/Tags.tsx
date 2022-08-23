@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, ChangeEvent } from "react";
 import Container from "../utils/Container";
 import { Button, Modal, Form, Input, Spin } from "antd";
 import TagGroup from "./TagGroup";
@@ -75,7 +75,7 @@ const Tags: FC<Props> = ({ match }) => {
         <Modal title="Tag" width="500px" visible={modalvisible} onCancel={() => setModalVisible(false)} footer={null}>
           <Form>
             <Form.Item>
-              <Input value={tagName} onChange={(e) => setTagName(e.target.value)} placeholder="Name" />
+              <Input value={tagName} onChange={(e: ChangeEvent<HTMLInputElement>) => setTagName(e.target.value)} placeholder="Name" />
             </Form.Item>
             <Form.Item>
               <Button onClick={createTagHandler}>Create</Button>
