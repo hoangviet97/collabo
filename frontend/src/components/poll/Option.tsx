@@ -41,7 +41,7 @@ const Option: FC<Props> = ({ data, voteCount, votes, setVoteHandler, deleteVoteh
               <Checkbox checked={isChecked} onChange={(e: any) => checkboxHandler(e)} />
               <span style={{ marginLeft: "10px", color: isChecked ? color.base_white : color.primary_text }}>{data.text}</span>
             </div>
-            <div style={{ flex: 1, textAlign: "right" }}>
+            <div className="option__votes">
               <Avatar.Group>
                 {votes.map((item: any, index: number) => (
                   <Avatar size="large" key={index} style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
-import { PlusOutlined, CalendarOutlined } from "@ant-design/icons";
-import { Button, Calendar, Skeleton } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Skeleton } from "antd";
 import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
 import { session } from "../../types/types";
 
 interface Props {

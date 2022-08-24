@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ChangeEvent } from "react";
 import { Modal, Button, Input, Form, message } from "antd";
 import { createMessage } from "../../actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
@@ -42,7 +42,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
   return (
     <Modal visible={visible} onCancel={handleCancel} onOk={handleOk} footer={null} width="50%">
       <div style={{ padding: "30px 15px" }}>
-        <TextArea style={{ fontSize: "20px" }} value={value} onChange={(e) => setValue(e.target.value)} placeholder="Enter your main text" autoSize={{ minRows: 5, maxRows: 8 }} />
+        <TextArea style={{ fontSize: "20px" }} value={value} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)} placeholder="Enter your main text" autoSize={{ minRows: 5, maxRows: 8 }} />
         <footer style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
           <div>
             <Button onClick={() => setPollWindow(true)}>

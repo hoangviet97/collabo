@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ChangeEvent } from "react";
 import { Divider, message, Input, Avatar } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { changeFirstname, changeLastname } from "../../actions/auth";
@@ -56,8 +56,8 @@ const AccountDetails: FC<Props> = ({ profile }) => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Name</div>
           <div style={{ display: "flex", flexDirection: "row", flex: "1" }}>
-            <Input style={{ marginRight: "10px", width: "200px" }} value={firstname} onChange={(e) => setFirstname(e.target.value)} onBlur={firstnameHandler} placeholder="firstname" />
-            <Input style={{ width: "200px" }} type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} onBlur={lastnameHandler} placeholder="lastname" />
+            <Input style={{ marginRight: "10px", width: "200px" }} value={firstname} onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstname(e.target.value)} onBlur={firstnameHandler} placeholder="firstname" />
+            <Input style={{ width: "200px" }} type="text" value={lastname} onChange={(e: ChangeEvent<HTMLInputElement>) => setLastname(e.target.value)} onBlur={lastnameHandler} placeholder="lastname" />
           </div>
         </div>
       </div>

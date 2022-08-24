@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, ChangeEvent } from "react";
 import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteReview, acceptReview } from "../../actions/review";
@@ -65,7 +65,7 @@ const Review: FC<Props> = ({ review }) => {
       <div className="review__body">
         {isCommentVisible && (
           <div style={{ margin: "10px 0" }}>
-            <TextArea rows={4} value={comment} onChange={(e) => setComment(e.target.value)} onBlur={onBlurComment} autoFocus />
+            <TextArea rows={4} value={comment} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)} onBlur={onBlurComment} autoFocus />
           </div>
         )}
       </div>

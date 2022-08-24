@@ -9,6 +9,20 @@
     transform: translate(-50%, -50%);
   }
 
+  &__talking-point {
+    margin-bottom: 30px;
+  }
+
+  &__talking-list {
+    margin-left: 20px;
+    list-style-type: none;
+  }
+
+  &__section-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
   &__preview {
     background-color: #0275d8;
     padding: 15px 20px;
@@ -33,6 +47,11 @@
 
   &__control-btn {
     margin-right: 5px;
+  }
+
+  &__panel-icon {
+    color: #2f3542;
+    margin-right: 10px;
   }
 
   &__panel-item {

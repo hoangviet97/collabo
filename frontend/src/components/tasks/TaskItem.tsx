@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { CheckCircleOutlined, EllipsisOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu, Typography, Tag, message } from "antd";
+import { Dropdown, Menu, Typography, Tag, message } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTaskStatus, updateTaskPriority } from "../../actions/task";
 import { createReview } from "../../actions/review";

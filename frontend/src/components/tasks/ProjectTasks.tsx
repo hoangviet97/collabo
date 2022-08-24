@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, ChangeEvent } from "react";
 import Container from "../utils/Container";
 import { createSection, getSections, deleteSection, resetSections } from "../../actions/section";
 import { getProjectTasks, createTask, getAllAssignees, resetTasks } from "../../actions/task";
@@ -194,7 +194,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
         <Container size="50">
           <header style={{ marginRight: "20px" }}>
             <div className="task__header-options justify-between">
-              <Input value={taskNameForSearch} onChange={(e) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
+              <Input value={taskNameForSearch} onChange={(e: ChangeEvent<HTMLInputElement>) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" style={{ width: "40%" }} />
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Filter by: &nbsp;</span>
                 <Button onClick={showTagSelectorHandler}>
@@ -257,7 +257,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
                 <div style={{ marginTop: "15px" }}>
                   {newTaskIndexes[index] === true ? (
                     <form onSubmit={() => onBlurTaskHandler(section.id, index)}>
-                      <Input onChange={(e) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id, index)} autoFocus />
+                      <Input onChange={(e: ChangeEvent<HTMLInputElement>) => taskHandler(e)} value={newTask} onBlur={() => onBlurTaskHandler(section.id, index)} autoFocus />
                     </form>
                   ) : (
                     <Button type="link" style={{ display: "block" }} onClick={(i) => newTaskVisibilityHandler(index)}>
@@ -277,7 +277,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             <div className="add-section-container">
               <div className="add-section-inputField">
                 <form onSubmit={onBlurSectionHandler}>
-                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e) => sectionHandler(e)} />
+                  <Input onBlur={onBlurSectionHandler} autoFocus value={newSection} onChange={(e: ChangeEvent<HTMLInputElement>) => sectionHandler(e)} />
                 </form>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSession, getParticipants } from "../../actions/session";
@@ -10,7 +10,7 @@ import AvatarIcon from "../utils/AvatarIcon";
 import color from "../../styles/abstract/variables.module.scss";
 import AssigneesBox from "../assignees/AssigneesBox";
 
-const SessionItem = () => {
+const SessionItem: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: RootStateOrAny) => state.session.singleLoading);
   const single = useSelector((state: RootStateOrAny) => state.session.single);
@@ -92,9 +92,11 @@ const SessionItem = () => {
             </div>
           </header>
           <Divider />
-          <div className="session__talking-point" style={{ marginBottom: "30px" }}>
-            <span style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Talking Points</span>
-            <ul style={{ marginLeft: "20px", listStyleType: "none" }}>
+          <div className="session__talking-point">
+            <span className="session__section-title" style={{ marginBottom: "10px" }}>
+              Talking Points
+            </span>
+            <ul className="session_talking-list">
               {talking_points.map((item: any, index: number) => (
                 <li key={index}>
                   <Checkbox onChange={(e) => pointCheckHandle(e.target.checked, item.id)} checked={item.checked === "T" ? true : false}>
@@ -110,7 +112,7 @@ const SessionItem = () => {
             </ul>
           </div>
           <div className="session__note">
-            <span style={{ fontSize: "18px", fontWeight: "bold" }}>Notepad</span>
+            <span className="session__section-title">Notepad</span>
             <TextArea style={{ padding: "5px 0" }} value={noteText} onChange={(e) => setNoteText(e.target.value)} onBlur={submitNoteText} placeholder="Write down everything you want" bordered={false} autoSize={{ minRows: 3, maxRows: 5 }} />
           </div>
         </>
