@@ -4,11 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { setNewPassword } from "../../actions/auth";
 import { useDispatch } from "react-redux";
 
-interface Props {
-  match: any;
-}
-
-const Verification: FC<Props> = ({ match }) => {
+const Verification = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const history = useHistory();

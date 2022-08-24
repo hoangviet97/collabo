@@ -23,8 +23,8 @@ const InvitationPanel: React.FunctionComponent = () => {
     <div className="team__invite">
       <h2 className="team__invite-header">Invite New People 👋</h2>
       <div className="team__invite-content">
-        <Input className="team__invite-input" placeholder="Enter e-mail address" value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
-        <Button type="primary" style={{ borderRadius: "7px" }} onClick={submitHandle}>
+        <Input type="email" name="email" aria-label="email" className="team__invite-input" placeholder="Enter e-mail address" value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
+        <Button type="primary" aria-label="submit" style={{ borderRadius: "7px" }} onClick={submitHandle}>
           Send
         </Button>
       </div>

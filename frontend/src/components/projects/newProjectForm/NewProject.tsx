@@ -1,16 +1,13 @@
 import React, { useState, FC, ChangeEvent } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createProject } from "../../../actions/project";
 import colorVar from "../../../styles/abstract/variables.module.scss";
 
-interface Props {
-  history: any;
-}
-
-const NewProject: FC<Props> = ({ history }) => {
+const NewProject = () => {
   const dispatch = useDispatch();
+  const history: any = useHistory();
   const loading = useSelector((state: RootStateOrAny) => state.project.loading);
   const [selected, setSelected] = useState<string>("");
   const colorSet: string[] = [colorVar.normal_green, colorVar.normal_reef, colorVar.light_orange, colorVar.normal_orange, colorVar.normal_red, colorVar.normal_blue, colorVar.normal_purple, colorVar.normal_koamaru, colorVar.normal_grey];
@@ -69,4 +66,4 @@ const NewProject: FC<Props> = ({ history }) => {
   );
 };
 
-export default withRouter(NewProject);
+export default NewProject;
