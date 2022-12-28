@@ -39,12 +39,12 @@ const NewProject = () => {
         <div className="new-project__form">
           <Form layout="vertical">
             <Form.Item label="Choose your project name">
-              <Input value={name} onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)} placeholder="input placeholder" />
+              <Input aria-label="project-name" value={name} onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)} placeholder="input placeholder" />
             </Form.Item>
             <Form.Item label="Choose your color">
               <div className="icon-colorbox" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 {colorSet.map((item, index) => (
-                  <div className={chosen === index ? "active-color-box" : "color-box"} onClick={() => colorCubicStateHandler(item, index)} style={{ backgroundColor: item, width: "50px", height: "50px" }}></div>
+                  <div key={index} className={chosen === index ? "active-color-box" : "color-box"} onClick={() => colorCubicStateHandler(item, index)} style={{ backgroundColor: item, width: "50px", height: "50px" }}></div>
                 ))}
               </div>
             </Form.Item>
@@ -56,7 +56,7 @@ const NewProject = () => {
           </Form>
         </div>
         <div className="new-project__close">
-          <Link to="/">Cancel</Link>
+          <a href="/">Cancel</a>
         </div>
       </div>
       <div className="new-project__bg">

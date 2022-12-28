@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import SessionPanelItem from "./SessionPanelItem";
-import { session } from "../../types/types";
+import { session } from "../../../types/types";
 
 interface Props {
   sessions: session[];

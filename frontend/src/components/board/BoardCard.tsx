@@ -6,11 +6,21 @@ import { deleteTask } from "../../actions/task";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const BoardCard = ({ id, title, description, priority, due_date, dragging, showModalHandler }) => {
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  priority: string;
+  due_date: string;
+  dragging: () => void;
+  showModalHandler: () => void;
+}
+
+const BoardCard: React.FunctionComponent<Props> = ({ id, title, description, priority, due_date, dragging, showModalHandler }) => {
   const dispatch = useDispatch();
   const params = useParams();
-  const [priorityColor, setPriorityColor] = useState("");
-  const [dayColor, setDayColor] = useState("black");
+  const [priorityColor, setPriorityColor] = useState<string>("");
+  const [dayColor, setDayColor] = useState<string>("black");
   const today = new Date();
 
   useEffect(() => {
@@ -39,11 +49,11 @@ const BoardCard = ({ id, title, description, priority, due_date, dragging, showM
   }, [due_date]);
 
   const confirm = () => {
-    dispatch(deleteTask(id, params.id));
+    //dispatch(deleteTask(id));
   };
 
   return (
-    <div className="board__card" onClick={showModalHandler} dragging={dragging}>
+    <div className="board__card" onClick={showModalHandler} data-dragging={dragging}>
       <div className="board__card-header">
         <h3 className="board__card-title">{title}</h3>
         <Popconfirm title="Are you sure to delete this task?" onConfirm={confirm} okText="Yes" cancelText="No">

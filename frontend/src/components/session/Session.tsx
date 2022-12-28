@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import Container from "../utils/Container";
-import ControlPanel from "./ControlPanel";
+import ControlPanel from "./controlPanel/ControlPanel";
 import SessionContent from "./SessionContent";
 import SessionModal from "../modal/SessionModal";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";

@@ -1,5 +1,12 @@
 import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, AUTH_LOADING, LOGOUT, CHANGE_FIRSTNAME, CHANGE_LASTNAME, CHANGE_COLOR } from "../../actions/types";
 
+interface initialAuthState {
+  token: any;
+  isAuthenticated: boolean;
+  loading: boolean;
+  user: any;
+}
+
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
@@ -7,7 +14,7 @@ const initialState = {
   user: {}
 };
 
-function authReducer(state = initialState, action: any) {
+function authReducer(state: initialAuthState = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {

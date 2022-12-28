@@ -1,5 +1,5 @@
 import React, { useState, FC, ChangeEvent } from "react";
-import { Divider, message, Input, Avatar } from "antd";
+import { Divider, Input, Avatar } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { changeFirstname, changeLastname } from "../../actions/auth";
 import AvatarIcon from "../utils/AvatarIcon";

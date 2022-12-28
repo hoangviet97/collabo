@@ -18,7 +18,7 @@ const Reset: React.FunctionComponent = () => {
     <div className="reset">
       <div className="reset__wrapper">
         <div>
-          <div style={{ backgroundColor: color.light_blue, display: "inline-block", position: "relative", borderRadius: "50%", width: "80px", height: "80px" }}>
+          <div className="reset__icon" style={{ backgroundColor: color.light_blue }}>
             <KeyOutlined style={{ fontSize: "40px", color: color.normal_blue, position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
           </div>
           <div style={{ fontSize: "30px" }}>Forgot password?</div>
@@ -29,14 +29,14 @@ const Reset: React.FunctionComponent = () => {
             </Form.Item>
 
             <Form.Item className="auth__element" style={{ width: "100%" }}>
-              <Button type="primary" htmlType="submit" size="large" style={{ borderRadius: "10px", width: "100%" }}>
+              <Button className="reset__btn" type="primary" htmlType="submit" size="large">
                 Send
               </Button>
             </Form.Item>
           </Form>
 
           <Link to="/login">
-            <span style={{ color: "black", textDecoration: "underline" }}>Go back</span>
+            <span className="reset__link-back">Go back</span>
           </Link>
         </div>
       </div>

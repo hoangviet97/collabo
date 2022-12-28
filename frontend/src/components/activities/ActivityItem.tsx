@@ -18,7 +18,7 @@ const ActivityItem: FC<Props> = ({ data }) => {
         </div>
       </header>
       <div className="activity__body">
-        <div style={{ float: "left", clear: "both", marginRight: "15px" }}>
+        <div className="activity__avatar">
           <Avatar style={{ backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }} size={50}>
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} size={20} />
           </Avatar>
@@ -33,7 +33,7 @@ const ActivityItem: FC<Props> = ({ data }) => {
           </div>
           {data.comment && (
             <div className="activity__comment">
-              <div style={{ width: "100%", overflowWrap: "break-word", backgroundColor: color.normal_silver_2, borderRadius: "8px", color: "white", padding: "10px 15px" }}>{data.comment}</div>
+              <div className="activity__comment-text">{data.comment}</div>
             </div>
           )}
         </div>

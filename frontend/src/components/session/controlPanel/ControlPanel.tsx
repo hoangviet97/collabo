@@ -4,7 +4,7 @@ import { Button, Skeleton } from "antd";
 import SessionPanelList from "./SessionPanelList";
 import moment from "moment";
 import { useSelector, RootStateOrAny } from "react-redux";
-import { session } from "../../types/types";
+import { session } from "../../../types/types";
 
 interface Props {
   addNewSession: any;

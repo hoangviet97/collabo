@@ -22,7 +22,6 @@ const Projects: React.FunctionComponent = () => {
   const [activeCards, setActiveCards] = useState<string>("projects-dimension__cards--active");
   const [activeList, setActiveList] = useState<string>("");
   const [filteredData, setFilteredData] = useState<any[]>([]);
-  const [isFvorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getProjects());

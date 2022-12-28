@@ -28,7 +28,6 @@ const FileList: React.FunctionComponent = () => {
       method: "GET",
       responseType: "blob" // important
     }).then((response) => {
-      console.log(response);
       fileDownload(response.data, `${record.title}.${record.file_mimetype}`);
     });
   };

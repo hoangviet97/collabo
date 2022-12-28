@@ -49,13 +49,13 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
 
   return (
     <div style={{ padding: "20px 15px" }}>
-      <Button style={{ marginTop: "-5px" }} onClick={cancelHandler}>
+      <Button aria-label="cancel-btn" style={{ marginTop: "-5px" }} onClick={cancelHandler}>
         Cancel
       </Button>
       {!viewData && (
         <div className="poll__editor-question">
-          <Input value={question} aria-label="question-text" onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." style={{ marginRight: "10px" }} />
-          <Button type="primary" aria-label="set-question" onClick={setQuestionHandler}>
+          <Input value={question} data-testid="question-input" onChange={(e) => setQuestion(e.target.value)} placeholder="Choose your question..." style={{ marginRight: "10px" }} />
+          <Button type="primary" data-testid="question-btn" onClick={setQuestionHandler}>
             Set question
           </Button>
         </div>
@@ -63,7 +63,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
 
       {viewData && (
         <div className="" style={{ marginTop: "20px" }}>
-          <h2 data-testid="question-display">{question}</h2>
+          <h2 data-testid="question-text">{question}</h2>
           <div className="option__preview-list" style={{ marginBottom: "10px" }}>
             {optionArr.map((item: string, index: number) => (
               <OptionPreview key={index} text={item} removeOption={removeOption} />

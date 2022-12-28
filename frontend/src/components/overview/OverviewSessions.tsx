@@ -15,7 +15,7 @@ const OverviewSessions = () => {
           <FundProjectionScreenOutlined className="overview__sec-icon" />
           <div>Upcoming Sessions</div>
         </div>
-        {sessions.length > 0 && <div className="blob red"></div>}
+        {sessions.filter((item: session) => moment(item.date) > moment()).length > 0 && <div className="blob red"></div>}
       </div>
       <div className="overview__session">
         {sessions.length < 1 ? (

@@ -4,10 +4,8 @@ import { useParams } from "react-router-dom";
 import { getSession, getParticipants } from "../../actions/session";
 import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../actions/talking_point";
 import { getNote, updateNote, createNote } from "../../actions/note";
-import { Divider, Input, Checkbox, Skeleton, Avatar, Tooltip } from "antd";
+import { Divider, Input, Checkbox, Skeleton } from "antd";
 import moment from "moment";
-import AvatarIcon from "../utils/AvatarIcon";
-import color from "../../styles/abstract/variables.module.scss";
 import AssigneesBox from "../assignees/AssigneesBox";
 
 const SessionItem: React.FunctionComponent = () => {

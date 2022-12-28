@@ -32,7 +32,7 @@ const Login = () => {
   return (
     <div className="auth__wrapper">
       <div class="auth__container auth__form-container">
-        <h1 style={{ letterSpacing: "1px", marginBottom: "30px" }}>
+        <h1 className="auth__title">
           <span style={{ fontWeight: "lighter" }}>COLLA</span>
           <span style={{ color: "#031428" }}>BOAT</span>
         </h1>
