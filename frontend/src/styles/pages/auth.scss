@@ -6,6 +6,18 @@
     display: flex;
   }
 
+  &__title {
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    left: 20%;
+  }
+
   &__hero {
     background-image: linear-gradient(#0274d880, #0274d8e7), url(../../img/hero.jpg);
     background-repeat: no-repeat;
@@ -59,17 +71,4 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-}
-
-.reset {
-  &__wrapper {
-    width: 700px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    padding: 50px 30px;
-    border-radius: 10px;
-  }
 }

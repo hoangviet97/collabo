@@ -1,13 +1,21 @@
 import { CREATE_PROJECT, RESET_AUTH, GET_PROJECT_AUTH, CREATE_PROJECT_FAIL, SET_PROJECT_CURRENCY, SET_PROJECT_BUDGET, LEAVE_PROJECT, UPDATE_PROJECT_COLOR, GET_PROJECTS, LOAD_PROJECTS_FAIL, GET_SINGLE_PROJECT, ERROR_SINGLE_PROJECT, PROJECT_LOADING, SET_FAVORITE_PROJECT, SET_FAVORITE_PROJECT_FAIL, UPDATE_PROJECT_STATUS, UPDATE_PROJECT_STATUS_FAIL, GET_MODAL_PROJECTS, RESET_SINGLE_PROJECT } from "../../actions/types";
 import { project } from "../../types/types";
 
+interface projectState {
+  loading: boolean;
+  authorized: boolean;
+  projects: any;
+  modalProjects: any;
+  currentProject: any;
+}
+
 const initialState = {
   loading: false,
   authorized: false,
   projects: [],
   modalProjects: [],
   currentProject: {}
-};
+} as projectState;
 
 function projectReducer(state = initialState, action: any) {
   const { type, payload } = action;

@@ -37,7 +37,7 @@ const FileHomePage: React.FunctionComponent = () => {
   return (
     <div>
       <div className="files__homepage">
-        <div style={{ gridArea: "content", maxHeight: "calc(100vh - 180px)", overflowY: "scroll" }}>
+        <div className="files__homepage-inter">
           <FolderList showModal={showModal} />
           <div className="files__recent-files">
             <div className="files__recent-files-header">

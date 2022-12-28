@@ -9,7 +9,7 @@ const FilesStatistics: React.FunctionComponent = () => {
   const sum = useSelector((state: RootStateOrAny) => state.file.total);
 
   return (
-    <div className="files__statistics" style={{ overflowY: "scroll" }}>
+    <div className="files__statistics">
       <div className="files__statistics-title">Storage</div>
       <div className="files__donut">
         <SemiDonut sum={sum} />

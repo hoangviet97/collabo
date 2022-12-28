@@ -2,7 +2,17 @@
   position: relative;
   height: calc(100vh - 180px);
 
+  &__homepage {
+    &-inter {
+      grid-area: content;
+      max-height: calc(100vh - 180px);
+      overflow-y: scroll;
+    }
+  }
+
   &__statistics {
+    overflow-y: scroll;
+
     &-title {
       font-size: 30px;
       font-weight: bolder;

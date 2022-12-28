@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import { CalendarOutlined, ClockCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { deleteSession } from "../../actions/session";
+import { deleteSession } from "../../../actions/session";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { session } from "../../types/types";
+import { session } from "../../../types/types";
 
 interface Props {
   session: session;

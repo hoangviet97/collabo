@@ -7,7 +7,6 @@ import Reset from "./components/auth/Reset";
 import PasswordReset from "./components/auth/PasswordReset";
 import Dashboard from "./components/main/Dashboard";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
 import store from "./redux/store";
 import setAuthToken from "./helpers/setAuthToken";
 import { loadUser } from "./actions/auth";
@@ -23,18 +22,16 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/verify/:id" component={Verification} />
-          <Route exact path="/reset" component={Reset} />
-          <Route exact path="/pwd-reset/:id" component={PasswordReset} />
-          <ProtectedRoute path="/" component={Dashboard} />
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      <Switch>
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/verify/:id" component={Verification} />
+        <Route exact path="/reset" component={Reset} />
+        <Route exact path="/pwd-reset/:id" component={PasswordReset} />
+        <ProtectedRoute path="/" component={Dashboard} />
+      </Switch>
+    </Router>
   );
 };
 

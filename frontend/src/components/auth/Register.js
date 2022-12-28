@@ -42,7 +42,7 @@ const Register = (props) => {
   return (
     <div className="auth__wrapper">
       <div class="auth__container auth__form-container">
-        <h1 style={{ letterSpacing: "1px", marginBottom: "30px" }}>
+        <h1 className="auth__title">
           <span style={{ fontWeight: "lighter" }}>COLLA</span>
           <span style={{ color: "#031428" }}>BOAT</span>
         </h1>
@@ -86,7 +86,7 @@ const Register = (props) => {
       </div>
       <div class="auth__container auth__hero">
         <div>
-          <img src={Img} style={{ width: "100%", height: "auto", position: "relative", left: "20%" }} />
+          <img src={Img} className="auth__img" />
         </div>
       </div>
     </div>
