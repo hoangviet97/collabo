@@ -2,7 +2,7 @@ import React, { useState, useRef, FC } from "react";
 import { Form, Button, Row, Col, Input } from "antd";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { uploadFile, uploadAttachFile } from "../../../actions/file";
+import { uploadFile, uploadAttachFile } from "../../../redux/actions/file";
 import { useParams } from "react-router-dom";
 
 interface Props {

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Option from "./Option";
-import { setPoolVote, deletePoolVote } from "../../actions/message";
+import { setPoolVote, deletePoolVote } from "../../redux/actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { option } from "../../types/types";

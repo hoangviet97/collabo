@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Button, Menu, Dropdown } from "antd";
 import { EllipsisOutlined, FolderFilled } from "@ant-design/icons";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import { deleteFolder } from "../../../actions/folder";
+import { deleteFolder } from "../../../redux/actions/folder";
 import { useDispatch } from "react-redux";
 import { folder } from "../../../types/types";
 

@@ -1,6 +1,6 @@
 import React, { useState, FC, ChangeEvent } from "react";
 import { Modal, Button, Input, Form, message } from "antd";
-import { createMessage } from "../../actions/message";
+import { createMessage } from "../../redux/actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { PlusCircleOutlined, UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import PollEditor from "../poll/PollEditor";

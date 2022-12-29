@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState, ChangeEvent } from "react";
 import { Input, Button } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteReview, acceptReview } from "../../actions/review";
+import { deleteReview, acceptReview } from "../../redux/actions/review";
 import { useParams } from "react-router-dom";
-import { getFilesByReview, getFilesByTask } from "../../actions/file";
+import { getFilesByReview, getFilesByTask } from "../../redux/actions/file";
 import FileMiniCard from "../documents/files/FileMiniCard";
 import moment from "moment";
 

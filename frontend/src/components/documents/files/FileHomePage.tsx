@@ -4,7 +4,7 @@ import FolderList from "../folders/FolderList";
 import FileList from "./FileList";
 import { Form, Input, Button, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { createFolder } from "../../../actions/folder";
+import { createFolder } from "../../../redux/actions/folder";
 import { useDispatch } from "react-redux";
 import FilesStatistics from "./FilesStatistics";
 import { useParams } from "react-router-dom";

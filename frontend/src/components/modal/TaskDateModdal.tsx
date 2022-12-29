@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import { updateTaskEndDate, updateTaskStartDate } from "../../actions/task";
+import { updateTaskEndDate, updateTaskStartDate } from "../../redux/actions/task";
 import { Calendar, Button } from "antd";
 import moment from "moment";
 import { useParams } from "react-router-dom";

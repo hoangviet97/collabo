@@ -1,4 +1,4 @@
-import { CREATE_NOTE, UPDATE_NOTE, GET_NOTE } from "../../actions/types";
+import { CREATE_NOTE, UPDATE_NOTE, GET_NOTE } from "../actions/types";
 
 const initialState = {
   note: {}

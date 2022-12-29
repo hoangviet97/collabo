@@ -1,4 +1,4 @@
-import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, DELETE_TASK_TAG, TAGS_LOADING, RESET_TAGS } from "../../actions/types";
+import { CREATE_TAG, CREATE_TASK_TAG, GET_TAGS, GET_TASK_TAGS, DELETE_TAGS, DELETE_TASK_TAG, TAGS_LOADING, RESET_TAGS } from "../actions/types";
 import { tag } from "../../types/types";
 
 interface tagState {

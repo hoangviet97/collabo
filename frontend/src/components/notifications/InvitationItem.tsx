@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteInvitation, acceptInvitation } from "../../actions/invitation";
+import { deleteInvitation, acceptInvitation } from "../../redux/actions/invitation";
 import moment from "moment";
 
 interface Props {

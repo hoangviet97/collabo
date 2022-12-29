@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Review from "./Review";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getReviews } from "../../actions/review";
+import { getReviews } from "../../redux/actions/review";
 import { Empty } from "antd";
 
 const ReviewList: React.FunctionComponent = () => {

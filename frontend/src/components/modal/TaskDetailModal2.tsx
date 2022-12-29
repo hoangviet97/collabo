@@ -4,12 +4,12 @@ import { EditOutlined, CheckOutlined, TagsOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { createTaskTag, getTags, getTagsByTasks, deleteTaskTag } from "../../actions/tag";
-import { getFilesByTask } from "../../actions/file";
-import { setBudget, setDescription, updateTaskPriority, updateTaskStatus, getTaskAssignees, updateTitle, getTask } from "../../actions/task";
+import { createTaskTag, getTags, getTagsByTasks, deleteTaskTag } from "../../redux/actions/tag";
+import { getFilesByTask } from "../../redux/actions/file";
+import { setBudget, setDescription, updateTaskPriority, updateTaskStatus, getTaskAssignees, updateTitle, getTask } from "../../redux/actions/task";
 import NewFileForm from "../documents/files/NewFileForm";
 import FileMiniCard from "../documents/files/FileMiniCard";
-import TaskDate from "../tasks/TaskDate";
+import TaskDate from "../taskItem/TaskDate";
 import { tag, member, file } from "../../types/types";
 import AssigneesBox from "../assignees/AssigneesBox";
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, FC } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getMembers } from "../../actions/member";
-import { createSession } from "../../actions/session";
+import { getMembers } from "../../redux/actions/member";
+import { createSession } from "../../redux/actions/session";
 import { Modal, Button, DatePicker, TimePicker, Form, Input, Select, Row, Col, message } from "antd";
 
 interface Props {

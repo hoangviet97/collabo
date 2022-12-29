@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Switch, Route } from "react-router-dom";
 import ReviewList from "./ReviewList";
 import ReviewDefault from "./ReviewDefault";
-import NotFound from "../layout/NotFound";
+import NotFound from "../../pages/404/NotFound";
 
 interface Props {
   match: any;

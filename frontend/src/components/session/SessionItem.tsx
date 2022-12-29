@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSession, getParticipants } from "../../actions/session";
-import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../actions/talking_point";
-import { getNote, updateNote, createNote } from "../../actions/note";
+import { getSession, getParticipants } from "../../redux/actions/session";
+import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from "../../redux/actions/talking_point";
+import { getNote, updateNote, createNote } from "../../redux/actions/note";
 import { Divider, Input, Checkbox, Skeleton } from "antd";
 import moment from "moment";
 import AssigneesBox from "../assignees/AssigneesBox";

@@ -1,4 +1,4 @@
-import { GET_UNSEEN_LOGS, GET_LOGS } from "../../actions/types";
+import { GET_UNSEEN_LOGS, GET_LOGS } from "../actions/types";
 import { log } from "../../types/types";
 
 interface logState {

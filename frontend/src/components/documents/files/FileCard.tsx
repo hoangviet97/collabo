@@ -5,7 +5,7 @@ import download from "downloadjs";
 import fileDownload from "js-file-download";
 import axios from "axios";
 import FileTypeIcon from "../../utils/FileTypeIcon";
-import { getFileDetail } from "../../../actions/file";
+import { getFileDetail } from "../../../redux/actions/file";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { file } from "../../../types/types";

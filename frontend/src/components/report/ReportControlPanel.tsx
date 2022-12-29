@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { getMembers } from "../../actions/member";
+import { getMembers } from "../../redux/actions/member";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar } from "antd";
