@@ -1,7 +1,7 @@
 import React, { useState, FC, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { createAssignee, deleteAssignee } from "../../actions/task";
-import { addParticipant, deleteParticipant } from "../../actions/session";
+import { createAssignee, deleteAssignee } from "../../redux/actions/task";
+import { addParticipant, deleteParticipant } from "../../redux/actions/session";
 import { Row, Col, Input, Avatar, Button, Divider } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";

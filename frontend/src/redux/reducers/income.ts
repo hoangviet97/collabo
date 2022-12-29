@@ -1,4 +1,4 @@
-import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING, INCOME_SUM } from "../../actions/types";
+import { CREATE_INCOME, GET_INCOMES, DELETE_INCOME, INCOME_LOADING, INCOME_SUM } from "../actions/types";
 import { folder } from "../../types/types";
 
 const initialState = {

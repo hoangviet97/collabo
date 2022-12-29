@@ -5,7 +5,7 @@ import { Button, Tooltip } from "antd";
 import { DownloadOutlined, DeleteOutlined, DisconnectOutlined } from "@ant-design/icons";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
-import { deleteFile, ejectFile } from "../../../actions/file";
+import { deleteFile, ejectFile } from "../../../redux/actions/file";
 import { useDispatch } from "react-redux";
 import axiosClient from "../../../helpers/axios";
 import color from "../../../styles/abstract/variables.module.scss";

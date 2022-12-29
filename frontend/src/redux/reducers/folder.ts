@@ -1,4 +1,4 @@
-import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER, FOLDER_LOADING } from "../../actions/types";
+import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER, FOLDER_LOADING } from "../actions/types";
 import { folder } from "../../types/types";
 
 interface folderState {

@@ -1,4 +1,4 @@
-import { CREATE_POLL } from "../../actions/types";
+import { CREATE_POLL } from "../actions/types";
 
 const initialState = {
   polls: [],

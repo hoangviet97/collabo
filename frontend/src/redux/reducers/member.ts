@@ -1,4 +1,4 @@
-import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, GET_MODAL_MEMBERS } from "../../actions/types";
+import { GET_MEMBERS, GET_MEMBERS_FAIL, UPDATE_MEMBER_ROLE, UPDATE_MEMBER_ROLE_FAILED, DELETE_MEMBER, GET_MODAL_MEMBERS } from "../actions/types";
 import { member } from "../../types/types";
 
 interface initialMemberState {

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Button, Skeleton } from "antd";
-import { getFolder } from "../../../actions/folder";
-import { getFilesByFolder } from "../../../actions/file";
+import { getFolder } from "../../../redux/actions/folder";
+import { getFilesByFolder } from "../../../redux/actions/file";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import FileCard from "../files/FileCard";
 import { file } from "../../../types/types";

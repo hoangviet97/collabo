@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { Breadcrumb, Button, Modal, Input, Avatar, Select } from "antd";
-import { getAllFiles } from "../../actions/file";
+import { getAllFiles } from "../../redux/actions/file";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { file } from "../../types/types";

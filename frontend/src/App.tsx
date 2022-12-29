@@ -1,15 +1,15 @@
 import "./App.scss";
 import * as React from "react";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import Verification from "./components/auth/Verification";
-import Reset from "./components/auth/Reset";
-import PasswordReset from "./components/auth/PasswordReset";
-import Dashboard from "./components/main/Dashboard";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import VerificationPage from "./pages/auth/VerificationPage";
+import ResetPage from "./pages/auth/ResetPage";
+import PasswordResetPage from "./pages/auth/PasswordResetPage";
+import Dashboard from "./layout/dashboard/Dashboard";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./redux/store";
 import setAuthToken from "./helpers/setAuthToken";
-import { loadUser } from "./actions/auth";
+import { loadUser } from "./redux/actions/auth";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 
@@ -24,11 +24,11 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/verify/:id" component={Verification} />
-        <Route exact path="/reset" component={Reset} />
-        <Route exact path="/pwd-reset/:id" component={PasswordReset} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/verify/:id" component={VerificationPage} />
+        <Route exact path="/reset" component={ResetPage} />
+        <Route exact path="/pwd-reset/:id" component={PasswordResetPage} />
         <ProtectedRoute path="/" component={Dashboard} />
       </Switch>
     </Router>

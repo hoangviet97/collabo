@@ -5,7 +5,7 @@ import moment from "moment";
 import axios from "axios";
 import axiosClient from "../../../helpers/axios";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { moveToFolder, deleteFile } from "../../../actions/file";
+import { moveToFolder, deleteFile } from "../../../redux/actions/file";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";

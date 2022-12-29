@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
-import { getMemberRecords } from "../../actions/time_record";
-import { getUserTasks } from "../../actions/task";
+import { getMemberRecords } from "../../redux/actions/time_record";
+import { getUserTasks } from "../../redux/actions/task";
 import moment from "moment";
 import { Column } from "@ant-design/plots";
 

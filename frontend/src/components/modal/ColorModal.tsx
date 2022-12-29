@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Modal } from "antd";
 import ColorCubic from "../utils/ColorCubic";
 import color from "../../styles/abstract/variables.module.scss";
-import { changeColor } from "../../actions/auth";
+import { changeColor } from "../../redux/actions/auth";
 
 interface Props {
   isVisible: boolean;
