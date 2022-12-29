@@ -1,0 +1,17 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title/>
+ <defs>
+  <path id="path-1" d="m5,6l0,9l14,0l0,-3l-11,0l0,-6l-3,0z"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <circle r="12" id="close-2" fill="#56aaff" cy="12.128755" cx="11.957082"/>
+  <use x="0.128755" y="6.781113" id="svg_2" xlink:href="#path-1" fill="none"/>
+  <ellipse id="svg_7" cy="5.62393" cx="28.244628" stroke-opacity="null" stroke-width="null" stroke="null" fill="#ff5656"/>
+  <circle stroke-width="2" stroke="#ffffff" r="5.905582" id="svg_11" fill="none" cy="12" cx="12.042919"/>
+ </g>
+</svg>

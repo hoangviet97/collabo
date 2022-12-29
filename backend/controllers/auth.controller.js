@@ -3,25 +3,70 @@ const { registerValidation, loginValidation } = require("../validation/auth");
 const apiResponse = require("../helpers/apiResponse");
 
 module.exports = {
-  // register new user
-  create: function (req, res) {
-    const { error } = registerValidation(req.body);
+  create: async function (req, res) {
+    try {
+      return res.json(await User.createUser(req.body));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
 
-    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
+  login2: async function (req, res) {
+    try {
+      return res.json(await User.loginUser2(req.body));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
 
-    User.createUser(req.body, (err, result) => {
+  resetPassword: function (req, res) {
+    User.resetPwd(req.body, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });
   },
 
-  // User login
-  login: function (req, res) {
-    const { error } = loginValidation(req.body);
+  setNewPassword: async function (req, res) {
+    try {
+      return res.json(await User.setNewPassword(req.body.token, req.body.password));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
 
-    if (error) return apiResponse.validationErrorWithData(res, error.message, error);
+  verify: async function (req, res) {
+    try {
+      return res.json(await User.verify(req.params.id));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
 
-    User.loginUser(req.body, (err, result) => {
+  changeColor: async function (req, res) {
+    try {
+      return res.json(await User.changeColor(req.user.id, req.body.color));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  changeFirstname: async function (req, res) {
+    try {
+      return res.json(await User.changeFirstname(req.user.id, req.body.firstname));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  changeLastname: function (req, res) {
+    User.changeLastname(req.user.id, req.body.lastname, (err, result) => {
+      if (err) return apiResponse.ErrorResponse(res, err.message);
+      return res.json(result);
+    });
+  },
+
+  changePassword: function (req, res) {
+    User.changePwd(req.body, req.user.id, (err, result) => {
       if (err) return apiResponse.ErrorResponse(res, err.message);
       return res.json(result);
     });

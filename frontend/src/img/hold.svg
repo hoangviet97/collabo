@@ -1,0 +1,16 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title/>
+ <defs>
+  <path id="path-1" d="m5,6l0,9l14,0l0,-3l-11,0l0,-6l-3,0z"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <circle r="12" id="close-2" fill="#ff5656" cy="12.085837" cx="12"/>
+  <use x="0.128755" y="6.781113" id="svg_2" xlink:href="#path-1" fill="none"/>
+  <rect id="svg_4" height="3.004291" width="12" y="10.542918" x="6" stroke-width="1.5" fill="#ffffff"/>
+ </g>
+</svg>

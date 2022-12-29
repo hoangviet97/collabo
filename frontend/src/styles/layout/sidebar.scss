@@ -1,0 +1,69 @@
+.sidebar {
+  grid-area: sidebar;
+  background-color: #222f3e;
+  border-right: 0.5px solid rgb(228, 228, 228);
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 30px;
+  z-index: 999;
+
+  &__logo {
+    color: rgb(199, 199, 199);
+    font-size: 40px;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-user {
+      display: none;
+
+      @media screen and (max-width: 1090px) {
+        display: block;
+      }
+    }
+  }
+}
+
+.side-nav {
+  margin-top: 50px;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  &__logout {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #b4babe;
+  }
+
+  &__icon {
+    font-size: 23px;
+    color: rgb(199, 199, 199);
+  }
+
+  div {
+    margin-bottom: 20px;
+  }
+}

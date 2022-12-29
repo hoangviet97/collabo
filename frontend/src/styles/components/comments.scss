@@ -1,0 +1,22 @@
+.comment {
+  width: 70%;
+  padding: 25px 40px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  &__author {
+    @extend .items-center;
+  }
+
+  &__body {
+    margin-bottom: 15px;
+  }
+
+  &__header {
+    @extend .justify-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}

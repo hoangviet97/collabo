@@ -1,0 +1,68 @@
+.budget__header {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  height: 35vh;
+  border-radius: 12px;
+  @extend .items-center;
+  padding: 0 30px;
+
+  &-item {
+    margin-right: 20px;
+  }
+}
+
+.budget {
+  &__title {
+    color: #a4b0be;
+    font-weight: bolder;
+  }
+
+  &__header-right {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 10px;
+  }
+
+  &__progress {
+    @extend .items-center;
+    margin-top: 10px;
+  }
+
+  &__bar {
+    width: 400px;
+    height: 15px;
+    background-color: #ecf0f1;
+    border-radius: 12px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    overflow: hidden;
+  }
+}
+
+.expense {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 15px 28px;
+  @extend .justify-between;
+}
+
+.income {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 15px 28px;
+  @extend .justify-between;
+
+  &__form {
+    width: 35%;
+    height: 35vh;
+    background-color: white;
+    border-radius: 12px;
+    margin-left: 15px;
+    padding: 30px;
+    @extend .justify-center;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+}

@@ -1,0 +1,27 @@
+.activity {
+  &__header {
+    @extend .justify-center;
+  }
+
+  &__avatar {
+    float: left;
+    clear: both;
+    margin-right: 15px;
+  }
+
+  &__comment {
+    &-text {
+      background-color: $normal_silver_2;
+      width: 100%;
+      overflow-wrap: break-word;
+      border-radius: 8px;
+      color: white;
+      padding: 10px 15px;
+    }
+  }
+
+  &__wrapper {
+    @extend .justify-center;
+    margin-top: 50px;
+  }
+}
