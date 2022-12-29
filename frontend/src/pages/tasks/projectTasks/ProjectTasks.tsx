@@ -13,14 +13,16 @@ import TaskDetailModal2 from "../../../components/modal/TaskDetailModal2";
 import TaskCard from "../../../components/taskItem/TaskCard";
 import { section, tag, task } from "../../../types/types";
 import TaskHeader from "../../../components/taskItem/TaskHeader";
+import { useParams } from "react-router-dom";
 
 interface Props {
   match: any;
 }
 
 const ProjectTasks: FC<Props> = ({ match }) => {
+  const params: any = useParams();
   const dispatch = useDispatch();
-  const project_id = match.params.id;
+  const project_id = params.id;
 
   // Ant components
   const { Panel } = Collapse;
@@ -54,6 +56,9 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [selectedSection, setSelectedSection] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [newTaskIndexes, setNewTaskIndexes] = useState<any>([]);
+
+  console.log(match.params.id);
+  console.log("hel");
 
   useEffect(() => {
     if (localStorage.getItem("task_visual") === null) {
