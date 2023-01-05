@@ -1,14 +1,10 @@
-import React, { FC } from "react";
-import { Switch, Route } from "react-router-dom";
+import React from "react";
+import { Switch, Route, withRouter, RouteComponentProps } from "react-router-dom";
 import ReviewList from "./ReviewList";
 import ReviewDefault from "./ReviewDefault";
 import NotFound from "../../pages/404/NotFound";
 
-interface Props {
-  match: any;
-}
-
-const ReviewContent: FC<Props> = ({ match }) => {
+const ReviewContent = ({ match }: RouteComponentProps) => {
   return (
     <div className="review__content">
       <Switch>
@@ -20,4 +16,4 @@ const ReviewContent: FC<Props> = ({ match }) => {
   );
 };
 
-export default ReviewContent;
+export default withRouter(ReviewContent);

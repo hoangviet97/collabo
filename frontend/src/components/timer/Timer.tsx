@@ -71,11 +71,11 @@ const Timer: FC<Props> = ({ localstorage, disabled }) => {
           <span>{formatTime()}</span>
           <div className="buttons">
             {!isActive ? (
-              <button disabled={disabled} className="time__button-action" onClick={handleStart}>
+              <button disabled={disabled} data-testid="start" className="time__button-action" onClick={handleStart}>
                 <CaretRightOutlined />
               </button>
             ) : (
-              <button className="time__button-action" onClick={handleReset}>
+              <button data-testid="pause" className="time__button-action" onClick={handleReset}>
                 <PauseOutlined />
               </button>
             )}

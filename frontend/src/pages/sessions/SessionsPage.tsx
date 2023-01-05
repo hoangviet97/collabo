@@ -7,11 +7,7 @@ import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSessions } from "../../redux/actions/session";
 
-interface Props {
-  match: any;
-}
-
-const SessionsPage: FC<Props> = ({ match }) => {
+const SessionsPage = () => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const [isModal, setModal] = useState<boolean>(false);
@@ -35,8 +31,8 @@ const SessionsPage: FC<Props> = ({ match }) => {
   return (
     <Container size="50">
       <div className="session">
-        <ControlPanel addNewSession={addNewSession} match={match} />
-        <SessionContent match={match} />
+        <ControlPanel addNewSession={addNewSession} />
+        <SessionContent />
       </div>
       <SessionModal project_id={params.id} visible={isModal} handleCancel={handleCancel} handleOk={handleOk} />
     </Container>

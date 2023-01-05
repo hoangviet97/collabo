@@ -1,13 +1,9 @@
-import React, { FC } from "react";
-import { Route, Switch, useLocation, match } from "react-router-dom";
+import React from "react";
+import { Route, Switch, RouteComponentProps, withRouter } from "react-router-dom";
 import SessionItem from "./SessionItem";
 import SessionWelcome from "./SessionWelcome";
 
-interface Props {
-  match: any;
-}
-
-const SessionContent: FC<Props> = ({ match }) => {
+const SessionContent = ({ match }: RouteComponentProps) => {
   return (
     <div className="session__content">
       <Switch>
@@ -18,4 +14,4 @@ const SessionContent: FC<Props> = ({ match }) => {
   );
 };
 
-export default SessionContent;
+export default withRouter(SessionContent);

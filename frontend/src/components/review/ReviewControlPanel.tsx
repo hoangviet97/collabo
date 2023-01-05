@@ -2,11 +2,7 @@ import React, { FC } from "react";
 import { useSelector, RootStateOrAny } from "react-redux";
 import ReviewLink from "./ReviewLink";
 
-interface Props {
-  match: any;
-}
-
-const ReviewControlPanel: FC<Props> = ({ match }) => {
+const ReviewControlPanel = () => {
   const reviewMembers = useSelector((state: RootStateOrAny) => state.review.review_panel);
 
   return (
@@ -14,7 +10,7 @@ const ReviewControlPanel: FC<Props> = ({ match }) => {
       <h2>Reviews</h2>
       <div style={{ marginTop: "30px" }}>
         {reviewMembers.map((member: any, index: number) => (
-          <ReviewLink key={index} member={member} match={match} />
+          <ReviewLink key={index} member={member} />
         ))}
       </div>
     </div>

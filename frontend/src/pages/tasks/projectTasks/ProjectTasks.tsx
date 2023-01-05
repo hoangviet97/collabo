@@ -57,9 +57,6 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [newTaskIndexes, setNewTaskIndexes] = useState<any>([]);
 
-  console.log(match.params.id);
-  console.log("hel");
-
   useEffect(() => {
     if (localStorage.getItem("task_visual") === null) {
       localStorage.setItem("task_visual", "list");
@@ -78,10 +75,10 @@ const ProjectTasks: FC<Props> = ({ match }) => {
   }, [tasks]);
 
   useEffect(() => {
-    if (match.params.taskId !== undefined) {
+    if (params.taskId !== undefined) {
       showModal();
     }
-  }, [match.params.taskId]);
+  }, [params]);
 
   const taskHandler = (e: any) => {
     setNewTask(e.target.value);
@@ -274,7 +271,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
             ))}
           </Collapse>
           {newSectionVisibility === false ? (
-            <Button type="primary" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler} disabled={sectionLoading}>
+            <Button type="primary" data-testid="section-btn" style={{ borderRadius: "8px" }} onClick={sectionVisibilityHandler} disabled={sectionLoading}>
               <PlusOutlined />
               {sectionLoading ? "Please wait..." : "Section"}
             </Button>

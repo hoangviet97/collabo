@@ -1,15 +1,15 @@
-import React, { FC } from "react";
+import React from "react";
 import { Avatar, Badge } from "antd";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Link } from "react-router-dom";
 import color from "../../styles/abstract/variables.module.scss";
 
-interface Props {
+interface Props extends RouteComponentProps {
   member: any;
-  match: any;
 }
 
-const ReviewLink: FC<Props> = ({ member, match }) => {
+const ReviewLink = ({ member, match }: Props) => {
   return (
     <div className="review__link">
       <div className="review__link-wrapper">
@@ -27,4 +27,4 @@ const ReviewLink: FC<Props> = ({ member, match }) => {
   );
 };
 
-export default ReviewLink;
+export default withRouter(ReviewLink);

@@ -13,7 +13,7 @@ import { folder } from "../../../types/types";
 
 const FileList: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
   const { Text, Link } = Typography;
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);

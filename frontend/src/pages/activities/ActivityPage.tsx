@@ -8,7 +8,7 @@ import { log } from "../../types/types";
 
 const ActivityPage: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params: any = useParams<{ id: string }>();
 
   const logs = useSelector((state: RootStateOrAny) => state.log.logs);
 

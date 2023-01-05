@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, withRouter, RouteComponentProps } from "react-router-dom";
 import moment from "moment";
 import { CalendarOutlined, ClockCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
@@ -7,15 +7,16 @@ import { deleteSession } from "../../../redux/actions/session";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { session } from "../../../types/types";
 
-interface Props {
+interface Props extends RouteComponentProps {
   session: session;
-  match?: any;
 }
 
-const SessionPanelItem: FC<Props> = ({ session, match }) => {
+const SessionPanelItem = ({ session, match }: Props) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
+
+  console.log(match);
 
   const deleteHandler = () => {
     dispatch(deleteSession(session.id, params.id));
@@ -49,4 +50,4 @@ const SessionPanelItem: FC<Props> = ({ session, match }) => {
   );
 };
 
-export default SessionPanelItem;
+export default withRouter(SessionPanelItem);

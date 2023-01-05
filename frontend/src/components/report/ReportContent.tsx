@@ -1,14 +1,10 @@
 import React, { FC } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter, RouteComponentProps } from "react-router-dom";
 import NotFound from "../../pages/404/NotFound";
 import ReportDefault from "./ReportDefault";
 import Report from "./Report";
 
-interface Props {
-  match: any;
-}
-
-const ReportContent: FC<Props> = ({ match }) => {
+const ReportContent = ({ match }: RouteComponentProps) => {
   return (
     <div className="report__content">
       <Switch>
@@ -20,4 +16,4 @@ const ReportContent: FC<Props> = ({ match }) => {
   );
 };
 
-export default ReportContent;
+export default withRouter(ReportContent);

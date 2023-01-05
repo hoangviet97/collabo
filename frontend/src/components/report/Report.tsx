@@ -9,7 +9,7 @@ import { Column } from "@ant-design/plots";
 
 const Report: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params: any = useParams<{ id: string; memberId: string }>();
   const [total, setTotal] = useState<number>(0);
   const [totalToday, setTotalToday] = useState<number>(0);
   const [avgTime, setAvgTime] = useState<number>(0);

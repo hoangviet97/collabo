@@ -1,17 +1,13 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { getMembers } from "../../redux/actions/member";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar } from "antd";
 import color from "../../styles/abstract/variables.module.scss";
 
-interface Props {
-  match: any;
-}
-
-const ReportControlPanel: FC<Props> = ({ match }) => {
+const ReportControlPanel = ({ match }: RouteComponentProps) => {
   const dispatch = useDispatch();
   const params: any = useParams();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
@@ -41,4 +37,4 @@ const ReportControlPanel: FC<Props> = ({ match }) => {
   );
 };
 
-export default ReportControlPanel;
+export default withRouter(ReportControlPanel);

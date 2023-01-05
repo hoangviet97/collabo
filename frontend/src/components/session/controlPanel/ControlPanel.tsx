@@ -8,10 +8,9 @@ import { session } from "../../../types/types";
 
 interface Props {
   addNewSession: any;
-  match: any;
 }
 
-const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
+const ControlPanel: FC<Props> = ({ addNewSession }) => {
   const [filteredSessions, setFilteredSessions] = useState([]);
   const sessions = useSelector((state: RootStateOrAny) => state.session.sessions);
   const sessionsLoading = useSelector((state: RootStateOrAny) => state.session.loading);
@@ -55,7 +54,7 @@ const ControlPanel: FC<Props> = ({ addNewSession, match }) => {
           </div>
         </div>
       </div>
-      <div className="meeting__control-content">{sessionsLoading ? <Skeleton /> : <SessionPanelList sessions={filteredSessions} match={match} />}</div>
+      <div className="meeting__control-content">{sessionsLoading ? <Skeleton /> : <SessionPanelList sessions={filteredSessions} />}</div>
     </div>
   );
 };

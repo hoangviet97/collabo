@@ -6,13 +6,9 @@ import { useDispatch } from "react-redux";
 import { getReviewPanel } from "../../redux/actions/review";
 import { useParams } from "react-router-dom";
 
-interface Props {
-  match: any;
-}
-
-const ReviewPage: FC<Props> = ({ match }) => {
+const ReviewPage = () => {
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
 
   useEffect(() => {
     dispatch(getReviewPanel(params.id));
@@ -21,8 +17,8 @@ const ReviewPage: FC<Props> = ({ match }) => {
   return (
     <Container size="50">
       <div className="review" style={{ minHeight: "calc(100vh - 180px)" }}>
-        <ReviewControlPanel match={match} />
-        <ReviewContent match={match} />
+        <ReviewControlPanel />
+        <ReviewContent />
       </div>
     </Container>
   );

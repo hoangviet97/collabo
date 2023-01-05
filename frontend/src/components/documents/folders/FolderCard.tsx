@@ -13,7 +13,7 @@ interface Props {
 const FolderCard: FC<Props> = ({ folder }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
   const location: any = useLocation();
 
   const deleteFolderHandler = () => {

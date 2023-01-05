@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 
 const FileHomePage: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isFolderModalVisible, setIsFolderModalVisible] = useState<boolean>(false);

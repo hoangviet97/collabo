@@ -4,14 +4,13 @@ import { session } from "../../../types/types";
 
 interface Props {
   sessions: session[];
-  match: any;
 }
 
-const SessionPanelList: FC<Props> = ({ sessions, match }) => {
+const SessionPanelList: FC<Props> = ({ sessions }) => {
   return (
     <div className="meeting-panel__list" style={{ marginTop: "20px" }}>
       {sessions.map((item: session) => (
-        <SessionPanelItem key={item.id} match={match} session={item} />
+        <SessionPanelItem key={item.id} session={item} />
       ))}
     </div>
   );
