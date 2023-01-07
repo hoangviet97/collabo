@@ -19,7 +19,9 @@ const ActivityPage: React.FunctionComponent = () => {
   return (
     <Container size="50">
       <header className="activity__header">
-        <div style={{ fontSize: "30px" }}>Activity Log</div>
+        <div data-testid="item" style={{ fontSize: "30px" }}>
+          Activity Log
+        </div>
       </header>
       <div className="activity__wrapper">
         <div>
