@@ -1,12 +1,10 @@
 import React from "react";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import Timer from "./Timer";
-import { createStore } from "redux";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { Provider } from "react-redux";
+import Timer from "../components/timer/Timer";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
-import thunk from "redux-thunk";
-import store from "../../redux/store";
+import store from "../redux/store";
 
 beforeEach(() => {
   render(
@@ -18,11 +16,7 @@ beforeEach(() => {
   );
 });
 
-afterEach(() => {
-  cleanup();
-});
-
-test("Pause button should be visible after timer starts", () => {
+test("Pause button should be visible after press start", async () => {
   const start = screen.getByTestId("start");
   fireEvent.click(start);
   const pause = screen.getByTestId("pause");

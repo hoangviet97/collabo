@@ -1,15 +1,15 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
-import store from "../../redux/store";
+import store from "../redux/store";
 import { BrowserRouter } from "react-router-dom";
-import ActivityPage from "./ActivityPage";
+import ActivityPage from "../pages/activities/ActivityPage";
 import MockAdapter from "axios-mock-adapter";
-import axios from "axios";
-import axiosClient from "../../helpers/axios";
-import { getLogs } from "../../redux/actions/log";
-import "../../setupTests";
+import axiosClient from "../helpers/axios";
+import { getLogs } from "../redux/actions/log";
+import "../setupTests";
+import { render } from "../test-utils";
 
 Object.defineProperty(window, "matchMedia", {
   value: () => {
