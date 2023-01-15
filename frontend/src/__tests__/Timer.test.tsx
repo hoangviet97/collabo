@@ -16,7 +16,7 @@ beforeEach(() => {
   );
 });
 
-test("Pause button should be visible after press start", async () => {
+test("Pause button should be visible after press start", () => {
   const start = screen.getByTestId("start");
   fireEvent.click(start);
   const pause = screen.getByTestId("pause");

@@ -1,0 +1,44 @@
+import React from "react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { Provider } from "react-redux";
+import store from "../redux/store";
+import { BrowserRouter } from "react-router-dom";
+import ActivityItem from "../components/activityItem/ActivityItem";
+
+export default {
+  title: "Activity/ActivityItem",
+  component: ActivityItem,
+  parameters: {
+    // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
+    layout: "padded"
+  },
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <BrowserRouter>{story()}</BrowserRouter>
+      </Provider>
+    )
+  ]
+} as ComponentMeta<typeof ActivityItem>;
+
+const Template: ComponentStory<typeof ActivityItem> = (args) => <ActivityItem {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  data: {
+    id: "1481deab-6784-4d99-bccc-06e0f4078f46",
+    projects_id: "66285580",
+    members_id: "935b6fa2-c7f5-494c-a4ea-c323d7b43ff1",
+    sender: "ccfefbcd-1fc9-4fff-ac66-ee9a83454bc5",
+    type: "task",
+    title: "Create strategic plan",
+    text: "assigned you a task",
+    created_at: "2022-08-03T16:08:27.000Z",
+    seen: "F",
+    comment: null,
+    firstname: "Vitek",
+    lastname: "Pham",
+    email: "phav02@vse.cz",
+    color: "#686de0"
+  }
+};
