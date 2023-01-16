@@ -4,7 +4,6 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { changeFirstname, changeLastname } from "../../redux/actions/auth";
 import AvatarIcon from "../../components/utils/AvatarIcon";
 import ColorModal from "../../components/modal/ColorModal";
-import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   profile: any;
@@ -20,13 +19,13 @@ const AccountDetailsPage: FC<Props> = ({ profile }) => {
 
   const firstnameHandler = () => {
     if (firstname !== profile.firstname) {
-      dispatch(changeFirstname({ firstname: firstname }));
+      dispatch(changeFirstname(firstname));
     }
   };
 
   const lastnameHandler = () => {
     if (firstname !== profile.lastname) {
-      dispatch(changeLastname({ lastname: lastname }));
+      dispatch(changeLastname(lastname));
     }
   };
 
@@ -45,7 +44,7 @@ const AccountDetailsPage: FC<Props> = ({ profile }) => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: "2", fontWeight: "bolder" }}>Avatar</div>
           <div onClick={() => setIsModalVisible(true)} style={{ display: "flex", flexDirection: "row", flex: "1" }}>
-            <Avatar style={{ backgroundColor: user.color === null || user.color.length < 1 ? color.normal_orange : user.color, width: "100px", height: "100px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+            <Avatar style={{ backgroundColor: user.color === null || user.color.length < 1 ? "#f39c12" : user.color, width: "100px", height: "100px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
               <AvatarIcon firstname={firstname} lastname={lastname} size={50} />
             </Avatar>
           </div>

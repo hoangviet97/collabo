@@ -8,16 +8,17 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getMembers } from "../../redux/actions/member";
 import { getAllProjectInvitations } from "../../redux/actions/invitation";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
 const Team: React.FunctionComponent = () => {
   const { TabPane } = Tabs;
-  const dispatch = useDispatch();
-  const params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
 
   useEffect(() => {
-    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getMembers(params.id));
     dispatch(getAllProjectInvitations(params.id));
   }, []);
 

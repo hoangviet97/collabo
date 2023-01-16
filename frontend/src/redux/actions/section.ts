@@ -1,8 +1,9 @@
 import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL, RESET_SECTIONS } from "./types";
 import axiosClient from "../../helpers/axios";
 import { message } from "antd";
+import { AppDispatch } from "../store";
 
-export const createSection = (project_id: string, name: string) => async (dispatch: any) => {
+export const createSection = (project_id: string, name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setSectionLoading());
     const res = await axiosClient.post(`/${project_id}/sections/add`, { name });
@@ -13,26 +14,26 @@ export const createSection = (project_id: string, name: string) => async (dispat
   }
 };
 
-export const getSections = (project_id: string) => async (dispatch: any) => {
+export const getSections = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setSectionLoading());
     const res = await axiosClient.get(`/${project_id}/sections`);
     dispatch({ type: GET_SECTIONS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_SECTIONS_FAIL });
   }
 };
 
-export const getModalSections = (project_id: string) => async (dispatch: any) => {
+export const getModalSections = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/sections`);
     dispatch({ type: GET_MODAL_SECTIONS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_MODAL_SECTIONS_FAIL });
   }
 };
 
-export const deleteSection = (project_id: string, id: string) => async (dispatch: any) => {
+export const deleteSection = (project_id: string, id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/sections/${id}`);
     message.success("Section deleted!");

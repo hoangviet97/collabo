@@ -1,31 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Table, Space, Avatar, Select, Menu, Dropdown, Drawer } from "antd";
+import { Table, Space, Avatar, Select, Menu, Dropdown } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import AvatarIcon from "../../../components/utils/AvatarIcon";
 import { updateMemberRole, deleteMember, leaveProject } from "../../../redux/actions/member";
 import moment from "moment";
-import color from "../../../styles/abstract/variables.module.scss";
 import { useParams, useHistory } from "react-router-dom";
+import { AppDispatch } from "../../../redux/store";
 
 const MembersPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const auth = useSelector((state: RootStateOrAny) => state.auth.user);
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const { Option } = Select;
 
   function roleHandle(id: string, value: string, current: string) {
-    dispatch(updateMemberRole({ id: id, project_id: params.id, role_id: value, current_role_id: current }));
+    dispatch(updateMemberRole(id, params.id, value, current));
   }
 
   const kickMemberHandle = (id: string, user_id: string) => {
     if (auth.id === user_id) {
-      dispatch(leaveProject({ project_id: params.id, history: history }));
+      dispatch(leaveProject(params.id, history));
     } else {
-      dispatch(deleteMember({ id: id, project_id: params.id }));
+      dispatch(deleteMember(id, params.id));
     }
   };
 
@@ -44,7 +44,7 @@ const MembersPage: React.FunctionComponent = () => {
       key: "name",
       render: (text: string, record: any) => (
         <Space size="middle">
-          <Avatar size="large" style={{ backgroundColor: record.color === null || record.color.length < 1 ? color.normal_orange : record.color }}>
+          <Avatar size="large" style={{ backgroundColor: record.color === null || record.color.length < 1 ? "#f39c12" : record.color }}>
             <AvatarIcon firstname={record.firstname} lastname={record.lastname} />
           </Avatar>
           <span>

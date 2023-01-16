@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Spinner from "../utils/Spinner";
+import Spinner from "../components/utils/Spinner";
 
 const ProtectedRoute = ({ component: Component, isAuthenticated, loading, ...rest }) => {
   if (!localStorage.token || localStorage.token === null) {

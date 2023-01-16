@@ -5,19 +5,20 @@ import { getAllFiles, getFileTypes } from "../../redux/actions/file";
 import { getAllFolders } from "../../redux/actions/folder";
 import Content from "../../components/documents/Content";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
   match: any;
 }
 
 const DocumentsPage: FC<Props> = ({ match }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params: any = useParams();
 
   useEffect(() => {
     dispatch(getAllFolders(params.id));
-    dispatch(getAllFiles({ project_id: params.id }));
-    dispatch(getFileTypes({ project_id: params.id }));
+    dispatch(getAllFiles(params.id));
+    dispatch(getFileTypes(params.id));
   }, []);
 
   return (

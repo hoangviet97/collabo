@@ -18,7 +18,7 @@ interface Props {
 
 const BoardCard: React.FunctionComponent<Props> = ({ id, title, description, priority, due_date, dragging, showModalHandler }) => {
   const dispatch = useDispatch();
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const [priorityColor, setPriorityColor] = useState<string>("");
   const [dayColor, setDayColor] = useState<string>("black");
   const today = new Date();

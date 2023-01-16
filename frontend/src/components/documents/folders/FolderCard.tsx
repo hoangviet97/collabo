@@ -5,6 +5,7 @@ import { useHistory, useParams, useLocation } from "react-router-dom";
 import { deleteFolder } from "../../../redux/actions/folder";
 import { useDispatch } from "react-redux";
 import { folder } from "../../../types/types";
+import { AppDispatch } from "../../../redux/store";
 
 interface Props {
   folder: folder;
@@ -12,7 +13,7 @@ interface Props {
 
 const FolderCard: FC<Props> = ({ folder }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
   const location: any = useLocation();
 

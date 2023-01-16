@@ -35,7 +35,7 @@ const TaskModal: React.FunctionComponent = () => {
   const projectSelected = (value: string) => {
     setProjectId(value);
     dispatch(getModalSections(value));
-    dispatch(getModalMembers({ project_id: value }));
+    dispatch(getModalMembers(value));
   };
 
   const onFinish = (fieldsValue: any) => {

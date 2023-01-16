@@ -5,7 +5,6 @@ import { logout } from "../../redux/actions/auth";
 import { ImportOutlined, BellOutlined, HomeOutlined, SettingOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Badge, Tooltip, Avatar } from "antd";
 import AvatarIcon from "../../components/utils/AvatarIcon";
-import color from "../../styles/abstract/variables.module.scss";
 
 const Sidebar: React.FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -56,7 +55,7 @@ const Sidebar: React.FunctionComponent = () => {
       <div className="sidebar__bottom">
         <div className="sidebar__bottom-user">
           <Tooltip placement="right" title={`${user.firstname} ${user.lastname}`}>
-            <Avatar size="large" style={{ backgroundColor: user.color === null || user.color.length < 1 ? color.normal_orange : user.color, marginBottom: "20px" }}>
+            <Avatar size="large" style={{ backgroundColor: user.color === null || user.color.length < 1 ? "#f39c12" : user.color, marginBottom: "20px" }}>
               <AvatarIcon firstname={user.firstname} lastname={user.lastname} />
             </Avatar>
           </Tooltip>

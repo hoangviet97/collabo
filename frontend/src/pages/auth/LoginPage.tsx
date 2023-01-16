@@ -3,12 +3,13 @@ import { Form, Input, Button } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { login } from "../../redux/actions/auth";
+import { AppDispatch } from "../../redux/store";
 
-const LoginPage = () => {
-  const dispatch = useDispatch();
+const LoginPage: React.FunctionComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useSelector((state: RootStateOrAny) => state.auth.isAuthenticated);
   const isLoading = useSelector((state: RootStateOrAny) => state.auth.loading);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState<{ email: string; password: string }>({ email: "", password: "" });
 
   const { email, password } = formData;
 
@@ -22,7 +23,7 @@ const LoginPage = () => {
 
   // Send auth data to redux action
   const submitHandler = () => {
-    dispatch(login({ email, password }));
+    dispatch(login(email, password));
   };
 
   if (isAuthenticated) {

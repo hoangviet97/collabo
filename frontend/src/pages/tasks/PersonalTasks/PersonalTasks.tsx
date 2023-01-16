@@ -51,7 +51,7 @@ const PersonalTasks: FC<Props> = ({ match }) => {
 
   const getData = (id: string) => {
     dispatch(getSections(id));
-    dispatch(getMembers({ project_id: id }));
+    dispatch(getMembers(id));
     dispatch(getAllAssignees(id));
     dispatch(getPersonalTasks(id, auth.id));
     dispatch(getTagsByTasks(id));

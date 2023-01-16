@@ -11,16 +11,17 @@ import { getLogs } from "../../redux/actions/log";
 import OverviewHeader from "../../components/overviewPanels/OverviewHeader";
 import OverviewLogs from "../../components/overviewPanels/OverviewLogs";
 import OverviewSessions from "../../components/overviewPanels/OverviewSessions";
+import { AppDispatch } from "../../redux/store";
 
 const OverviewPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const statusGroup = useSelector((state: RootStateOrAny) => state.task.statusGroup);
 
   useEffect(() => {
     dispatch(getProjectTasks(params.id));
     dispatch(getStatusGroup(params.id));
-    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getMembers(params.id));
     dispatch(getSessions(params.id));
     dispatch(getTimeRecordsSum(params.id));
     dispatch(getLogs(params.id));

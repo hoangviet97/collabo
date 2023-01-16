@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FC } from "react";
 import Container from "../../components/utils/Container";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getExpenses } from "../../redux/actions/task";
 import { getAllIncomes, getIncomeSum } from "../../redux/actions/income";
 import { task } from "../../types/types";
@@ -10,13 +11,11 @@ import { FallOutlined, RiseOutlined } from "@ant-design/icons";
 import ExpenseList from "../../components/expenses/ExpenseList";
 import IncomeList from "../../components/incomes/IncomeList";
 import getCurrency from "../../helpers/currencyIcon";
+import { AppDispatch } from "../../redux/store";
 
-interface Props {
-  match: any;
-}
-
-const BudgetPage: FC<Props> = ({ match }) => {
-  const dispatch = useDispatch();
+const BudgetPage = () => {
+  const params = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
   const [balance, setBalance] = useState<number>(0);
   const [spending, setSpending] = useState<number>(0);
 
@@ -28,9 +27,9 @@ const BudgetPage: FC<Props> = ({ match }) => {
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    dispatch(getExpenses(match.params.id));
-    dispatch(getAllIncomes(match.params.id));
-    dispatch(getIncomeSum(match.params.id));
+    dispatch(getExpenses(params.id));
+    dispatch(getAllIncomes(params.id));
+    dispatch(getIncomeSum(params.id));
   }, []);
 
   useEffect(() => {

@@ -1,8 +1,9 @@
 import { CREATE_TAG, GET_TAGS, CREATE_TASK_TAG, DELETE_TAGS, GET_TASK_TAGS, DELETE_TASK_TAG, GET_TALKING_POINTS_FAIL, CREATE_TALKING_POINT_FAIL, TAGS_LOADING, RESET_TAGS } from "./types";
 import axiosClient from "../../helpers/axios";
 import { message } from "antd";
+import { AppDispatch } from "../store";
 
-export const createTag = (project_id: string, name: string, color: string) => async (dispatch: any) => {
+export const createTag = (project_id: string, name: string, color: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tags/add`, { name, color });
     dispatch({ type: CREATE_TAG, payload: res.data });
@@ -12,7 +13,7 @@ export const createTag = (project_id: string, name: string, color: string) => as
   }
 };
 
-export const createTaskTag = (project_id: string, task: string, tag: string, name: string) => async (dispatch: any) => {
+export const createTaskTag = (project_id: string, task: string, tag: string, name: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tags/task-tag`, { task, tag, name });
     dispatch({ type: CREATE_TASK_TAG, payload: { task, tag, name } });
@@ -22,26 +23,26 @@ export const createTaskTag = (project_id: string, task: string, tag: string, nam
   }
 };
 
-export const getTags = (project_id: string) => async (dispatch: any) => {
+export const getTags = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTagsLoading());
     const res = await axiosClient.get(`/${project_id}/tags`);
     dispatch({ type: GET_TAGS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
   }
 };
 
-export const getTagsByTasks = (project_id: string) => async (dispatch: any) => {
+export const getTagsByTasks = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tags/tasks`);
     dispatch({ type: GET_TASK_TAGS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_TALKING_POINTS_FAIL });
   }
 };
 
-export const deleteTag = (project_id: string, id: string) => async (dispatch: any) => {
+export const deleteTag = (project_id: string, id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/tags/${id}`);
     dispatch({ type: DELETE_TAGS, payload: id });
@@ -51,7 +52,7 @@ export const deleteTag = (project_id: string, id: string) => async (dispatch: an
   }
 };
 
-export const deleteTaskTag = (project_id: string, tag: string, task: string) => async (dispatch: any) => {
+export const deleteTaskTag = (project_id: string, tag: string, task: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/tasks/${task}/tags/${tag}`);
     dispatch({ type: DELETE_TASK_TAG, payload: { tag, task } });

@@ -20,7 +20,7 @@ const SessionModal: FC<Props> = ({ project_id, visible, handleCancel, handleOk }
   const { TextArea } = Input;
 
   useEffect(() => {
-    dispatch(getMembers({ project_id: project_id }));
+    dispatch(getMembers(project_id));
   }, []);
 
   const timeHandle = (value: any) => {

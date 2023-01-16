@@ -14,6 +14,7 @@ import TaskCard from "../../../components/taskItem/TaskCard";
 import { section, tag, task } from "../../../types/types";
 import TaskHeader from "../../../components/taskItem/TaskHeader";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../../redux/store";
 
 interface Props {
   match: any;
@@ -21,7 +22,7 @@ interface Props {
 
 const ProjectTasks: FC<Props> = ({ match }) => {
   const params: any = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const project_id = params.id;
 
   // Ant components
@@ -64,7 +65,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
       setTaskVisual(localStorage.getItem("task_visual"));
     }
     dispatch(getSections(project_id));
-    dispatch(getMembers({ project_id: project_id }));
+    dispatch(getMembers(project_id));
     dispatch(getAllAssignees(project_id));
     dispatch(getProjectTasks(project_id));
     dispatch(getTagsByTasks(project_id));

@@ -4,10 +4,11 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Table, Space, Button } from "antd";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../../redux/store";
 
 const InvitationsPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const sended = useSelector((state: RootStateOrAny) => state.invitation.sended);
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
 

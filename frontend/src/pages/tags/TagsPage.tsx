@@ -5,12 +5,10 @@ import TagGroup from "../../components/tagGroup/TagGroup";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createTag, getTags } from "../../redux/actions/tag";
 import { tag } from "../../types/types";
+import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
-interface Props {
-  match: any;
-}
-
-const TagsPage: FC<Props> = ({ match }) => {
+const TagsPage: React.FunctionComponent = () => {
   const groupList = [
     { title: "A", list: [] },
     { title: "B", list: [] },
@@ -39,18 +37,19 @@ const TagsPage: FC<Props> = ({ match }) => {
     { title: "Y", list: [] },
     { title: "Z", list: [] }
   ];
-  const [modalvisible, setModalVisible] = useState(false);
+  const [modalvisible, setModalVisible] = useState<boolean>(false);
   const [tagName, setTagName] = useState<string>("");
-  const dispatch = useDispatch();
+  const params = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
   const tags = useSelector((state: RootStateOrAny) => state.tag.tags);
   const loading = useSelector((state: RootStateOrAny) => state.tag.loading);
 
   const createTagHandler = () => {
-    dispatch(createTag(match.params.id, tagName.toLocaleLowerCase(), "green"));
+    dispatch(createTag(params.id, tagName.toLocaleLowerCase(), "green"));
   };
 
   useEffect(() => {
-    dispatch(getTags(match.params.id));
+    dispatch(getTags(params.id));
   }, []);
 
   return (

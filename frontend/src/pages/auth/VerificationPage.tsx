@@ -1,18 +1,19 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect } from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { verifyAccount } from "../../redux/actions/auth";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
   match: any;
 }
 
-const VerificationPage: FC<Props> = ({ match }) => {
-  const dispatch = useDispatch();
+const VerificationPage: React.FunctionComponent<Props> = ({ match }) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(verifyAccount({ id: match.params.id }));
+    dispatch(verifyAccount(match.params.id));
   }, []);
 
   return (

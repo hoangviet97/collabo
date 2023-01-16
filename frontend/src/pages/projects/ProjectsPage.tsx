@@ -9,9 +9,10 @@ import { getProjects } from "../../redux/actions/project";
 import { getMembers2 } from "../../redux/actions/member";
 import "../../components/projectCard/Project.scss";
 import { project, member } from "../../types/types";
+import { AppDispatch } from "../../redux/store";
 
 const ProjectsPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const projects = useSelector((state: RootStateOrAny) => state.project.projects);
   const members = useSelector((state: RootStateOrAny) => state.member.members);
   const loading = useSelector((state: RootStateOrAny) => state.project.loading);

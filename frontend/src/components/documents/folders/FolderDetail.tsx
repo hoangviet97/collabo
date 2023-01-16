@@ -6,16 +6,17 @@ import { getFilesByFolder } from "../../../redux/actions/file";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import FileCard from "../files/FileCard";
 import { file } from "../../../types/types";
+import { AppDispatch } from "../../../redux/store";
 
 const FolderDetail: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const files = useSelector((state: RootStateOrAny) => state.file.folder_files);
   const isLoading = useSelector((state: RootStateOrAny) => state.file.loading);
   const folder = useSelector((state: RootStateOrAny) => state.folder.folder);
   const params = useParams<{ id: string; folderId: string }>();
 
   useEffect(() => {
-    dispatch(getFilesByFolder({ id: params.folderId, project_id: params.id }));
+    dispatch(getFilesByFolder(params.folderId, params.id));
     dispatch(getFolder(params.folderId, params.id));
   }, []);
 

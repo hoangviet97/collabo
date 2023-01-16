@@ -3,9 +3,10 @@ import { Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createIncome } from "../../redux/actions/income";
+import { AppDispatch } from "../../redux/store";
 
 const IncomeForm: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
   const user = useSelector((state: RootStateOrAny) => state.auth.user.lastname);
   const [title, setTitle] = useState<string>("");

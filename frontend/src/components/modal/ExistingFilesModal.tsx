@@ -17,7 +17,7 @@ const ExistingFilesModal: FC<Props> = ({ isVisible, close }) => {
   const files = useSelector((state: RootStateOrAny) => state.file.files);
 
   useEffect(() => {
-    dispatch(getAllFiles({ project_id: params.id }));
+    dispatch(getAllFiles(params.id));
   }, []);
 
   return (

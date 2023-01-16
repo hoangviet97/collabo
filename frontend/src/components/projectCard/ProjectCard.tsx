@@ -5,7 +5,6 @@ import { Row, Col, Button, Avatar, Tooltip } from "antd";
 import "./Project.scss";
 import AvatarIcon from "../utils/AvatarIcon";
 import { project, member } from "../../types/types";
-import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   project: project;
@@ -33,7 +32,7 @@ const ProjectCard: FC<Props> = ({ project, projectCardHandler, members }) => {
           {members.map((item: member, index: number) => {
             return (
               <Tooltip key={index} title={item.email} placement="top">
-                <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? "#f39c12" : item.color }}>
                   <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                 </Avatar>
               </Tooltip>

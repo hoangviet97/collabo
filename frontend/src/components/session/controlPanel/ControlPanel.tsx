@@ -7,7 +7,7 @@ import { useSelector, RootStateOrAny } from "react-redux";
 import { session } from "../../../types/types";
 
 interface Props {
-  addNewSession: any;
+  addNewSession: () => void;
 }
 
 const ControlPanel: FC<Props> = ({ addNewSession }) => {

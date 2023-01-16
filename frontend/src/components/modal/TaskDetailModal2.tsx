@@ -61,7 +61,7 @@ const TaskDetailModal2: FC<Props> = ({ task, isVisible, closeModal, match, view,
       setTagGroup(alltags);
       dispatch(getTaskAssignees(params.id, params.taskId));
       dispatch(getTask(params.id, task));
-      dispatch(getFilesByTask({ id: task, project_id: params.id }));
+      dispatch(getFilesByTask(task, params.id));
       dispatch(getTagsByTasks(params.id));
       dispatch(getTags(params.id));
     }

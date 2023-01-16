@@ -3,17 +3,18 @@ import { Button, Input, Form, message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
 import { setNewPassword } from "../../redux/actions/auth";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
 
-const PasswordResetPage = () => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
+const PasswordResetPage: React.FunctionComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const history = useHistory();
 
   const submitHandler = (value: any) => {
     if (value.password !== value.password_check) {
       message.error("Passwords do not match!");
     } else {
-      dispatch(setNewPassword({ token: params.id, password: value.password, history: history }));
+      dispatch(setNewPassword(params.id, value.password, history));
     }
   };
 

@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { Divider, message, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { changePassword } from "../../redux/actions/auth";
+import { AppDispatch } from "../../redux/store";
 
 const PasswordSettingsPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [currentPwd, setCurrentPwd] = useState<string>("");
   const [firstPwd, setFirstPwd] = useState<string>("");
   const [rePwd, setRePwd] = useState<string>("");
 
   const changePwdHandler = () => {
     if (firstPwd === rePwd) {
-      dispatch(changePassword({ currentPassword: currentPwd, newPassword: rePwd }));
+      dispatch(changePassword(currentPwd, rePwd));
     } else {
       return message.error("Passwords doesn't match!");
     }

@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { deleteFile, ejectFile } from "../../../redux/actions/file";
 import { useDispatch } from "react-redux";
 import axiosClient from "../../../helpers/axios";
-import color from "../../../styles/abstract/variables.module.scss";
+import { AppDispatch } from "../../../redux/store";
 
 interface Props {
   data: any;
@@ -19,7 +19,7 @@ interface Props {
 
 const FileMiniCard: FC<Props> = ({ data, task_id, deleteProp, bordered }) => {
   const params: any = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(false);
 
   const download = () => {
@@ -33,15 +33,15 @@ const FileMiniCard: FC<Props> = ({ data, task_id, deleteProp, bordered }) => {
   };
 
   const deleteFileHandler = () => {
-    dispatch(deleteFile({ project_id: params.id, id: data.id }));
+    dispatch(deleteFile(params.id, data.id));
   };
 
   const ejectFileHandler = () => {
-    dispatch(ejectFile({ project_id: params.id, id: data.id, task_id: task_id }));
+    dispatch(ejectFile(params.id, data.id, task_id));
   };
 
   return (
-    <div className="task__attachment-item" onMouseOver={() => setIsSettingsVisible(true)} onMouseLeave={() => setIsSettingsVisible(false)} style={{ position: "relative", zIndex: 600, border: bordered ? `0.2px solid ${color.normal_silver}` : "none" }}>
+    <div className="task__attachment-item" onMouseOver={() => setIsSettingsVisible(true)} onMouseLeave={() => setIsSettingsVisible(false)} style={{ position: "relative", zIndex: 600, border: bordered ? `0.2px solid #bdc3c7` : "none" }}>
       <div>
         <FileTypeIcon type={data.file_mimetype} size="65" />
       </div>

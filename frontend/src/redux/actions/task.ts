@@ -1,8 +1,9 @@
 import { CREATE_TASK, FILTER_STATUS, FILTER_PRIORITY, CREATE_TASK_FAIL, GET_TASK_ASSIGNEES, GET_TASK, GET_STATUS_GROUP, DELETE_TASK, SET_BUDGET, SET_PROGRESS, DELETE_TASK_FAIL, GET_ASSIGNEES, CREATE_ASSIGNEE, GET_ASSIGNEES_FAIL, GET_PROJECT_TASKS, UPDATE_TASK_TITLE, GET_PROJECT_TASKS_FAIL, TASKS_LOADING, UPDATE_TASK_STATUS, UPDATE_TASK_PRIORITY, UPDATE_TASK_FAIL, UPDATE_TASK_START, UPDATE_TASK_START_FAIL, UPDATE_TASK_END, RESET_TASKS, DELETE_ASSIGNEE, GET_PROJECT_AUTH, RESET_AUTH, GET_EXPENSES, GET_ASSIGNEE_TASKS, GET_PERSONAL_TASKS } from "./types";
 import axiosClient from "../../helpers/axios";
 import { message } from "antd";
+import { AppDispatch } from "../store";
 
-export const createTask = (project_id: string, task: any) => async (dispatch: any) => {
+export const createTask = (project_id: string, task: any) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tasks/add`, { task });
     message.success("New task created!");
@@ -13,65 +14,66 @@ export const createTask = (project_id: string, task: any) => async (dispatch: an
   }
 };
 
-export const getTask = (project_id: string, task: any) => async (dispatch: any) => {
+export const getTask = (project_id: string, task: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axiosClient.get(`/${project_id}/tasks/${task}`);
     dispatch({ type: GET_TASK, payload: res.data[0] });
+    console.log(res.data);
   } catch (err: any) {
     //dispatch({ type: CREATE_TASK_FAIL });
-    //message.error(err.response.data.message);
+    message.error(err.response.data.message);
   }
 };
 
-export const getProjectTasks = (project_id: string) => async (dispatch: any) => {
+export const getProjectTasks = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axiosClient.get(`/${project_id}/tasks`);
     dispatch({ type: GET_PROJECT_AUTH });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: RESET_AUTH });
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
   }
 };
 
-export const getPersonalTasks = (project_id: string, id: string) => async (dispatch: any) => {
+export const getPersonalTasks = (project_id: string, id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axiosClient.get(`/${project_id}/members/${id}/tasks`);
     dispatch({ type: GET_PROJECT_AUTH });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: RESET_AUTH });
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
   }
 };
 
-export const getUserTasks = (project_id: string, id: string) => async (dispatch: any) => {
+export const getUserTasks = (project_id: string, id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axiosClient.get(`/${project_id}/users/${id}/tasks`);
     dispatch({ type: GET_PROJECT_AUTH });
     dispatch({ type: GET_PROJECT_TASKS, payload: res.data });
-  } catch (err) {
+  } catch (er: any) {
     dispatch({ type: RESET_AUTH });
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
   }
 };
 
-export const getStatusGroup = (project_id: string) => async (dispatch: any) => {
+export const getStatusGroup = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoading());
     const res = await axiosClient.get(`/${project_id}/tasks`);
     dispatch({ type: GET_STATUS_GROUP, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_PROJECT_TASKS_FAIL });
     message.error("Something went wrong!");
   }
 };
 
-export const updateTaskStatus = (id: string, statusId: string, project_id: string) => async (dispatch: any) => {
+export const updateTaskStatus = (id: string, statusId: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/status`, { statusId });
     dispatch({ type: UPDATE_TASK_STATUS, payload: { id, statusId } });
@@ -82,7 +84,7 @@ export const updateTaskStatus = (id: string, statusId: string, project_id: strin
   }
 };
 
-export const setBudget = (id: string, budget: number, project_id: string) => async (dispatch: any) => {
+export const setBudget = (id: string, budget: number, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/budget`, { budget });
     message.success("Task updated!");
@@ -92,7 +94,7 @@ export const setBudget = (id: string, budget: number, project_id: string) => asy
   }
 };
 
-export const setProgress = (id: string, progress: number, project_id: string) => async (dispatch: any) => {
+export const setProgress = (id: string, progress: number, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/progress`, { progress });
     dispatch({ type: SET_PROGRESS, payload: { id: id, progress: progress } });
@@ -102,7 +104,7 @@ export const setProgress = (id: string, progress: number, project_id: string) =>
   }
 };
 
-export const setDescription = (id: string, description: string, project_id: string) => async (dispatch: any) => {
+export const setDescription = (id: string, description: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/description`, { description });
     message.success("Task updated!");
@@ -112,7 +114,7 @@ export const setDescription = (id: string, description: string, project_id: stri
   }
 };
 
-export const updateTaskPriority = (id: string, priorityId: string, project_id: string) => async (dispatch: any) => {
+export const updateTaskPriority = (id: string, priorityId: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/priority`, { priorityId });
     dispatch({ type: UPDATE_TASK_PRIORITY, payload: { id, priorityId } });
@@ -123,7 +125,7 @@ export const updateTaskPriority = (id: string, priorityId: string, project_id: s
   }
 };
 
-export const updateTitle = (id: string, title: string, project_id: string) => async (dispatch: any) => {
+export const updateTitle = (id: string, title: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/title`, { title });
     dispatch({ type: UPDATE_TASK_TITLE, payload: { id, title } });
@@ -134,7 +136,7 @@ export const updateTitle = (id: string, title: string, project_id: string) => as
   }
 };
 
-export const updateTaskStartDate = (id: string, date: any, project_id: string) => async (dispatch: any) => {
+export const updateTaskStartDate = (id: string, date: any, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/start`, { date });
     dispatch({ type: UPDATE_TASK_START, payload: { id, date } });
@@ -144,44 +146,44 @@ export const updateTaskStartDate = (id: string, date: any, project_id: string) =
   }
 };
 
-export const updateTaskEndDate = (id: string, date: any, project_id: string) => async (dispatch: any) => {
+export const updateTaskEndDate = (id: string, date: any, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.patch(`/${project_id}/tasks/${id}/end`, { date });
     dispatch({ type: UPDATE_TASK_END, payload: { id, date } });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: UPDATE_TASK_FAIL });
     message.error("Something went wrong!");
   }
 };
 
-export const getAllAssignees = (project_id: string) => async (dispatch: any) => {
+export const getAllAssignees = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tasks/assignees`);
     dispatch({ type: GET_ASSIGNEES, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
   }
 };
 
-export const getTaskAssignees = (project_id: string, task: string) => async (dispatch: any) => {
+export const getTaskAssignees = (project_id: string, task: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tasks/assignees`);
     dispatch({ type: GET_TASK_ASSIGNEES, payload: { data: res.data, task: task } });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
   }
 };
 
-export const getAssigneeTasks = (project_id: string, id: string) => async (dispatch: any) => {
+export const getAssigneeTasks = (project_id: string, id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tasks/assignees/${id}`);
     dispatch({ type: GET_ASSIGNEE_TASKS, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: GET_ASSIGNEES_FAIL });
   }
 };
 
-export const createAssignee = (user_id: string, task_id: string, project_id: string) => async (dispatch: any) => {
+export const createAssignee = (user_id: string, task_id: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.post(`/${project_id}/tasks/${task_id}/assignees/${user_id}`);
     dispatch({ type: CREATE_ASSIGNEE, payload: res.data[0] });
@@ -191,7 +193,7 @@ export const createAssignee = (user_id: string, task_id: string, project_id: str
   }
 };
 
-export const deleteAssignee = (user_id: string, task_id: string, project_id: string) => async (dispatch: any) => {
+export const deleteAssignee = (user_id: string, task_id: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/tasks/${task_id}/assignees/${user_id}`);
     dispatch({ type: DELETE_ASSIGNEE, payload: { user_id, task_id } });
@@ -201,7 +203,7 @@ export const deleteAssignee = (user_id: string, task_id: string, project_id: str
   }
 };
 
-export const deleteTask = (id: string, project_id: string) => async (dispatch: any) => {
+export const deleteTask = (id: string, project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.delete(`/${project_id}/tasks/${id}`);
     dispatch({ type: DELETE_TASK, payload: id });
@@ -212,11 +214,11 @@ export const deleteTask = (id: string, project_id: string) => async (dispatch: a
   }
 };
 
-export const getExpenses = (project_id: string) => async (dispatch: any) => {
+export const getExpenses = (project_id: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.get(`/${project_id}/tasks`);
     dispatch({ type: GET_EXPENSES, payload: res.data });
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: DELETE_TASK_FAIL });
     message.error("Something went wrong!");
   }

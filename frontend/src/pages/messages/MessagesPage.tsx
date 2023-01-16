@@ -6,20 +6,23 @@ import MessageEditor from "../../components/modal/MessageEditor";
 import { getMessages } from "../../redux/actions/message";
 import Message from "../../components/message/Message";
 import { message } from "../../types/types";
+import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
   match: any;
 }
 
 const MessagesPage: FC<Props> = ({ match }) => {
-  const dispatch = useDispatch();
+  const params = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootStateOrAny) => state.auth.user.firstname);
   const messages = useSelector((state: RootStateOrAny) => state.message.messages);
   const loading = useSelector((state: RootStateOrAny) => state.message.loading);
   const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getMessages(match.params.id));
+    dispatch(getMessages(params.id));
   }, []);
 
   const handleCancel = () => {

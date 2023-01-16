@@ -11,7 +11,7 @@ import store from "./redux/store";
 import setAuthToken from "./helpers/setAuthToken";
 import { loadUser } from "./redux/actions/auth";
 import { useEffect } from "react";
-import ProtectedRoute from "./components/routing/ProtectedRoute";
+import ProtectedRoute from "./routing/ProtectedRoute";
 
 const App = () => {
   useEffect(() => {

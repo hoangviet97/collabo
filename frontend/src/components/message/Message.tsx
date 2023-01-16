@@ -3,7 +3,6 @@ import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
 import { Avatar, Divider } from "antd";
 import Poll from "../poll/Poll";
-import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   data: any;
@@ -16,7 +15,7 @@ const Message: FC<Props> = ({ data }) => {
     <div className="comment">
       <div className="comment__header">
         <div className="comment__author">
-          <Avatar size={50} style={{ marginRight: "10px", backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }}>
+          <Avatar size={50} style={{ marginRight: "10px", backgroundColor: data.color === null || data.color.length < 1 ? "#f39c12" : data.color }}>
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} />
           </Avatar>
           <div style={{ display: "flex", flexDirection: "column" }}>

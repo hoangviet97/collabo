@@ -24,7 +24,7 @@ import { resetTasks } from "../../redux/actions/task";
 import { resetSections } from "../../redux/actions/section";
 import { resetTags } from "../../redux/actions/tag";
 import { useDispatch } from "react-redux";
-import ProtectedProjectRoute from "../../components/routing/ProtectedProjectRoute";
+import ProtectedProjectRoute from "../../routing/ProtectedProjectRoute";
 
 interface Props {
   match: any;
@@ -39,7 +39,7 @@ const MainContent: FC<Props> = ({ match, history }) => {
 
   useEffect(() => {
     if (pathValue.length === 8 && /^\d+$/.test(pathValue)) {
-      dispatch(getProject({ project_id: pathValue, push: push }));
+      dispatch(getProject(pathValue, push));
     } else {
       dispatch(resetProject());
       dispatch(resetTasks());

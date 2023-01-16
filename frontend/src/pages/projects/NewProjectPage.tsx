@@ -4,9 +4,10 @@ import { Form, Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createProject } from "../../redux/actions/project";
 import colorVar from "../../styles/abstract/variables.module.scss";
+import { AppDispatch } from "../../redux/store";
 
-const NewProjectPage = () => {
-  const dispatch = useDispatch();
+const NewProjectPage: React.FunctionComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const history: any = useHistory();
   const loading = useSelector((state: RootStateOrAny) => state.project.loading);
   const [selected, setSelected] = useState<string>("");
@@ -29,7 +30,7 @@ const NewProjectPage = () => {
     if (color.length === 0 || name.length === 0) {
       message.error("Choose your project title and color!");
     } else {
-      dispatch(createProject({ name, color, push }));
+      dispatch(createProject(name, color, push));
     }
   };
 

@@ -18,7 +18,7 @@ const ColorModal: FC<Props> = ({ isVisible, close }) => {
 
   const colorCubicStateHandler = (item: any, index: number) => {
     setChosen(index);
-    dispatch(changeColor({ color: item }));
+    dispatch(changeColor(item));
   };
 
   return (

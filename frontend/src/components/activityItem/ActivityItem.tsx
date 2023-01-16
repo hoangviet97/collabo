@@ -3,7 +3,6 @@ import { getTypeColor } from "../../helpers/log";
 import { Avatar } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
-import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   data: any;
@@ -19,7 +18,7 @@ const ActivityItem: FC<Props> = ({ data }) => {
       </header>
       <div className="activity__body">
         <div className="activity__avatar">
-          <Avatar style={{ backgroundColor: data.color === null || data.color.length < 1 ? color.normal_orange : data.color }} size={50}>
+          <Avatar style={{ backgroundColor: data.color === null || data.color.length < 1 ? "#f39c12" : data.color }} size={50}>
             <AvatarIcon firstname={data.firstname} lastname={data.lastname} size={20} />
           </Avatar>
         </div>

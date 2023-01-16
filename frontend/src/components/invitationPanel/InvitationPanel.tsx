@@ -9,7 +9,7 @@ const InvitationPanel: React.FunctionComponent = () => {
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
-  const params: any = useParams();
+  const params = useParams<{ id: string }>();
   const [email, setEmail] = useState<string>("");
 
   const submitHandle = (e: any) => {

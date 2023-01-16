@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { useSelector, RootStateOrAny } from "react-redux";
-import color from "../../styles/abstract/variables.module.scss";
 import { Avatar, Popover } from "antd";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import AssigneesModal from "../modal/AssigneesModal";
@@ -33,7 +32,7 @@ const AssigneesBox: FC<Props> = ({ assignees, id, type }) => {
           <Avatar.Group size={32} maxCount={1} maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
             {assignees.map((assignee: any, index: number) => (
               <Popover key={index} content={`${assignee.firstname} ${assignee.lastname} (${assignee.email})`}>
-                <Avatar key={index} style={{ backgroundColor: assignee.color === null || assignee.color.length < 1 ? color.normal_orange : assignee.color }}>
+                <Avatar key={index} style={{ backgroundColor: assignee.color === null || assignee.color.length < 1 ? "#f39c12" : assignee.color }}>
                   <AvatarIcon firstname={assignee.firstname} lastname={assignee.lastname} />
                 </Avatar>
               </Popover>

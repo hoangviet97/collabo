@@ -5,7 +5,6 @@ import { getMembers } from "../../redux/actions/member";
 import { member } from "../../types/types";
 import AvatarIcon from "../utils/AvatarIcon";
 import { Avatar } from "antd";
-import color from "../../styles/abstract/variables.module.scss";
 
 const ReportControlPanel = ({ match }: RouteComponentProps) => {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ const ReportControlPanel = ({ match }: RouteComponentProps) => {
   const members = useSelector((state: RootStateOrAny) => state.member.members);
 
   useEffect(() => {
-    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getMembers(params.id));
   }, []);
 
   return (
@@ -22,7 +21,7 @@ const ReportControlPanel = ({ match }: RouteComponentProps) => {
       <div style={{ marginTop: "30px" }}>
         {members.map((member: member, index: number) => (
           <div key={index} className="report__panel-list">
-            <Avatar style={{ backgroundColor: member.color === null || member.color.length < 1 ? color.normal_orange : member.color }}>
+            <Avatar style={{ backgroundColor: member.color === null || member.color.length < 1 ? "#f39c12" : member.color }}>
               <AvatarIcon firstname={member.firstname} lastname={member.lastname} />
             </Avatar>
             <div style={{ marginLeft: "10px" }}>

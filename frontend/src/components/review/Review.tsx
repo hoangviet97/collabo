@@ -20,7 +20,7 @@ const Review: FC<Props> = ({ review }) => {
   const { TextArea } = Input;
 
   useEffect(() => {
-    dispatch(getFilesByTask({ id: review.task_id, project_id: params.id }));
+    dispatch(getFilesByTask(review.task_id, params.id));
   }, []);
 
   const deleteHandler = () => {
@@ -41,7 +41,7 @@ const Review: FC<Props> = ({ review }) => {
 
   const filesHandler = () => {
     setShowFileButton(false);
-    dispatch(getFilesByReview({ review: review.id, id: review.task_id, project_id: params.id }));
+    dispatch(getFilesByReview(review.id, review.task_id, params.id));
   };
 
   return (

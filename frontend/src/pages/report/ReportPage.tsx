@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React from "react";
 import Container from "../../components/utils/Container";
 import ReportControlPanel from "../../components/report/ReportControlPanel";
 import ReportContent from "../../components/report/ReportContent";
 
-const ReportPage = () => {
+const ReportPage: React.FunctionComponent = () => {
   return (
     <Container size="50">
       <div className="report">

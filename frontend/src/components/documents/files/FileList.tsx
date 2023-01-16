@@ -1,8 +1,7 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Table, Space, Dropdown, Menu, Typography, Modal, Button, Select, message } from "antd";
 import moment from "moment";
-import axios from "axios";
 import axiosClient from "../../../helpers/axios";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { moveToFolder, deleteFile } from "../../../redux/actions/file";
@@ -10,9 +9,10 @@ import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { folder } from "../../../types/types";
+import { AppDispatch } from "../../../redux/store";
 
 const FileList: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
   const { Text, Link } = Typography;
   const { Option } = Select;
@@ -33,7 +33,7 @@ const FileList: React.FunctionComponent = () => {
   };
 
   const deleteHandler = (id: string) => {
-    dispatch(deleteFile({ project_id: params.id, id: id }));
+    dispatch(deleteFile(params.id, id));
   };
 
   const columns = [
@@ -102,7 +102,7 @@ const FileList: React.FunctionComponent = () => {
   };
 
   const submitHandle = () => {
-    dispatch(moveToFolder({ project_id: params.id, id: fileId, folder_id: folderId }));
+    dispatch(moveToFolder(params.id, fileId, folderId));
     setFolderId("");
     setFileId("");
     setIsModalVisible(false);

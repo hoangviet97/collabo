@@ -16,7 +16,7 @@ const ControlPanel: FC<Props> = ({ match }) => {
   const members = useSelector((state: RootStateOrAny) => state.member.members);
 
   useEffect(() => {
-    dispatch(getMembers({ project_id: params.id }));
+    dispatch(getMembers(params.id));
   }, []);
 
   return (

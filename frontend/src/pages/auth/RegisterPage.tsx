@@ -5,17 +5,18 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import { register } from "../../redux/actions/auth";
 import { passwordStrength } from "check-password-strength";
 import Img from "../../img/hero_auth.png";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
   history: any;
 }
 
 const RegisterPage: React.FunctionComponent<Props> = ({ history }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [form] = Form.useForm();
   const isAuthenticated = useSelector((state: RootStateOrAny) => state.auth.isAuthenticated);
   const [formData, setFormData] = useState({ email: "", password: "", passwordCheck: "", firstname: "", lastname: "" });
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState<string>("");
   const { email, password, passwordCheck, firstname, lastname } = formData;
 
   // Controlled input
@@ -36,7 +37,7 @@ const RegisterPage: React.FunctionComponent<Props> = ({ history }) => {
     } else {
       setErrMsg("");
       const { push } = history;
-      dispatch(register({ firstname, lastname, email, password, push }));
+      dispatch(register(firstname, lastname, email, password, push));
       form.resetFields();
     }
   };

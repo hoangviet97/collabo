@@ -5,13 +5,14 @@ import { useDispatch } from "react-redux";
 import { reset } from "../../redux/actions/auth";
 import { KeyOutlined } from "@ant-design/icons";
 import color from "../../styles/abstract/variables.module.scss";
+import { AppDispatch } from "../../redux/store";
 
 const ResetPage: React.FunctionComponent = () => {
   const [email, setEmail] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const submitHandler = () => {
-    dispatch(reset({ email: email }));
+    dispatch(reset(email));
   };
 
   return (

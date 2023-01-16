@@ -1,5 +1,4 @@
 import React from "react";
-import color from "../../styles/abstract/variables.module.scss";
 
 const TaskHeader: React.FunctionComponent = () => {
   return (

@@ -1,13 +1,14 @@
-import React, { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 import Container from "../../components/utils/Container";
 import ReviewContent from "../../components/review/ReviewContent";
 import ReviewControlPanel from "../../components/review/ReviewControlPanel";
 import { useDispatch } from "react-redux";
 import { getReviewPanel } from "../../redux/actions/review";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
-const ReviewPage = () => {
-  const dispatch = useDispatch();
+const ReviewPage: React.FunctionComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
 
   useEffect(() => {

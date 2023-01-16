@@ -4,9 +4,10 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getAllInvitations } from "../../redux/actions/invitation";
 import Container from "../../components/utils/Container";
 import { Invitation } from "../../types/types";
+import { AppDispatch } from "../../redux/store";
 
 const NotificationsPage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const invitations: Invitation[] = useSelector((state: RootStateOrAny) => state.invitation.invitations);
 
   useEffect(() => {

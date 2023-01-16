@@ -8,9 +8,10 @@ import { createFolder } from "../../../redux/actions/folder";
 import { useDispatch } from "react-redux";
 import FilesStatistics from "./FilesStatistics";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../../redux/store";
 
 const FileHomePage: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);

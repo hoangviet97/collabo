@@ -7,7 +7,6 @@ import AvatarIcon from "../utils/AvatarIcon";
 import { CloseCircleOutlined, PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { useParams, useLocation } from "react-router-dom";
 import { member } from "../../types/types";
-import color from "../../styles/abstract/variables.module.scss";
 
 interface Props {
   item_id: string;
@@ -84,7 +83,7 @@ const AssigneesModal: FC<Props> = ({ item_id, assignees, members, close, type })
             .map((item: member, index: number) => (
               <div className="assignee-modal__item" key={index}>
                 <div className="assignee-modal__identity">
-                  <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? color.normal_orange : item.color }}>
+                  <Avatar style={{ backgroundColor: item.color === null || item.color.length < 1 ? "#f39c12" : item.color }}>
                     <AvatarIcon firstname={item.firstname} lastname={item.lastname} />
                   </Avatar>{" "}
                   <span>{item.lastname}</span>
