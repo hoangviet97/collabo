@@ -25,6 +25,8 @@ const OverviewPage: React.FunctionComponent = () => {
     dispatch(getSessions(params.id));
     dispatch(getTimeRecordsSum(params.id));
     dispatch(getLogs(params.id));
+
+    console.log(process.env.REACT_APP_BACKEND_URL);
   }, []);
 
   return (
