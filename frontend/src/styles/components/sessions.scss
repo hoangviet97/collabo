@@ -1,6 +1,11 @@
 .session {
   height: calc(100vh - 180px);
   display: flex;
+  flex-direction: column;
+
+  @include breakpoint(md) {
+    flex-direction: row;
+  }
 
   &__welcome {
     position: absolute;
@@ -100,22 +105,38 @@
     background-color: white;
     padding: 25px 35px;
     position: relative;
-    height: calc(100vh - 180px);
-    flex: 1;
+    height: auto;
     border-radius: 12px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     overflow: scroll;
+
+    @include breakpoint(md) {
+      flex: 1;
+    }
   }
 
   &__control-panel {
     background-color: white;
     margin-right: 25px;
+    margin-bottom: 25px;
     padding: 25px 35px;
-    height: calc(100vh - 180px);
-    width: 450px;
+    height: 300px;
+    width: 100%;
     border-radius: 12px;
     overflow-y: scroll;
     overflow-x: hidden;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    @include breakpoint(md) {
+      margin-bottom: 0px;
+      width: 300px;
+      height: calc(100vh - 180px);
+    }
+
+    @include breakpoint(lg) {
+      margin-bottom: 0px;
+      width: 450px;
+      height: calc(100vh - 180px);
+    }
   }
 }

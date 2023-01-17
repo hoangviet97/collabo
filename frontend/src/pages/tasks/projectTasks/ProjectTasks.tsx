@@ -196,7 +196,7 @@ const ProjectTasks: FC<Props> = ({ match }) => {
       ) : (
         <Container size="50">
           <header style={{ marginRight: "20px" }}>
-            <div className="task__header-options justify-between">
+            <div className="task__header-options">
               <Input value={taskNameForSearch} onChange={(e: ChangeEvent<HTMLInputElement>) => setTaskNameForSearch(e.target.value)} placeholder="Search tasks by name" data-testid="search-name" style={{ width: "40%" }} />
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Filter by: &nbsp;</span>

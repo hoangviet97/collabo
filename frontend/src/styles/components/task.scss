@@ -7,6 +7,21 @@
     border-right: "0.5px solid #dfe4ea";
   }
 
+  &__header-options {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+
+    @include breakpoint(md) {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+    }
+  }
+
   &__assignees {
     &-edit {
       position: absolute;

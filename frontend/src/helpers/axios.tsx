@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://collaboatdb.herokuapp.com/api"
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`
 });
 
 export default axiosClient;
-
-//"https://collaboatbe.herokuapp.com/api"

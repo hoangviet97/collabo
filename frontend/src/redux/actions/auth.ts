@@ -22,7 +22,7 @@ export const register = (firstname: string, lastname: string, email: string, pas
     dispatch({ type: REGISTER_SUCCESS, payload: res });
     message.success("Registration Success!");
   } catch (err: any) {
-    //message.error(err.response.data.message);
+    message.error(err.response.data.message);
     dispatch({ type: REGISTER_FAIL });
   }
 };
@@ -43,6 +43,7 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err: any) {
+    console.log(err.response.data.message);
     message.error(err.response.data.message);
     dispatch({ type: LOGIN_FAIL });
   }

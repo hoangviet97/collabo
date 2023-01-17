@@ -14,8 +14,8 @@ import { notification } from "antd";
 
 const Dashboard: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  //const socket = io("http://localhost:9000");
-  const socket = io("https://collaboatdb.herokuapp.com");
+  const socket = io(`${process.env.REACT_APP_BACKEND_URL}`);
+  //const socket = io("https://collaboatdb.herokuapp.com");
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
 
   useEffect(() => {
@@ -31,6 +31,8 @@ const Dashboard: React.FunctionComponent = () => {
       });
       dispatch(addInvitation(data));
     });
+
+    console.log(process.env.REACT_APP_BACKEND_URL);
   }, []);
 
   return (
