@@ -79,6 +79,7 @@ export const changeLastname = (lastname: string) => async (dispatch: AppDispatch
 export const changePassword = (currentPassword: string, newPassword: string) => async () => {
   try {
     const res = await axiosClient.patch("/change-pwd", { currentPassword, newPassword });
+    console.log(res);
     message.success("Password has been changed!");
   } catch (err: any) {
     message.error(err.response.data.message);
@@ -98,6 +99,7 @@ export const setNewPassword = (token: string, password: string, history: any) =>
 export const reset = (email: string) => async () => {
   try {
     const res = await axiosClient.post("/reset", { email });
+    console.log(res);
     message.success("Check your e-mail for the reset link");
   } catch (err: any) {
     console.log(err);

@@ -8,7 +8,7 @@ export const createReview = (task_id: string, project_id: string) => async (disp
     dispatch(setReviewLoading());
     const res = await axiosClient.post(`/${project_id}/reviews/add`, { task_id });
     dispatch({ type: CREATE_REVIEW, payload: res.data });
-    dispatch({ type: UPDATE_TASK_STATUS, payload: { id: task_id, status: "5" } });
+    dispatch({ type: UPDATE_TASK_STATUS, payload: { id: task_id, statusId: "5" } });
     message.success("Task sent to review!");
   } catch (err: any) {
     dispatch({ type: REVIEW_FAIL });
