@@ -5,7 +5,8 @@ Collaboat is an open source web application for project management designed to h
 ## How to use
 
 Landing page (Still under construction)<br/> [collaboat.cz](https://collaboat.cz) <br/><br/>
-Application<br/> [app.collaboat.cz](https://app.collaboat.cz)
+Application<br/> [app.collaboat.cz](https://app.collaboat.cz)<br/><br/>
+Storybook<br/>[collabo-kappa.vercel.app]
 <br/>
 
 ####
