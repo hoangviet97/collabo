@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import InvitationItem from "../../components/notifications/InvitationItem";
+import InvitationItem from "../../components/notificationItem/InvitationItem";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { getAllInvitations } from "../../redux/actions/invitation";
 import Container from "../../components/utils/Container";

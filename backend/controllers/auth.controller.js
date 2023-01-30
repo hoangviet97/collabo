@@ -15,7 +15,8 @@ module.exports = {
     try {
       return res.json(await User.loginUser2(req.body));
     } catch (err) {
-      return apiResponse.ErrorResponse(res, err.message);
+      console.log(err.message);
+      return res.status(501).json({ message: err.message });
     }
   },
 

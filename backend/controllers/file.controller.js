@@ -56,15 +56,15 @@ module.exports = {
 
   download: function (req, res) {
     const s3 = new aws.S3({
-      region: process.env.REGION,
+      region: "eu-central-1",
       accessKeyId: process.env.AWS_ACCESS_KEY,
       secretAccessKey: process.env.AWS_SECRET_KEY
     });
 
-    //res.attachment("7ea8761c-6adf-4b10-833b-28448328e99f");
+    res.attachment("7ea8761c-6adf-4b10-833b-28448328e99f");
 
     s3.getObject({
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: "collabo-bucket",
       Key: req.params.id
     })
       .createReadStream()

@@ -5,9 +5,8 @@ module.exports = {
   // Create new projects
   create: async function (req, res) {
     try {
-      return res.json(await Task.create(req.body.task, req.member, req.params.project));
+      return res.json(await Task.create(req.body.task));
     } catch (err) {
-      console.log(err);
       return apiResponse.ErrorResponse(res, err.message);
     }
   },
@@ -15,6 +14,14 @@ module.exports = {
   getAll: async function (req, res) {
     try {
       return res.json(await Task.getAllTasks(req.params.project));
+    } catch (err) {
+      return apiResponse.ErrorResponse(res, err.message);
+    }
+  },
+
+  getOne: async function (req, res) {
+    try {
+      return res.json(await Task.getOne(req.params.id));
     } catch (err) {
       return apiResponse.ErrorResponse(res, err.message);
     }

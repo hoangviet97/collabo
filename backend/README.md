@@ -1,1 +1,1 @@
-# collaboat_backend
+# collabo-server

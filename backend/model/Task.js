@@ -3,7 +3,6 @@ const uuid4 = require("uuid4");
 const Log = require("./Log");
 const Member = require("./Member");
 const User = require("./User");
-const { assert } = require("joi");
 
 class Task {
   constructor(id, sections_id, priorityId, statusId, title, description, start_date, due_date, budget, progress) {
@@ -24,7 +23,7 @@ class Task {
 module.exports = {
   Task,
   // create new member by user or by admin
-  create: async function (task, sender, project_id) {
+  create: async function (task) {
     const priorityCheck = task.priorityId === null || task.priorityId === undefined ? "0" : task.priorityId;
     const statusCheck = task.statusId === null || task.statusId === undefined ? "0" : task.statusId;
     const newTask = new Task(uuid4(), task.sectionId, priorityCheck, statusCheck, task.title, task.description, task.start_date, task.due_date, 0, 0);
@@ -38,15 +37,12 @@ module.exports = {
     } else {
       const arr = [];
       task.assignees.map((item) => arr.push([item, newTask.id]));
+      console.log(arr);
 
       const sql = `INSERT INTO users_has_tasks (users_id, tasks_id) VALUES ?`;
       const [rows] = await con.promise().query(sql, [arr]);
 
-      const text = `assigned you a task`;
-
-      console.log(task);
-
-      const logRow = await Log.create(project_id, task.assignees_members, sender, "task", newTask.title, text, "");
+      //const logRow = await Log.create(project_id, task.assignees, sender, "session", session.name, text, "");
 
       return newTask;
     }

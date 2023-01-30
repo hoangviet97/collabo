@@ -16,10 +16,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
-
 const io = socketIo(server, {
   cors: {
     origin: client_url

@@ -119,8 +119,6 @@ module.exports = {
 
     const [rows] = await con.promise().query(sqlCheck, [id]);
 
-    console.log(rows[0].name);
-
     return rows[0].name;
   }
 };

@@ -161,6 +161,7 @@ export const getAllAssignees = (project_id: string) => async (dispatch: AppDispa
     const res = await axiosClient.get(`/${project_id}/tasks/assignees`);
     dispatch({ type: GET_ASSIGNEES, payload: res.data });
   } catch (err: any) {
+    console.log(err);
     dispatch({ type: GET_ASSIGNEES_FAIL });
   }
 };
