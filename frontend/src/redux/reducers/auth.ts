@@ -30,7 +30,7 @@ function authReducer(state: initialAuthState = initialState, action: any) {
       return {
         ...state,
         isAuthenticated: false,
-        loading: true,
+        loading: false,
         user: null
       };
     case LOGIN_SUCCESS:
