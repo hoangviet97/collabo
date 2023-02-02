@@ -81,6 +81,13 @@ export type folder = {
   total_files: number;
 };
 
+export type folderDetail = {
+  title: string;
+  id: string;
+  projects_id: string;
+  created_at: Date;
+};
+
 export type tag = {
   id: string;
   projects_id: string;
@@ -153,3 +160,4 @@ export type user = {
 };
 
 export type IAuthAction = { type: "USER_LOADED"; payload: user } | { type: "REGISTER_SUCCESS"; payload: null } | { type: "LOGIN_SUCCESS"; payload: any } | { type: "CHANGE_COLOR"; payload: string } | { type: "CHANGE_FIRSTNAME"; payload: string } | { type: "CHANGE_LASTNAME"; payload: string } | { type: "AUTH_LOADING"; payload: null } | { type: "LOGOUT"; payload: null };
+export type IFolderAction = { type: "CREATE_FOLDER"; payload: folderDetail } | { type: "GET_FOLDER"; payload: folderDetail } | { type: "GET_FOLDERS"; payload: folder[] } | { type: "DELETE_FOLDER"; payload: string } | { type: "UPDATE_FOLDER_NUM"; payload: string };

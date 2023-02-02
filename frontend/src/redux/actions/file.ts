@@ -105,7 +105,7 @@ export const moveToFolder = (project_id: string, id: string, folder_id: string) 
   try {
     const res = await axiosClient.post(`/${project_id}/files/${id}/move-folder`, { folder_id });
     dispatch({ type: MOVE_TO_FOLDER, payload: { id: id } });
-    dispatch({ type: UPDATE_FOLDER_NUM, payload: { id: folder_id } });
+    dispatch({ type: UPDATE_FOLDER_NUM, payload: id });
     message.success("This is a success message");
   } catch (err: any) {
     console.log(err);

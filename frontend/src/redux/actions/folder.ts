@@ -7,6 +7,7 @@ export const createFolder = (title: string, project_id: string) => async (dispat
   try {
     const res = await axiosClient.post(`/${project_id}/folders/add`, { title });
     dispatch({ type: CREATE_FOLDER, payload: res.data });
+    console.log(res.data);
   } catch (err: any) {
     dispatch({ type: GET_FOLDERS_FAIL });
   }
@@ -16,6 +17,7 @@ export const getFolder = (id: string, project_id: string) => async (dispatch: Ap
   try {
     const res = await axiosClient.get(`/${project_id}/folders/${id}`);
     dispatch({ type: GET_FOLDER, payload: res.data[0] });
+    console.log(res.data[0]);
   } catch (err: any) {
     dispatch({ type: GET_FOLDERS_FAIL });
   }
@@ -26,6 +28,7 @@ export const getAllFolders = (project_id: string) => async (dispatch: AppDispatc
     dispatch(setLoading());
     const res = await axiosClient.get(`/${project_id}/folders`);
     dispatch({ type: GET_FOLDERS, payload: res.data });
+    console.log(res.data);
   } catch (err: any) {
     dispatch({ type: GET_FOLDERS_FAIL });
   }

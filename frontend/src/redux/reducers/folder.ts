@@ -1,19 +1,19 @@
 import { CREATE_FOLDER, GET_FOLDERS, GET_FOLDER, UPDATE_FOLDER_NUM, DELETE_FOLDER, FOLDER_LOADING } from "../actions/types";
-import { folder } from "../../types/types";
+import { folder, folderDetail, IFolderAction } from "../../types/types";
 
 interface folderState {
   folders: folder[];
-  folder: any;
+  folder: folderDetail;
   loading: boolean;
 }
 
 const initialState = {
   folders: [],
-  folder: {},
+  folder: { id: "", title: "", projects_id: "", created_at: new Date() },
   loading: false
 };
 
-function folderReducer(state: folderState = initialState, action: any) {
+function folderReducer(state: folderState = initialState, action: IFolderAction) {
   const { type, payload } = action;
 
   switch (type) {
@@ -29,12 +29,12 @@ function folderReducer(state: folderState = initialState, action: any) {
       };
     case UPDATE_FOLDER_NUM:
       let updatedFolders: folder[] = state.folders;
-      const ind: any = updatedFolders.findIndex((i: folder) => i.id === payload.id);
+      const ind: any = updatedFolders.findIndex((i: folder) => i.id === payload);
       const num = updatedFolders[ind].total_files;
 
       return {
         ...state,
-        folders: state.folders.map((item: folder) => (item.id === payload.id ? { ...item, total_files: num + 1 } : item))
+        folders: state.folders.map((item: folder) => (item.id === payload ? { ...item, total_files: num + 1 } : item))
       };
     case GET_FOLDERS:
       return {
