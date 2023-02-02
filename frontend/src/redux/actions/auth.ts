@@ -19,7 +19,7 @@ export const loadUser = () => async (dispatch: AppDispatch) => {
 export const register = (firstname: string, lastname: string, email: string, password: string, push: any) => async (dispatch: AppDispatch) => {
   try {
     const res = await axiosClient.post("/register", { firstname, lastname, email, password });
-    dispatch({ type: REGISTER_SUCCESS, payload: res });
+    dispatch({ type: REGISTER_SUCCESS });
     message.success("Registration Success!");
   } catch (err: any) {
     message.error(err.response.data.message);
@@ -43,7 +43,6 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err: any) {
-    console.log(err.response.data.message);
     message.error(err.response.data.message);
     dispatch({ type: LOGIN_FAIL });
   }
@@ -79,7 +78,6 @@ export const changeLastname = (lastname: string) => async (dispatch: AppDispatch
 export const changePassword = (currentPassword: string, newPassword: string) => async () => {
   try {
     const res = await axiosClient.patch("/change-pwd", { currentPassword, newPassword });
-    console.log(res);
     message.success("Password has been changed!");
   } catch (err: any) {
     message.error(err.response.data.message);
@@ -99,7 +97,6 @@ export const setNewPassword = (token: string, password: string, history: any) =>
 export const reset = (email: string) => async () => {
   try {
     const res = await axiosClient.post("/reset", { email });
-    console.log(res);
     message.success("Check your e-mail for the reset link");
   } catch (err: any) {
     console.log(err);

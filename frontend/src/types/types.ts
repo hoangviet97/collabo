@@ -142,3 +142,14 @@ export type message = {
   color: string;
   pollData: poll[];
 };
+
+export type user = {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  created_at: Date;
+  color: string;
+};
+
+export type IAuthAction = { type: "USER_LOADED"; payload: user } | { type: "REGISTER_SUCCESS"; payload: null } | { type: "LOGIN_SUCCESS"; payload: any } | { type: "CHANGE_COLOR"; payload: string } | { type: "CHANGE_FIRSTNAME"; payload: string } | { type: "CHANGE_LASTNAME"; payload: string } | { type: "AUTH_LOADING"; payload: null } | { type: "LOGOUT"; payload: null };

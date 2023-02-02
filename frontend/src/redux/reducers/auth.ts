@@ -1,4 +1,5 @@
 import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, AUTH_LOADING, LOGOUT, CHANGE_FIRSTNAME, CHANGE_LASTNAME, CHANGE_COLOR } from "../actions/types";
+import { IAuthAction } from "../../types/types";
 
 interface initialAuthState {
   token: any;
@@ -14,7 +15,7 @@ const initialState = {
   user: {}
 };
 
-function authReducer(state: initialAuthState = initialState, action: any) {
+function authReducer(state: initialAuthState = initialState, action: IAuthAction) {
   const { type, payload } = action;
 
   switch (type) {
