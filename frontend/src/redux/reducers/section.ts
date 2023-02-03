@@ -1,5 +1,5 @@
 import { GET_SECTIONS, GET_SECTIONS_FAIL, GET_MODAL_SECTIONS, GET_MODAL_SECTIONS_FAIL, CREATE_SECTION, CREATE_SECTION_FAIL, SECTIONS_LOADING, DELETE_SECTION, DELETE_SECTION_FAIL, RESET_SECTIONS } from "../actions/types";
-import { section } from "../../types/types";
+import { section, ISectionAction } from "../../types/types";
 
 interface sectionState {
   sections: section[];
@@ -13,7 +13,7 @@ const initialState = {
   loading: false
 };
 
-function sectionReducer(state: sectionState = initialState, action: any) {
+function sectionReducer(state: sectionState = initialState, action: ISectionAction) {
   const { type, payload } = action;
 
   switch (type) {

@@ -1,5 +1,4 @@
-import React, { useState, FC } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC } from "react";
 import FileHomePage from "./files/FileHomePage";
 import FolderDetail from "./folders/FolderDetail";
 import { Switch, Route } from "react-router-dom";

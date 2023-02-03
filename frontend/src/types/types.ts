@@ -52,6 +52,11 @@ export type section = {
   name: string;
 };
 
+export interface newSection extends section {
+  projectId: string;
+  created_at: Date;
+}
+
 export type session = {
   id: string;
   projects_id: string;
@@ -161,3 +166,4 @@ export type user = {
 
 export type IAuthAction = { type: "USER_LOADED"; payload: user } | { type: "REGISTER_SUCCESS"; payload: null } | { type: "LOGIN_SUCCESS"; payload: any } | { type: "CHANGE_COLOR"; payload: string } | { type: "CHANGE_FIRSTNAME"; payload: string } | { type: "CHANGE_LASTNAME"; payload: string } | { type: "AUTH_LOADING"; payload: null } | { type: "LOGOUT"; payload: null };
 export type IFolderAction = { type: "CREATE_FOLDER"; payload: folderDetail } | { type: "GET_FOLDER"; payload: folderDetail } | { type: "GET_FOLDERS"; payload: folder[] } | { type: "DELETE_FOLDER"; payload: string } | { type: "UPDATE_FOLDER_NUM"; payload: string };
+export type ISectionAction = { type: "CREATE_SECTION"; payload: any } | { type: "CREATE_SECTION_FAIL"; payload: null } | { type: "GET_SECTIONS"; payload: section[] } | { type: "GET_SECTIONS_FAIL"; payload: null } | { type: "DELETE_SECTION"; payload: string } | { type: "DELETE_SECTION_FAIL"; payload: string } | { type: "GET_MODAL_SECTIONS"; payload: section[] } | { type: "GET_MODAL_SECTIONS_FAIL"; payload: null } | { type: "RESET_SECTIONS"; payload: null } | { type: "SECTIONS_LOADING"; payload: null };
