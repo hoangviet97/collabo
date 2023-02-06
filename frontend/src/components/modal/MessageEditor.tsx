@@ -45,7 +45,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
         <TextArea style={{ fontSize: "20px" }} value={value} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)} placeholder="Enter your main text" autoSize={{ minRows: 5, maxRows: 8 }} />
         <footer style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
           <div>
-            <Button onClick={() => setPollWindow(true)}>
+            <Button onClick={() => setPollWindow(true)} data-testid="set-poll">
               {question.length > 0 ? (
                 <span style={{ color: "green" }}>
                   <CheckCircleOutlined /> Polls
@@ -62,7 +62,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
           </Button>
         </footer>
         {pollWindow && (
-          <div className="poll__window">
+          <div className="poll__window" data-testid="poll-window">
             <PollEditor setPollWindow={setPollWindow} getPollData={getPollData} />
           </div>
         )}

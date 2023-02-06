@@ -49,7 +49,7 @@ const PollEditor: FC<Props> = ({ setPollWindow, getPollData }) => {
 
   return (
     <div style={{ padding: "20px 15px" }}>
-      <Button aria-label="cancel-btn" style={{ marginTop: "-5px" }} onClick={cancelHandler}>
+      <Button aria-label="cancel-btn" data-testid="cancel-btn" style={{ marginTop: "-5px" }} onClick={cancelHandler}>
         Cancel
       </Button>
       {!viewData && (

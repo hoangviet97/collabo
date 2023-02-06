@@ -7,7 +7,6 @@ export const createSection = (project_id: string, name: string) => async (dispat
   try {
     dispatch(setSectionLoading());
     const res = await axiosClient.post(`/${project_id}/sections/add`, { name });
-    console.log(res.data.name);
     dispatch({ type: CREATE_SECTION, payload: { id: res.data.id, name: res.data.name } });
   } catch (err: any) {
     dispatch({ type: CREATE_SECTION_FAIL });
@@ -20,7 +19,7 @@ export const getSections = (project_id: string) => async (dispatch: AppDispatch)
     dispatch(setSectionLoading());
     const res = await axiosClient.get(`/${project_id}/sections`);
     dispatch({ type: GET_SECTIONS, payload: res.data });
-    console.log(res.data);
+    console.log(process.env.REACT_APP_TODO);
   } catch (err: any) {
     dispatch({ type: GET_SECTIONS_FAIL });
   }
