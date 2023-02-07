@@ -14,7 +14,7 @@ import { notification } from "antd";
 
 const Dashboard: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const socket = io("https://collaboatapp.herokuapp.com");
+  const socket = io(`${process.env.REACT_APP_BACKEND_URL}`);
   const profile = useSelector((state: RootStateOrAny) => state.auth.user);
 
   useEffect(() => {
