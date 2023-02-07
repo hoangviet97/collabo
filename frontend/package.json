@@ -41,6 +41,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "4.0.2",
+    "react-stripe-checkout": "^2.6.3",
     "redux": "^4.0.5",
     "redux-devtools": "^3.7.0",
     "redux-devtools-extension": "^2.13.8",

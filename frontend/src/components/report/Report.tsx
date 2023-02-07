@@ -13,7 +13,7 @@ const Report: React.FunctionComponent = () => {
   const [total, setTotal] = useState<number>(0);
   const [totalToday, setTotalToday] = useState<number>(0);
   const [avgTime, setAvgTime] = useState<number>(0);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>([]);
   const [completed, setCompleted] = useState<number>(0);
   const [inProgress, setInProgress] = useState<number>(0);
   const [underReview, setUnderReview] = useState<number>(0);
@@ -42,33 +42,31 @@ const Report: React.FunctionComponent = () => {
     const avg = sum / time_records.length;
     setAvgTime(avg);
 
-    const config = {
-      data: week_records,
-      xField: "day",
-      yField: "sum",
-      xAxis: {
-        label: {
-          autoHide: true,
-          autoRotate: false
-        }
-      },
-      meta: {
-        day: {
-          alias: "Day"
-        },
-        sum: {
-          alias: "Total"
-        }
-      }
-    };
-
-    setData(config);
-
     return () => {
       setTotal(0);
       setTotalToday(0);
     };
   }, [time_records]);
+
+  const config = {
+    data: week_records,
+    xField: "day",
+    yField: "sum",
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false
+      }
+    },
+    meta: {
+      day: {
+        alias: "Day"
+      },
+      sum: {
+        alias: "Total"
+      }
+    }
+  };
 
   return (
     <div className="report-item">
@@ -103,7 +101,7 @@ const Report: React.FunctionComponent = () => {
             Weekly progress <span style={{ fontSize: "12px" }}>(minutes)</span>
           </span>
         </div>
-        <Column {...data} />
+        <Column {...config} />
       </div>
       <div className="report__status">
         <div className="report__status-card" style={{ backgroundColor: "black" }}>
