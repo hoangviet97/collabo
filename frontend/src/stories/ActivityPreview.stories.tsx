@@ -33,7 +33,7 @@ Preview.args = {
     type: "task",
     title: "Create strategic plan",
     text: "assigned you a task",
-    created_at: "2022-08-03T16:08:27.000Z",
+    created_at: new Date(),
     seen: "F",
     comment: null,
     firstname: "Vitek",

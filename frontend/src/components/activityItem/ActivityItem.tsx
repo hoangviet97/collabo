@@ -3,9 +3,10 @@ import { getTypeColor } from "../../helpers/log";
 import { Avatar } from "antd";
 import AvatarIcon from "../utils/AvatarIcon";
 import moment from "moment";
+import { log } from "../../types/types";
 
 interface Props {
-  data: any;
+  data: log;
 }
 
 const ActivityItem: FC<Props> = ({ data }) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../../components/utils/Container";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { Input } from "antd";
@@ -9,11 +9,7 @@ import { message } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { AppDispatch } from "../../redux/store";
 
-interface Props {
-  match: any;
-}
-
-const MessagesPage: FC<Props> = ({ match }) => {
+const MessagesPage: React.FunctionComponent = () => {
   const params = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootStateOrAny) => state.auth.user.firstname);
@@ -47,11 +43,11 @@ const MessagesPage: FC<Props> = ({ match }) => {
           {loading
             ? "loading..."
             : messages.map((item: message, index: number) => {
-                return <Message key={index} data={item} match={match} project={match.params.id} />;
+                return <Message key={index} data={item} />;
               })}
         </div>
       </div>
-      <MessageEditor project={match.params.id} visible={isEditorVisible} handleCancel={handleCancel} handleOk={handleOk} />
+      <MessageEditor visible={isEditorVisible} handleCancel={handleCancel} handleOk={handleOk} />
     </Container>
   );
 };

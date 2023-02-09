@@ -26,7 +26,7 @@ const FileMiniCard: FC<Props> = ({ data, task_id, deleteProp, bordered }) => {
     axiosClient({
       url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${data.id}/download`,
       method: "GET",
-      responseType: "blob" // important
+      responseType: "blob"
     }).then((response) => {
       fileDownload(response.data, `${data.title}.${data.file_mimetype}`);
     });

@@ -1,32 +1,27 @@
-import React, { useState, useEffect, FC } from "react";
-import { Popover, Modal, Form, Input, Menu, Button, Radio, Select } from "antd";
-import { CommentOutlined, TagsOutlined, CalendarOutlined, InfoCircleOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Popover, Modal, Form, Input, Button, Radio, Select } from "antd";
+import { CommentOutlined, TagsOutlined, CalendarOutlined, PieChartOutlined, DollarOutlined, FundOutlined, FileTextOutlined, DashboardOutlined, TeamOutlined, FundProjectionScreenOutlined, EyeOutlined, BarsOutlined, LayoutOutlined, ProjectOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { AppDispatch } from "../../redux/store";
 import { updateColor, updateStatus, deleteProject, setCurrency, changeName } from "../../redux/actions/project";
 import AvatarIcon from "../utils/AvatarIcon";
 import { colorList } from "../utils/Colors";
 
-interface Props {
-  history: any;
-}
-
-const ProjectNavigation: FC<Props> = ({ history }) => {
+const ProjectNavigation: React.FunctionComponent = () => {
   let path = window.location.pathname;
-  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
-
-  const { push } = history;
-
+  const history = useHistory();
+  const dispatch = useDispatch<AppDispatch>();
   const { TextArea } = Input;
   const { Option } = Select;
-  const dispatch = useDispatch();
+  const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
   const currentProject = useSelector((state: RootStateOrAny) => state.project.currentProject);
   const auth = useSelector((state: RootStateOrAny) => state.project.authorized);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [projectName, setProjectName] = useState<string>("");
   const [showIconTab, setIconTab] = useState<boolean>(false);
   const [projectDescription, setProjectDescription] = useState<string>("");
-  const [iconColorSelection, setIconColorSelection] = useState("");
+  const [iconColorSelection, setIconColorSelection] = useState<string>("");
 
   useEffect(() => {
     setProjectName(currentProject.name);
@@ -95,7 +90,7 @@ const ProjectNavigation: FC<Props> = ({ history }) => {
   };
 
   const deleteHandler = () => {
-    dispatch(deleteProject(currentProject.id, push));
+    dispatch(deleteProject(currentProject.id, history.push));
   };
 
   const handleOk = () => {

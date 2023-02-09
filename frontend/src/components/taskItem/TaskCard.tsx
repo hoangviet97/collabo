@@ -16,7 +16,7 @@ interface Props {
 }
 
 const TaskCard: FC<Props> = ({ task, sectionName, showModal, closeModal, assignees, members }) => {
-  const [assignessModalVisible, setAssignessModalVisible] = useState(false);
+  const [assignessModalVisible, setAssignessModalVisible] = useState<boolean>(false);
 
   const showAssigness = () => {
     setAssignessModalVisible(true);

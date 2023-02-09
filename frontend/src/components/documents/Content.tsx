@@ -1,13 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 import FileHomePage from "./files/FileHomePage";
 import FolderDetail from "./folders/FolderDetail";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-interface Props {
-  match: any;
-}
+const Content: React.FunctionComponent = () => {
+  const match = useRouteMatch();
 
-const Content: FC<Props> = ({ match }) => {
   return (
     <div className="files__data">
       <Switch>
@@ -15,7 +13,7 @@ const Content: FC<Props> = ({ match }) => {
           <FileHomePage />
         </Route>
         <Route exact path={`${match.path}/folders/:folderId`}>
-          <FolderDetail {...match} />
+          <FolderDetail />
         </Route>
       </Switch>
     </div>

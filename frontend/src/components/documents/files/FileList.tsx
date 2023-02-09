@@ -8,13 +8,13 @@ import { moveToFolder, deleteFile } from "../../../redux/actions/file";
 import fileDownload from "js-file-download";
 import { useParams } from "react-router-dom";
 import { useSelector, RootStateOrAny } from "react-redux";
-import { folder } from "../../../types/types";
+import { folder, file } from "../../../types/types";
 import { AppDispatch } from "../../../redux/store";
 
 const FileList: React.FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
-  const { Text, Link } = Typography;
+  const { Text } = Typography;
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [fileId, setFileId] = useState<string>("");
@@ -22,11 +22,11 @@ const FileList: React.FunctionComponent = () => {
   const folders = useSelector((state: RootStateOrAny) => state.folder.folders);
   const files = useSelector((state: RootStateOrAny) => state.file.files);
 
-  const download = (record: any) => {
+  const download = (record: file) => {
     axiosClient({
-      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`, //your url
+      url: `https://collaboatbe.herokuapp.com/api/${params.id}/files/${record.id}/download`,
       method: "GET",
-      responseType: "blob" // important
+      responseType: "blob"
     }).then((response) => {
       fileDownload(response.data, `${record.title}.${record.file_mimetype}`);
     });
@@ -41,7 +41,7 @@ const FileList: React.FunctionComponent = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      render: (text: any) => <a>{text}</a>
+      render: (text: string) => <a>{text}</a>
     },
     {
       title: "Description",
@@ -52,13 +52,13 @@ const FileList: React.FunctionComponent = () => {
       title: "Created",
       dataIndex: "created_at",
       key: "created",
-      render: (text: any, record: any) => moment(record.created_at).format("MMM Do YY, h:mm")
+      render: (text: string, record: file) => moment(record.created_at).format("MMM Do YY, h:mm")
     },
     {
       title: "",
       key: "download",
       width: "12%",
-      render: (text: any, record: any) => (
+      render: (text: string, record: file) => (
         <Space size="middle">
           <Dropdown overlay={() => menu(record)} trigger={["click"]}>
             <a>
@@ -75,7 +75,7 @@ const FileList: React.FunctionComponent = () => {
     setFileId(id);
   };
 
-  const menu = (record: any) => (
+  const menu = (record: file) => (
     <Menu>
       <Menu.Item key="0">
         <a onClick={() => download(record)}>Download</a>

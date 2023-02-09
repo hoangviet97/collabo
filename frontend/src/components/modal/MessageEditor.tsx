@@ -1,20 +1,22 @@
 import React, { useState, FC, ChangeEvent } from "react";
-import { Modal, Button, Input, Form, message } from "antd";
+import { Modal, Button, Input, message } from "antd";
 import { createMessage } from "../../redux/actions/message";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { PlusCircleOutlined, UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
+import { PlusCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import PollEditor from "../poll/PollEditor";
 
 interface Props {
-  project: string;
   visible: boolean;
   handleCancel: () => void;
   handleOk: () => void;
 }
 
-const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) => {
+const MessageEditor: FC<Props> = ({ visible, handleCancel, handleOk }) => {
+  const params = useParams<{ id: string }>();
   const { TextArea } = Input;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
   const loading = useSelector((state: RootStateOrAny) => state.message.msgLoading);
   const [value, setValue] = useState<string>("");
@@ -26,7 +28,7 @@ const MessageEditor: FC<Props> = ({ project, visible, handleCancel, handleOk }) 
     if (value.length < 1) {
       message.error("Text cannot be empty!");
     } else {
-      dispatch(createMessage(project, value, question, options, user));
+      dispatch(createMessage(params.id, value, question, options, user));
       setValue("");
       setQuestion("");
       setOptions([]);

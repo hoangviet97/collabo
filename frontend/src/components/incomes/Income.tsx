@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { task } from "../../types/types";
 
 interface Props {
   income: any;

@@ -6,8 +6,6 @@ import Poll from "../poll/Poll";
 
 interface Props {
   data: any;
-  match: any;
-  project: any;
 }
 
 const Message: FC<Props> = ({ data }) => {

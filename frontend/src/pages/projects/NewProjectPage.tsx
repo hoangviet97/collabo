@@ -1,5 +1,5 @@
-import React, { useState, FC, ChangeEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, ChangeEvent } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { createProject } from "../../redux/actions/project";
@@ -16,12 +16,8 @@ const NewProjectPage: React.FunctionComponent = () => {
   const [color, setColor] = useState<string>("");
   const [chosen, setChosen] = useState<number>();
 
-  const handleIconColor = (e: any) => {
-    setColor(e);
-  };
-
-  const colorCubicStateHandler = (item: any, index: number) => {
-    handleIconColor(item);
+  const colorCubicStateHandler = (item: string, index: number) => {
+    setColor(item);
     setChosen(index);
   };
 

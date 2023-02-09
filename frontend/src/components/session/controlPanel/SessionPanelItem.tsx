@@ -6,17 +6,16 @@ import { Button } from "antd";
 import { deleteSession } from "../../../redux/actions/session";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { session } from "../../../types/types";
+import { AppDispatch } from "../../../redux/store";
 
 interface Props extends RouteComponentProps {
   session: session;
 }
 
 const SessionPanelItem = ({ session, match }: Props) => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const user_role = useSelector((state: RootStateOrAny) => state.project.currentProject.role);
-
-  console.log(match);
 
   const deleteHandler = () => {
     dispatch(deleteSession(session.id, params.id));

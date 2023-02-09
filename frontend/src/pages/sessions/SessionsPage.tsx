@@ -3,7 +3,7 @@ import Container from "../../components/utils/Container";
 import ControlPanel from "../../components/session/controlPanel/ControlPanel";
 import SessionContent from "../../components/session/SessionContent";
 import SessionModal from "../../components/modal/SessionModal";
-import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSessions } from "../../redux/actions/session";
 import { AppDispatch } from "../../redux/store";

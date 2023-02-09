@@ -4,17 +4,17 @@ import { useDispatch } from "react-redux";
 import { createInvitation } from "../../redux/actions/invitation";
 import SocketContext from "../../context/SocketContext";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
 const InvitationPanel: React.FunctionComponent = () => {
   const socket = useContext(SocketContext);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params = useParams<{ id: string }>();
   const [email, setEmail] = useState<string>("");
 
-  const submitHandle = (e: any) => {
+  const submitHandle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // dispatch with passed socket
     dispatch(createInvitation(email, params.id, socket));
     setEmail("");
   };

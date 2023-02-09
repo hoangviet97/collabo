@@ -22,7 +22,7 @@ beforeEach(() => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <MessageEditor project="67ygt56" visible={true} handleCancel={() => {}} handleOk={() => {}} />
+        <MessageEditor visible={true} handleCancel={() => {}} handleOk={() => {}} />
       </BrowserRouter>
     </Provider>
   );

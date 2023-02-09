@@ -6,10 +6,11 @@ import { getTalkingPoints, createTalkingPoint, updateCheckTalkingPoint } from ".
 import { getNote, updateNote, createNote } from "../../redux/actions/note";
 import { Divider, Input, Checkbox, Skeleton } from "antd";
 import moment from "moment";
+import { AppDispatch } from "../../redux/store";
 import AssigneesBox from "../assignees/AssigneesBox";
 
 const SessionItem: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector((state: RootStateOrAny) => state.session.singleLoading);
   const single = useSelector((state: RootStateOrAny) => state.session.single);
   const participants = useSelector((state: RootStateOrAny) => state.session.participants);
@@ -46,7 +47,6 @@ const SessionItem: React.FunctionComponent = () => {
   };
 
   const pointCheckHandle = (e: boolean, id: string) => {
-    console.log(e);
     dispatch(updateCheckTalkingPoint(params.sessionId, id, params.id, e === true ? "T" : "F"));
   };
 

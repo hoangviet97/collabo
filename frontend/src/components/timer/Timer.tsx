@@ -4,23 +4,24 @@ import moment from "moment";
 import { createTimeRecord } from "../../redux/actions/time_record";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
-  localstorage: any;
+  localstorage: string;
   disabled: boolean;
 }
 
 const Timer: FC<Props> = ({ localstorage, disabled }) => {
-  const dispatch = useDispatch();
-  const params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<{ id: string }>();
   const [timer, setTimer] = useState<number>(0);
   let finalFormat: string = "";
-  const [isActive, setIsActive] = useState<any>(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
   const countRef: any = useRef(null);
 
   const handleStart = () => {
     let now = new Date();
-    let val: any = JSON.parse(localStorage.getItem(`timer${localstorage}`)!);
+    let val: string = JSON.parse(localStorage.getItem(`timer${localstorage}`)!);
 
     if (!val) {
       localStorage.setItem(`timer${localstorage}`, JSON.stringify(now));
@@ -55,10 +56,10 @@ const Timer: FC<Props> = ({ localstorage, disabled }) => {
   }, []);
 
   const formatTime = () => {
-    const getSeconds: any = `0${timer % 60}`.slice(-2);
+    const getSeconds: string = `0${timer % 60}`.slice(-2);
     const minutes: any = `${Math.floor(timer / 60)}`;
-    const getMinutes: any = `0${minutes % 60}`.slice(-2);
-    const getHours: any = `0${Math.floor(timer / 3600)}`.slice(-2);
+    const getMinutes: string = `0${minutes % 60}`.slice(-2);
+    const getHours: string = `0${Math.floor(timer / 3600)}`.slice(-2);
     finalFormat = `${getHours}:${getMinutes}:${getSeconds}`;
 
     return finalFormat;
@@ -66,7 +67,7 @@ const Timer: FC<Props> = ({ localstorage, disabled }) => {
 
   return (
     <div>
-      <div className="time__button" style={{ backgroundColor: isActive ? "#e74c3c" : "white", color: isActive && "white" }}>
+      <div className="time__button" style={{ backgroundColor: isActive ? "#e74c3c" : "white", color: isActive ? "white" : "black" }}>
         <div className="time__button-content">
           <span>{formatTime()}</span>
           <div className="buttons">

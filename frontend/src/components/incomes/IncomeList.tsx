@@ -8,8 +8,8 @@ const IncomeList: React.FunctionComponent = () => {
 
   return (
     <div>
-      {incomes.map((item: task) => (
-        <Income income={item} />
+      {incomes.map((item: task, index: number) => (
+        <Income key={index} income={item} />
       ))}
     </div>
   );

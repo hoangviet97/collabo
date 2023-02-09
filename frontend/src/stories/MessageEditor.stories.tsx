@@ -25,7 +25,6 @@ const Template: ComponentStory<typeof MessageEditor> = (args) => <MessageEditor 
 
 export const Default = Template.bind({});
 Default.args = {
-  project: "123edf5",
   visible: true,
   handleCancel: () => {},
   handleOk: () => {}

@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Button } from "antd";
 import { InfoCircleOutlined, StarFilled, DownloadOutlined } from "@ant-design/icons";
-import download from "downloadjs";
 import fileDownload from "js-file-download";
 import axios from "axios";
 import FileTypeIcon from "../../utils/FileTypeIcon";
@@ -10,15 +9,15 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { file } from "../../../types/types";
 import prettyBytes from "pretty-bytes";
+import { AppDispatch } from "../../../redux/store";
 
 interface Props {
   file: file;
 }
 
 const FileCard: FC<Props> = ({ file }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const params: any = useParams();
-  const favoriteToggle = () => {};
 
   const showDetail = () => {
     dispatch(getFileDetail({ file: file }));
@@ -37,7 +36,7 @@ const FileCard: FC<Props> = ({ file }) => {
   return (
     <div className="file-card">
       <div className="file-card__header">
-        <StarFilled onClick={favoriteToggle} className="file-card__favorite" />
+        <StarFilled className="file-card__favorite" />
         <div style={{ padding: 0, cursor: "pointer" }} onClick={showDetail}>
           <InfoCircleOutlined style={{ fontSize: "20px" }} />
         </div>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { deleteTag } from "../../redux/actions/tag";
 import { useDispatch } from "react-redux";
 import { tag } from "../../types/types";
+import { AppDispatch } from "../../redux/store";
 
 interface Props {
   title: String;
@@ -11,8 +12,8 @@ interface Props {
 }
 
 const TagGroup: FC<Props> = ({ title, tags }) => {
-  const dispatch = useDispatch();
-  let params: any = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  let params = useParams<{ id: string }>();
 
   const deleteHandler = (id: string) => {
     dispatch(deleteTag(params.id, id));
